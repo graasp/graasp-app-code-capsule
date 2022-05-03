@@ -1,8 +1,9 @@
 {
-  "name": "graasp-code-review-app-test",
+  "name": "graasp-app-code-review-rewrite",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@testing-library/cypress": "^8.0.2",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^13.0.0",
     "@testing-library/user-event": "^13.2.1",
@@ -26,7 +27,7 @@
     "hooks:install": "husky install",
     "hooks:uninstall": "husky uninstall",
     "lint": "eslint .",
-    "test:once": "",
+    "test:once": "yarn test:ci",
     "test:ci": "env-cmd -f ./.env.test cypress run"
   },
   "browserslist": {
@@ -47,10 +48,12 @@
     "@commitlint/config-conventional": "16.0.0",
     "@typescript-eslint/eslint-plugin": "^5.22.0",
     "@typescript-eslint/parser": "^5.22.0",
+    "cypress": "^9.6.0",
     "eslint": "^8.14.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-prettier": "^8.5.0",
     "eslint-import-resolver-typescript": "^2.7.1",
+    "eslint-plugin-cypress": "^2.12.1",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-jsx-a11y": "^6.5.1",
     "eslint-plugin-prettier": "^4.0.0",
