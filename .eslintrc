@@ -5,9 +5,9 @@
   },
   "extends": [
     "airbnb",
-    "plugin:react/recommended",
     "plugin:@typescript-eslint/recommended",
     "prettier",
+    "plugin:react/recommended",
     "plugin:cypress/recommended"
   ],
   "globals": {
@@ -24,6 +24,8 @@
   },
   "plugins": ["react", "react-hooks", "@typescript-eslint", "prettier"],
   "rules": {
+    "import/no-import-module-exports": "off",
+    "import/no-extraneous-dependencies": ["error", { "devDependencies": true }],
     "import/prefer-default-export": "off",
     "prettier/prettier": "error",
     "import/extensions": [
@@ -40,6 +42,8 @@
         "allowExpressions": true
       }
     ],
+    "@typescript-eslint/no-var-requires": "off",
+    "global-require": "off",
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "warn",
     "comma-dangle": "off",
