@@ -98,10 +98,12 @@
   },
   "nyc": {
     "all": true,
-    "include": "src/*.{js,ts,jsx,tsx}",
+    "include": [
+      "src/**/*.{js,ts,jsx,tsx}"
+    ],
     "exclude": [
       "src/setupTests.ts",
-      "src/*.d.ts"
+      "src/**/*.d.ts"
     ]
   },
   "packageManager": "yarn@3.2.0"
