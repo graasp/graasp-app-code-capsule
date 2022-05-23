@@ -5,4 +5,4 @@ export const {
   REACT_APP_GOOGLE_ANALYTICS_ID,
   REACT_APP_MOCK_API,
   REACT_APP_API_HOST,
-} = process.env;
+} = window.Cypress ? Cypress.env() : process.env;

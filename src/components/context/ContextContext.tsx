@@ -14,21 +14,9 @@ import {
 } from '../../config/settings';
 import { hooks } from '../../config/queryClient';
 import Loader from '../common/Loader';
+import { AppContext } from '../../interfaces/appContext';
 
-type ContextType = {
-  apiHost: string;
-  context: string;
-  permission: string;
-  itemId: string;
-  memberId?: string;
-  lang: string;
-  offline: string | boolean;
-  dev: string | boolean;
-  standalone: boolean;
-  settings: object;
-};
-
-const defaultContextValue: Partial<ContextType> = {
+const defaultContextValue: Partial<AppContext> = {
   apiHost: DEFAULT_CONTEXT_API_HOST,
   context: DEFAULT_CONTEXT,
   permission: DEFAULT_PERMISSION,
@@ -61,15 +49,16 @@ export const ContextProvider: FC<Props> = ({ children }) => {
       return <Loader />;
     }
     if (isError) {
+      // eslint-disable-next-line no-console
       console.error('An error occurred while fetching the local context');
     }
     if (Map.isMap(context)) {
-      contextValue = context?.toJS() as ContextType;
+      contextValue = context?.toJS() as Partial<AppContext>;
     }
   }
 
   return <Context.Provider value={contextValue}>{children}</Context.Provider>;
 };
 
-export const useContextContext = (): Partial<ContextType> =>
-  React.useContext<Partial<ContextType>>(Context);
+export const useContextContext = (): Partial<AppContext> =>
+  React.useContext<Partial<AppContext>>(Context);

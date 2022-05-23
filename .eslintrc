@@ -24,8 +24,15 @@
   },
   "plugins": ["react", "react-hooks", "@typescript-eslint", "prettier"],
   "rules": {
+    "react/react-in-jsx-scope": "off",
+    "@typescript-eslint/ban-ts-comment": "off",
     "import/no-import-module-exports": "off",
-    "import/no-extraneous-dependencies": ["error", { "devDependencies": true }],
+    "import/no-extraneous-dependencies": [
+      "error",
+      {
+        "devDependencies": true
+      }
+    ],
     "import/prefer-default-export": "off",
     "prettier/prettier": "error",
     "import/extensions": [
@@ -33,6 +40,7 @@
       "ignorePackages",
       {
         "ts": "never",
+        "js": "never",
         "tsx": "never"
       }
     ],
@@ -60,7 +68,10 @@
       {
         "namedComponents": "arrow-function"
       }
-    ]
+    ],
+    // eslint rule reports false error
+    "no-shadow": "off",
+    "@typescript-eslint/no-shadow": ["error"]
   },
   "settings": {
     "import/resolver": {

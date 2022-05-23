@@ -2,23 +2,44 @@ import { useTokenContext } from './TokenContext';
 import { useContextContext } from './ContextContext';
 import { hooks } from '../../config/queryClient';
 
-export const useAppData = (): any => {
-  const { itemId } = useContextContext();
-  const token = useTokenContext();
-  const query = hooks.useAppData({ token, itemId });
-  return query;
+type useAppDataType = {
+  data: unknown;
+  isSuccess: boolean;
+  isError: boolean;
+  isLoading: boolean;
+  error: Error | null;
 };
 
-export const useAppSettings = (): any => {
-  const { itemId } = useContextContext();
-  const token = useTokenContext();
-  const query = hooks.useAppSettings({ token, itemId });
-  return query;
+type useAppSettingsType = {
+  data: unknown;
+  isSuccess: boolean;
+  isError: boolean;
+  isLoading: boolean;
+  error: Error | null;
 };
 
-export const useAppContext = (): any => {
+type useAppContextType = {
+  data: unknown;
+  isSuccess: boolean;
+  isError: boolean;
+  isLoading: boolean;
+  error: Error | null;
+};
+
+export const useAppData = (): useAppDataType => {
   const { itemId } = useContextContext();
   const token = useTokenContext();
-  const query = hooks.useAppContext({ token, itemId });
-  return query;
+  return hooks.useAppData({ token, itemId });
+};
+
+export const useAppSettings = (): useAppSettingsType => {
+  const { itemId } = useContextContext();
+  const token = useTokenContext();
+  return hooks.useAppSettings({ token, itemId });
+};
+
+export const useAppContext = (): useAppContextType => {
+  const { itemId } = useContextContext();
+  const token = useTokenContext();
+  return hooks.useAppContext({ token, itemId });
 };
