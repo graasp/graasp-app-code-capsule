@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC, ReactElement, useState } from 'react';
 import { Tab, Button } from '@mui/material';
 import { TabContext, TabList, TabPanel } from '@mui/lab';
 import { useTranslation } from 'react-i18next';
@@ -12,6 +12,8 @@ import {
   TAB_TABLE_VIEW_CYPRESS,
   TABLE_VIEW_PANE_CYPRESS,
 } from '../../../config/selectors';
+import SettingsFab from './SettingsFab';
+import { useContextContext } from '../../context/ContextContext';
 
 enum TABS {
   TABLE_VIEW = 'TABLE_VIEW',
@@ -21,10 +23,11 @@ enum TABS {
 const AdminView: FC = () => {
   const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState(TABS.TABLE_VIEW);
+  const appContext = useContextContext();
 
   const { mutate: postAppData } = useMutation(MUTATION_KEYS.POST_APP_DATA);
 
-  return (
+  const renderTable = (): ReactElement => (
     <TabContext value={activeTab}>
       <TabList
         textColor="secondary"
@@ -54,13 +57,24 @@ const AdminView: FC = () => {
         <Button
           onClick={() =>
             // @ts-ignore
-            postAppData({ data: 'message', type: APP_DATA_TYPES.COMMENT })
+            postAppData({
+              data: 'message',
+              type: APP_DATA_TYPES.COMMENT,
+              memberId: appContext.memberId,
+            })
           }
         >
           Add app data
         </Button>
       </TabPanel>
     </TabContext>
+  );
+
+  return (
+    <>
+      {renderTable()}
+      <SettingsFab />
+    </>
   );
 };
 

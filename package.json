@@ -11,8 +11,9 @@
   "dependencies": {
     "@emotion/react": "^11.9.0",
     "@emotion/styled": "^11.8.1",
-    "@graasp/apps-query-client": "github:graasp/graasp-apps-query-client#v0.1.1",
-    "@graasp/ui": "github:graasp/graasp-ui",
+    "@graasp/apps-query-client": "github:graasp/graasp-apps-query-client#v0.2.0",
+    "@graasp/ui": "github:graasp/graasp-ui#93/mui5",
+    "@monaco-editor/react": "^4.4.5",
     "@mui/icons-material": "^5.8.0",
     "@mui/lab": "^5.0.0-alpha.82",
     "@mui/material": "5.6.4",

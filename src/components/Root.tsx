@@ -1,6 +1,7 @@
 import React, { FC, ReactNode } from 'react';
 import { createTheme, styled, ThemeProvider } from '@mui/material';
 import { grey, orange, pink } from '@mui/material/colors';
+import { StyledEngineProvider } from '@mui/material/styles';
 import { I18nextProvider } from 'react-i18next';
 import App from './App';
 import i18nConfig from '../config/i18n';
@@ -65,16 +66,19 @@ const RootDiv = styled('div')({
 
 const Root: FC = () => (
   <RootDiv>
-    <ThemeProvider theme={theme}>
-      <I18nextProvider i18n={i18nConfig}>
-        <QueryClientProvider client={queryClient}>
-          <ContextProvider>
-            <App />
-          </ContextProvider>
-          {process.env.NODE_ENV === 'development' && <ReactQueryDevtools />}
-        </QueryClientProvider>
-      </I18nextProvider>
-    </ThemeProvider>
+    {/* Used to define the order of injected properties between JSS and emotion */}
+    <StyledEngineProvider injectFirst>
+      <ThemeProvider theme={theme}>
+        <I18nextProvider i18n={i18nConfig}>
+          <QueryClientProvider client={queryClient}>
+            <ContextProvider>
+              <App />
+            </ContextProvider>
+            {process.env.NODE_ENV === 'development' && <ReactQueryDevtools />}
+          </QueryClientProvider>
+        </I18nextProvider>
+      </ThemeProvider>
+    </StyledEngineProvider>
   </RootDiv>
 );
 

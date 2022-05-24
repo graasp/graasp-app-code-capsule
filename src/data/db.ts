@@ -5,7 +5,7 @@ import { GENERAL_SETTINGS_KEY } from '../config/appSettings';
 import { DEFAULT_GENERAL_SETTINGS } from '../interfaces/settings';
 
 export const mockContext = {
-  permission: 'write',
+  permission: 'admin',
   context: 'builder',
   itemId: '1234-1234-123456-8123-123456',
 };
@@ -24,6 +24,10 @@ const buildDatabase = (appContext: Partial<AppContext>): Partial<Database> => ({
       id: v4(),
       name: GENERAL_SETTINGS_KEY,
       data: DEFAULT_GENERAL_SETTINGS,
+      itemId: appContext.itemId || '',
+      creator: 'mock-member',
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
     },
   ],
 });
