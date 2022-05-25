@@ -23,7 +23,8 @@ export const TokenProvider: FC<Prop> = ({ children }) => {
     }
 
     if (isError) {
-      console.error('An error occured while requesting the token.');
+      // eslint-disable-next-line no-console
+      console.error('An error occurred while requesting the token.');
     }
 
     contextValue = (data as string) || defaultContextValue;

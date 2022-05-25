@@ -1,4 +1,4 @@
-import { FC, ReactElement } from 'react';
+import { FC, ReactElement, useState } from 'react';
 import {
   IconButton,
   Table,
@@ -10,11 +10,9 @@ import {
 } from '@mui/material';
 import InputIcon from '@mui/icons-material/Input';
 import { useTranslation } from 'react-i18next';
-import { Loader } from '@graasp/ui';
 import { List } from 'immutable';
-import { AppData } from '@graasp/apps-query-client/dist/src/types';
+import { AppData, Member } from '@graasp/apps-query-client/dist/src/types';
 import { useAppContext, useAppData } from '../../context/hooks';
-import { Member } from '../../../interfaces/member';
 import {
   NUMBER_OF_COMMENTS_CYPRESS,
   TABLE_NO_COMMENTS_CYPRESS,
@@ -27,9 +25,12 @@ import {
   ANONYMOUS_USER,
   NB_COL_TABLE_VIEW_TABLE,
 } from '../../../config/constants';
+import CustomDialog from '../../common/CustomDialog';
+import Loader from '../../common/Loader';
 
 const TableView: FC = () => {
   const { t } = useTranslation();
+  const [openCommentView, setOpenCommentView] = useState(false);
   const { data: appContext, isLoading: isLoadingAppContext } = useAppContext();
   const { data: appData, isLoading: isLoadingAppData } = useAppData();
 
@@ -37,12 +38,11 @@ const TableView: FC = () => {
     return <Loader />;
   }
 
-  // @ts-ignore
-  const members = appContext?.get('members') ?? List();
+  const members: Member[] =
+    (appContext?.get('members') as Member[]) ?? List<Member>();
   const comments =
-    // @ts-ignore
-    appData.filter(
-      (res: { type: string }) => res.type === APP_DATA_TYPES.COMMENT,
+    (appData as List<AppData>).filter(
+      (res) => res.type === APP_DATA_TYPES.COMMENT,
     ) ?? List();
 
   const renderTableBody = (): ReactElement[] | ReactElement => {
@@ -59,23 +59,22 @@ const TableView: FC = () => {
         </TableRow>
       );
     }
-    const commentsByUsers: [string, List<AppData>][] = comments
-      .groupBy(({ memberId }: { memberId: string }) => memberId)
+    const commentsByUsers = comments
+      .groupBy(({ memberId }) => memberId)
       .toArray();
     return commentsByUsers?.map(([userId, userComments]) => {
       const userName =
-        members?.find(({ id }: Member) => id === userId)?.name ||
-        ANONYMOUS_USER;
+        members?.find(({ id }) => id === userId)?.name || ANONYMOUS_USER;
       return (
         <TableRow key={userId} data-cy={tableRowUserCypress(userId)}>
           <TableCell>{userName}</TableCell>
           <TableCell>{false}</TableCell>
           <TableCell data-cy={NUMBER_OF_COMMENTS_CYPRESS}>
-            {userComments?.size}
+            <div>{userComments.count()}</div>
           </TableCell>
           <TableCell>
-            <IconButton>
-              <InputIcon />
+            <IconButton onClick={() => setOpenCommentView(true)}>
+              <InputIcon color="primary" />
             </IconButton>
           </TableCell>
         </TableRow>
@@ -84,21 +83,29 @@ const TableView: FC = () => {
   };
 
   return (
-    <TableContainer data-cy={TABLE_VIEW_TABLE_CYPRESS}>
-      <Table aria-label="student table">
-        <TableHead>
-          <TableRow>
-            <TableCell>{t('Name')}</TableCell>
-            <TableCell>{t('Help needed')}</TableCell>
-            <TableCell>{t('Total Number of comments')}</TableCell>
-            <TableCell>{t('View Student comments')}</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody data-cy={TABLE_VIEW_BODY_USERS_CYPRESS}>
-          {renderTableBody()}
-        </TableBody>
-      </Table>
-    </TableContainer>
+    <>
+      <TableContainer data-cy={TABLE_VIEW_TABLE_CYPRESS}>
+        <Table aria-label="student table">
+          <TableHead>
+            <TableRow>
+              <TableCell>{t('Name')}</TableCell>
+              <TableCell>{t('Help needed')}</TableCell>
+              <TableCell>{t('Total Number of comments')}</TableCell>
+              <TableCell>{t('View Student comments')}</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody data-cy={TABLE_VIEW_BODY_USERS_CYPRESS}>
+            {renderTableBody()}
+          </TableBody>
+        </Table>
+      </TableContainer>
+      <CustomDialog
+        open={openCommentView}
+        title={t('Viewing comments from ')}
+        content={<span>Code Review</span>}
+        onClose={() => setOpenCommentView(false)}
+      />
+    </>
   );
 };
 

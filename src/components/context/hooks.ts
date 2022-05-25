@@ -1,9 +1,8 @@
-import { useTokenContext } from './TokenContext';
-import { useContextContext } from './ContextContext';
+import { List, Map } from 'immutable';
 import { hooks } from '../../config/queryClient';
 
 type useAppDataType = {
-  data: unknown;
+  data?: List<unknown>;
   isSuccess: boolean;
   isError: boolean;
   isLoading: boolean;
@@ -11,7 +10,7 @@ type useAppDataType = {
 };
 
 type useAppSettingsType = {
-  data: unknown;
+  data?: List<unknown>;
   isSuccess: boolean;
   isError: boolean;
   isLoading: boolean;
@@ -19,27 +18,15 @@ type useAppSettingsType = {
 };
 
 type useAppContextType = {
-  data: unknown;
+  data?: Map<unknown, unknown>;
   isSuccess: boolean;
   isError: boolean;
   isLoading: boolean;
   error: Error | null;
 };
 
-export const useAppData = (): useAppDataType => {
-  const { itemId } = useContextContext();
-  const token = useTokenContext();
-  return hooks.useAppData({ token, itemId });
-};
+export const useAppData = (): useAppDataType => hooks.useAppData();
 
-export const useAppSettings = (): useAppSettingsType => {
-  const { itemId } = useContextContext();
-  const token = useTokenContext();
-  return hooks.useAppSettings({ token, itemId });
-};
+export const useAppSettings = (): useAppSettingsType => hooks.useAppSettings();
 
-export const useAppContext = (): useAppContextType => {
-  const { itemId } = useContextContext();
-  const token = useTokenContext();
-  return hooks.useAppContext({ token, itemId });
-};
+export const useAppContext = (): useAppContextType => hooks.useAppContext();

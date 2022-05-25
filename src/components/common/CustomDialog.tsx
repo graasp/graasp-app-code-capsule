@@ -10,7 +10,7 @@ type Props = {
   open: boolean;
   title: string;
   content: ReactElement | string;
-  actions: ReactElement;
+  actions?: ReactElement;
   onClose?: () => void;
   dataCy?: string;
   keepMounted?: boolean;

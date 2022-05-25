@@ -6,6 +6,7 @@
     "Cancel": "Cancel",
     "Finish": "Finish",
     "Save": "Save",
+    "Saved": "Saved",
     "Send": "Send",
     "Reply": "Reply",
     "Yes": "Yes",
@@ -21,6 +22,8 @@
     "Code": "Code",
     "Programming Language": "Programming Language",
     "Show Header to Students": "Show Header to Students",
+    "Allow Comments": "Allow Comments",
+    "Allow Replies": "Allow Replies",
     "Student Comments": "Student Comments",
     "Code Review": "Code Review",
     "Total Number of comments": "Total Number of comments",
@@ -47,7 +50,7 @@
     "Reset Defaults": "Reset Defaults",
     "Add Empty Step": "Add Empty Step",
     "Description": "Description",
-    "Show Top Bar to Students": "Show Top Bar to Students",
+    "Show Toolbar to Students": "Show Toolbar to Students",
     "Show All Comments": "Show All Comments",
     "Hide All Comments": "Hide All Comments",
     "Code Settings": "Code Settings",
@@ -72,6 +75,8 @@
     "Help needed": "Help needed",
     "Table View": "Table View",
     "Preset View": "Preset View",
-    "No Comments": "Pas de commentaires"
+    "No Comments": "Pas de commentaires",
+    "Define Interaction Mode": "Define Interaction Mode",
+    "App Customization": "App Customization"
   }
 }

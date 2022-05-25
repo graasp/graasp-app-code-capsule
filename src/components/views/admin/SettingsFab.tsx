@@ -1,47 +1,42 @@
 import { FC, ReactElement, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button, Loader } from '@graasp/ui';
+import { Button } from '@graasp/ui';
 import { Settings as SettingsIcon } from '@mui/icons-material';
 import Editor from '@monaco-editor/react';
-import {
-  Box,
-  Fab,
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
-  Stack,
-  Tab,
-} from '@mui/material';
+import { Box, Divider, Fab, Stack, Tab, Typography } from '@mui/material';
 import { TabContext, TabList, TabPanel } from '@mui/lab';
-import {
-  AppSetting,
-  CreateAppSetting,
-  PatchAppSetting,
-} from '@graasp/apps-query-client/dist/src/types';
+import { styled } from '@mui/styles';
 import CustomDialog from '../../common/CustomDialog';
 import {
+  ALLOW_COMMENTS_SWITCH_CYPRESS,
+  ALLOW_REPLIES_SWITCH_CYPRESS,
   PROGRAMMING_LANGUAGE_SELECT_CYPRESS,
-  PROGRAMMING_LANGUAGE_SELECT_ID,
   SETTINGS_DIALOG_CANCEL_BUTTON_CYPRESS,
   SETTINGS_DIALOG_SAVE_BUTTON_CYPRESS,
   SETTINGS_DIALOG_WINDOW_CYPRESS,
   SETTINGS_FAB_CYPRESS,
+  SHOW_EDIT_BUTTON_SWITCH_CYPRESS,
+  SHOW_HEADER_SWITCH_CYPRESS,
+  SHOW_TOOLBAR_SWITCH_CYPRESS,
+  SHOW_VERSION_NAVIGATION_SWITCH_CYPRESS,
+  SHOW_VISIBILITY_SWITCH_CYPRESS,
 } from '../../../config/selectors';
+import { SETTINGS } from '../../../interfaces/settings';
+import { CLOSE_SETTINGS_TIMEOUT } from '../../../config/constants';
 import {
-  DEFAULT_GENERAL_SETTINGS,
-  GeneralSettings,
-} from '../../../interfaces/settings';
-import { GENERAL_SETTINGS_KEY } from '../../../config/appSettings';
-import { useAppSettings } from '../../context/hooks';
-import {
-  CLOSE_SETTINGS_TIMEOUT,
-  JAVA,
-  JAVASCRIPT,
-  MATLAB,
-  PYTHON,
-} from '../../../config/constants';
-import { MUTATION_KEYS, useMutation } from '../../../config/queryClient';
+  programmingLanguageSelect,
+  programmingLanguageSettings,
+} from '../../../config/programmingLanguages';
+import SettingsSwitch from '../../common/settings/SettingsSwitch';
+import Loader from '../../common/Loader';
+import SettingsSelect from '../../common/settings/SettingsSelect';
+import { useSettings } from '../../context/SettingsContext';
+
+const StyledEditor = styled(Editor)({
+  padding: '8px',
+  border: 'solid silver 1px',
+  borderRadius: '4px',
+});
 
 enum TABS {
   CODE_SETTINGS = 'code_settings',
@@ -52,60 +47,16 @@ const SettingsFab: FC = () => {
   const { t } = useTranslation();
   const [openSettings, setOpenSettings] = useState(false);
   const [tab, setTab] = useState(TABS.CODE_SETTINGS);
-  const { data: appSettings, isLoading: isLoadingAppSettings } =
-    useAppSettings();
-  const generalAppSettings = (appSettings as AppSetting[])?.find(
-    (setting) => setting.name === GENERAL_SETTINGS_KEY,
-  );
-  const generalSettings = generalAppSettings?.data as GeneralSettings;
-  const [settings, setSettings] = useState({
-    ...DEFAULT_GENERAL_SETTINGS,
-    ...generalSettings,
-  });
-  const postSettings = useMutation<unknown, unknown, CreateAppSetting>(
-    MUTATION_KEYS.POST_APP_SETTING,
-  );
-  const patchSettings = useMutation<unknown, unknown, PatchAppSetting>(
-    MUTATION_KEYS.PATCH_APP_SETTING,
-  );
-
-  const handleChangeSelect =
-    (key: string) =>
-    ({ target: { value } }: { target: { value: string } }) => {
-      setSettings({ ...settings, [key]: value });
-    };
-
-  const handleChangeEditor = (key: string) => (value?: string) => {
-    setSettings({ ...settings, [key]: value });
-  };
+  const {
+    saveSettings,
+    resetSettings,
+    unsavedChanges,
+    changeSetting,
+    settings,
+  } = useSettings();
 
   const renderSettings = (): ReactElement => {
-    if (isLoadingAppSettings) {
-      return <Loader />;
-    }
-
-    const programmingLanguageSelectControl = (
-      <>
-        <InputLabel id={PROGRAMMING_LANGUAGE_SELECT_ID}>
-          {t('Programming Language')}
-        </InputLabel>
-        <Select
-          data-cy={PROGRAMMING_LANGUAGE_SELECT_CYPRESS}
-          label={t('Programming Language')}
-          value={settings.programmingLanguage}
-          onChange={handleChangeSelect('programmingLanguage')}
-          inputProps={{
-            name: 'programmingLanguage',
-            id: PROGRAMMING_LANGUAGE_SELECT_ID,
-          }}
-        >
-          <MenuItem value={JAVASCRIPT}>JavaScript</MenuItem>
-          <MenuItem value={JAVA}>Java</MenuItem>
-          <MenuItem value={PYTHON}>Python</MenuItem>
-          <MenuItem value={MATLAB}>MATLAB</MenuItem>
-        </Select>
-      </>
-    );
+    const programmingLanguage = settings[SETTINGS.PROGRAMMING_LANGUAGE];
     return (
       <TabContext value={tab}>
         <TabList
@@ -118,26 +69,76 @@ const SettingsFab: FC = () => {
           <Tab value={TABS.DISPLAY_SETTINGS} label={t('Display Settings')} />
         </TabList>
         <TabPanel value={TABS.CODE_SETTINGS}>
-          <Stack direction="column" spacing={2} sx={{ height: '50vh' }}>
-            <FormControl>{programmingLanguageSelectControl}</FormControl>
-            <Editor
-              defaultLanguage={settings.programmingLanguage}
-              language={settings.programmingLanguage}
-              value={settings.code}
-              onChange={handleChangeEditor('code')}
+          <Stack direction="column" sx={{ height: '50vh' }}>
+            <SettingsSelect
+              settingsKey={SETTINGS.PROGRAMMING_LANGUAGE}
+              values={programmingLanguageSelect}
+              label={t('Programming Language')}
+              dataCy={PROGRAMMING_LANGUAGE_SELECT_CYPRESS}
+            />
+
+            <Typography variant="subtitle2">{t('Code')}</Typography>
+            <StyledEditor
+              defaultLanguage={programmingLanguage}
+              language={programmingLanguage}
+              value={settings[SETTINGS.CODE]}
+              onChange={(value) => changeSetting(SETTINGS.CODE, value)}
               options={{
                 scrollBeyondLastLine: false,
                 detectIndentation: false,
-                // todo: add this
-                // tabSize:
-                //   programmingLanguageSettings[settings.programmingLanguage].tabSize,
+                tabSize:
+                  programmingLanguageSettings[programmingLanguage].tabSize,
               }}
+              loading={<Loader />}
             />
           </Stack>
         </TabPanel>
         <TabPanel value={TABS.DISPLAY_SETTINGS}>
           <Stack sx={{ height: '50vh' }}>
-            <div>Display settings</div>
+            <Typography variant="subtitle2">
+              {t('App Customization')}
+            </Typography>
+            <SettingsSwitch
+              settingKey={SETTINGS.SHOW_HEADER}
+              label={t('Show Header to Students')}
+              dataCy={SHOW_HEADER_SWITCH_CYPRESS}
+            />
+            <SettingsSwitch
+              settingKey={SETTINGS.SHOW_TOOLBAR}
+              label={t('Show Toolbar to Students')}
+              dataCy={SHOW_TOOLBAR_SWITCH_CYPRESS}
+            />
+            <SettingsSwitch
+              settingKey={SETTINGS.SHOW_VERSION_NAVIGATION}
+              label={t('Show Version Navigation')}
+              dataCy={SHOW_VERSION_NAVIGATION_SWITCH_CYPRESS}
+            />
+            <SettingsSwitch
+              settingKey={SETTINGS.SHOW_EDIT_BUTTON}
+              label={t('Show Code Edit Button')}
+              dataCy={SHOW_EDIT_BUTTON_SWITCH_CYPRESS}
+            />
+            <SettingsSwitch
+              settingKey={SETTINGS.SHOW_VISIBILITY_BUTTON}
+              label={t('Show Visibility Toggle')}
+              dataCy={SHOW_VISIBILITY_SWITCH_CYPRESS}
+            />
+
+            <Divider sx={{ mt: 1 }} />
+            <Typography variant="subtitle2">
+              {t('Define Interaction Mode')}
+            </Typography>
+
+            <SettingsSwitch
+              settingKey={SETTINGS.ALLOW_COMMENTS}
+              label={t('Allow Comments')}
+              dataCy={ALLOW_COMMENTS_SWITCH_CYPRESS}
+            />
+            <SettingsSwitch
+              settingKey={SETTINGS.ALLOW_REPLIES}
+              label={t('Allow Replies')}
+              dataCy={ALLOW_REPLIES_SWITCH_CYPRESS}
+            />
           </Stack>
         </TabPanel>
       </TabContext>
@@ -146,28 +147,10 @@ const SettingsFab: FC = () => {
 
   const handleClose = (save: boolean): void => {
     if (save) {
-      // post settings
-      if (!generalAppSettings) {
-        postSettings.mutate({
-          data: settings,
-          name: GENERAL_SETTINGS_KEY,
-        });
-      } else {
-        patchSettings.mutate({
-          id: generalAppSettings.id,
-          data: settings,
-        });
-      }
+      saveSettings();
     } else {
       // restore old settings after some short delay to not glitch the display
-      setTimeout(
-        () =>
-          setSettings({
-            ...DEFAULT_GENERAL_SETTINGS,
-            ...generalSettings,
-          }),
-        CLOSE_SETTINGS_TIMEOUT,
-      );
+      setTimeout(() => resetSettings(), CLOSE_SETTINGS_TIMEOUT);
     }
     // close the dialog
     setOpenSettings(false);
@@ -186,8 +169,9 @@ const SettingsFab: FC = () => {
         sx={{ m: 1 }}
         dataCy={SETTINGS_DIALOG_SAVE_BUTTON_CYPRESS}
         onClick={() => handleClose(true)}
+        disabled={!unsavedChanges}
       >
-        {t('Save')}
+        {unsavedChanges ? t('Save') : t('Saved')}
       </Button>
     </Box>
   );

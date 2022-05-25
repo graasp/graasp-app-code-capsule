@@ -1,10 +1,10 @@
 import React, { FC } from 'react';
-import { Loader } from '@graasp/ui';
 import { useContextContext } from '../../context/ContextContext';
 import AdminView from './AdminView';
 import PlayerView from '../read/PlayerView';
 import { PERMISSIONS } from '../../../config/settings';
 import { useAppSettings } from '../../context/hooks';
+import Loader from '../../common/Loader';
 
 const BuilderView: FC = () => {
   const { permission } = useContextContext();

@@ -2,8 +2,8 @@ import {
   AppAction,
   AppData,
   AppSetting,
+  Member,
 } from '@graasp/apps-query-client/dist/src/types';
-import { Member } from './member';
 
 export interface Database {
   appData: AppData[];

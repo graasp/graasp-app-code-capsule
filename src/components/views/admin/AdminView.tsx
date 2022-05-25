@@ -3,6 +3,7 @@ import { Tab, Button } from '@mui/material';
 import { TabContext, TabList, TabPanel } from '@mui/lab';
 import { useTranslation } from 'react-i18next';
 import { Code, TableChart } from '@mui/icons-material';
+import { AppData } from '@graasp/apps-query-client/dist/src/types';
 import TableView from './TableView';
 import { MUTATION_KEYS, useMutation } from '../../../config/queryClient';
 import { APP_DATA_TYPES } from '../../../config/appDataTypes';
@@ -13,7 +14,7 @@ import {
   TABLE_VIEW_PANE_CYPRESS,
 } from '../../../config/selectors';
 import SettingsFab from './SettingsFab';
-import { useContextContext } from '../../context/ContextContext';
+import { SettingsProvider } from '../../context/SettingsContext';
 
 enum TABS {
   TABLE_VIEW = 'TABLE_VIEW',
@@ -23,9 +24,12 @@ enum TABS {
 const AdminView: FC = () => {
   const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState(TABS.TABLE_VIEW);
-  const appContext = useContextContext();
 
-  const { mutate: postAppData } = useMutation(MUTATION_KEYS.POST_APP_DATA);
+  const { mutate: postAppData } = useMutation<
+    unknown,
+    unknown,
+    Partial<AppData>
+  >(MUTATION_KEYS.POST_APP_DATA);
 
   const renderTable = (): ReactElement => (
     <TabContext value={activeTab}>
@@ -56,11 +60,9 @@ const AdminView: FC = () => {
       <TabPanel value={TABS.PRESET_VIEW} data-cy={PRESET_VIEW_PANE_CYPRESS}>
         <Button
           onClick={() =>
-            // @ts-ignore
             postAppData({
-              data: 'message',
+              data: { content: 'message' },
               type: APP_DATA_TYPES.COMMENT,
-              memberId: appContext.memberId,
             })
           }
         >
@@ -71,10 +73,10 @@ const AdminView: FC = () => {
   );
 
   return (
-    <>
+    <SettingsProvider>
       {renderTable()}
       <SettingsFab />
-    </>
+    </SettingsProvider>
   );
 };
 

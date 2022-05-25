@@ -18,7 +18,6 @@ if (MOCK_API) {
   }
   const database = window.Cypress ? window.database : buildDatabase(appContext);
   const errors = window.apiErrors;
-  // @ts-ignore
   mockServer({ database, appContext, errors });
 }
 

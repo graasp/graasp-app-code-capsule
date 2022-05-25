@@ -17,8 +17,15 @@ export const SETTINGS_DIALOG_SAVE_BUTTON_CYPRESS =
 export const PROGRAMMING_LANGUAGE_SELECT_ID = 'programmingLanguageSelect';
 export const PROGRAMMING_LANGUAGE_SELECT_CYPRESS =
   'programming_language_select';
-export const CODE_EDITOR_SETTINGS_CYPRESS = 'code_editor_settings';
 export const SETTINGS_DIALOG_WINDOW_CYPRESS = 'settings_dialog_window';
+export const SHOW_HEADER_SWITCH_CYPRESS = 'show_header_switch';
+export const SHOW_TOOLBAR_SWITCH_CYPRESS = 'show_toolbar_switch';
+export const SHOW_VERSION_NAVIGATION_SWITCH_CYPRESS =
+  'show_version_navigation_switch';
+export const SHOW_EDIT_BUTTON_SWITCH_CYPRESS = 'show_edit_button_switch';
+export const SHOW_VISIBILITY_SWITCH_CYPRESS = 'show_visibility_switch';
+export const ALLOW_COMMENTS_SWITCH_CYPRESS = 'allow_comments_switch';
+export const ALLOW_REPLIES_SWITCH_CYPRESS = 'allow_replies_switch';
 export const tableRowUserCypress = (id: string): string =>
   `${TABLE_ROW_USERS_CYPRESS}-${id}`;
 
