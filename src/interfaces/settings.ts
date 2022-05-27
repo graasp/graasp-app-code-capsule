@@ -38,7 +38,23 @@ export const DEFAULT_SHOW_VISIBILITY_BUTTON_SETTING = true;
 export const DEFAULT_ALLOW_COMMENTS_SETTING = true;
 export const DEFAULT_ALLOW_REPLIES_SETTING = true;
 export const DEFAULT_PROGRAMMING_LANGUAGE_SETTING = PYTHON;
-export const DEFAULT_CODE_SETTING = '';
+export const DEFAULT_CODE_SETTING = `# my sample code in python
+
+age = input('What is your age ?')
+print(f'Your age is {age}')
+
+# ask another question
+print('wait a bit')
+''' and here starts a
+multiline comment 
+that continues here also
+'''
+for i in range(10000):
+    pass
+
+print('Done!')
+print('See you !')
+`;
 
 // default settings object
 export const DEFAULT_GENERAL_SETTINGS: GeneralSettings = {

@@ -5,10 +5,10 @@ import {
   SETTINGS_DIALOG_SAVE_BUTTON_CYPRESS,
   SETTINGS_DIALOG_WINDOW_CYPRESS,
   SETTINGS_FAB_CYPRESS,
-} from '../../../src/config/selectors';
-import { CONTEXTS, PERMISSIONS } from '../../../src/config/settings';
-import { DEFAULT_PROGRAMMING_LANGUAGE_SETTING } from '../../../src/interfaces/settings';
-import { JAVASCRIPT } from '../../../src/config/constants';
+} from '../../../../src/config/selectors';
+import { CONTEXTS, PERMISSIONS } from '../../../../src/config/settings';
+import { DEFAULT_PROGRAMMING_LANGUAGE_SETTING } from '../../../../src/interfaces/settings';
+import { JAVASCRIPT } from '../../../../src/config/constants';
 
 describe('Settings', () => {
   it('Open settings', () => {
