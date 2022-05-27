@@ -1,9 +1,9 @@
-import { MOCK_APP_DATA } from '../../fixtures/appData';
-import { CONTEXTS, PERMISSIONS } from '../../../src/config/settings';
+import { MOCK_APP_DATA } from '../../../fixtures/appData';
+import { CONTEXTS, PERMISSIONS } from '../../../../src/config/settings';
 import {
   buildDataCy,
   PLAYER_VIEW_CYPRESS,
-} from '../../../src/config/selectors';
+} from '../../../../src/config/selectors';
 
 describe('Builder', () => {
   beforeEach(() => {

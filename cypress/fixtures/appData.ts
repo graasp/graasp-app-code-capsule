@@ -4,6 +4,8 @@ import { CURRENT_MEMBER, MEMBERS } from './members';
 
 export const MOCK_SERVER_ITEM = { id: '1234567890' };
 
+export const MOCK_SERVER_API_HOST = 'http://localhost:3636';
+
 export const MOCK_APP_DATA = [
   // comments
   {

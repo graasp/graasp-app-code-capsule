@@ -1,6 +1,6 @@
 import '@testing-library/cypress/add-commands';
 
-import { MOCK_SERVER_ITEM } from '../fixtures/appData';
+import { MOCK_SERVER_API_HOST, MOCK_SERVER_ITEM } from '../fixtures/appData';
 import { CURRENT_MEMBER, MEMBERS } from '../fixtures/members';
 
 // ***********************************************
@@ -44,6 +44,7 @@ Cypress.Commands.add(
       // eslint-disable-next-line no-param-reassign
       win.appContext = {
         itemId: MOCK_SERVER_ITEM.id,
+        apiHost: Cypress.env('REACT_APP_API_HOST') || MOCK_SERVER_API_HOST,
         ...appContext,
       };
     });

@@ -1,8 +1,8 @@
-import { CONTEXTS, PERMISSIONS } from '../../../src/config/settings';
+import { CONTEXTS, PERMISSIONS } from '../../../../src/config/settings';
 import {
   buildDataCy,
   PLAYER_VIEW_CYPRESS,
-} from '../../../src/config/selectors';
+} from '../../../../src/config/selectors';
 
 describe('Read access', () => {
   beforeEach(() => {

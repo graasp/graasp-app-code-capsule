@@ -21,6 +21,7 @@ module.exports = (on, config) => {
   const newConfig = {
     ...config,
     env: {
+      ...config.env,
       REACT_APP_API_HOST: process.env.REACT_APP_API_HOST,
       REACT_APP_MOCK_API: process.env.REACT_APP_MOCK_API,
       REACT_APP_GRAASP_DEVELOPER_ID: process.env.REACT_APP_GRAASP_DEVELOPER_ID,

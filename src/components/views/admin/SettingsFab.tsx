@@ -3,9 +3,16 @@ import { useTranslation } from 'react-i18next';
 import { Button } from '@graasp/ui';
 import { Settings as SettingsIcon } from '@mui/icons-material';
 import Editor from '@monaco-editor/react';
-import { Box, Divider, Fab, Stack, Tab, Typography } from '@mui/material';
+import {
+  Box,
+  Divider,
+  Fab,
+  Stack,
+  Tab,
+  Typography,
+  styled,
+} from '@mui/material';
 import { TabContext, TabList, TabPanel } from '@mui/lab';
-import { styled } from '@mui/styles';
 import CustomDialog from '../../common/CustomDialog';
 import {
   ALLOW_COMMENTS_SWITCH_CYPRESS,
