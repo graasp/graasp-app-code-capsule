@@ -1,10 +1,28 @@
-import { FC, ReactElement } from 'react';
+import React, { FC, MutableRefObject, ReactElement, RefObject } from 'react';
 import {
   Dialog,
   DialogActions,
   DialogContent,
   DialogTitle,
 } from '@mui/material';
+
+type RefType =
+  | null
+  | MutableRefObject<HTMLElement | undefined>
+  | RefObject<HTMLElement | undefined>;
+
+const getPlacedModalStyle = (
+  anchor: RefType,
+): { [key: string]: string | number } => {
+  if (anchor?.current) {
+    const { top = 0 } = anchor.current.getBoundingClientRect();
+    return {
+      position: 'fixed',
+      top: top - 50,
+    };
+  }
+  return {};
+};
 
 type Props = {
   open: boolean;
@@ -14,6 +32,7 @@ type Props = {
   onClose?: () => void;
   dataCy?: string;
   keepMounted?: boolean;
+  anchor?: RefType;
 };
 
 const CustomDialog: FC<Props> = ({
@@ -24,6 +43,7 @@ const CustomDialog: FC<Props> = ({
   onClose,
   dataCy,
   keepMounted = true,
+  anchor = null,
 }) => (
   <Dialog
     keepMounted={keepMounted}
@@ -31,6 +51,7 @@ const CustomDialog: FC<Props> = ({
     fullWidth
     open={open}
     onClose={onClose}
+    PaperProps={anchor ? { style: getPlacedModalStyle(anchor) } : {}}
   >
     <DialogTitle>{title}</DialogTitle>
     <DialogContent>{content}</DialogContent>

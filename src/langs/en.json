@@ -77,6 +77,11 @@
     "Preset View": "Preset View",
     "No Comments": "Pas de commentaires",
     "Define Interaction Mode": "Define Interaction Mode",
-    "App Customization": "App Customization"
+    "App Customization": "App Customization",
+    "Delete": "Delete",
+    "Report": "Report",
+    "Report a comment": "Report a comment",
+    "Please provide below the reason for reporting this comment": "Please provide below the reason for reporting this comment",
+    "Type your comment": "Type your comment"
   }
 }

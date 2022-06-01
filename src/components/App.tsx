@@ -4,6 +4,7 @@ import { TokenProvider } from './context/TokenContext';
 import { CONTEXTS } from '../config/settings';
 import BuilderView from './views/admin/BuilderView';
 import PlayerView from './views/read/PlayerView';
+import { MembersProvider } from './context/MembersContext';
 
 const App: FC = () => {
   const { context } = useContextContext();
@@ -23,7 +24,11 @@ const App: FC = () => {
     }
   };
 
-  return <TokenProvider>{renderContent()}</TokenProvider>;
+  return (
+    <TokenProvider>
+      <MembersProvider>{renderContent()}</MembersProvider>
+    </TokenProvider>
+  );
 };
 
 export default App;
