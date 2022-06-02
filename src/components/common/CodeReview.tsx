@@ -36,6 +36,7 @@ const Code = styled('div')({
 
 const Line = styled('pre')({
   display: 'table-row',
+  whiteSpace: 'pre-wrap',
   margin: 0,
   // make the "add" button appear when hovering on the line
   '&:hover button': {
@@ -46,8 +47,7 @@ const Line = styled('pre')({
 const LineNoContainer = styled('div')({
   display: 'table-cell',
   paddingRight: '1em',
-  width: '1%',
-  minWidth: '50px',
+  minWidth: '5rem',
   textAlign: 'right',
   whiteSpace: 'nowrap',
   userSelect: 'none',
@@ -55,7 +55,9 @@ const LineNoContainer = styled('div')({
 
 const LineNo = styled('span')({
   opacity: 0.5,
-  paddingRight: '0.5rem',
+  minWidth: '3rem',
+  textAlign: 'right',
+  paddingRight: '1rem',
 });
 
 const AddButton = styled(IconButton)({
@@ -144,7 +146,7 @@ const CodeReview: FC<Props> = ({
                       postAppData({
                         data: {
                           content: text,
-                          line: i,
+                          line: i + 1,
                           parent: null,
                         },
                         type: APP_DATA_TYPES.COMMENT,
@@ -155,7 +157,7 @@ const CodeReview: FC<Props> = ({
                 )}
                 <CommentThread>
                   {
-                    groupedComments.get(i)?.toJS() as (AppData &
+                    groupedComments.get(i + 1)?.toJS() as (AppData &
                       CommentAppData)[]
                   }
                 </CommentThread>

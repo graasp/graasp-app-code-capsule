@@ -4,6 +4,7 @@ import { Delete, Edit } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
 import { useCommentContext } from '../context/CommentContext';
 import { useAppDataContext } from '../context/AppDataContext';
+import { useReviewContext } from '../context/ReviewContext';
 
 type Props = {
   open: boolean;
@@ -22,6 +23,7 @@ const CommentActions: FC<Props> = ({
 }) => {
   const { t } = useTranslation();
   const comment = useCommentContext();
+  const { editComment } = useReviewContext();
   const { deleteAppData } = useAppDataContext();
 
   return (
@@ -43,7 +45,7 @@ const CommentActions: FC<Props> = ({
       {showEdit && (
         <MenuItem
           onClick={() => {
-            console.log('edit comment');
+            editComment(comment.id);
             onClose();
           }}
         >

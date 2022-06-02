@@ -16,6 +16,7 @@ import CommentActions from './CommentActions';
 import ReportCommentDialog from './ReportCommentDialog';
 import { useMembersContext } from '../context/MembersContext';
 import { ANONYMOUS_USER } from '../../config/constants';
+import CommentBody from './CommentBody';
 
 const CustomCard = styled(Card)<CardProps>(({ theme }) => ({
   borderRadius: theme.spacing(1),
@@ -74,7 +75,9 @@ const Comment: FC<Props> = ({ comment }) => {
         }
         action={renderCommentActions()}
       />
-      <CardContent>{comment.data.content}</CardContent>
+      <CardContent sx={{ p: 2, py: 0, '&:last-child': { pb: 0 } }}>
+        <CommentBody>{comment.data.content}</CommentBody>
+      </CardContent>
     </CustomCard>
   );
 };

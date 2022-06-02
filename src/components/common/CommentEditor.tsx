@@ -4,9 +4,17 @@ import {
   boldCommand,
   codeCommand,
   italicCommand,
+  linkCommand,
+  quoteCommand,
   useTextAreaMarkdownEditor,
 } from 'react-mde';
-import { Code, FormatBold, FormatItalic } from '@mui/icons-material';
+import {
+  Code,
+  FormatBold,
+  FormatItalic,
+  FormatQuote,
+  InsertLink,
+} from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@graasp/ui';
 import ToolbarButton from '../layout/ToolbarButton';
@@ -34,16 +42,19 @@ const TextArea = styled(TextareaAutosize)(({ theme }) => ({
 type Props = {
   onCancel: () => void;
   onSend: (comment: string) => void;
+  value?: string;
 };
 
-const CommentEditor: FC<Props> = ({ onCancel, onSend }) => {
+const CommentEditor: FC<Props> = ({ onCancel, onSend, value = '' }) => {
   const { t } = useTranslation();
-  const [text, setText] = useState('');
+  const [text, setText] = useState(value);
   const { ref, commandController } = useTextAreaMarkdownEditor({
     commandMap: {
       bold: boldCommand,
       italic: italicCommand,
       code: codeCommand,
+      link: linkCommand,
+      quote: quoteCommand,
     },
   });
 
@@ -55,7 +66,7 @@ const CommentEditor: FC<Props> = ({ onCancel, onSend }) => {
   });
 
   return (
-    <Box sx={{ my: 1 }}>
+    <Box sx={{ p: 1 }}>
       <Stack direction="column" spacing={1}>
         <Stack direction="row" spacing={1}>
           <ToolbarButton
@@ -79,6 +90,20 @@ const CommentEditor: FC<Props> = ({ onCancel, onSend }) => {
           >
             <Code fontSize="inherit" />
           </ToolbarButton>
+          <ToolbarButton
+            onClick={async () => {
+              await commandController.executeCommand('link');
+            }}
+          >
+            <InsertLink fontSize="inherit" />
+          </ToolbarButton>
+          <ToolbarButton
+            onClick={async () => {
+              await commandController.executeCommand('quote');
+            }}
+          >
+            <FormatQuote fontSize="inherit" />
+          </ToolbarButton>
         </Stack>
         <TextArea
           placeholder={t('Type your comment')}
@@ -89,10 +114,18 @@ const CommentEditor: FC<Props> = ({ onCancel, onSend }) => {
           onChange={(e) => setText(e.target.value)}
         />
         <Stack direction="row" spacing={1} justifyContent="end">
-          <Button color="secondary" onClick={() => onCancel()}>
+          <Button
+            color="secondary"
+            variant="outlined"
+            onClick={() => onCancel()}
+          >
             {t('Cancel')}
           </Button>
-          <Button color="primary" onClick={() => onSend(text)}>
+          <Button
+            color="primary"
+            variant="outlined"
+            onClick={() => onSend(text)}
+          >
             {t('Send')}
           </Button>
         </Stack>

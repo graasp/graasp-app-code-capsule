@@ -14,7 +14,7 @@ type PostAppDataType = {
 
 type PatchAppDataType = {
   data: { [key: string]: unknown };
-  type: string;
+  id: string;
 };
 
 type DeleteAppDataType = {

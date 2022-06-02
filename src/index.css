@@ -1,6 +1,9 @@
 /* define colors */
 :root {
   --graasp-primary: #5050d2;
+  --code-bg: rgba(197, 197, 197, 0.37);
+  --monospace-fonts: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas,
+    'Liberation Mono', monospace;
 }
 
 body {

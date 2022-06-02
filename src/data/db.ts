@@ -54,7 +54,19 @@ const buildDatabase = (appContext: Partial<AppContext>): Database => ({
       id: v4(),
       data: {
         line: 1,
-        content: 'Hello this is a comment on line 1',
+        content: `Hello this is a \`comment\` on line 1
+\`\`\`python
+import pandas as pd
+print('Hello World')
+\`\`\`
+And some more text here
+
+- bullet 1
+  - sub-bullet 1
+  - sub-bullet 2
+- bullet 2
+
+And some text to **finish** _off_`,
         parent: null,
       },
       memberId: 'mock-member-id-2',
