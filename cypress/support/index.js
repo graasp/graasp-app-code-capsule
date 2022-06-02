@@ -19,3 +19,12 @@ import '@cypress/code-coverage/support';
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
+
+// ignore Resize Observer errors
+// eslint-disable-next-line consistent-return
+Cypress.on('uncaught:exception', (err) => {
+  /* returning false here prevents Cypress from failing the test */
+  if (err.message === 'ResizeObserver loop limit exceeded') {
+    return false;
+  }
+});
