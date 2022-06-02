@@ -17,6 +17,12 @@ const CommentContainer = styled('div')(({ theme }) => ({
   borderRadius: theme.spacing(1),
 }));
 
+const ResponseContainer = styled('div')(({ theme }) => ({
+  padding: theme.spacing(2),
+  borderBottomLeftRadius: theme.spacing(1),
+  borderBottomRightRadius: theme.spacing(1),
+}));
+
 type Props = {
   children?: (AppData & CommentAppData)[];
 };
