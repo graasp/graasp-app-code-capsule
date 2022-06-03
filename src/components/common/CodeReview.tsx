@@ -60,6 +60,16 @@ const LineNo = styled('span')({
   paddingRight: '1rem',
 });
 
+const addButtonHoverStyle = {
+  opacity: 1,
+  backgroundColor: 'var(--graasp-primary)',
+  transition: 'transform .1s ease-in-out',
+  transform: 'scale(1, 1)',
+  '& svg': {
+    fill: 'white',
+  },
+};
+
 const AddButton = styled(IconButton)({
   height: '1.5rem',
   width: '1.5rem',
@@ -67,16 +77,7 @@ const AddButton = styled(IconButton)({
   borderRadius: '4px',
   // shrink the icon to have the spring out effect
   transform: 'scale(0.8, 0.8)',
-  '&:hover': {
-    opacity: 1,
-    backgroundColor: 'var(--graasp-primary)',
-    fill: 'white',
-    transition: 'transform .1s ease-in-out',
-    transform: 'scale(1, 1)',
-  },
-  '&:hover svg': {
-    fill: 'white',
-  },
+  '&:hover': addButtonHoverStyle,
 });
 
 type Props = {
@@ -92,7 +93,8 @@ const CodeReview: FC<Props> = ({
   allowReplies = DEFAULT_ALLOW_REPLIES_SETTING,
   allowComments = DEFAULT_ALLOW_COMMENTS_SETTING,
 }) => {
-  const { addComment, currentCommentLine, closeComment } = useReviewContext();
+  const { addComment, multilineRange, currentCommentLine, closeComment } =
+    useReviewContext();
   const { postAppData } = useAppDataContext();
   const appData = useAppData();
 
@@ -106,6 +108,17 @@ const CodeReview: FC<Props> = ({
   const groupedComments = (comments as List<AppData & CommentAppData>).groupBy(
     ({ data }) => data.line,
   );
+
+  const handleClick = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    i: number,
+  ): void => {
+    if (e.shiftKey) {
+      addComment(i + 1, true);
+      return;
+    }
+    addComment(i + 1);
+  };
 
   return (
     <CodeContainer>
@@ -123,12 +136,22 @@ const CodeReview: FC<Props> = ({
                   <LineNoContainer>
                     <LineNo>{i + 1}</LineNo>
                     {allowComments && (
-                      <AddButton size="medium" onClick={() => addComment(i)}>
-                        <Add
-                          // sx={{ height: '15px', width: '15px' }}
-                          fontSize="inherit"
-                          color="primary"
-                        />
+                      <AddButton
+                        size="medium"
+                        sx={
+                          // add hover style on buttons that are in the selected line range
+                          (multilineRange?.end &&
+                            multilineRange?.start &&
+                            multilineRange?.start <= i &&
+                            multilineRange?.end > i) ||
+                          currentCommentLine - 1 === i ||
+                          (multilineRange?.start || 0) - 1 === i
+                            ? addButtonHoverStyle
+                            : null
+                        }
+                        onClick={(e) => handleClick(e, i)}
+                      >
+                        <Add fontSize="inherit" color="primary" />
                       </AddButton>
                     )}
                   </LineNoContainer>
@@ -139,22 +162,25 @@ const CodeReview: FC<Props> = ({
                     />
                   ))}
                 </Line>
-                {currentCommentLine === i && (
-                  <CommentEditor
-                    onCancel={closeComment}
-                    onSend={(text) => {
-                      postAppData({
-                        data: {
-                          content: text,
-                          line: i + 1,
-                          parent: null,
-                        },
-                        type: APP_DATA_TYPES.COMMENT,
-                      });
-                      closeComment();
-                    }}
-                  />
-                )}
+                {
+                  // currentCommentLine is 1-indexed while the index i is 0-indexed
+                  currentCommentLine - 1 === i && (
+                    <CommentEditor
+                      onCancel={closeComment}
+                      onSend={(text) => {
+                        postAppData({
+                          data: {
+                            content: text,
+                            line: i + 1,
+                            parent: null,
+                          },
+                          type: APP_DATA_TYPES.COMMENT,
+                        });
+                        closeComment();
+                      }}
+                    />
+                  )
+                }
                 <CommentThread>
                   {
                     groupedComments.get(i + 1)?.toJS() as (AppData &

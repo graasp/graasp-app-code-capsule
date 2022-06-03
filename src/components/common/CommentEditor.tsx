@@ -1,5 +1,11 @@
 import React, { FC, useEffect, useState } from 'react';
-import { Box, Stack, styled, TextareaAutosize } from '@mui/material';
+import {
+  Box,
+  Stack,
+  styled,
+  TextareaAutosize,
+  Typography,
+} from '@mui/material';
 import {
   boldCommand,
   codeCommand,
@@ -18,6 +24,7 @@ import {
 import { useTranslation } from 'react-i18next';
 import { Button } from '@graasp/ui';
 import ToolbarButton from '../layout/ToolbarButton';
+import { useReviewContext } from '../context/ReviewContext';
 
 const TextArea = styled(TextareaAutosize)(({ theme }) => ({
   borderRadius: '4px',
@@ -47,6 +54,7 @@ type Props = {
 
 const CommentEditor: FC<Props> = ({ onCancel, onSend, value = '' }) => {
   const { t } = useTranslation();
+  const { multilineRange, currentCommentLine } = useReviewContext();
   const [text, setText] = useState(value);
   const { ref, commandController } = useTextAreaMarkdownEditor({
     commandMap: {
@@ -113,21 +121,39 @@ const CommentEditor: FC<Props> = ({ onCancel, onSend, value = '' }) => {
           value={text}
           onChange={(e) => setText(e.target.value)}
         />
-        <Stack direction="row" spacing={1} justifyContent="end">
-          <Button
-            color="secondary"
-            variant="outlined"
-            onClick={() => onCancel()}
-          >
-            {t('Cancel')}
-          </Button>
-          <Button
-            color="primary"
-            variant="outlined"
-            onClick={() => onSend(text)}
-          >
-            {t('Send')}
-          </Button>
+        <Stack
+          direction="row"
+          alignItems="center"
+          justifyContent="space-between"
+        >
+          {multilineRange ? (
+            <Typography>
+              {t('MultiLineComment', {
+                start: multilineRange.start,
+                end: multilineRange.end,
+              })}
+            </Typography>
+          ) : (
+            <Typography>
+              {t('LineComment', { line: currentCommentLine })}
+            </Typography>
+          )}
+          <Stack direction="row" spacing={1} justifyContent="end">
+            <Button
+              color="secondary"
+              variant="outlined"
+              onClick={() => onCancel()}
+            >
+              {t('Cancel')}
+            </Button>
+            <Button
+              color="primary"
+              variant="outlined"
+              onClick={() => onSend(text)}
+            >
+              {t('Send')}
+            </Button>
+          </Stack>
         </Stack>
       </Stack>
     </Box>

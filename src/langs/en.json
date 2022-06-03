@@ -83,6 +83,8 @@
     "Report a comment": "Report a comment",
     "Please provide below the reason for reporting this comment": "Please provide below the reason for reporting this comment",
     "Type your comment": "Type your comment",
-    "Respond to this comment": "Respond to this comment"
+    "Respond to this comment": "Respond to this comment",
+    "LineComment": "Line Comment: {{line}}",
+    "MultiLineComment": "Multiline Comment: {{start}} - {{end}}"
   }
 }

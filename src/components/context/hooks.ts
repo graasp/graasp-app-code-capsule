@@ -25,7 +25,8 @@ type useAppContextType = {
   error: Error | null;
 };
 
-export const useAppData = (): useAppDataType => hooks.useAppData();
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+export const useAppData = () => hooks.useAppData();
 
 export const useAppSettings = (): useAppSettingsType => hooks.useAppSettings();
 

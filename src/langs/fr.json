@@ -81,6 +81,8 @@
     "Report a comment": "Signaler un commentaire",
     "Please provide below the reason for reporting this comment": "Fournissez ci-dessous la raison du signalement de ce commentaire",
     "Type your comment": "Entre ton commentaire",
-    "Respond to this comment": "Répondre à ce commentaire"
+    "Respond to this comment": "Répondre à ce commentaire",
+    "LineComment": "Commentaire sur ligne: {{line}}",
+    "MultiLineComment": "Commentaire multi-ligne: {{start}} - {{end}}"
   }
 }
