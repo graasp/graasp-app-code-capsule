@@ -11,9 +11,8 @@ import { DEFAULT_PROGRAMMING_LANGUAGE_SETTING } from '../../../../src/interfaces
 import { JAVASCRIPT } from '../../../../src/config/constants';
 
 describe('Settings', () => {
-  it('Open settings', () => {
+  beforeEach(() => {
     cy.setUpApi({
-      database: { appSettings: [] },
       appContext: {
         context: CONTEXTS.BUILDER,
         permission: PERMISSIONS.ADMIN,
@@ -21,6 +20,9 @@ describe('Settings', () => {
     });
 
     cy.visit('/');
+  });
+
+  it('Open settings', () => {
     cy.get(buildDataCy(SETTINGS_FAB_CYPRESS)).should('be.visible').click();
 
     // check buttons are visible

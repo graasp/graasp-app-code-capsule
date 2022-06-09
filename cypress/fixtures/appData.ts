@@ -1,6 +1,8 @@
 import { v4 } from 'uuid';
 import { APP_DATA_TYPES } from '../../src/config/appDataTypes';
 import { CURRENT_MEMBER, MEMBERS } from './members';
+import { GENERAL_SETTINGS_KEY } from '../../src/config/appSettingsTypes';
+import { MOCK_CODE_SAMPLE } from './appSettings';
 
 export const MOCK_SERVER_ITEM = { id: '1234567890' };
 
@@ -56,5 +58,18 @@ export const MOCK_APP_DATA = [
     itemId: MOCK_SERVER_ITEM.id,
     createdAt: Date.now(),
     type: APP_DATA_TYPES.TEACHER_COMMENT,
+  },
+];
+
+const MOCK_APP_SETTINGS = [
+  {
+    id: v4(),
+    name: GENERAL_SETTINGS_KEY,
+    data: {
+      code: MOCK_CODE_SAMPLE,
+    },
+    itemId: MOCK_SERVER_ITEM.id,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
   },
 ];

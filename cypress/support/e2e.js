@@ -25,7 +25,7 @@ import '@cypress/code-coverage/support';
 Cypress.on('uncaught:exception', (err) => {
   console.error(err.message);
   /* returning false here prevents Cypress from failing the test */
-  if (err.message === 'ResizeObserver loop limit exceeded') {
+  if (/ResizeObserver/.test(err.message)) {
     return false;
   }
 });
