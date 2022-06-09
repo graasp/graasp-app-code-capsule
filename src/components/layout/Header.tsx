@@ -1,22 +1,18 @@
 import React, { FC } from 'react';
-import { Stack, Typography } from '@mui/material';
+import { Stack, styled, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { GraaspLogo, Header as GraaspHeader } from '@graasp/ui';
-import { makeStyles } from '@mui/styles';
 import { GRAASP_LOGO_CYPRESS } from '../../config/selectors';
 import { GRAASP_LOGO_HEADER_HEIGHT } from '../../config/constants';
 
-const useStyles = makeStyles(() => ({
-  logo: {
-    fill: '#fff',
-  },
-}));
+const StyledGraaspLogo = styled(GraaspLogo)({
+  fill: '#fff',
+});
 
 // type Props = {};
 
 const Header: FC = () => {
   const { t } = useTranslation();
-  const classes = useStyles();
 
   return (
     <header>
@@ -24,10 +20,9 @@ const Header: FC = () => {
         hasSidebar={false}
         leftContent={
           <Stack direction="row" justifyContent="center" alignContent="center">
-            <GraaspLogo
+            <StyledGraaspLogo
               data-cy={GRAASP_LOGO_CYPRESS}
               height={GRAASP_LOGO_HEADER_HEIGHT}
-              className={classes.logo}
             />
             <Typography variant="h6">{t('Code Review')}</Typography>
           </Stack>

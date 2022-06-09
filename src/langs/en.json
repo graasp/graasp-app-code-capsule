@@ -85,6 +85,9 @@
     "Type your comment": "Type your comment",
     "Respond to this comment": "Respond to this comment",
     "LineComment": "Line Comment: {{line}}",
-    "MultiLineComment": "Multiline Comment: {{start}} - {{end}}"
+    "MultiLineComment": "Multiline Comment: {{start}} - {{end}}",
+    "Define Review Mode": "Define Review Mode",
+    "Individual - Each student works in isolation": "Individual - Each student works in isolation",
+    "Collaborative - Students see other students work": "Collaborative - Students see other students work"
   }
 }

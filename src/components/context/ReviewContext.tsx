@@ -18,10 +18,12 @@ const defaultMultilineRange = null;
 
 export type ReviewContextType = {
   addComment: (lineNumber: number, multiline?: boolean) => void;
+  addResponse: (commentId: string) => void;
   editComment: (commentId: string) => void;
   currentCommentLine: number;
   multilineRange: MultilineRange | null;
   currentEditedCommentId: string;
+  currentRepliedCommentId: string;
   closeComment: () => void;
   closeEditingComment: () => void;
 };
@@ -29,11 +31,14 @@ export type ReviewContextType = {
 const defaultContextValue = {
   addComment: (lineNumber: number, multiline?: boolean) =>
     console.log(`comment added on ${lineNumber} (multiline: ${multiline})`),
+  addResponse: (commentId: string) =>
+    console.log(`response added to ${commentId}`),
   editComment: (commentId: string) =>
     console.log(`comment with id ${commentId} is edited`),
   currentCommentLine: NO_COMMENT_OPENED,
   multilineRange: defaultMultilineRange,
   currentEditedCommentId: NO_COMMENT_EDITED,
+  currentRepliedCommentId: NO_COMMENT_EDITED,
   closeComment: () => console.log(`comment closed`),
   closeEditingComment: () => console.log(`comment finished editing`),
 };
@@ -48,6 +53,8 @@ export const ReviewProvider: FC<Prop> = ({ children }) => {
   const [currentCommentLine, setCurrentCommentLine] =
     useState<number>(NO_COMMENT_OPENED);
   const [currentEditedCommentId, setCurrentEditedCommentId] =
+    useState<string>(NO_COMMENT_EDITED);
+  const [currentRepliedCommentId, setCurrentRepliedCommentId] =
     useState<string>(NO_COMMENT_EDITED);
   const [multilineRange, setMultilineRange] = useState<MultilineRange | null>(
     null,
@@ -77,24 +84,37 @@ export const ReviewProvider: FC<Prop> = ({ children }) => {
             setCurrentCommentLine(multilineRange?.start);
             return;
           }
-          setMultilineRange({ ...multilineRange, end: lineNumber });
+          setMultilineRange({
+            ...multilineRange,
+            end: lineNumber,
+          });
           setCurrentCommentLine(lineNumber);
           return;
         }
         setMultilineRange(defaultMultilineRange);
         setCurrentCommentLine(lineNumber);
       },
+      addResponse: (commentId: string) => {
+        setCurrentRepliedCommentId(commentId);
+      },
       editComment: (commentId: string) => setCurrentEditedCommentId(commentId),
       currentCommentLine,
       multilineRange,
       currentEditedCommentId,
+      currentRepliedCommentId,
       closeComment: () => {
         setMultilineRange(null);
         setCurrentCommentLine(NO_COMMENT_OPENED);
+        setCurrentRepliedCommentId(NO_COMMENT_EDITED);
       },
       closeEditingComment: () => setCurrentEditedCommentId(NO_COMMENT_EDITED),
     }),
-    [currentCommentLine, currentEditedCommentId, multilineRange],
+    [
+      currentCommentLine,
+      currentEditedCommentId,
+      currentRepliedCommentId,
+      multilineRange,
+    ],
   );
 
   return (

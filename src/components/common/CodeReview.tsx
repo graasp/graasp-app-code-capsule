@@ -3,20 +3,16 @@ import Highlight, { defaultProps, Language } from 'prism-react-renderer';
 import theme from 'prism-react-renderer/themes/vsLight';
 import { IconButton, styled } from '@mui/material';
 import { Add } from '@mui/icons-material';
-import { AppData } from '@graasp/apps-query-client/dist/src/types';
 import { List } from 'immutable';
-import {
-  DEFAULT_ALLOW_COMMENTS_SETTING,
-  DEFAULT_ALLOW_REPLIES_SETTING,
-} from '../../interfaces/settings';
+import { SETTINGS } from '../../interfaces/settings';
 import { useReviewContext } from '../context/ReviewContext';
 import CommentThread from './CommentThread';
-import { useAppData } from '../context/hooks';
-import Loader from './Loader';
-import { APP_DATA_TYPES } from '../../config/appDataTypes';
-import { CommentAppData } from '../../interfaces/comment';
+import { APP_DATA_TYPES, APP_DATA_VISIBILITY } from '../../config/appDataTypes';
+import { CommentType } from '../../interfaces/comment';
 import CommentEditor from './CommentEditor';
 import { useAppDataContext } from '../context/AppDataContext';
+import { useSettings } from '../context/SettingsContext';
+import { REVIEW_MODE_INDIVIDUAL } from '../../config/constants';
 
 const CodeContainer = styled('div')({
   margin: 'auto',
@@ -87,27 +83,19 @@ type Props = {
   language: string;
 };
 
-const CodeReview: FC<Props> = ({
-  code,
-  language,
-  allowReplies = DEFAULT_ALLOW_REPLIES_SETTING,
-  allowComments = DEFAULT_ALLOW_COMMENTS_SETTING,
-}) => {
+const CodeReview: FC<Props> = ({ code, language }) => {
   const { addComment, multilineRange, currentCommentLine, closeComment } =
     useReviewContext();
-  const { postAppData } = useAppDataContext();
-  const appData = useAppData();
+  const { settings } = useSettings();
+  const allowComments = settings[SETTINGS.ALLOW_COMMENTS];
+  const reviewMode = settings[SETTINGS.REVIEW_MODE];
+  const { postAppData, appData } = useAppDataContext();
 
-  if (appData.isLoading) {
-    return <Loader />;
-  }
-
-  const comments = (appData.data as List<AppData>)?.filter(
+  const comments = appData?.filter(
     (res) => res.type === APP_DATA_TYPES.COMMENT,
-  );
-  const groupedComments = (comments as List<AppData & CommentAppData>).groupBy(
-    ({ data }) => data.line,
-  );
+  ) as List<CommentType>;
+
+  const groupedComments = comments?.groupBy(({ data }) => data.line);
 
   const handleClick = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
@@ -132,7 +120,13 @@ const CodeReview: FC<Props> = ({
           <Code className={className} style={style}>
             {tokens.map((line, i) => (
               <>
-                <Line key={`row ${line}`} {...getLineProps({ line, key: i })}>
+                <Line
+                  key={`row ${line}`}
+                  {...getLineProps({
+                    line,
+                    key: i,
+                  })}
+                >
                   <LineNoContainer>
                     <LineNo>{i + 1}</LineNo>
                     {allowComments && (
@@ -158,7 +152,10 @@ const CodeReview: FC<Props> = ({
                   {line.map((token, key) => (
                     <span
                       key={`code-${key + 1}-${line}`}
-                      {...getTokenProps({ token, key })}
+                      {...getTokenProps({
+                        token,
+                        key,
+                      })}
                     />
                   ))}
                 </Line>
@@ -172,9 +169,18 @@ const CodeReview: FC<Props> = ({
                           data: {
                             content: text,
                             line: i + 1,
+                            // comment on top level has no parent
                             parent: null,
+                            ...(multilineRange?.start &&
+                              multilineRange?.end && {
+                                multiline: multilineRange,
+                              }),
                           },
                           type: APP_DATA_TYPES.COMMENT,
+                          visibility:
+                            reviewMode === REVIEW_MODE_INDIVIDUAL
+                              ? APP_DATA_VISIBILITY.MEMBER
+                              : APP_DATA_VISIBILITY.ITEM,
                         });
                         closeComment();
                       }}
@@ -182,10 +188,7 @@ const CodeReview: FC<Props> = ({
                   )
                 }
                 <CommentThread>
-                  {
-                    groupedComments.get(i + 1)?.toJS() as (AppData &
-                      CommentAppData)[]
-                  }
+                  {groupedComments.get(i + 1)?.toList() as List<CommentType>}
                 </CommentThread>
               </>
             ))}

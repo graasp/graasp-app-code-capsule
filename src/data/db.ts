@@ -2,7 +2,7 @@ import { v4 } from 'uuid';
 import { Member } from '@graasp/apps-query-client/dist/src/types';
 import { AppContext } from '../interfaces/appContext';
 import { Database } from '../interfaces/database';
-import { GENERAL_SETTINGS_KEY } from '../config/appSettings';
+import { GENERAL_SETTINGS_KEY } from '../config/appSettingsTypes';
 import { DEFAULT_GENERAL_SETTINGS } from '../interfaces/settings';
 import { APP_DATA_TYPES } from '../config/appDataTypes';
 
@@ -73,8 +73,8 @@ And some text to **finish** _off_`,
       type: APP_DATA_TYPES.COMMENT,
       itemId: appContext.itemId || '',
       creator: 'mock-member-id-2',
-      createdAt: Date.now().toString(),
-      updatedAt: Date.now().toString(),
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
     },
     {
       id: v4(),
@@ -87,8 +87,8 @@ And some text to **finish** _off_`,
       type: APP_DATA_TYPES.COMMENT,
       itemId: appContext.itemId || '',
       creator: 'mock-member-id',
-      createdAt: Date.now().toString(),
-      updatedAt: Date.now().toString(),
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
     },
     {
       id: commentParent,
@@ -101,8 +101,22 @@ And some text to **finish** _off_`,
       type: APP_DATA_TYPES.COMMENT,
       itemId: appContext.itemId || '',
       creator: 'mock-member-id',
-      createdAt: Date.now().toString(),
-      updatedAt: Date.now().toString(),
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    },
+    {
+      id: v4(),
+      data: {
+        line: 3,
+        content: '*A different _thread_* on line 3',
+        parent: null,
+      },
+      memberId: 'mock-member-id-2',
+      type: APP_DATA_TYPES.COMMENT,
+      itemId: appContext.itemId || '',
+      creator: 'mock-member-id-2',
+      createdAt: new Date(Date.now() - 1500).toISOString(),
+      updatedAt: new Date(Date.now() - 1500).toISOString(),
     },
   ],
   appActions: [],

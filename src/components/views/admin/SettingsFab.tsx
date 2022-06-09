@@ -29,7 +29,10 @@ import {
   SHOW_VISIBILITY_SWITCH_CYPRESS,
 } from '../../../config/selectors';
 import { SETTINGS } from '../../../interfaces/settings';
-import { CLOSE_SETTINGS_TIMEOUT } from '../../../config/constants';
+import {
+  CLOSE_SETTINGS_TIMEOUT,
+  REVIEW_MODES,
+} from '../../../config/constants';
 import {
   programmingLanguageSelect,
   programmingLanguageSettings,
@@ -64,6 +67,7 @@ const SettingsFab: FC = () => {
 
   const renderSettings = (): ReactElement => {
     const programmingLanguage = settings[SETTINGS.PROGRAMMING_LANGUAGE];
+
     return (
       <TabContext value={tab}>
         <TabList
@@ -145,6 +149,16 @@ const SettingsFab: FC = () => {
               settingKey={SETTINGS.ALLOW_REPLIES}
               label={t('Allow Replies')}
               dataCy={ALLOW_REPLIES_SWITCH_CYPRESS}
+            />
+
+            <SettingsSelect
+              settingsKey={SETTINGS.REVIEW_MODE}
+              label={t('Define Review Mode')}
+              values={REVIEW_MODES.map(({ label, value }) => ({
+                // @ts-ignore
+                label: t(label),
+                value,
+              }))}
             />
           </Stack>
         </TabPanel>

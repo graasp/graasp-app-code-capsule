@@ -25,6 +25,7 @@ import { useTranslation } from 'react-i18next';
 import { Button } from '@graasp/ui';
 import ToolbarButton from '../layout/ToolbarButton';
 import { useReviewContext } from '../context/ReviewContext';
+import { CommentType } from '../../interfaces/comment';
 
 const TextArea = styled(TextareaAutosize)(({ theme }) => ({
   borderRadius: '4px',
@@ -49,13 +50,13 @@ const TextArea = styled(TextareaAutosize)(({ theme }) => ({
 type Props = {
   onCancel: () => void;
   onSend: (comment: string) => void;
-  value?: string;
+  comment?: CommentType;
 };
 
-const CommentEditor: FC<Props> = ({ onCancel, onSend, value = '' }) => {
+const CommentEditor: FC<Props> = ({ onCancel, onSend, comment }) => {
   const { t } = useTranslation();
   const { multilineRange, currentCommentLine } = useReviewContext();
-  const [text, setText] = useState(value);
+  const [text, setText] = useState(comment?.data.content ?? '');
   const { ref, commandController } = useTextAreaMarkdownEditor({
     commandMap: {
       bold: boldCommand,
@@ -65,6 +66,8 @@ const CommentEditor: FC<Props> = ({ onCancel, onSend, value = '' }) => {
       quote: quoteCommand,
     },
   });
+
+  const multiline = comment?.data.multiline ?? multilineRange;
 
   // focus textarea on mount
   useEffect(() => {
@@ -126,16 +129,13 @@ const CommentEditor: FC<Props> = ({ onCancel, onSend, value = '' }) => {
           alignItems="center"
           justifyContent="space-between"
         >
-          {multilineRange ? (
-            <Typography>
-              {t('MultiLineComment', {
-                start: multilineRange.start,
-                end: multilineRange.end,
-              })}
-            </Typography>
+          {multiline ? (
+            <Typography>{t('MultiLineComment', multiline)}</Typography>
           ) : (
             <Typography>
-              {t('LineComment', { line: currentCommentLine })}
+              {t('LineComment', {
+                line: comment?.data.line ?? currentCommentLine,
+              })}
             </Typography>
           )}
           <Stack direction="row" spacing={1} justifyContent="end">

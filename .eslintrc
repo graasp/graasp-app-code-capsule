@@ -76,6 +76,9 @@
     "@typescript-eslint/no-shadow": ["error"]
   },
   "settings": {
+    "react": {
+      "version": "detect"
+    },
     "import/resolver": {
       "typescript": {}
     },

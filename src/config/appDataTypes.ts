@@ -3,4 +3,9 @@ enum APP_DATA_TYPES {
   TEACHER_COMMENT = 'teacher_comment',
 }
 
-export { APP_DATA_TYPES };
+enum APP_DATA_VISIBILITY {
+  MEMBER = 'member',
+  ITEM = 'item',
+}
+
+export { APP_DATA_TYPES, APP_DATA_VISIBILITY };

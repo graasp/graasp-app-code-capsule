@@ -1,17 +1,16 @@
 import { AppSetting } from '@graasp/apps-query-client/dist/src/types';
-import { List } from 'immutable';
-import { useAppSettings } from '../components/context/hooks';
 import {
   DEFAULT_GENERAL_SETTINGS,
   GeneralSettings,
 } from '../interfaces/settings';
-import { GENERAL_SETTINGS_KEY } from '../config/appSettings';
+import { GENERAL_SETTINGS_KEY } from '../config/appSettingsTypes';
+import { hooks } from '../config/queryClient';
 
 export const useGeneralAppSettings = ():
   | GeneralSettings
   | { [key: string]: unknown }
   | undefined => {
-  const { data, isLoading, isError, error } = useAppSettings();
+  const { data, isLoading, isError, error } = hooks.useAppSettings();
   if (isLoading) {
     return undefined;
   }
@@ -20,8 +19,7 @@ export const useGeneralAppSettings = ():
     console.error('GeneralAppSettings', error);
   }
 
-  const appSettings = data as List<AppSetting>;
-  const generalSetting = appSettings?.find(
+  const generalSetting = data?.find(
     (setting: AppSetting) => setting.name === GENERAL_SETTINGS_KEY,
   )?.data;
 

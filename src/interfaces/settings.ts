@@ -1,4 +1,4 @@
-import { PYTHON } from '../config/constants';
+import { PYTHON, REVIEW_MODE_INDIVIDUAL } from '../config/constants';
 
 // general settings keys
 export enum SETTINGS {
@@ -11,6 +11,7 @@ export enum SETTINGS {
   ALLOW_REPLIES = 'allowReplies',
   PROGRAMMING_LANGUAGE = 'programmingLanguage',
   CODE = 'code',
+  REVIEW_MODE = 'reviewMode',
 }
 
 // type of general settings
@@ -24,6 +25,7 @@ export interface GeneralSettings {
   [SETTINGS.ALLOW_REPLIES]: boolean;
   [SETTINGS.PROGRAMMING_LANGUAGE]: string;
   [SETTINGS.CODE]: string;
+  [SETTINGS.REVIEW_MODE]: string;
 
   // used to allow access using settings[settingKey] syntax
   [key: string]: unknown;
@@ -55,6 +57,7 @@ for i in range(10000):
 print('Done!')
 print('See you !')
 `;
+export const DEFAULT_REVIEW_MODE_SETTING = REVIEW_MODE_INDIVIDUAL;
 
 // default settings object
 export const DEFAULT_GENERAL_SETTINGS: GeneralSettings = {
@@ -67,4 +70,5 @@ export const DEFAULT_GENERAL_SETTINGS: GeneralSettings = {
   [SETTINGS.ALLOW_REPLIES]: DEFAULT_ALLOW_REPLIES_SETTING,
   [SETTINGS.PROGRAMMING_LANGUAGE]: DEFAULT_PROGRAMMING_LANGUAGE_SETTING,
   [SETTINGS.CODE]: DEFAULT_CODE_SETTING,
+  [SETTINGS.REVIEW_MODE]: DEFAULT_REVIEW_MODE_SETTING,
 };

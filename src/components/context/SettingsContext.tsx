@@ -7,16 +7,16 @@ import React, {
   useState,
 } from 'react';
 import { AppSetting } from '@graasp/apps-query-client/dist/src/types';
-import { List } from 'immutable';
 import _ from 'lodash';
 import Loader from '../common/Loader';
 import {
   DEFAULT_GENERAL_SETTINGS,
   GeneralSettings,
 } from '../../interfaces/settings';
-import { useAppSettings } from './hooks';
-import { GENERAL_SETTINGS_KEY } from '../../config/appSettings';
-import { MUTATION_KEYS, useMutation } from '../../config/queryClient';
+import { GENERAL_SETTINGS_KEY } from '../../config/appSettingsTypes';
+import { MUTATION_KEYS, useMutation, hooks } from '../../config/queryClient';
+
+const { useAppSettings } = hooks;
 
 export type SettingsContextType = {
   settings: GeneralSettings;
@@ -46,7 +46,7 @@ export const SettingsProvider: FC<Prop> = ({ children }) => {
     MUTATION_KEYS.PATCH_APP_SETTING,
   );
   const appSettings = useAppSettings();
-  const generalAppSettings = (appSettings?.data as List<AppSetting>)?.find(
+  const generalAppSettings = appSettings?.data?.find(
     (setting) => setting.name === GENERAL_SETTINGS_KEY,
   );
   const defaultSettingsValue =

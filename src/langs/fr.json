@@ -83,6 +83,9 @@
     "Type your comment": "Entre ton commentaire",
     "Respond to this comment": "Répondre à ce commentaire",
     "LineComment": "Commentaire sur ligne: {{line}}",
-    "MultiLineComment": "Commentaire multi-ligne: {{start}} - {{end}}"
+    "MultiLineComment": "Commentaire multi-ligne: {{start}} - {{end}}",
+    "Define Review Mode": "Définir le mode de revue",
+    "Individual - Each student works in isolation": "Individuel - Chaque étudiant travail en isolation",
+    "Collaborative - Students see other students work": "Collaborative - Les étudiants voient le travail des autres étudiants"
   }
 }

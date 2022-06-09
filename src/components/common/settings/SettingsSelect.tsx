@@ -1,4 +1,10 @@
-import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
+import {
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  styled,
+} from '@mui/material';
 import { FC } from 'react';
 import { useSettings } from '../../context/SettingsContext';
 
@@ -9,12 +15,16 @@ type Prop = {
   dataCy?: string;
 };
 
+const StyledFormControl = styled(FormControl)(({ theme }) => ({
+  margin: theme.spacing(2, 0),
+}));
+
 const SettingsSelect: FC<Prop> = ({ settingsKey, label, values, dataCy }) => {
   const { settings, changeSetting } = useSettings();
   const value = settings[settingsKey] as string;
 
   return (
-    <FormControl>
+    <StyledFormControl>
       <InputLabel>{label}</InputLabel>
       <Select
         data-cy={dataCy}
@@ -28,7 +38,7 @@ const SettingsSelect: FC<Prop> = ({ settingsKey, label, values, dataCy }) => {
           </MenuItem>
         ))}
       </Select>
-    </FormControl>
+    </StyledFormControl>
   );
 };
 

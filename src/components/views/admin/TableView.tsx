@@ -11,8 +11,7 @@ import {
 import InputIcon from '@mui/icons-material/Input';
 import { useTranslation } from 'react-i18next';
 import { List } from 'immutable';
-import { AppData, Member } from '@graasp/apps-query-client/dist/src/types';
-import { useAppContext, useAppData } from '../../context/hooks';
+import { Member } from '@graasp/apps-query-client/dist/src/types';
 import {
   NUMBER_OF_COMMENTS_CYPRESS,
   TABLE_NO_COMMENTS_CYPRESS,
@@ -27,12 +26,14 @@ import {
 } from '../../../config/constants';
 import CustomDialog from '../../common/CustomDialog';
 import Loader from '../../common/Loader';
+import { hooks } from '../../../config/queryClient';
 
 const TableView: FC = () => {
   const { t } = useTranslation();
   const [openCommentView, setOpenCommentView] = useState(false);
-  const { data: appContext, isLoading: isLoadingAppContext } = useAppContext();
-  const { data: appData, isLoading: isLoadingAppData } = useAppData();
+  const { data: appContext, isLoading: isLoadingAppContext } =
+    hooks.useAppContext();
+  const { data: appData, isLoading: isLoadingAppData } = hooks.useAppData();
 
   if (isLoadingAppContext || isLoadingAppData) {
     return <Loader />;
@@ -40,13 +41,12 @@ const TableView: FC = () => {
 
   const members: Member[] =
     (appContext?.get('members') as Member[]) ?? List<Member>();
-  const comments =
-    (appData as List<AppData>).filter(
-      (res) => res.type === APP_DATA_TYPES.COMMENT,
-    ) ?? List();
+  const comments = appData?.filter(
+    (res) => res.type === APP_DATA_TYPES.COMMENT,
+  );
 
-  const renderTableBody = (): ReactElement[] | ReactElement => {
-    if (comments.isEmpty()) {
+  const renderTableBody = (): ReactElement[] | ReactElement | null => {
+    if (comments?.isEmpty()) {
       // show that there are no comments available
       return (
         <TableRow>
@@ -60,26 +60,28 @@ const TableView: FC = () => {
       );
     }
     const commentsByUsers = comments
-      .groupBy(({ memberId }) => memberId)
+      ?.groupBy(({ memberId }) => memberId)
       .toArray();
-    return commentsByUsers?.map(([userId, userComments]) => {
-      const userName =
-        members?.find(({ id }) => id === userId)?.name || ANONYMOUS_USER;
-      return (
-        <TableRow key={userId} data-cy={tableRowUserCypress(userId)}>
-          <TableCell>{userName}</TableCell>
-          <TableCell>{false}</TableCell>
-          <TableCell data-cy={NUMBER_OF_COMMENTS_CYPRESS}>
-            <div>{userComments.count()}</div>
-          </TableCell>
-          <TableCell>
-            <IconButton onClick={() => setOpenCommentView(true)}>
-              <InputIcon color="primary" />
-            </IconButton>
-          </TableCell>
-        </TableRow>
-      );
-    });
+    return (
+      commentsByUsers?.map(([userId, userComments]) => {
+        const userName =
+          members?.find(({ id }) => id === userId)?.name || ANONYMOUS_USER;
+        return (
+          <TableRow key={userId} data-cy={tableRowUserCypress(userId)}>
+            <TableCell>{userName}</TableCell>
+            <TableCell>{false}</TableCell>
+            <TableCell data-cy={NUMBER_OF_COMMENTS_CYPRESS}>
+              <div>{userComments.count()}</div>
+            </TableCell>
+            <TableCell>
+              <IconButton onClick={() => setOpenCommentView(true)}>
+                <InputIcon color="primary" />
+              </IconButton>
+            </TableCell>
+          </TableRow>
+        );
+      }) || null
+    );
   };
 
   return (

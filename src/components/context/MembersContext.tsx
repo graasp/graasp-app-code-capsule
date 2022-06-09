@@ -1,8 +1,8 @@
 import React, { createContext, FC, ReactElement } from 'react';
 import { Member } from '@graasp/apps-query-client/dist/src/types';
 import { List } from 'immutable';
-import { useAppContext } from './hooks';
 import Loader from '../common/Loader';
+import { hooks } from '../../config/queryClient';
 
 export type MembersContextType = Member[];
 
@@ -14,7 +14,7 @@ type Prop = {
 };
 
 export const MembersProvider: FC<Prop> = ({ children }) => {
-  const appContext = useAppContext();
+  const appContext = hooks.useAppContext();
 
   if (appContext.isLoading) {
     return <Loader />;

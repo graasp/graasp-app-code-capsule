@@ -15,11 +15,7 @@ const PlayerView: FC = () => {
       This is the player view
       <ReviewProvider>
         <AppDataProvider>
-          <CodeReview
-            code={code}
-            language={programmingLanguage}
-            allowComments
-          />
+          <CodeReview code={code} language={programmingLanguage} />
         </AppDataProvider>
       </ReviewProvider>
     </div>

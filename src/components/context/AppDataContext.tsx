@@ -1,15 +1,14 @@
-import React, { createContext, FC, ReactElement, useMemo } from 'react';
+import React, { createContext, FC, PropsWithChildren, useMemo } from 'react';
 import { AppData } from '@graasp/apps-query-client/dist/src/types';
-import { List } from 'immutable';
-import { useAppData } from './hooks';
+import Immutable from 'immutable';
 import Loader from '../common/Loader';
-import { MUTATION_KEYS, useMutation } from '../../config/queryClient';
-import { CommentType } from '../../interfaces/comment';
-import { APP_DATA_TYPES } from '../../config/appDataTypes';
+import { hooks, MUTATION_KEYS, useMutation } from '../../config/queryClient';
+import { VisibilityVariants } from '../../interfaces/comment';
 
 type PostAppDataType = {
   data: { [key: string]: unknown };
   type: string;
+  visibility?: VisibilityVariants;
 };
 
 type PatchAppDataType = {
@@ -25,26 +24,23 @@ export type AppDataContextType = {
   postAppData: (payload: PostAppDataType) => void;
   patchAppData: (payload: PatchAppDataType) => void;
   deleteAppData: (payload: DeleteAppDataType) => void;
-  appData: List<AppData>;
-  comments: List<CommentType>;
+  appData: Immutable.List<AppData>;
 };
 
 const defaultContextValue = {
   postAppData: () => null,
   patchAppData: () => null,
   deleteAppData: () => null,
-  appData: List<AppData>(),
-  comments: List<CommentType>(),
+  appData: Immutable.List<AppData>(),
 };
 
 const AppDataContext = createContext<AppDataContextType>(defaultContextValue);
 
-type Prop = {
-  children: ReactElement | ReactElement[];
-};
+// eslint-disable-next-line @typescript-eslint/ban-types
+type Prop = {};
 
-export const AppDataProvider: FC<Prop> = ({ children }) => {
-  const appData = useAppData();
+export const AppDataProvider: FC<PropsWithChildren<Prop>> = ({ children }) => {
+  const appData = hooks.useAppData();
   const postAppData = useMutation<unknown, unknown, PostAppDataType>(
     MUTATION_KEYS.POST_APP_DATA,
   );
@@ -55,20 +51,14 @@ export const AppDataProvider: FC<Prop> = ({ children }) => {
     MUTATION_KEYS.DELETE_APP_DATA,
   );
 
-  const appDataData = (appData.data as List<AppData>) ?? List<AppData>();
-  const comments = appDataData?.filter(
-    (c) => c.type === APP_DATA_TYPES.COMMENT,
-  ) as List<CommentType>;
-
   const contextValue = useMemo(
     () => ({
       postAppData: postAppData.mutate,
       patchAppData: patchAppData.mutate,
       deleteAppData: deleteAppData.mutate,
-      appData: appDataData,
-      comments,
+      appData: appData.data || Immutable.List<AppData>(),
     }),
-    [appDataData, comments, deleteAppData, patchAppData, postAppData],
+    [appData, deleteAppData, patchAppData, postAppData],
   );
 
   if (appData.isLoading) {

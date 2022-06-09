@@ -1,13 +1,15 @@
 import React, { FC, Fragment } from 'react';
 import { styled, TextField } from '@mui/material';
-import { AppData } from '@graasp/apps-query-client/dist/src/types';
 import { useTranslation } from 'react-i18next';
+import { List } from 'immutable';
 import Comment from './Comment';
-import { CommentAppData } from '../../interfaces/comment';
 import { CommentProvider } from '../context/CommentContext';
 import { useReviewContext } from '../context/ReviewContext';
 import CommentEditor from './CommentEditor';
 import { useAppDataContext } from '../context/AppDataContext';
+import { CommentType } from '../../interfaces/comment';
+import { buildThread } from '../../utils/comments';
+import { APP_DATA_TYPES } from '../../config/appDataTypes';
 
 const CommentContainer = styled('div')(({ theme }) => ({
   backgroundColor: 'white',
@@ -23,58 +25,99 @@ const ResponseContainer = styled('div')(({ theme }) => ({
   borderBottomRightRadius: theme.spacing(1),
 }));
 
+const StyledTextField = styled(TextField)(({ theme }) => ({
+  '& input': {
+    padding: theme.spacing(1),
+  },
+}));
+
 type Props = {
-  children?: (AppData & CommentAppData)[];
+  children?: List<CommentType>;
 };
 
 const CommentThread: FC<Props> = ({ children }) => {
   const { t } = useTranslation();
-  const { currentEditedCommentId, closeEditingComment } = useReviewContext();
-  const { patchAppData } = useAppDataContext();
+  const {
+    addResponse,
+    currentRepliedCommentId,
+    currentEditedCommentId,
+    closeComment,
+    closeEditingComment,
+  } = useReviewContext();
+  const { patchAppData, postAppData } = useAppDataContext();
 
   const isEdited = (id: string): boolean => id === currentEditedCommentId;
+  const isReplied = (id: string): boolean => id === currentRepliedCommentId;
 
-  if (children?.length) {
-    return (
-      <CommentContainer>
-        {children?.map((c, i, arr) => (
-          <Fragment key={c.id}>
-            <CommentProvider value={c}>
-              {isEdited(c.id) ? (
+  if (!children || children?.isEmpty()) {
+    return null;
+  }
+
+  const threads = children
+    .filter((c) => !c.data.parent)
+    .map((parent) => buildThread(parent, children))
+    .sortBy((thread) => thread.get(0)?.createdAt);
+
+  return (
+    <>
+      {threads.map((thread) => (
+        <CommentContainer key={`comment-thread-${thread.get(0)?.id}`}>
+          {thread.map((c, i, arr) => (
+            <Fragment key={c.id}>
+              <CommentProvider value={c}>
+                {isEdited(c.id) ? (
+                  <CommentEditor
+                    onCancel={() => {
+                      closeEditingComment();
+                    }}
+                    onSend={(content) => {
+                      patchAppData({
+                        id: c.id,
+                        data: {
+                          ...c.data,
+                          content,
+                        },
+                      });
+                      closeEditingComment();
+                    }}
+                    comment={c}
+                  />
+                ) : (
+                  <Comment comment={c} />
+                )}
+              </CommentProvider>
+              {i + 1 === arr.size && !isEdited(c.id) && !isReplied(c.id) && (
+                <ResponseContainer>
+                  <StyledTextField
+                    fullWidth
+                    placeholder={t('Respond to this comment')}
+                    onClick={() => addResponse(c.id)}
+                  />
+                </ResponseContainer>
+              )}
+              {isReplied(c.id) && (
                 <CommentEditor
-                  onCancel={() => {
-                    closeEditingComment();
-                  }}
+                  onCancel={closeComment}
                   onSend={(content) => {
-                    patchAppData({
-                      id: c.id,
+                    postAppData({
                       data: {
                         ...c.data,
+                        parent: c.id,
                         content,
                       },
+                      type: APP_DATA_TYPES.COMMENT,
                     });
-                    closeEditingComment();
+                    closeComment();
                   }}
-                  value={c.data?.content}
+                  comment={{ ...c, data: { ...c.data, content: '' } }}
                 />
-              ) : (
-                <Comment comment={c} />
               )}
-            </CommentProvider>
-            {i + 1 === arr.length && !isEdited(c.id) && (
-              <ResponseContainer>
-                <TextField
-                  fullWidth
-                  placeholder={t('Respond to this comment')}
-                />
-              </ResponseContainer>
-            )}
-          </Fragment>
-        ))}
-      </CommentContainer>
-    );
-  }
-  return null;
+            </Fragment>
+          ))}
+        </CommentContainer>
+      ))}
+    </>
+  );
 };
 
 export default CommentThread;

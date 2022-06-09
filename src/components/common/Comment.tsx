@@ -17,6 +17,7 @@ import ReportCommentDialog from './ReportCommentDialog';
 import { useMembersContext } from '../context/MembersContext';
 import { ANONYMOUS_USER } from '../../config/constants';
 import CommentBody from './CommentBody';
+import { getFormattedTime } from '../../utils/datetime';
 
 const CustomCard = styled(Card)<CardProps>(({ theme }) => ({
   borderRadius: theme.spacing(1),
@@ -27,7 +28,7 @@ type Props = {
 };
 
 const Comment: FC<Props> = ({ comment }) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const members = useMembersContext();
   const [menuAnchorEl, setMenuAnchorEl] = useState<null | HTMLElement>(null);
   const [openActionsMenu, setOpenActionsMenu] = useState(false);
@@ -64,12 +65,11 @@ const Comment: FC<Props> = ({ comment }) => {
       />
     </>
   );
-
   return (
     <CustomCard elevation={0} ref={commentRef}>
       <CardHeader
         title={userName}
-        subheader="time"
+        subheader={getFormattedTime(comment.updatedAt, i18n.language)}
         avatar={
           <Avatar src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Logo_wikibot.svg/240px-Logo_wikibot.svg.png" />
         }
