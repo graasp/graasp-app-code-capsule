@@ -15,6 +15,7 @@ import { useSettings } from '../context/SettingsContext';
 import { REVIEW_MODE_INDIVIDUAL } from '../../config/constants';
 import {
   buildAddButtonDataCy,
+  CODE_REVIEW_ADD_BUTTON_CYPRESS,
   CODE_REVIEW_CONTAINER_CYPRESS,
   CODE_REVIEW_LINE_CYPRESS,
 } from '../../config/selectors';
@@ -138,7 +139,8 @@ const CodeReview: FC<Props> = ({ code, language }) => {
                     <LineNo>{i + 1}</LineNo>
                     {allowComments && (
                       <AddButton
-                        data-cy={buildAddButtonDataCy(i + 1)}
+                        data-cy={CODE_REVIEW_ADD_BUTTON_CYPRESS}
+                        button-cy={buildAddButtonDataCy(i + 1)}
                         size="medium"
                         sx={
                           // add hover style on buttons that are in the selected line range

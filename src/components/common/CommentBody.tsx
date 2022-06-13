@@ -63,7 +63,7 @@ const StyledReactMarkdown = styled(ReactMarkdown)(({ theme }) => ({
     borderCollapse: 'collapse',
   },
   // alternate background colors in table rows
-  '& tr:nth-child(even)': {
+  '& tr:nth-of-type(even)': {
     backgroundColor: 'lightgray',
   },
 }));
@@ -76,14 +76,12 @@ const renderCode = ({
   inline,
   className: classNameInit,
   children: codeContent,
-  key: keyInit,
   ...props
 }: CodeProps): ReactElement => {
   const match = /language-(\w+)/.exec(classNameInit || '');
   return !inline && match ? (
     <Highlight
       {...defaultProps}
-      key={keyInit}
       theme={vsLight}
       code={String(codeContent).replace(/\n$/, '')}
       language={match[1] as Language}

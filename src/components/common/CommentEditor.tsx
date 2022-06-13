@@ -26,6 +26,18 @@ import { Button } from '@graasp/ui';
 import ToolbarButton from '../layout/ToolbarButton';
 import { useReviewContext } from '../context/ReviewContext';
 import { CommentType } from '../../interfaces/comment';
+import {
+  COMMENT_EDITOR_BOLD_BUTTON_CYPRESS,
+  COMMENT_EDITOR_CANCEL_BUTTON_CYPRESS,
+  COMMENT_EDITOR_CODE_BUTTON_CYPRESS,
+  COMMENT_EDITOR_CYPRESS,
+  COMMENT_EDITOR_ITALIC_BUTTON_CYPRESS,
+  COMMENT_EDITOR_LINE_INFO_TEXT_CYPRESS,
+  COMMENT_EDITOR_LINK_BUTTON_CYPRESS,
+  COMMENT_EDITOR_QUOTE_BUTTON_CYPRESS,
+  COMMENT_EDITOR_SAVE_BUTTON_CYPRESS,
+  COMMENT_EDITOR_TEXTAREA_CYPRESS,
+} from '../../config/selectors';
 
 const TextArea = styled(TextareaAutosize)(({ theme }) => ({
   borderRadius: '4px',
@@ -77,10 +89,11 @@ const CommentEditor: FC<Props> = ({ onCancel, onSend, comment }) => {
   });
 
   return (
-    <Box sx={{ p: 1 }}>
+    <Box sx={{ p: 1 }} data-cy={COMMENT_EDITOR_CYPRESS}>
       <Stack direction="column" spacing={1}>
         <Stack direction="row" spacing={1}>
           <ToolbarButton
+            dataCy={COMMENT_EDITOR_BOLD_BUTTON_CYPRESS}
             onClick={async () => {
               await commandController.executeCommand('bold');
             }}
@@ -88,6 +101,7 @@ const CommentEditor: FC<Props> = ({ onCancel, onSend, comment }) => {
             <FormatBold fontSize="inherit" />
           </ToolbarButton>
           <ToolbarButton
+            dataCy={COMMENT_EDITOR_ITALIC_BUTTON_CYPRESS}
             onClick={async () => {
               await commandController.executeCommand('italic');
             }}
@@ -95,6 +109,7 @@ const CommentEditor: FC<Props> = ({ onCancel, onSend, comment }) => {
             <FormatItalic fontSize="inherit" />
           </ToolbarButton>
           <ToolbarButton
+            dataCy={COMMENT_EDITOR_CODE_BUTTON_CYPRESS}
             onClick={async () => {
               await commandController.executeCommand('code');
             }}
@@ -102,6 +117,7 @@ const CommentEditor: FC<Props> = ({ onCancel, onSend, comment }) => {
             <Code fontSize="inherit" />
           </ToolbarButton>
           <ToolbarButton
+            dataCy={COMMENT_EDITOR_LINK_BUTTON_CYPRESS}
             onClick={async () => {
               await commandController.executeCommand('link');
             }}
@@ -109,6 +125,7 @@ const CommentEditor: FC<Props> = ({ onCancel, onSend, comment }) => {
             <InsertLink fontSize="inherit" />
           </ToolbarButton>
           <ToolbarButton
+            dataCy={COMMENT_EDITOR_QUOTE_BUTTON_CYPRESS}
             onClick={async () => {
               await commandController.executeCommand('quote');
             }}
@@ -117,6 +134,7 @@ const CommentEditor: FC<Props> = ({ onCancel, onSend, comment }) => {
           </ToolbarButton>
         </Stack>
         <TextArea
+          data-cy={COMMENT_EDITOR_TEXTAREA_CYPRESS}
           placeholder={t('Type your comment')}
           minRows={1}
           maxRows={10}
@@ -125,6 +143,7 @@ const CommentEditor: FC<Props> = ({ onCancel, onSend, comment }) => {
           onChange={(e) => setText(e.target.value)}
         />
         <Stack
+          data-cy={COMMENT_EDITOR_LINE_INFO_TEXT_CYPRESS}
           direction="row"
           alignItems="center"
           justifyContent="space-between"
@@ -140,6 +159,7 @@ const CommentEditor: FC<Props> = ({ onCancel, onSend, comment }) => {
           )}
           <Stack direction="row" spacing={1} justifyContent="end">
             <Button
+              dataCy={COMMENT_EDITOR_CANCEL_BUTTON_CYPRESS}
               color="secondary"
               variant="outlined"
               onClick={() => onCancel()}
@@ -147,6 +167,7 @@ const CommentEditor: FC<Props> = ({ onCancel, onSend, comment }) => {
               {t('Cancel')}
             </Button>
             <Button
+              dataCy={COMMENT_EDITOR_SAVE_BUTTON_CYPRESS}
               color="primary"
               variant="outlined"
               onClick={() => onSend(text)}

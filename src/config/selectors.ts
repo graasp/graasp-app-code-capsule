@@ -33,6 +33,20 @@ export const CODE_REVIEW_ADD_BUTTON_CYPRESS = 'code_review_add_button';
 export const CODE_REVIEW_LINE_CYPRESS = 'code_review_line';
 export const buildAddButtonDataCy = (index: number): string =>
   `${CODE_REVIEW_ADD_BUTTON_CYPRESS}-${index}`;
+export const COMMENT_EDITOR_CYPRESS = 'comment_editor';
+export const COMMENT_EDITOR_CANCEL_BUTTON_CYPRESS =
+  'comment_editor_cancel_button';
+export const COMMENT_EDITOR_SAVE_BUTTON_CYPRESS = 'comment_editor_save_button';
+export const COMMENT_EDITOR_BOLD_BUTTON_CYPRESS = 'comment_editor_bold_button';
+export const COMMENT_EDITOR_ITALIC_BUTTON_CYPRESS =
+  'comment_editor_italic_button';
+export const COMMENT_EDITOR_CODE_BUTTON_CYPRESS = 'comment_editor_code_button';
+export const COMMENT_EDITOR_LINK_BUTTON_CYPRESS = 'comment_editor_link_button';
+export const COMMENT_EDITOR_QUOTE_BUTTON_CYPRESS =
+  'comment_editor_quote_button';
+export const COMMENT_EDITOR_LINE_INFO_TEXT_CYPRESS =
+  'comment_editor_line_info_text';
+export const COMMENT_EDITOR_TEXTAREA_CYPRESS = 'comment_editor_textarea';
 
 export const buildDataCy = (selector: string): string =>
   `[data-cy=${selector}]`;

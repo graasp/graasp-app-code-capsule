@@ -36,7 +36,6 @@ export const MembersProvider: FC<Prop> = ({ children }) => {
     return <Loader />;
   }
 
-  console.log(appContext.data?.get('members'));
   return (
     <MembersContext.Provider value={members}>
       {children}
