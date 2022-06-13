@@ -27,7 +27,7 @@ const {
   targetWindow: MOCK_API
     ? // build mock parent window given cypress (app) context or mock data
       (buildMockParentWindow(
-        buildMockLocalContext(window.appContext ?? mockContext),
+        buildMockLocalContext(window.appContext),
       ) as Window)
     : window.parent,
 });

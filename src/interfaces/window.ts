@@ -1,9 +1,9 @@
+import { LocalContext } from '@graasp/apps-query-client/dist/src/types';
 import { Database } from './database';
-import { AppContext } from './appContext';
 
 declare global {
   interface Window {
-    appContext: Partial<AppContext>;
+    appContext: LocalContext;
     Cypress: boolean;
     database: Database;
     apiErrors: object;

@@ -7,7 +7,7 @@ export const CONTEXTS = {
   PLAYER: 'player',
   ANALYZER: 'analyzer',
   STANDALONE: 'standalone',
-};
+} as const;
 
 export const PERMISSIONS = {
   READ: 'read',

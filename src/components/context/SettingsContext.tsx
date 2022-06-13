@@ -6,8 +6,8 @@ import React, {
   useMemo,
   useState,
 } from 'react';
-import { AppSetting } from '@graasp/apps-query-client/dist/src/types';
 import _ from 'lodash';
+import { AppSetting } from '@graasp/apps-query-client/dist/src/types';
 import Loader from '../common/Loader';
 import {
   DEFAULT_GENERAL_SETTINGS,

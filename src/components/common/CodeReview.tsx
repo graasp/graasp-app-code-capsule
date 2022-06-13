@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, Fragment } from 'react';
 import Highlight, { defaultProps, Language } from 'prism-react-renderer';
 import theme from 'prism-react-renderer/themes/vsLight';
 import { IconButton, styled } from '@mui/material';
@@ -13,6 +13,12 @@ import CommentEditor from './CommentEditor';
 import { useAppDataContext } from '../context/AppDataContext';
 import { useSettings } from '../context/SettingsContext';
 import { REVIEW_MODE_INDIVIDUAL } from '../../config/constants';
+import {
+  buildAddButtonDataCy,
+  CODE_REVIEW_CONTAINER_CYPRESS,
+  CODE_REVIEW_LINE_CYPRESS,
+} from '../../config/selectors';
+import { buildCodeRowKey } from '../../utils/utils';
 
 const CodeContainer = styled('div')({
   margin: 'auto',
@@ -109,7 +115,7 @@ const CodeReview: FC<Props> = ({ code, language }) => {
   };
 
   return (
-    <CodeContainer>
+    <CodeContainer data-cy={CODE_REVIEW_CONTAINER_CYPRESS}>
       <Highlight
         Prism={defaultProps.Prism}
         theme={theme}
@@ -119,9 +125,10 @@ const CodeReview: FC<Props> = ({ code, language }) => {
         {({ className, style, tokens, getLineProps, getTokenProps }) => (
           <Code className={className} style={style}>
             {tokens.map((line, i) => (
-              <>
+              <Fragment key={buildCodeRowKey(line, i)}>
                 <Line
-                  key={`row ${line}`}
+                  data-cy={CODE_REVIEW_LINE_CYPRESS}
+                  id={buildCodeRowKey(line, i)}
                   {...getLineProps({
                     line,
                     key: i,
@@ -131,6 +138,7 @@ const CodeReview: FC<Props> = ({ code, language }) => {
                     <LineNo>{i + 1}</LineNo>
                     {allowComments && (
                       <AddButton
+                        data-cy={buildAddButtonDataCy(i + 1)}
                         size="medium"
                         sx={
                           // add hover style on buttons that are in the selected line range
@@ -190,7 +198,7 @@ const CodeReview: FC<Props> = ({ code, language }) => {
                 <CommentThread>
                   {groupedComments.get(i + 1)?.toList() as List<CommentType>}
                 </CommentThread>
-              </>
+              </Fragment>
             ))}
           </Code>
         )}

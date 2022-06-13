@@ -28,6 +28,11 @@ export const ALLOW_COMMENTS_SWITCH_CYPRESS = 'allow_comments_switch';
 export const ALLOW_REPLIES_SWITCH_CYPRESS = 'allow_replies_switch';
 export const tableRowUserCypress = (id: string): string =>
   `${TABLE_ROW_USERS_CYPRESS}-${id}`;
+export const CODE_REVIEW_CONTAINER_CYPRESS = 'code_review_container';
+export const CODE_REVIEW_ADD_BUTTON_CYPRESS = 'code_review_add_button';
+export const CODE_REVIEW_LINE_CYPRESS = 'code_review_line';
+export const buildAddButtonDataCy = (index: number): string =>
+  `${CODE_REVIEW_ADD_BUTTON_CYPRESS}-${index}`;
 
 export const buildDataCy = (selector: string): string =>
   `[data-cy=${selector}]`;

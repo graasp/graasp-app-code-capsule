@@ -1,22 +1,28 @@
 import { v4 } from 'uuid';
-import { Member } from '@graasp/apps-query-client/dist/src/types';
+import type {
+  LocalContext,
+  Member,
+  Context,
+} from '@graasp/apps-query-client/dist/src/types';
 import { AppContext } from '../interfaces/appContext';
 import { Database } from '../interfaces/database';
 import { GENERAL_SETTINGS_KEY } from '../config/appSettingsTypes';
 import { DEFAULT_GENERAL_SETTINGS } from '../interfaces/settings';
 import { APP_DATA_TYPES } from '../config/appDataTypes';
+import { REACT_APP_API_HOST } from '../config/env';
 
-export const mockContext = {
+export const mockContext: LocalContext = {
+  apiHost: REACT_APP_API_HOST,
   permission: 'admin',
-  context: 'builder',
+  context: 'player',
   itemId: '1234-1234-123456-8123-123456',
   memberId: 'mock-member-id',
 };
 
 export const mockMembers: Member[] = [
   {
-    id: mockContext.memberId,
-    name: 'mock-member',
+    id: mockContext.memberId || '',
+    name: 'current-member',
     email: '',
     extra: {},
   },

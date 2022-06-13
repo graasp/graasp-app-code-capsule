@@ -1,12 +1,18 @@
-import React, { createContext, FC, ReactElement } from 'react';
+import React, {
+  createContext,
+  FC,
+  ReactElement,
+  useEffect,
+  useState,
+} from 'react';
 import { Member } from '@graasp/apps-query-client/dist/src/types';
 import { List } from 'immutable';
 import Loader from '../common/Loader';
 import { hooks } from '../../config/queryClient';
 
-export type MembersContextType = Member[];
+export type MembersContextType = List<Member>;
 
-const defaultContextValue: Member[] = [];
+const defaultContextValue = List<Member>();
 const MembersContext = createContext<MembersContextType>(defaultContextValue);
 
 type Prop = {
@@ -15,14 +21,22 @@ type Prop = {
 
 export const MembersProvider: FC<Prop> = ({ children }) => {
   const appContext = hooks.useAppContext();
+  const [members, setMembers] = useState(defaultContextValue);
+
+  useEffect(() => {
+    if (
+      appContext.data?.get('members') &&
+      members !== appContext.data?.get('members')
+    ) {
+      setMembers(appContext.data.get('members') as List<Member>);
+    }
+  }, [appContext, members]);
 
   if (appContext.isLoading) {
     return <Loader />;
   }
 
-  const members: Member[] =
-    (appContext.data?.get('members') as Member[]) ?? List<Member>();
-
+  console.log(appContext.data?.get('members'));
   return (
     <MembersContext.Provider value={members}>
       {children}

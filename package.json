@@ -11,7 +11,7 @@
   "dependencies": {
     "@emotion/react": "11.9.0",
     "@emotion/styled": "11.8.1",
-    "@graasp/apps-query-client": "github:graasp/graasp-apps-query-client#v0.2.0",
+    "@graasp/apps-query-client": "github:graasp/graasp-apps-query-client#38/HOCTypes",
     "@graasp/ui": "github:graasp/graasp-ui#93/mui5",
     "@monaco-editor/react": "4.4.5",
     "@mui/icons-material": "5.8.3",
@@ -39,6 +39,7 @@
     "react-markdown": "8.0.3",
     "react-mde": "12.0.8",
     "react-scripts": "5.0.1",
+    "react-toastify": "9.0.4",
     "remark-breaks": "3.0.2",
     "remark-gfm": "3.0.1",
     "typescript": "4.7.3"
@@ -69,7 +70,7 @@
     "@cypress/code-coverage": "3.10.0",
     "@cypress/instrument-cra": "1.4.0",
     "@trivago/prettier-plugin-sort-imports": "3.2.0",
-    "@types/i18n": "^0.13.2",
+    "@types/i18n": "^0.13.3",
     "@types/lodash": "^4.14.182",
     "@types/uuid": "^8.3.4",
     "@typescript-eslint/eslint-plugin": "^5.27.1",

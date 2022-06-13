@@ -1,16 +1,14 @@
-import React, { FC, ReactElement } from 'react';
-import { useContextContext } from './context/ContextContext';
-import { TokenProvider } from './context/TokenContext';
+import React, { FC, ReactElement, useContext } from 'react';
+import { HOC } from '@graasp/apps-query-client';
 import { CONTEXTS } from '../config/settings';
 import BuilderView from './views/admin/BuilderView';
 import PlayerView from './views/read/PlayerView';
 import { MembersProvider } from './context/MembersContext';
 
 const App: FC = () => {
-  const { context } = useContextContext();
-
+  const context = useContext(HOC.Context);
   const renderContent = (): ReactElement => {
-    switch (context) {
+    switch (context.get('context')) {
       // eslint-disable-next-line default-case-last
       case CONTEXTS.BUILDER:
         return <BuilderView />;
@@ -24,11 +22,7 @@ const App: FC = () => {
     }
   };
 
-  return (
-    <TokenProvider>
-      <MembersProvider>{renderContent()}</MembersProvider>
-    </TokenProvider>
-  );
+  return <MembersProvider>{renderContent()}</MembersProvider>;
 };
 
 export default App;
