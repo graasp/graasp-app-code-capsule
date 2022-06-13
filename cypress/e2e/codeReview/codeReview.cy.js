@@ -13,13 +13,19 @@ import {
   COMMENT_EDITOR_TEXTAREA_CYPRESS,
   PLAYER_VIEW_CYPRESS,
 } from '../../../src/config/selectors';
-import { MOCK_CODE_SAMPLE } from '../../fixtures/appSettings';
+import {
+  MOCK_CODE_SAMPLE,
+  MOCK_GENERAL_SETTINGS,
+} from '../../fixtures/appSettings';
 import { CURRENT_MEMBER } from '../../fixtures/members';
 
 describe('Code review', () => {
   beforeEach(() => {
     cy.setUpApi({
-      database: { appData: MOCK_APP_DATA },
+      database: {
+        appData: MOCK_APP_DATA,
+        appSettings: [MOCK_GENERAL_SETTINGS],
+      },
       appContext: {
         context: CONTEXTS.PLAYER,
         permission: PERMISSIONS.ADMIN,

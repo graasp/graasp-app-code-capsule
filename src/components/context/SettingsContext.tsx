@@ -3,6 +3,7 @@ import React, {
   FC,
   ReactElement,
   useContext,
+  useEffect,
   useMemo,
   useState,
 } from 'react';
@@ -15,8 +16,6 @@ import {
 } from '../../interfaces/settings';
 import { GENERAL_SETTINGS_KEY } from '../../config/appSettingsTypes';
 import { MUTATION_KEYS, useMutation, hooks } from '../../config/queryClient';
-
-const { useAppSettings } = hooks;
 
 export type SettingsContextType = {
   settings: GeneralSettings;
@@ -45,14 +44,25 @@ export const SettingsProvider: FC<Prop> = ({ children }) => {
   const patchSettings = useMutation<unknown, unknown, Partial<AppSetting>>(
     MUTATION_KEYS.PATCH_APP_SETTING,
   );
-  const appSettings = useAppSettings();
-  const generalAppSettings = appSettings?.data?.find(
-    (setting) => setting.name === GENERAL_SETTINGS_KEY,
-  );
-  const defaultSettingsValue =
-    (generalAppSettings?.data as GeneralSettings) ?? DEFAULT_GENERAL_SETTINGS;
-  const [settings, setSettings] = useState(defaultSettingsValue);
+  const appSettings = hooks.useAppSettings();
+  const [settings, setSettings] = useState(DEFAULT_GENERAL_SETTINGS);
 
+  useEffect(
+    () => {
+      if (appSettings.data) {
+        const generalAppSettings = appSettings.data?.find(
+          (setting) => setting.name === GENERAL_SETTINGS_KEY,
+        )?.data as GeneralSettings;
+        if (generalAppSettings && !_.isEqual(settings, generalAppSettings)) {
+          setSettings(generalAppSettings);
+        }
+      }
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [appSettings.data],
+  );
+
+  // eslint-disable-next-line react/jsx-no-constructed-context-values
   const contextValue = useMemo(
     () => ({
       settings,
@@ -63,28 +73,34 @@ export const SettingsProvider: FC<Prop> = ({ children }) => {
         });
       },
       saveSettings: () => {
-        if (!generalAppSettings?.data) {
+        if (!settings) {
           postSettings.mutate({
             data: settings,
             name: GENERAL_SETTINGS_KEY,
           });
         } else {
           patchSettings.mutate({
-            id: generalAppSettings?.id,
+            id: appSettings.data?.find(
+              (setting) => setting.name === GENERAL_SETTINGS_KEY,
+            )?.id,
             data: settings,
           });
         }
       },
-      resetSettings: () => setSettings(defaultSettingsValue),
-      unsavedChanges: !_.isEqual(defaultSettingsValue, settings),
+      resetSettings: () =>
+        setSettings(
+          (appSettings.data?.find(
+            (setting) => setting.name === GENERAL_SETTINGS_KEY,
+          )?.data as GeneralSettings) ?? DEFAULT_GENERAL_SETTINGS,
+        ),
+      unsavedChanges: !_.isEqual(
+        appSettings.data?.find(
+          (setting) => setting.name === GENERAL_SETTINGS_KEY,
+        )?.data,
+        settings,
+      ),
     }),
-    [
-      settings,
-      defaultSettingsValue,
-      generalAppSettings,
-      postSettings,
-      patchSettings,
-    ],
+    [appSettings.data, patchSettings, postSettings, settings],
   );
 
   if (appSettings.isLoading) {

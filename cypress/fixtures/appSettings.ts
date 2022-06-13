@@ -20,6 +20,14 @@ print('Done!')
 print('See you !')
 `;
 
+export const MOCK_GENERAL_SETTINGS = {
+  id: v4(),
+  name: GENERAL_SETTINGS_KEY,
+  data: {
+    ...DEFAULT_GENERAL_SETTINGS,
+    code: MOCK_CODE_SAMPLE,
+  },
+};
 export const MOCK_APP_SETTINGS = [
   {
     id: v4(),

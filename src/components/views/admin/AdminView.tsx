@@ -12,7 +12,7 @@ import {
 } from '../../../config/selectors';
 import SettingsFab from './SettingsFab';
 import { SettingsProvider } from '../../context/SettingsContext';
-import PresetView from './PresetView';
+import PresetView from '../../common/CodeReviewWrapper';
 
 enum TABS {
   TABLE_VIEW = 'TABLE_VIEW',
