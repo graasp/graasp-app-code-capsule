@@ -1,4 +1,4 @@
-import { MOCK_APP_DATA } from '../../../fixtures/appData';
+import { SINGLE_LINE_MOCK_COMMENTS } from '../../../fixtures/appData';
 import { CONTEXTS, PERMISSIONS } from '../../../../src/config/settings';
 import {
   buildDataCy,
@@ -8,7 +8,7 @@ import {
 describe('Builder', () => {
   beforeEach(() => {
     cy.setUpApi({
-      database: { appData: MOCK_APP_DATA },
+      database: { appData: SINGLE_LINE_MOCK_COMMENTS },
       appContext: {
         context: CONTEXTS.BUILDER,
         permission: PERMISSIONS.WRITE,

@@ -1,4 +1,4 @@
-import { MOCK_APP_DATA } from '../../../fixtures/appData';
+import { SINGLE_LINE_MOCK_COMMENTS } from '../../../fixtures/appData';
 import { CONTEXTS, PERMISSIONS } from '../../../../src/config/settings';
 import {
   buildDataCy,
@@ -15,7 +15,7 @@ import { APP_DATA_TYPES } from '../../../../src/config/appDataTypes';
 describe('Builder with Admin access', () => {
   beforeEach(() => {
     cy.setUpApi({
-      database: { appData: MOCK_APP_DATA },
+      database: { appData: SINGLE_LINE_MOCK_COMMENTS },
       appContext: {
         context: CONTEXTS.BUILDER,
         permission: PERMISSIONS.ADMIN,
@@ -29,7 +29,7 @@ describe('Builder with Admin access', () => {
     cy.get(buildDataCy(TABLE_VIEW_PANE_CYPRESS)).should('be.visible');
 
     // check that all users are displayed
-    const comments = MOCK_APP_DATA.filter(
+    const comments = SINGLE_LINE_MOCK_COMMENTS.filter(
       (r) => r.type === APP_DATA_TYPES.COMMENT,
     );
     const users = comments.map((r) => r.memberId);
