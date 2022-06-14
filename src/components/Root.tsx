@@ -3,7 +3,7 @@ import { createTheme, styled, ThemeProvider } from '@mui/material';
 import { grey, orange, pink } from '@mui/material/colors';
 import { StyledEngineProvider } from '@mui/material/styles';
 import { I18nextProvider } from 'react-i18next';
-import { HOC } from '@graasp/apps-query-client';
+import { withContext, withToken } from '@graasp/apps-query-client';
 import App from './App';
 import i18nConfig from '../config/i18n';
 import {
@@ -68,14 +68,14 @@ const RootDiv = styled('div')({
 });
 
 const Root: FC = () => {
-  const AppWithContext = HOC.withToken(App, {
+  const AppWithContext = withToken(App, {
     LoadingComponent: <Loader />,
     useAuthToken: hooks.useAuthToken,
     onError: () => {
       showErrorToast('An error occurred while requesting the token.');
     },
   });
-  const AppWithContextAndToken = HOC.withContext(AppWithContext, {
+  const AppWithContextAndToken = withContext(AppWithContext, {
     LoadingComponent: <Loader />,
     useGetLocalContext: hooks.useGetLocalContext,
     onError: () => {

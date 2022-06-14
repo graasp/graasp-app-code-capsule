@@ -18,6 +18,7 @@ import { useMembersContext } from '../context/MembersContext';
 import { ANONYMOUS_USER } from '../../config/constants';
 import CommentBody from './CommentBody';
 import { getFormattedTime } from '../../utils/datetime';
+import { COMMENT_CONTAINER_CYPRESS } from '../../config/selectors';
 
 const CustomCard = styled(Card)<CardProps>(({ theme }) => ({
   borderRadius: theme.spacing(1),
@@ -66,7 +67,11 @@ const Comment: FC<Props> = ({ comment }) => {
     </>
   );
   return (
-    <CustomCard elevation={0} ref={commentRef}>
+    <CustomCard
+      data-cy={COMMENT_CONTAINER_CYPRESS}
+      elevation={0}
+      ref={commentRef}
+    >
       <CardHeader
         title={userName}
         subheader={getFormattedTime(comment.updatedAt, i18n.language)}

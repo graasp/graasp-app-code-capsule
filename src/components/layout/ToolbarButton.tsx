@@ -1,4 +1,8 @@
-import React, { FC, PropsWithChildren } from 'react';
+import React, {
+  forwardRef,
+  ForwardRefRenderFunction,
+  PropsWithChildren,
+} from 'react';
 import { Button } from '@mui/material';
 
 type Props = {
@@ -6,24 +10,28 @@ type Props = {
   onClick: () => void;
 };
 
-const ToolbarButton: FC<PropsWithChildren<Props>> = ({
-  children,
-  onClick,
-  dataCy,
-}) => (
-  <Button
-    data-cy={dataCy}
-    sx={{
-      p: 1,
-      minWidth: '0px',
-    }}
-    variant="outlined"
-    size="medium"
-    color="primary"
-    onClick={onClick}
-  >
-    {children}
-  </Button>
-);
+const ToolbarButton: ForwardRefRenderFunction<
+  HTMLButtonElement,
+  PropsWithChildren<Props>
+> = (props, ref) => {
+  const { dataCy, onClick } = props;
+  return (
+    <Button
+      ref={ref}
+      {...props}
+      data-cy={dataCy}
+      sx={{
+        p: 1,
+        minWidth: '0px',
+      }}
+      variant="outlined"
+      size="medium"
+      color="primary"
+      onClick={onClick}
+    />
+  );
+};
 
-export default ToolbarButton;
+export default forwardRef<HTMLButtonElement, PropsWithChildren<Props>>(
+  ToolbarButton,
+);

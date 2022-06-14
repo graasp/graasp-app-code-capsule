@@ -6,9 +6,9 @@ import type {
 import { AppContext } from '../interfaces/appContext';
 import { Database } from '../interfaces/database';
 import { GENERAL_SETTINGS_KEY } from '../config/appSettingsTypes';
-import { DEFAULT_GENERAL_SETTINGS } from '../interfaces/settings';
 import { APP_DATA_TYPES } from '../config/appDataTypes';
 import { REACT_APP_API_HOST } from '../config/env';
+import { DEFAULT_GENERAL_SETTINGS } from '../config/settings';
 
 export const mockContext: LocalContext = {
   apiHost: REACT_APP_API_HOST,

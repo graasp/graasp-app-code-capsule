@@ -10,12 +10,10 @@ import React, {
 import _ from 'lodash';
 import { AppSetting } from '@graasp/apps-query-client/dist/src/types';
 import Loader from '../common/Loader';
-import {
-  DEFAULT_GENERAL_SETTINGS,
-  GeneralSettings,
-} from '../../interfaces/settings';
+import { GeneralSettings } from '../../interfaces/settings';
 import { GENERAL_SETTINGS_KEY } from '../../config/appSettingsTypes';
 import { MUTATION_KEYS, useMutation, hooks } from '../../config/queryClient';
+import { DEFAULT_GENERAL_SETTINGS } from '../../config/settings';
 
 export type SettingsContextType = {
   settings: GeneralSettings;

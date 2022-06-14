@@ -47,6 +47,11 @@ export const COMMENT_EDITOR_QUOTE_BUTTON_CYPRESS =
 export const COMMENT_EDITOR_LINE_INFO_TEXT_CYPRESS =
   'comment_editor_line_info_text';
 export const COMMENT_EDITOR_TEXTAREA_CYPRESS = 'comment_editor_textarea';
+export const CODE_REVIEW_TOOLBAR_CYPRESS = 'comment_review_toolbar';
+export const TOOLBAR_COMMIT_INFO_BUTTON_CYPRESS = 'toolbar_commit_info';
+export const TOOLBAR_EDIT_CODE_BUTTON_CYPRESS = 'toolbar_edit_code_button';
+export const TOOLBAR_VISIBILITY_BUTTON_CYPRESS = 'toolbar_visibility_button';
+export const COMMENT_CONTAINER_CYPRESS = 'comment_container';
 
 export const buildDataCy = (selector: string): string =>
   `[data-cy=${selector}]`;

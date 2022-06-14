@@ -1,5 +1,5 @@
 import React, { FC, useContext } from 'react';
-import { HOC } from '@graasp/apps-query-client';
+import { Context } from '@graasp/apps-query-client';
 import AdminView from './AdminView';
 import PlayerView from '../read/PlayerView';
 import { PERMISSIONS } from '../../../config/settings';
@@ -7,7 +7,7 @@ import Loader from '../../common/Loader';
 import { hooks } from '../../../config/queryClient';
 
 const BuilderView: FC = () => {
-  const context = useContext(HOC.Context);
+  const context = useContext(Context);
   const generalAppSettings = hooks.useAppSettings();
 
   if (!generalAppSettings) {

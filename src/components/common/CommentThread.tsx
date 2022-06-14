@@ -33,9 +33,10 @@ const StyledTextField = styled(TextField)(({ theme }) => ({
 
 type Props = {
   children?: List<CommentType>;
+  hiddenState: boolean;
 };
 
-const CommentThread: FC<Props> = ({ children }) => {
+const CommentThread: FC<Props> = ({ children, hiddenState }) => {
   const { t } = useTranslation();
   const {
     addResponse,
@@ -49,7 +50,7 @@ const CommentThread: FC<Props> = ({ children }) => {
   const isEdited = (id: string): boolean => id === currentEditedCommentId;
   const isReplied = (id: string): boolean => id === currentRepliedCommentId;
 
-  if (!children || children?.isEmpty()) {
+  if (!children || children?.isEmpty() || hiddenState) {
     return null;
   }
 

@@ -1,6 +1,6 @@
 import { v4 } from 'uuid';
 import { GENERAL_SETTINGS_KEY } from '../../src/config/appSettingsTypes';
-import { DEFAULT_GENERAL_SETTINGS } from '../../src/interfaces/settings';
+import { DEFAULT_GENERAL_SETTINGS } from '../../src/config/settings';
 
 export const MOCK_CODE_SAMPLE = `# my sample code in python
 

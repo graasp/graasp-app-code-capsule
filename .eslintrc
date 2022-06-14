@@ -5,10 +5,10 @@
   },
   "extends": [
     "airbnb",
+    "plugin:cypress/recommended",
     "plugin:@typescript-eslint/recommended",
     "prettier",
-    "plugin:react/recommended",
-    "plugin:cypress/recommended"
+    "plugin:react/recommended"
   ],
   "globals": {
     "cy": true,
@@ -25,6 +25,7 @@
   "plugins": ["react", "react-hooks", "@typescript-eslint", "prettier"],
   "rules": {
     "react/jsx-props-no-spreading": "off",
+    "react/destructuring-assignment": "off",
     "react/require-default-props": "off",
     "react/react-in-jsx-scope": "off",
     "@typescript-eslint/ban-ts-comment": "off",

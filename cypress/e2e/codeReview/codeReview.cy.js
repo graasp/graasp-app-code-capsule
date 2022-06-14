@@ -1,29 +1,44 @@
-import { MOCK_APP_DATA } from '../../fixtures/appData';
-import { CONTEXTS, PERMISSIONS } from '../../../src/config/settings';
+import { SINGLE_LINE_MOCK_COMMENTS } from '../../fixtures/appData';
+import {
+  CONTEXTS,
+  DEFAULT_GENERAL_SETTINGS,
+  PERMISSIONS,
+} from '../../../src/config/settings';
 import {
   buildAddButtonDataCy,
   buildDataCy,
   CODE_REVIEW_ADD_BUTTON_CYPRESS,
   CODE_REVIEW_CONTAINER_CYPRESS,
   CODE_REVIEW_LINE_CYPRESS,
+  CODE_REVIEW_TOOLBAR_CYPRESS,
+  COMMENT_CONTAINER_CYPRESS,
   COMMENT_EDITOR_CANCEL_BUTTON_CYPRESS,
   COMMENT_EDITOR_CYPRESS,
   COMMENT_EDITOR_LINE_INFO_TEXT_CYPRESS,
   COMMENT_EDITOR_SAVE_BUTTON_CYPRESS,
   COMMENT_EDITOR_TEXTAREA_CYPRESS,
   PLAYER_VIEW_CYPRESS,
+  TOOLBAR_COMMIT_INFO_BUTTON_CYPRESS,
+  TOOLBAR_EDIT_CODE_BUTTON_CYPRESS,
+  TOOLBAR_VISIBILITY_BUTTON_CYPRESS,
 } from '../../../src/config/selectors';
 import {
   MOCK_CODE_SAMPLE,
   MOCK_GENERAL_SETTINGS,
 } from '../../fixtures/appSettings';
 import { CURRENT_MEMBER } from '../../fixtures/members';
+import { SLOW_DOWN_CYPRESS_DELAY } from '../../fixtures/constants';
+import { SETTINGS_KEYS } from '../../../src/interfaces/settings';
+
+// importing a const from a file and using it in cy.wait() produces an error:
+// https://github.com/cypress-io/eslint-plugin-cypress/issues/43#issuecomment-986675657
+const waitingDelay = SLOW_DOWN_CYPRESS_DELAY;
 
 describe('Code review', () => {
   beforeEach(() => {
     cy.setUpApi({
       database: {
-        appData: MOCK_APP_DATA,
+        appData: SINGLE_LINE_MOCK_COMMENTS,
         appSettings: [MOCK_GENERAL_SETTINGS],
       },
       appContext: {
@@ -71,10 +86,12 @@ describe('Code review', () => {
     cy.get(buildDataCy(COMMENT_EDITOR_SAVE_BUTTON_CYPRESS)).should(
       'be.visible',
     );
-    cy.get(buildDataCy(COMMENT_EDITOR_CANCEL_BUTTON_CYPRESS))
-      .should('be.visible')
-      .click();
-    // cy.get(buildDataCy(COMMENT_EDITOR_CANCEL_BUTTON_CYPRESS)).click();
+    cy.get(buildDataCy(COMMENT_EDITOR_CANCEL_BUTTON_CYPRESS)).should(
+      'be.visible',
+    );
+    cy.wait(waitingDelay);
+    cy.get(buildDataCy(COMMENT_EDITOR_CANCEL_BUTTON_CYPRESS)).click();
+
     cy.get(buildDataCy(COMMENT_EDITOR_CYPRESS)).should('not.exist');
   });
 
@@ -99,7 +116,64 @@ describe('Code review', () => {
     );
 
     cy.get(buildDataCy(COMMENT_EDITOR_TEXTAREA_CYPRESS)).type('test');
+    cy.wait(waitingDelay);
     cy.get(buildDataCy(COMMENT_EDITOR_CANCEL_BUTTON_CYPRESS)).click();
     cy.get(buildDataCy(COMMENT_EDITOR_CYPRESS)).should('not.exist');
+  });
+});
+
+describe('Code Review Tools', () => {
+  beforeEach(() => {
+    cy.setUpApi({
+      database: {
+        appData: SINGLE_LINE_MOCK_COMMENTS,
+        appSettings: [
+          {
+            ...MOCK_GENERAL_SETTINGS,
+            data: {
+              ...DEFAULT_GENERAL_SETTINGS,
+              [SETTINGS_KEYS.SHOW_EDIT_BUTTON]: true,
+              [SETTINGS_KEYS.SHOW_VERSION_NAVIGATION]: true,
+              [SETTINGS_KEYS.CODE]: MOCK_CODE_SAMPLE,
+            },
+          },
+        ],
+      },
+      appContext: {
+        context: CONTEXTS.PLAYER,
+        permission: PERMISSIONS.ADMIN,
+        currentMember: CURRENT_MEMBER,
+      },
+    });
+    cy.visit('/');
+  });
+
+  it('show toolbar', () => {
+    cy.get(buildDataCy(CODE_REVIEW_TOOLBAR_CYPRESS)).should('be.visible');
+
+    // check that buttons are present
+    cy.get(buildDataCy(TOOLBAR_COMMIT_INFO_BUTTON_CYPRESS)).should(
+      'be.visible',
+    );
+    cy.get(buildDataCy(TOOLBAR_EDIT_CODE_BUTTON_CYPRESS)).should('be.visible');
+    cy.get(buildDataCy(TOOLBAR_VISIBILITY_BUTTON_CYPRESS)).should('be.visible');
+
+    cy.get(buildDataCy(COMMENT_CONTAINER_CYPRESS)).should(
+      'have.length',
+      SINGLE_LINE_MOCK_COMMENTS.length,
+    );
+
+    // click the toggle visibility button
+    cy.get(buildDataCy(TOOLBAR_VISIBILITY_BUTTON_CYPRESS)).click();
+    cy.get(buildDataCy(COMMENT_CONTAINER_CYPRESS)).should('have.length', 0);
+    cy.get(buildDataCy(TOOLBAR_VISIBILITY_BUTTON_CYPRESS)).click();
+    cy.get(buildDataCy(COMMENT_CONTAINER_CYPRESS)).should(
+      'have.length',
+      SINGLE_LINE_MOCK_COMMENTS.length,
+    );
+
+    // todo: test edit button
+
+    // todo: test code info button
   });
 });

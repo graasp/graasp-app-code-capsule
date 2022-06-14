@@ -28,7 +28,7 @@ import {
   SHOW_VERSION_NAVIGATION_SWITCH_CYPRESS,
   SHOW_VISIBILITY_SWITCH_CYPRESS,
 } from '../../../config/selectors';
-import { SETTINGS } from '../../../interfaces/settings';
+import { SETTINGS_KEYS } from '../../../interfaces/settings';
 import {
   CLOSE_SETTINGS_TIMEOUT,
   REVIEW_MODES,
@@ -66,7 +66,7 @@ const SettingsFab: FC = () => {
   } = useSettings();
 
   const renderSettings = (): ReactElement => {
-    const programmingLanguage = settings[SETTINGS.PROGRAMMING_LANGUAGE];
+    const programmingLanguage = settings[SETTINGS_KEYS.PROGRAMMING_LANGUAGE];
 
     return (
       <TabContext value={tab}>
@@ -82,7 +82,7 @@ const SettingsFab: FC = () => {
         <TabPanel value={TABS.CODE_SETTINGS}>
           <Stack direction="column" sx={{ height: '50vh' }}>
             <SettingsSelect
-              settingsKey={SETTINGS.PROGRAMMING_LANGUAGE}
+              settingsKey={SETTINGS_KEYS.PROGRAMMING_LANGUAGE}
               values={programmingLanguageSelect}
               label={t('Programming Language')}
               dataCy={PROGRAMMING_LANGUAGE_SELECT_CYPRESS}
@@ -92,8 +92,8 @@ const SettingsFab: FC = () => {
             <StyledEditor
               defaultLanguage={programmingLanguage}
               language={programmingLanguage}
-              value={settings[SETTINGS.CODE]}
-              onChange={(value) => changeSetting(SETTINGS.CODE, value)}
+              value={settings[SETTINGS_KEYS.CODE]}
+              onChange={(value) => changeSetting(SETTINGS_KEYS.CODE, value)}
               options={{
                 scrollBeyondLastLine: false,
                 detectIndentation: false,
@@ -110,27 +110,27 @@ const SettingsFab: FC = () => {
               {t('App Customization')}
             </Typography>
             <SettingsSwitch
-              settingKey={SETTINGS.SHOW_HEADER}
+              settingKey={SETTINGS_KEYS.SHOW_HEADER}
               label={t('Show Header to Students')}
               dataCy={SHOW_HEADER_SWITCH_CYPRESS}
             />
             <SettingsSwitch
-              settingKey={SETTINGS.SHOW_TOOLBAR}
+              settingKey={SETTINGS_KEYS.SHOW_TOOLBAR}
               label={t('Show Toolbar to Students')}
               dataCy={SHOW_TOOLBAR_SWITCH_CYPRESS}
             />
             <SettingsSwitch
-              settingKey={SETTINGS.SHOW_VERSION_NAVIGATION}
+              settingKey={SETTINGS_KEYS.SHOW_VERSION_NAVIGATION}
               label={t('Show Version Navigation')}
               dataCy={SHOW_VERSION_NAVIGATION_SWITCH_CYPRESS}
             />
             <SettingsSwitch
-              settingKey={SETTINGS.SHOW_EDIT_BUTTON}
+              settingKey={SETTINGS_KEYS.SHOW_EDIT_BUTTON}
               label={t('Show Code Edit Button')}
               dataCy={SHOW_EDIT_BUTTON_SWITCH_CYPRESS}
             />
             <SettingsSwitch
-              settingKey={SETTINGS.SHOW_VISIBILITY_BUTTON}
+              settingKey={SETTINGS_KEYS.SHOW_VISIBILITY_BUTTON}
               label={t('Show Visibility Toggle')}
               dataCy={SHOW_VISIBILITY_SWITCH_CYPRESS}
             />
@@ -141,18 +141,18 @@ const SettingsFab: FC = () => {
             </Typography>
 
             <SettingsSwitch
-              settingKey={SETTINGS.ALLOW_COMMENTS}
+              settingKey={SETTINGS_KEYS.ALLOW_COMMENTS}
               label={t('Allow Comments')}
               dataCy={ALLOW_COMMENTS_SWITCH_CYPRESS}
             />
             <SettingsSwitch
-              settingKey={SETTINGS.ALLOW_REPLIES}
+              settingKey={SETTINGS_KEYS.ALLOW_REPLIES}
               label={t('Allow Replies')}
               dataCy={ALLOW_REPLIES_SWITCH_CYPRESS}
             />
 
             <SettingsSelect
-              settingsKey={SETTINGS.REVIEW_MODE}
+              settingsKey={SETTINGS_KEYS.REVIEW_MODE}
               label={t('Define Review Mode')}
               values={REVIEW_MODES.map(({ label, value }) => ({
                 // @ts-ignore
