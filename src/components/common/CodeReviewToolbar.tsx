@@ -1,6 +1,11 @@
 import React, { FC, useState } from 'react';
 import { Stack, Tooltip } from '@mui/material';
-import { Edit, Visibility, VisibilityOff } from '@mui/icons-material';
+import {
+  Edit,
+  PlayArrow,
+  Visibility,
+  VisibilityOff,
+} from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faInfo } from '@fortawesome/free-solid-svg-icons';
@@ -10,11 +15,13 @@ import {
   CODE_REVIEW_TOOLBAR_CYPRESS,
   TOOLBAR_COMMIT_INFO_BUTTON_CYPRESS,
   TOOLBAR_EDIT_CODE_BUTTON_CYPRESS,
+  TOOLBAR_RUN_CODE_BUTTON_CYPRESS,
   TOOLBAR_VISIBILITY_BUTTON_CYPRESS,
 } from '../../config/selectors';
 import ToolbarButton from '../layout/ToolbarButton';
 import { useVisibilityContext } from '../context/VisibilityContext';
 import { DEFAULT_LINE_HIDDEN_STATE } from '../../config/settings';
+import { SUPPORTED_EXECUTABLE_LANGUAGES } from '../../config/programmingLanguages';
 
 // todo: remove this once there are props
 // eslint-disable-next-line @typescript-eslint/ban-types
@@ -29,6 +36,9 @@ const CodeReviewToolbar: FC<Props> = () => {
   const showEditButton = settings[SETTINGS_KEYS.SHOW_EDIT_BUTTON];
   const showVisibilityToggle = settings[SETTINGS_KEYS.SHOW_VISIBILITY_BUTTON];
   const showCommitInfo = settings[SETTINGS_KEYS.SHOW_VERSION_NAVIGATION];
+  const isExecutable = SUPPORTED_EXECUTABLE_LANGUAGES.includes(
+    settings[SETTINGS_KEYS.PROGRAMMING_LANGUAGE],
+  );
   const [isHidden, setIsHidden] = useState(DEFAULT_LINE_HIDDEN_STATE);
   const { toggleAll } = useVisibilityContext();
 
@@ -40,6 +50,20 @@ const CodeReviewToolbar: FC<Props> = () => {
     setIsHidden(!isHidden);
     toggleAll(!isHidden);
   };
+
+  const executeCodeButton = (
+    <Tooltip title={t('Run')}>
+      <span>
+        <ToolbarButton
+          disabled
+          dataCy={TOOLBAR_RUN_CODE_BUTTON_CYPRESS}
+          onClick={() => console.log('run code clicked')}
+        >
+          <PlayArrow fontSize="inherit" />
+        </ToolbarButton>
+      </span>
+    </Tooltip>
+  );
 
   const infoButton = (
     <Tooltip title={t('Commit Info')}>
@@ -90,6 +114,7 @@ const CodeReviewToolbar: FC<Props> = () => {
         <>
           {showCommitInfo && infoButton}
           {showEditButton && editButton}
+          {isExecutable && executeCodeButton}
           {showVisibilityToggle && toggleVisibilityButton}
         </>
       </Stack>

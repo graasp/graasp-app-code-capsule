@@ -32,3 +32,5 @@ export const programmingLanguageSelect = Object.entries(
   label: o[1].label,
   value: o[0],
 }));
+
+export const SUPPORTED_EXECUTABLE_LANGUAGES = [PYTHON];

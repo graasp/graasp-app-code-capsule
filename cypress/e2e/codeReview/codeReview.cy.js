@@ -20,6 +20,7 @@ import {
   PLAYER_VIEW_CYPRESS,
   TOOLBAR_COMMIT_INFO_BUTTON_CYPRESS,
   TOOLBAR_EDIT_CODE_BUTTON_CYPRESS,
+  TOOLBAR_RUN_CODE_BUTTON_CYPRESS,
   TOOLBAR_VISIBILITY_BUTTON_CYPRESS,
 } from '../../../src/config/selectors';
 import {
@@ -156,6 +157,7 @@ describe('Code Review Tools', () => {
       'be.visible',
     );
     cy.get(buildDataCy(TOOLBAR_EDIT_CODE_BUTTON_CYPRESS)).should('be.visible');
+    cy.get(buildDataCy(TOOLBAR_RUN_CODE_BUTTON_CYPRESS)).should('be.visible');
     cy.get(buildDataCy(TOOLBAR_VISIBILITY_BUTTON_CYPRESS)).should('be.visible');
 
     cy.get(buildDataCy(COMMENT_CONTAINER_CYPRESS)).should(
