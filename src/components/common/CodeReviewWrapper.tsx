@@ -5,7 +5,6 @@ import { useSettings } from '../context/SettingsContext';
 import { SETTINGS_KEYS } from '../../interfaces/settings';
 import CodeReview from './CodeReview';
 import { ReviewProvider } from '../context/ReviewContext';
-import { AppDataProvider } from '../context/AppDataContext';
 import CodeReviewToolbar from './CodeReviewToolbar';
 import { CODE_REVIEW_CONTAINER_CYPRESS } from '../../config/selectors';
 import { VisibilityProvider } from '../context/VisibilityContext';
@@ -35,12 +34,10 @@ const CodeReviewWrapper: FC<Props> = () => {
   return (
     <ReviewProvider>
       <VisibilityProvider numberOfLines={numberOfLines}>
-        <AppDataProvider>
-          <CodeContainer data-cy={CODE_REVIEW_CONTAINER_CYPRESS}>
-            <CodeReviewToolbar />
-            <CodeReview code={code} language={language} />
-          </CodeContainer>
-        </AppDataProvider>
+        <CodeContainer data-cy={CODE_REVIEW_CONTAINER_CYPRESS}>
+          <CodeReviewToolbar />
+          <CodeReview code={code} language={language} />
+        </CodeContainer>
       </VisibilityProvider>
     </ReviewProvider>
   );

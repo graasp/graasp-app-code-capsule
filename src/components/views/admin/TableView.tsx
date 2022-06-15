@@ -11,7 +11,6 @@ import {
 import InputIcon from '@mui/icons-material/Input';
 import { useTranslation } from 'react-i18next';
 import { List } from 'immutable';
-import { Member } from '@graasp/apps-query-client/dist/src/types';
 import {
   NUMBER_OF_COMMENTS_CYPRESS,
   TABLE_NO_COMMENTS_CYPRESS,
@@ -25,28 +24,28 @@ import {
   NB_COL_TABLE_VIEW_TABLE,
 } from '../../../config/constants';
 import CustomDialog from '../../common/CustomDialog';
-import Loader from '../../common/Loader';
-import { hooks } from '../../../config/queryClient';
+import OrphanComments from './OrphanComments';
+import { useAppDataContext } from '../../context/AppDataContext';
+import { useMembersContext } from '../../context/MembersContext';
+import { CommentType } from '../../../interfaces/comment';
+import { getOrphans } from '../../../utils/comments';
 
 const TableView: FC = () => {
   const { t } = useTranslation();
   const [openCommentView, setOpenCommentView] = useState(false);
-  const { data: appContext, isLoading: isLoadingAppContext } =
-    hooks.useAppContext();
-  const { data: appData, isLoading: isLoadingAppData } = hooks.useAppData();
+  const members = useMembersContext();
+  const { appData } = useAppDataContext();
 
-  if (isLoadingAppContext || isLoadingAppData) {
-    return <Loader />;
-  }
-
-  const members: Member[] =
-    (appContext?.get('members') as Member[]) ?? List<Member>();
   const comments = appData?.filter(
     (res) => res.type === APP_DATA_TYPES.COMMENT,
-  );
+  ) as List<CommentType>;
 
   const renderTableBody = (): ReactElement[] | ReactElement | null => {
-    if (comments?.isEmpty()) {
+    const orphansId = getOrphans(comments).map((c) => c.id);
+    const nonOrphanComments = comments?.filter(
+      (c) => !orphansId.includes(c.id),
+    );
+    if (nonOrphanComments?.isEmpty()) {
       // show that there are no comments available
       return (
         <TableRow>
@@ -59,7 +58,7 @@ const TableView: FC = () => {
         </TableRow>
       );
     }
-    const commentsByUsers = comments
+    const commentsByUsers = nonOrphanComments
       ?.groupBy(({ memberId }) => memberId)
       .toArray();
     return (
@@ -86,6 +85,7 @@ const TableView: FC = () => {
 
   return (
     <>
+      <OrphanComments comments={comments} />
       <TableContainer data-cy={TABLE_VIEW_TABLE_CYPRESS}>
         <Table aria-label="student table">
           <TableHead>

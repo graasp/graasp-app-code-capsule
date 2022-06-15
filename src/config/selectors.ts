@@ -54,6 +54,7 @@ export const TOOLBAR_VISIBILITY_BUTTON_CYPRESS = 'toolbar_visibility_button';
 export const TOOLBAR_RUN_CODE_BUTTON_CYPRESS = 'toolbar_run_code_button';
 export const COMMENT_CONTAINER_CYPRESS = 'comment_container';
 export const COMMENT_THREAD_CONTAINER_CYPRESS = 'comment_thread_container';
+export const ORPHAN_BUTTON_CYPRESS = 'orphan_button';
 
 export const buildDataCy = (selector: string): string =>
   `[data-cy=${selector}]`;

@@ -89,6 +89,9 @@
     "MultiLineComment": "Multiline Comment: {{start}} - {{end}}",
     "Define Review Mode": "Define Review Mode",
     "Individual - Each student works in isolation": "Individual - Each student works in isolation",
-    "Collaborative - Students see other students work": "Collaborative - Students see other students work"
+    "Collaborative - Students see other students work": "Collaborative - Students see other students work",
+    "Remove orphans": "Remove orphans",
+    "Orphan threads": "Orphan threads",
+    "total comments": "total comments"
   }
 }

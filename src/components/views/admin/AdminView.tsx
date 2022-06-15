@@ -11,7 +11,6 @@ import {
   TABLE_VIEW_PANE_CYPRESS,
 } from '../../../config/selectors';
 import SettingsFab from './SettingsFab';
-import { SettingsProvider } from '../../context/SettingsContext';
 import PresetView from '../../common/CodeReviewWrapper';
 
 enum TABS {
@@ -28,7 +27,7 @@ const AdminView: FC = () => {
       <TabList
         textColor="secondary"
         indicatorColor="secondary"
-        onChange={(_, newTab) => setActiveTab(newTab)}
+        onChange={(_, newTab: TABS) => setActiveTab(newTab)}
         centered
       >
         <Tab
@@ -56,10 +55,10 @@ const AdminView: FC = () => {
   );
 
   return (
-    <SettingsProvider>
+    <>
       {renderTable()}
       <SettingsFab />
-    </SettingsProvider>
+    </>
   );
 };
 

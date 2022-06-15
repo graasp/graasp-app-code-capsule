@@ -87,6 +87,9 @@
     "MultiLineComment": "Commentaire multi-ligne: {{start}} - {{end}}",
     "Define Review Mode": "Définir le mode de revue",
     "Individual - Each student works in isolation": "Individuel - Chaque étudiant travail en isolation",
-    "Collaborative - Students see other students work": "Collaborative - Les étudiants voient le travail des autres étudiants"
+    "Collaborative - Students see other students work": "Collaborative - Les étudiants voient le travail des autres étudiants",
+    "Remove orphans": "Supprimer les commentaire orphelins",
+    "Orphan threads": "Fils orphelins",
+    "total comments": "commentaires au total"
   }
 }

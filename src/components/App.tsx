@@ -4,6 +4,8 @@ import { CONTEXTS } from '../config/settings';
 import BuilderView from './views/admin/BuilderView';
 import PlayerView from './views/read/PlayerView';
 import { MembersProvider } from './context/MembersContext';
+import { SettingsProvider } from './context/SettingsContext';
+import { AppDataProvider } from './context/AppDataContext';
 
 const App: FC = () => {
   const context = useContext(Context);
@@ -22,7 +24,13 @@ const App: FC = () => {
     }
   };
 
-  return <MembersProvider>{renderContent()}</MembersProvider>;
+  return (
+    <MembersProvider>
+      <SettingsProvider>
+        <AppDataProvider>{renderContent()}</AppDataProvider>
+      </SettingsProvider>
+    </MembersProvider>
+  );
 };
 
 export default App;
