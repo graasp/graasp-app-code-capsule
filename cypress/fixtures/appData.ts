@@ -1,4 +1,4 @@
-import { v4 } from 'uuid';
+import { v4 as uuid } from 'uuid';
 import { AppData } from '@graasp/apps-query-client/dist/src/types';
 import { APP_DATA_TYPES } from '../../src/config/appDataTypes';
 import { CURRENT_MEMBER, MEMBERS } from './members';
@@ -13,7 +13,7 @@ export const MOCK_SERVER_API_HOST = 'http://localhost:3636';
 export const SINGLE_LINE_MOCK_COMMENTS: AppData[] = [
   // comments
   {
-    id: v4(),
+    id: uuid(),
     data: {
       line: 1,
       content: 'Thread start\n\nComment on line 1',
@@ -27,7 +27,7 @@ export const SINGLE_LINE_MOCK_COMMENTS: AppData[] = [
     type: APP_DATA_TYPES.COMMENT,
   },
   {
-    id: v4(),
+    id: uuid(),
     data: {
       line: 3,
       content: 'Other Thread start\n\nComment on line 3\n\nFrom Bob',
@@ -44,7 +44,7 @@ export const SINGLE_LINE_MOCK_COMMENTS: AppData[] = [
 
 export const MULTILINE_MOCK_COMMENTS: AppData[] = [
   {
-    id: v4(),
+    id: uuid(),
     data: {
       line: 3,
       multiline: {
@@ -63,7 +63,7 @@ export const MULTILINE_MOCK_COMMENTS: AppData[] = [
     type: APP_DATA_TYPES.COMMENT,
   },
   {
-    id: v4(),
+    id: uuid(),
     data: { text: 'some text' },
     memberId: MEMBERS.BOB.id,
     creator: MEMBERS.BOB.id,
@@ -73,7 +73,7 @@ export const MULTILINE_MOCK_COMMENTS: AppData[] = [
     type: APP_DATA_TYPES.COMMENT,
   },
   {
-    id: v4(),
+    id: uuid(),
     data: { text: 'some text' },
     memberId: CURRENT_MEMBER.id,
     creator: CURRENT_MEMBER.id,
@@ -84,7 +84,7 @@ export const MULTILINE_MOCK_COMMENTS: AppData[] = [
   },
   // teacher comments
   {
-    id: v4(),
+    id: uuid(),
     data: { text: 'some text' },
     memberId: CURRENT_MEMBER.id,
     creator: CURRENT_MEMBER.id,
@@ -95,10 +95,44 @@ export const MULTILINE_MOCK_COMMENTS: AppData[] = [
   },
 ];
 
+export const generateSingleLineThread = (
+  lineIndex: number,
+  threadLength = 1,
+  creator: string = CURRENT_MEMBER.id,
+): AppData[] => {
+  let parentId = null;
+  const thread: AppData[] = [];
+  for (let idx = 0; idx < threadLength; idx += 1) {
+    thread.push({
+      id: uuid(),
+      data: {
+        line: lineIndex,
+        content: `Thread content ${idx + 1}`,
+        parent: parentId,
+      },
+      itemId: MOCK_SERVER_ITEM.id,
+      memberId: creator,
+      creator,
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+      type: APP_DATA_TYPES.COMMENT,
+    });
+    parentId = thread.at(-1)?.id;
+  }
+  return thread;
+};
+
+export const generateSingleLineCommentThread = (
+  options: { lineIndex: number; threadLength: number }[],
+): AppData[] =>
+  options
+    .map((t) => generateSingleLineThread(t.lineIndex, t.threadLength))
+    .reduce((acc: AppData[], arr) => acc.concat(arr), []);
+
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const MOCK_APP_SETTINGS = [
   {
-    id: v4(),
+    id: uuid(),
     name: GENERAL_SETTINGS_KEY,
     data: {
       ...DEFAULT_GENERAL_SETTINGS,

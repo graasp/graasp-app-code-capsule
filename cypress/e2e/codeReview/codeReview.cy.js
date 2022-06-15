@@ -1,4 +1,7 @@
-import { SINGLE_LINE_MOCK_COMMENTS } from '../../fixtures/appData';
+import {
+  generateSingleLineCommentThread,
+  SINGLE_LINE_MOCK_COMMENTS,
+} from '../../fixtures/appData';
 import {
   CONTEXTS,
   DEFAULT_GENERAL_SETTINGS,
@@ -17,6 +20,7 @@ import {
   COMMENT_EDITOR_LINE_INFO_TEXT_CYPRESS,
   COMMENT_EDITOR_SAVE_BUTTON_CYPRESS,
   COMMENT_EDITOR_TEXTAREA_CYPRESS,
+  COMMENT_THREAD_CONTAINER_CYPRESS,
   PLAYER_VIEW_CYPRESS,
   TOOLBAR_COMMIT_INFO_BUTTON_CYPRESS,
   TOOLBAR_EDIT_CODE_BUTTON_CYPRESS,
@@ -35,7 +39,7 @@ import { SETTINGS_KEYS } from '../../../src/interfaces/settings';
 // https://github.com/cypress-io/eslint-plugin-cypress/issues/43#issuecomment-986675657
 const waitingDelay = SLOW_DOWN_CYPRESS_DELAY;
 
-describe('Code review', () => {
+describe('Code review single comments', () => {
   beforeEach(() => {
     cy.setUpApi({
       database: {
@@ -120,6 +124,40 @@ describe('Code review', () => {
     cy.wait(waitingDelay);
     cy.get(buildDataCy(COMMENT_EDITOR_CANCEL_BUTTON_CYPRESS)).click();
     cy.get(buildDataCy(COMMENT_EDITOR_CYPRESS)).should('not.exist');
+  });
+});
+
+describe('Code Review thread comments', () => {
+  const threadOptions = [
+    { lineIndex: 1, threadLength: 2 },
+    { lineIndex: 3, threadLength: 4 },
+  ];
+  beforeEach(() => {
+    cy.setUpApi({
+      database: {
+        appData: generateSingleLineCommentThread(threadOptions),
+        appSettings: [MOCK_GENERAL_SETTINGS],
+      },
+      appContext: {
+        context: CONTEXTS.PLAYER,
+        permission: PERMISSIONS.ADMIN,
+        currentMember: CURRENT_MEMBER,
+      },
+    });
+    cy.visit('/');
+  });
+
+  it.only('should display threads', () => {
+    cy.get(buildDataCy(CODE_REVIEW_CONTAINER_CYPRESS)).should('exist');
+
+    // check that the threads are rendered
+    cy.get(buildDataCy(COMMENT_THREAD_CONTAINER_CYPRESS))
+      .should('have.length', 2)
+      .each((el, i) => {
+        cy.wrap(el)
+          .children(buildDataCy(COMMENT_CONTAINER_CYPRESS))
+          .should('have.length', threadOptions[i].threadLength);
+      });
   });
 });
 

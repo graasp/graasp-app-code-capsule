@@ -10,6 +10,7 @@ import { useAppDataContext } from '../context/AppDataContext';
 import { CommentType } from '../../interfaces/comment';
 import { buildThread } from '../../utils/comments';
 import { APP_DATA_TYPES } from '../../config/appDataTypes';
+import { COMMENT_THREAD_CONTAINER_CYPRESS } from '../../config/selectors';
 
 const CommentContainer = styled('div')(({ theme }) => ({
   backgroundColor: 'white',
@@ -62,7 +63,10 @@ const CommentThread: FC<Props> = ({ children, hiddenState }) => {
   return (
     <>
       {threads.map((thread) => (
-        <CommentContainer key={`comment-thread-${thread.get(0)?.id}`}>
+        <CommentContainer
+          data-cy={COMMENT_THREAD_CONTAINER_CYPRESS}
+          key={`comment-thread-${thread.get(0)?.id}`}
+        >
           {thread.map((c, i, arr) => (
             <Fragment key={c.id}>
               <CommentProvider value={c}>
