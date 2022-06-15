@@ -1,8 +1,5 @@
 import { v4 } from 'uuid';
-import type {
-  LocalContext,
-  Member,
-} from '@graasp/apps-query-client/dist/src/types';
+import type { LocalContext, Member } from '@graasp/apps-query-client';
 import { AppContext } from '../interfaces/appContext';
 import { Database } from '../interfaces/database';
 import { GENERAL_SETTINGS_KEY } from '../config/appSettingsTypes';

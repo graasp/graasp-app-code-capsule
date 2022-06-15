@@ -1,9 +1,12 @@
 import React, { createContext, FC, PropsWithChildren, useMemo } from 'react';
-import { AppData } from '@graasp/apps-query-client/dist/src/types';
+import { AppData } from '@graasp/apps-query-client';
 import Immutable from 'immutable';
 import Loader from '../common/Loader';
 import { hooks, MUTATION_KEYS, useMutation } from '../../config/queryClient';
 import { VisibilityVariants } from '../../interfaces/comment';
+import { useSettings } from './SettingsContext';
+import { SETTINGS_KEYS } from '../../interfaces/settings';
+import { REVIEW_MODE_INDIVIDUAL } from '../../config/constants';
 
 type PostAppDataType = {
   data: { [key: string]: unknown };
@@ -41,6 +44,12 @@ type Prop = {};
 
 export const AppDataProvider: FC<PropsWithChildren<Prop>> = ({ children }) => {
   const appData = hooks.useAppData();
+  const { settings } = useSettings();
+  // set the default visibility following the review mode
+  const visibilityVariant =
+    settings[SETTINGS_KEYS.REVIEW_MODE] === REVIEW_MODE_INDIVIDUAL
+      ? 'member'
+      : 'item';
   const postAppData = useMutation<unknown, unknown, PostAppDataType>(
     MUTATION_KEYS.POST_APP_DATA,
   );
@@ -53,12 +62,14 @@ export const AppDataProvider: FC<PropsWithChildren<Prop>> = ({ children }) => {
 
   const contextValue = useMemo(
     () => ({
-      postAppData: postAppData.mutate,
+      postAppData: (payload: PostAppDataType) => {
+        postAppData.mutate({ visibility: visibilityVariant, ...payload });
+      },
       patchAppData: patchAppData.mutate,
       deleteAppData: deleteAppData.mutate,
       appData: appData.data || Immutable.List<AppData>(),
     }),
-    [appData, deleteAppData, patchAppData, postAppData],
+    [appData, deleteAppData, patchAppData, postAppData, visibilityVariant],
   );
 
   if (appData.isLoading) {

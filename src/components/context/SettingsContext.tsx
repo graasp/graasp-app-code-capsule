@@ -8,7 +8,7 @@ import React, {
   useState,
 } from 'react';
 import _ from 'lodash';
-import { AppSetting } from '@graasp/apps-query-client/dist/src/types';
+import { AppSetting } from '@graasp/apps-query-client';
 import Loader from '../common/Loader';
 import { GeneralSettings } from '../../interfaces/settings';
 import { GENERAL_SETTINGS_KEY } from '../../config/appSettingsTypes';

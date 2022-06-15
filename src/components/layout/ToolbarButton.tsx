@@ -15,11 +15,12 @@ const ToolbarButton: ForwardRefRenderFunction<
   HTMLButtonElement,
   PropsWithChildren<Props>
 > = (props, ref) => {
-  const { dataCy, onClick, disabled } = props;
+  // structure the custom props from the other ones given by the tooltip
+  const { dataCy, onClick, disabled, ...otherProps } = props;
   return (
     <Button
       ref={ref}
-      {...props}
+      {...otherProps}
       data-cy={dataCy}
       disabled={disabled}
       sx={{

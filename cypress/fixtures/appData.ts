@@ -1,5 +1,5 @@
 import { v4 as uuid } from 'uuid';
-import { AppData } from '@graasp/apps-query-client/dist/src/types';
+import { AppData } from '@graasp/apps-query-client';
 import { APP_DATA_TYPES } from '../../src/config/appDataTypes';
 import { CURRENT_MEMBER, MEMBERS } from './members';
 import { GENERAL_SETTINGS_KEY } from '../../src/config/appSettingsTypes';

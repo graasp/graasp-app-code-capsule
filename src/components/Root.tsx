@@ -1,4 +1,4 @@
-import React, { FC, ReactNode } from 'react';
+import React, { FC } from 'react';
 import { createTheme, styled, ThemeProvider } from '@mui/material';
 import { grey, orange, pink } from '@mui/material/colors';
 import { StyledEngineProvider } from '@mui/material/styles';
@@ -14,14 +14,6 @@ import {
 } from '../config/queryClient';
 import Loader from './common/Loader';
 import { showErrorToast } from '../utils/toast';
-
-// declare this type to use React v18 with react-query v3
-// for reference: https://github.com/tannerlinsley/react-query/issues/3476
-declare module 'react-query/types/react/QueryClientProvider' {
-  interface QueryClientProviderProps {
-    children?: ReactNode;
-  }
-}
 
 // declare the module to enable theme modification
 declare module '@mui/material/styles' {
@@ -71,16 +63,20 @@ const Root: FC = () => {
   const AppWithContext = withToken(App, {
     LoadingComponent: <Loader />,
     useAuthToken: hooks.useAuthToken,
-    onError: () => {
-      showErrorToast('An error occurred while requesting the token.');
-    },
+    onError:
+      /* istanbul ignore next */
+      () => {
+        showErrorToast('An error occurred while requesting the token.');
+      },
   });
   const AppWithContextAndToken = withContext(AppWithContext, {
     LoadingComponent: <Loader />,
     useGetLocalContext: hooks.useGetLocalContext,
-    onError: () => {
-      showErrorToast('An error occurred while fetching the context.');
-    },
+    onError:
+      /* istanbul ignore next */
+      () => {
+        showErrorToast('An error occurred while fetching the context.');
+      },
   });
   return (
     <RootDiv>

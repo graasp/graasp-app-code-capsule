@@ -1,6 +1,5 @@
-import { AppData } from '@graasp/apps-query-client/dist/src/types';
-import { UUID } from '@graasp/ui/dist/types';
 import { List } from 'immutable';
+import { AppData, UUID } from '@graasp/apps-query-client';
 import { CommentType } from '../interfaces/comment';
 
 const findCommentWithId = (

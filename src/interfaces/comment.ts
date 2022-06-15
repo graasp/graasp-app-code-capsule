@@ -1,4 +1,4 @@
-import { AppData } from '@graasp/apps-query-client/dist/src/types';
+import { AppData } from '@graasp/apps-query-client';
 
 export interface CommentAppData {
   data: {

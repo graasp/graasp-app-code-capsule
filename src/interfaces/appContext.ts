@@ -1,4 +1,4 @@
-import { Member } from '@graasp/apps-query-client/dist/src/types';
+import { Member } from '@graasp/apps-query-client';
 
 export interface AppContext {
   id: string;

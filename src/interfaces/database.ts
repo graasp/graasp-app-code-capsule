@@ -3,7 +3,7 @@ import {
   AppData,
   AppSetting,
   Member,
-} from '@graasp/apps-query-client/dist/src/types';
+} from '@graasp/apps-query-client';
 
 export interface Database {
   appData: AppData[];

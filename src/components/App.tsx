@@ -6,6 +6,7 @@ import PlayerView from './views/read/PlayerView';
 import { MembersProvider } from './context/MembersContext';
 import { SettingsProvider } from './context/SettingsContext';
 import { AppDataProvider } from './context/AppDataContext';
+import { ANALYZER_VIEW_CYPRESS } from '../config/selectors';
 
 const App: FC = () => {
   const context = useContext(Context);
@@ -16,7 +17,7 @@ const App: FC = () => {
         return <BuilderView />;
 
       case CONTEXTS.ANALYZER:
-        return <div>Analyzer view is a work in progress</div>;
+        return <div data-cy={ANALYZER_VIEW_CYPRESS}>Analyzer View</div>;
 
       case CONTEXTS.PLAYER:
       default:

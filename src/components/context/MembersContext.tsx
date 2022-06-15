@@ -5,7 +5,7 @@ import React, {
   useEffect,
   useState,
 } from 'react';
-import { Member } from '@graasp/apps-query-client/dist/src/types';
+import { Member } from '@graasp/apps-query-client';
 import { List } from 'immutable';
 import Loader from '../common/Loader';
 import { hooks } from '../../config/queryClient';

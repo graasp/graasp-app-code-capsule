@@ -1,4 +1,4 @@
-import { LocalContext } from '@graasp/apps-query-client/dist/src/types';
+import { LocalContext } from '@graasp/apps-query-client';
 import { Database } from './database';
 
 declare global {
