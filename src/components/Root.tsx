@@ -1,19 +1,22 @@
 import React, { FC } from 'react';
-import { createTheme, styled, ThemeProvider } from '@mui/material';
+import { I18nextProvider } from 'react-i18next';
+
+import { withContext, withToken } from '@graasp/apps-query-client';
+
+import { ThemeProvider, createTheme, styled } from '@mui/material';
 import { grey, orange, pink } from '@mui/material/colors';
 import { StyledEngineProvider } from '@mui/material/styles';
-import { I18nextProvider } from 'react-i18next';
-import { withContext, withToken } from '@graasp/apps-query-client';
-import App from './App';
+
 import i18nConfig from '../config/i18n';
 import {
   QueryClientProvider,
-  queryClient,
   ReactQueryDevtools,
   hooks,
+  queryClient,
 } from '../config/queryClient';
-import Loader from './common/Loader';
 import { showErrorToast } from '../utils/toast';
+import App from './App';
+import Loader from './common/Loader';
 
 // declare the module to enable theme modification
 declare module '@mui/material/styles' {

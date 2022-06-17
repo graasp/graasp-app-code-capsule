@@ -1,9 +1,12 @@
 import React, { FC } from 'react';
-import { Stack, styled, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { GraaspLogo, Header as GraaspHeader } from '@graasp/ui';
-import { GRAASP_LOGO_CYPRESS } from '../../config/selectors';
+
+import { Header as GraaspHeader, GraaspLogo } from '@graasp/ui';
+
+import { Stack, Typography, styled } from '@mui/material';
+
 import { GRAASP_LOGO_HEADER_HEIGHT } from '../../config/constants';
+import { GRAASP_LOGO_CYPRESS } from '../../config/selectors';
 
 const StyledGraaspLogo = styled(GraaspLogo)({
   fill: '#fff',

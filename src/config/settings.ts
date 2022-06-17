@@ -1,6 +1,6 @@
-import { REACT_APP_MOCK_API } from './env';
-import { PYTHON, REVIEW_MODE_INDIVIDUAL } from './constants';
 import { GeneralSettings, SETTINGS_KEYS } from '../interfaces/settings';
+import { PYTHON, REVIEW_MODE_INDIVIDUAL } from './constants';
+import { REACT_APP_MOCK_API } from './env';
 
 export const MOCK_API = REACT_APP_MOCK_API === 'true';
 
@@ -39,6 +39,8 @@ export const DEFAULT_ALLOW_COMMENTS_SETTING = true;
 export const DEFAULT_ALLOW_REPLIES_SETTING = true;
 export const DEFAULT_PROGRAMMING_LANGUAGE_SETTING = PYTHON;
 export const DEFAULT_CODE_SETTING = '';
+export const DEFAULT_COMMIT_MESSAGE_SETTING = '';
+export const DEFAULT_COMMIT_DESCRIPTION_SETTING = '';
 
 export const DEFAULT_REVIEW_MODE_SETTING = REVIEW_MODE_INDIVIDUAL;
 

@@ -1,4 +1,7 @@
 import React, { FC, ReactElement, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+
+import { MoreVert } from '@mui/icons-material';
 import {
   Avatar,
   Card,
@@ -6,19 +9,18 @@ import {
   CardHeader,
   CardProps,
   IconButton,
-  styled,
   Tooltip,
+  styled,
 } from '@mui/material';
-import { MoreVert } from '@mui/icons-material';
-import { useTranslation } from 'react-i18next';
-import { CommentType } from '../../interfaces/comment';
-import CommentActions from './CommentActions';
-import ReportCommentDialog from './ReportCommentDialog';
-import { useMembersContext } from '../context/MembersContext';
+
 import { ANONYMOUS_USER } from '../../config/constants';
-import CommentBody from './CommentBody';
-import { getFormattedTime } from '../../utils/datetime';
 import { COMMENT_CONTAINER_CYPRESS } from '../../config/selectors';
+import { CommentType } from '../../interfaces/comment';
+import { getFormattedTime } from '../../utils/datetime';
+import { useMembersContext } from '../context/MembersContext';
+import CommentActions from './CommentActions';
+import CommentBody from './CommentBody';
+import ReportCommentDialog from './ReportCommentDialog';
 
 const CustomCard = styled(Card)<CardProps>(({ theme }) => ({
   borderRadius: theme.spacing(1),

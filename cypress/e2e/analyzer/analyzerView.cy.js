@@ -1,8 +1,8 @@
-import { CONTEXTS, PERMISSIONS } from '../../../src/config/settings';
 import {
   ANALYZER_VIEW_CYPRESS,
   buildDataCy,
 } from '../../../src/config/selectors';
+import { CONTEXTS, PERMISSIONS } from '../../../src/config/settings';
 
 describe('Analyzer View', () => {
   beforeEach(() => {

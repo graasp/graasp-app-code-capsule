@@ -1,7 +1,10 @@
 import React, { FC, RefObject, useState } from 'react';
-import { Button } from '@graasp/ui';
 import { useTranslation } from 'react-i18next';
+
+import { Button } from '@graasp/ui';
+
 import { TextField, Typography } from '@mui/material';
+
 import CustomDialog from './CustomDialog';
 
 type Props = {

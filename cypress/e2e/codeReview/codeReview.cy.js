@@ -1,15 +1,4 @@
 import {
-  generateSingleLineCommentThread,
-  SINGLE_LINE_MOCK_COMMENTS,
-} from '../../fixtures/appData';
-import {
-  CONTEXTS,
-  DEFAULT_GENERAL_SETTINGS,
-  PERMISSIONS,
-} from '../../../src/config/settings';
-import {
-  buildAddButtonDataCy,
-  buildDataCy,
   CODE_REVIEW_ADD_BUTTON_CYPRESS,
   CODE_REVIEW_CONTAINER_CYPRESS,
   CODE_REVIEW_LINE_CYPRESS,
@@ -26,14 +15,25 @@ import {
   TOOLBAR_EDIT_CODE_BUTTON_CYPRESS,
   TOOLBAR_RUN_CODE_BUTTON_CYPRESS,
   TOOLBAR_VISIBILITY_BUTTON_CYPRESS,
+  buildAddButtonDataCy,
+  buildDataCy,
 } from '../../../src/config/selectors';
+import {
+  CONTEXTS,
+  DEFAULT_GENERAL_SETTINGS,
+  PERMISSIONS,
+} from '../../../src/config/settings';
+import { SETTINGS_KEYS } from '../../../src/interfaces/settings';
+import {
+  SINGLE_LINE_MOCK_COMMENTS,
+  generateSingleLineCommentThread,
+} from '../../fixtures/appData';
 import {
   MOCK_CODE_SAMPLE,
   MOCK_GENERAL_SETTINGS,
 } from '../../fixtures/appSettings';
-import { CURRENT_MEMBER } from '../../fixtures/members';
 import { SLOW_DOWN_CYPRESS_DELAY } from '../../fixtures/constants';
-import { SETTINGS_KEYS } from '../../../src/interfaces/settings';
+import { CURRENT_MEMBER } from '../../fixtures/members';
 
 // importing a const from a file and using it in cy.wait() produces an error:
 // https://github.com/cypress-io/eslint-plugin-cypress/issues/43#issuecomment-986675657

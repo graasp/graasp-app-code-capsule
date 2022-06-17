@@ -1,4 +1,5 @@
 import { LocalContext } from '@graasp/apps-query-client';
+
 import { Database } from './database';
 
 declare global {

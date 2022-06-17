@@ -1,8 +1,14 @@
 import { FC, ReactElement, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+
 import { Button } from '@graasp/ui';
-import { Settings as SettingsIcon } from '@mui/icons-material';
-import Editor from '@monaco-editor/react';
+
+import {
+  Code,
+  DisplaySettings,
+  Settings as SettingsIcon,
+} from '@mui/icons-material';
+import { TabContext, TabList, TabPanel } from '@mui/lab';
 import {
   Box,
   Divider,
@@ -12,12 +18,17 @@ import {
   Typography,
   styled,
 } from '@mui/material';
-import { TabContext, TabList, TabPanel } from '@mui/lab';
-import CustomDialog from '../../common/CustomDialog';
+
+import Editor from '@monaco-editor/react';
+
+import {
+  CLOSE_SETTINGS_TIMEOUT,
+  INSTRUCTOR_CODE_ID,
+  REVIEW_MODES,
+} from '../../../config/constants';
 import {
   ALLOW_COMMENTS_SWITCH_CYPRESS,
   ALLOW_REPLIES_SWITCH_CYPRESS,
-  PROGRAMMING_LANGUAGE_SELECT_CYPRESS,
   SETTINGS_DIALOG_CANCEL_BUTTON_CYPRESS,
   SETTINGS_DIALOG_SAVE_BUTTON_CYPRESS,
   SETTINGS_DIALOG_WINDOW_CYPRESS,
@@ -29,17 +40,12 @@ import {
   SHOW_VISIBILITY_SWITCH_CYPRESS,
 } from '../../../config/selectors';
 import { SETTINGS_KEYS } from '../../../interfaces/settings';
-import {
-  CLOSE_SETTINGS_TIMEOUT,
-  REVIEW_MODES,
-} from '../../../config/constants';
-import {
-  programmingLanguageSelect,
-  programmingLanguageSettings,
-} from '../../../config/programmingLanguages';
-import SettingsSwitch from '../../common/settings/SettingsSwitch';
-import Loader from '../../common/Loader';
+import CodeEditor from '../../common/CodeEditor';
+import CustomDialog from '../../common/CustomDialog';
 import SettingsSelect from '../../common/settings/SettingsSelect';
+import SettingsSwitch from '../../common/settings/SettingsSwitch';
+import { useCodeEditingContext } from '../../context/CodeEditingContext';
+import { useCodeVersionContext } from '../../context/CodeVersionContext';
 import { useSettings } from '../../context/SettingsContext';
 
 const StyledEditor = styled(Editor)({
@@ -57,118 +63,98 @@ const SettingsFab: FC = () => {
   const { t } = useTranslation();
   const [openSettings, setOpenSettings] = useState(false);
   const [tab, setTab] = useState(TABS.CODE_SETTINGS);
-  const {
-    saveSettings,
-    resetSettings,
-    unsavedChanges,
-    changeSetting,
-    settings,
-  } = useSettings();
+  const { saveSettings, resetSettings, unsavedChanges } = useSettings();
+  const { submit: saveCodeVersionSetting } = useCodeEditingContext();
+  const { setCodeId } = useCodeVersionContext();
 
-  const renderSettings = (): ReactElement => {
-    const programmingLanguage = settings[SETTINGS_KEYS.PROGRAMMING_LANGUAGE];
+  const renderSettings = (): ReactElement => (
+    <TabContext value={tab}>
+      <TabList
+        textColor="secondary"
+        indicatorColor="secondary"
+        onChange={(_, newTab) => setTab(newTab)}
+        centered
+      >
+        <Tab
+          value={TABS.CODE_SETTINGS}
+          label={t('Code Settings')}
+          icon={<Code />}
+          iconPosition="start"
+        />
+        <Tab
+          value={TABS.DISPLAY_SETTINGS}
+          label={t('Display Settings')}
+          icon={<DisplaySettings />}
+          iconPosition="start"
+        />
+      </TabList>
+      <TabPanel value={TABS.CODE_SETTINGS}>
+        <CodeEditor showButtonBar={false} />
+      </TabPanel>
+      <TabPanel value={TABS.DISPLAY_SETTINGS}>
+        <Stack sx={{ height: '50vh' }}>
+          <Typography variant="subtitle2">{t('App Customization')}</Typography>
+          <SettingsSwitch
+            settingKey={SETTINGS_KEYS.SHOW_HEADER}
+            label={t('Show Header to Students')}
+            dataCy={SHOW_HEADER_SWITCH_CYPRESS}
+          />
+          <SettingsSwitch
+            settingKey={SETTINGS_KEYS.SHOW_TOOLBAR}
+            label={t('Show Toolbar to Students')}
+            dataCy={SHOW_TOOLBAR_SWITCH_CYPRESS}
+          />
+          <SettingsSwitch
+            settingKey={SETTINGS_KEYS.SHOW_VERSION_NAVIGATION}
+            label={t('Show Version Navigation')}
+            dataCy={SHOW_VERSION_NAVIGATION_SWITCH_CYPRESS}
+          />
+          <SettingsSwitch
+            settingKey={SETTINGS_KEYS.SHOW_EDIT_BUTTON}
+            label={t('Show Code Edit Button')}
+            dataCy={SHOW_EDIT_BUTTON_SWITCH_CYPRESS}
+          />
+          <SettingsSwitch
+            settingKey={SETTINGS_KEYS.SHOW_VISIBILITY_BUTTON}
+            label={t('Show Visibility Toggle')}
+            dataCy={SHOW_VISIBILITY_SWITCH_CYPRESS}
+          />
 
-    return (
-      <TabContext value={tab}>
-        <TabList
-          textColor="secondary"
-          indicatorColor="secondary"
-          onChange={(_, newTab) => setTab(newTab)}
-          centered
-        >
-          <Tab value={TABS.CODE_SETTINGS} label={t('Code Settings')} />
-          <Tab value={TABS.DISPLAY_SETTINGS} label={t('Display Settings')} />
-        </TabList>
-        <TabPanel value={TABS.CODE_SETTINGS}>
-          <Stack direction="column" sx={{ height: '50vh' }}>
-            <SettingsSelect
-              settingsKey={SETTINGS_KEYS.PROGRAMMING_LANGUAGE}
-              values={programmingLanguageSelect}
-              label={t('Programming Language')}
-              dataCy={PROGRAMMING_LANGUAGE_SELECT_CYPRESS}
-            />
+          <Divider sx={{ mt: 1 }} />
+          <Typography variant="subtitle2">
+            {t('Define Interaction Mode')}
+          </Typography>
 
-            <Typography variant="subtitle2">{t('Code')}</Typography>
-            <StyledEditor
-              defaultLanguage={programmingLanguage}
-              language={programmingLanguage}
-              value={settings[SETTINGS_KEYS.CODE]}
-              onChange={(value) => changeSetting(SETTINGS_KEYS.CODE, value)}
-              options={{
-                scrollBeyondLastLine: false,
-                detectIndentation: false,
-                tabSize:
-                  programmingLanguageSettings[programmingLanguage].tabSize,
-              }}
-              loading={<Loader />}
-            />
-          </Stack>
-        </TabPanel>
-        <TabPanel value={TABS.DISPLAY_SETTINGS}>
-          <Stack sx={{ height: '50vh' }}>
-            <Typography variant="subtitle2">
-              {t('App Customization')}
-            </Typography>
-            <SettingsSwitch
-              settingKey={SETTINGS_KEYS.SHOW_HEADER}
-              label={t('Show Header to Students')}
-              dataCy={SHOW_HEADER_SWITCH_CYPRESS}
-            />
-            <SettingsSwitch
-              settingKey={SETTINGS_KEYS.SHOW_TOOLBAR}
-              label={t('Show Toolbar to Students')}
-              dataCy={SHOW_TOOLBAR_SWITCH_CYPRESS}
-            />
-            <SettingsSwitch
-              settingKey={SETTINGS_KEYS.SHOW_VERSION_NAVIGATION}
-              label={t('Show Version Navigation')}
-              dataCy={SHOW_VERSION_NAVIGATION_SWITCH_CYPRESS}
-            />
-            <SettingsSwitch
-              settingKey={SETTINGS_KEYS.SHOW_EDIT_BUTTON}
-              label={t('Show Code Edit Button')}
-              dataCy={SHOW_EDIT_BUTTON_SWITCH_CYPRESS}
-            />
-            <SettingsSwitch
-              settingKey={SETTINGS_KEYS.SHOW_VISIBILITY_BUTTON}
-              label={t('Show Visibility Toggle')}
-              dataCy={SHOW_VISIBILITY_SWITCH_CYPRESS}
-            />
+          <SettingsSwitch
+            settingKey={SETTINGS_KEYS.ALLOW_COMMENTS}
+            label={t('Allow Comments')}
+            dataCy={ALLOW_COMMENTS_SWITCH_CYPRESS}
+          />
+          <SettingsSwitch
+            settingKey={SETTINGS_KEYS.ALLOW_REPLIES}
+            label={t('Allow Replies')}
+            dataCy={ALLOW_REPLIES_SWITCH_CYPRESS}
+          />
 
-            <Divider sx={{ mt: 1 }} />
-            <Typography variant="subtitle2">
-              {t('Define Interaction Mode')}
-            </Typography>
-
-            <SettingsSwitch
-              settingKey={SETTINGS_KEYS.ALLOW_COMMENTS}
-              label={t('Allow Comments')}
-              dataCy={ALLOW_COMMENTS_SWITCH_CYPRESS}
-            />
-            <SettingsSwitch
-              settingKey={SETTINGS_KEYS.ALLOW_REPLIES}
-              label={t('Allow Replies')}
-              dataCy={ALLOW_REPLIES_SWITCH_CYPRESS}
-            />
-
-            <SettingsSelect
-              settingsKey={SETTINGS_KEYS.REVIEW_MODE}
-              label={t('Define Review Mode')}
-              values={REVIEW_MODES.map(({ label, value }) => ({
-                // @ts-ignore
-                label: t(label),
-                value,
-              }))}
-            />
-          </Stack>
-        </TabPanel>
-      </TabContext>
-    );
-  };
+          <SettingsSelect
+            settingsKey={SETTINGS_KEYS.REVIEW_MODE}
+            label={t('Define Review Mode')}
+            values={REVIEW_MODES.map(({ label, value }) => ({
+              // @ts-ignore
+              label: t(label),
+              value,
+            }))}
+          />
+        </Stack>
+      </TabPanel>
+    </TabContext>
+  );
 
   const handleClose = (save: boolean): void => {
     if (save) {
       saveSettings();
+      saveCodeVersionSetting();
+      setCodeId(INSTRUCTOR_CODE_ID);
     } else {
       // restore old settings after some short delay to not glitch the display
       setTimeout(() => resetSettings(), CLOSE_SETTINGS_TIMEOUT);

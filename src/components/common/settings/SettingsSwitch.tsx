@@ -1,5 +1,7 @@
 import React, { FC } from 'react';
+
 import { FormControlLabel, Switch } from '@mui/material';
+
 import { useSettings } from '../../context/SettingsContext';
 
 type Props = {

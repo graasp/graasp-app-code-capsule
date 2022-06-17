@@ -1,9 +1,11 @@
 import React, { FC, MutableRefObject, ReactElement, RefObject } from 'react';
+
 import {
   Dialog,
   DialogActions,
   DialogContent,
   DialogTitle,
+  styled,
 } from '@mui/material';
 
 type RefType =
@@ -23,6 +25,10 @@ const getPlacedModalStyle = (
   }
   return {};
 };
+
+const StyledDialogTitle = styled(DialogTitle)({
+  paddingBottom: 0,
+});
 
 type Props = {
   open: boolean;
@@ -53,7 +59,7 @@ const CustomDialog: FC<Props> = ({
     onClose={onClose}
     PaperProps={anchor ? { style: getPlacedModalStyle(anchor) } : {}}
   >
-    <DialogTitle>{title}</DialogTitle>
+    <StyledDialogTitle>{title}</StyledDialogTitle>
     <DialogContent>{content}</DialogContent>
     <DialogActions>{actions}</DialogActions>
   </Dialog>

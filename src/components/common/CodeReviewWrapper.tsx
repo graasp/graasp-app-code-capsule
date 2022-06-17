@@ -1,15 +1,22 @@
-import React, { FC } from 'react';
-import { Language } from 'prism-react-renderer';
-import { styled } from '@mui/material';
-import { useSettings } from '../context/SettingsContext';
-import { SETTINGS_KEYS } from '../../interfaces/settings';
-import CodeReview from './CodeReview';
-import { ReviewProvider } from '../context/ReviewContext';
-import CodeReviewToolbar from './CodeReviewToolbar';
-import { CODE_REVIEW_CONTAINER_CYPRESS } from '../../config/selectors';
-import { VisibilityProvider } from '../context/VisibilityContext';
+import React, { FC, ReactNode, useState } from 'react';
 
-const CodeContainer = styled('div')({
+import { Button } from '@graasp/ui';
+
+import { styled } from '@mui/material';
+
+import { AppViews } from '../../config/layout';
+import {
+  CODE_EDITOR_CONTAINER_CYPRESS,
+  CODE_EXECUTION_CONTAINER_CYPRESS,
+  CODE_REVIEW_CONTAINER_CYPRESS,
+} from '../../config/selectors';
+import { ReviewProvider } from '../context/ReviewContext';
+import { VisibilityProvider } from '../context/VisibilityContext';
+import CodeEditor from './CodeEditor';
+import CodeReview from './CodeReview';
+import CodeReviewToolbar from './CodeReviewToolbar';
+
+const Container = styled('div')({
   margin: 'auto',
   fontSize: '1.1rem',
   padding: '16px',
@@ -25,22 +32,41 @@ const CodeContainer = styled('div')({
 type Props = {};
 
 const CodeReviewWrapper: FC<Props> = () => {
-  const { settings } = useSettings();
+  const [view, setView] = useState<AppViews>(AppViews.CodeReview);
 
-  const code = settings[SETTINGS_KEYS.CODE];
-  const numberOfLines = code.split('\n').length;
-  const language = settings[SETTINGS_KEYS.PROGRAMMING_LANGUAGE] as Language;
+  const getContent = (): ReactNode => {
+    switch (view) {
+      case AppViews.CodeEditor:
+        return (
+          <Container data-cy={CODE_EDITOR_CONTAINER_CYPRESS}>
+            <CodeEditor onClose={() => setView(AppViews.CodeReview)} />
+          </Container>
+        );
+      case AppViews.CodeExecution:
+        return (
+          <Container data-cy={CODE_EXECUTION_CONTAINER_CYPRESS}>
+            <div>This is the Code Execution panel</div>
+            <Button onClick={() => setView(AppViews.CodeReview)}>
+              Back to CodeReview
+            </Button>
+          </Container>
+        );
+      case AppViews.CodeReview:
+      default:
+        return (
+          <ReviewProvider>
+            <VisibilityProvider>
+              <Container data-cy={CODE_REVIEW_CONTAINER_CYPRESS}>
+                <CodeReviewToolbar setView={setView} />
+                <CodeReview />
+              </Container>
+            </VisibilityProvider>
+          </ReviewProvider>
+        );
+    }
+  };
 
-  return (
-    <ReviewProvider>
-      <VisibilityProvider numberOfLines={numberOfLines}>
-        <CodeContainer data-cy={CODE_REVIEW_CONTAINER_CYPRESS}>
-          <CodeReviewToolbar />
-          <CodeReview code={code} language={language} />
-        </CodeContainer>
-      </VisibilityProvider>
-    </ReviewProvider>
-  );
+  return <>{getContent()}</>;
 };
 
 export default CodeReviewWrapper;

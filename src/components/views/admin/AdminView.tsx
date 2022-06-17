@@ -1,17 +1,22 @@
 import React, { FC, ReactElement, useState } from 'react';
-import { Tab } from '@mui/material';
-import { TabContext, TabList, TabPanel } from '@mui/lab';
 import { useTranslation } from 'react-i18next';
+
 import { Code, TableChart } from '@mui/icons-material';
-import TableView from './TableView';
+import { TabContext, TabList, TabPanel } from '@mui/lab';
+import { Tab } from '@mui/material';
+
+import { CodeContexts } from '../../../config/codeVersions';
 import {
   PRESET_VIEW_PANE_CYPRESS,
+  TABLE_VIEW_PANE_CYPRESS,
   TAB_PRESET_VIEW_CYPRESS,
   TAB_TABLE_VIEW_CYPRESS,
-  TABLE_VIEW_PANE_CYPRESS,
 } from '../../../config/selectors';
-import SettingsFab from './SettingsFab';
 import PresetView from '../../common/CodeReviewWrapper';
+import { CodeEditingProvider } from '../../context/CodeEditingContext';
+import { CodeVersionProvider } from '../../context/CodeVersionContext';
+import SettingsFab from './SettingsFab';
+import TableView from './TableView';
 
 enum TABS {
   TABLE_VIEW = 'TABLE_VIEW',
@@ -55,10 +60,12 @@ const AdminView: FC = () => {
   );
 
   return (
-    <>
-      {renderTable()}
-      <SettingsFab />
-    </>
+    <CodeVersionProvider>
+      <CodeEditingProvider context={CodeContexts.Instructor}>
+        {renderTable()}
+        <SettingsFab />
+      </CodeEditingProvider>
+    </CodeVersionProvider>
   );
 };
 

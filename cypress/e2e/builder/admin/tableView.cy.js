@@ -1,19 +1,20 @@
 import { List } from 'immutable';
-import { SINGLE_LINE_MOCK_COMMENTS } from '../../../fixtures/appData';
-import { CONTEXTS, PERMISSIONS } from '../../../../src/config/settings';
+
+import { APP_DATA_TYPES } from '../../../../src/config/appDataTypes';
 import {
-  buildDataCy,
-  buildTableRowCypress,
   NUMBER_OF_COMMENTS_CYPRESS,
   ORPHAN_BUTTON_CYPRESS,
-  TAB_TABLE_VIEW_CYPRESS,
   TABLE_VIEW_BODY_USERS_CYPRESS,
   TABLE_VIEW_PANE_CYPRESS,
   TABLE_VIEW_TABLE_CYPRESS,
+  TAB_TABLE_VIEW_CYPRESS,
+  buildDataCy,
+  buildTableRowCypress,
   tableRowUserCypress,
 } from '../../../../src/config/selectors';
-import { APP_DATA_TYPES } from '../../../../src/config/appDataTypes';
+import { CONTEXTS, PERMISSIONS } from '../../../../src/config/settings';
 import { getOrphans } from '../../../../src/utils/comments';
+import { SINGLE_LINE_MOCK_COMMENTS } from '../../../fixtures/appData';
 
 describe('Builder with Admin access', () => {
   beforeEach(() => {

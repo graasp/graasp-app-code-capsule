@@ -1,10 +1,12 @@
 import { v4 as uuid } from 'uuid';
+
 import { AppData } from '@graasp/apps-query-client';
+
 import { APP_DATA_TYPES } from '../../src/config/appDataTypes';
-import { CURRENT_MEMBER, MEMBERS } from './members';
 import { GENERAL_SETTINGS_KEY } from '../../src/config/appSettingsTypes';
-import { MOCK_CODE_SAMPLE } from './appSettings';
 import { DEFAULT_GENERAL_SETTINGS } from '../../src/config/settings';
+import { MOCK_CODE_SAMPLE } from './appSettings';
+import { CURRENT_MEMBER, MEMBERS } from './members';
 
 export const MOCK_SERVER_ITEM = { id: '1234567890' };
 

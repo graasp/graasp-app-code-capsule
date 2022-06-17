@@ -1,9 +1,9 @@
 import {
-  buildDataCy,
-  TAB_TABLE_VIEW_CYPRESS,
   TABLE_NO_COMMENTS_CYPRESS,
   TABLE_VIEW_PANE_CYPRESS,
   TABLE_VIEW_TABLE_CYPRESS,
+  TAB_TABLE_VIEW_CYPRESS,
+  buildDataCy,
 } from '../../../../src/config/selectors';
 import { CONTEXTS, PERMISSIONS } from '../../../../src/config/settings';
 

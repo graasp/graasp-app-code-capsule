@@ -1,19 +1,22 @@
+import _ from 'lodash';
+
 import React, {
-  createContext,
   FC,
   ReactElement,
+  createContext,
   useContext,
   useEffect,
   useMemo,
   useState,
 } from 'react';
-import _ from 'lodash';
+
 import { AppSetting } from '@graasp/apps-query-client';
-import Loader from '../common/Loader';
-import { GeneralSettings } from '../../interfaces/settings';
+
 import { GENERAL_SETTINGS_KEY } from '../../config/appSettingsTypes';
-import { MUTATION_KEYS, useMutation, hooks } from '../../config/queryClient';
+import { MUTATION_KEYS, hooks, useMutation } from '../../config/queryClient';
 import { DEFAULT_GENERAL_SETTINGS } from '../../config/settings';
+import { GeneralSettings } from '../../interfaces/settings';
+import Loader from '../common/Loader';
 
 export type SettingsContextType = {
   settings: GeneralSettings;
@@ -60,7 +63,6 @@ export const SettingsProvider: FC<Prop> = ({ children }) => {
     [appSettings.data],
   );
 
-  // eslint-disable-next-line react/jsx-no-constructed-context-values
   const contextValue = useMemo(
     () => ({
       settings,

@@ -1,16 +1,20 @@
+import { List } from 'immutable';
+
 import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
-import { FormControlLabel } from '@mui/material';
+
 import { UUID } from '@graasp/apps-query-client';
-import { List } from 'immutable';
 import { Button } from '@graasp/ui';
+
+import { FormControlLabel } from '@mui/material';
+
+import { ORPHAN_BUTTON_CYPRESS } from '../../../config/selectors';
+import { CommentType } from '../../../interfaces/comment';
 import {
   getOrphans,
   getThreadIdsFromFirstCommentId,
 } from '../../../utils/comments';
-import { CommentType } from '../../../interfaces/comment';
 import { useAppDataContext } from '../../context/AppDataContext';
-import { ORPHAN_BUTTON_CYPRESS } from '../../../config/selectors';
 
 type Prop = {
   comments: List<CommentType>;

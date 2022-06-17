@@ -1,16 +1,19 @@
-import React, { FC, Fragment } from 'react';
-import { styled, TextField } from '@mui/material';
-import { useTranslation } from 'react-i18next';
 import { List } from 'immutable';
-import Comment from './Comment';
-import { CommentProvider } from '../context/CommentContext';
-import { useReviewContext } from '../context/ReviewContext';
-import CommentEditor from './CommentEditor';
-import { useAppDataContext } from '../context/AppDataContext';
-import { CommentType } from '../../interfaces/comment';
-import { buildThread } from '../../utils/comments';
+
+import React, { FC, Fragment } from 'react';
+import { useTranslation } from 'react-i18next';
+
+import { TextField, styled } from '@mui/material';
+
 import { APP_DATA_TYPES } from '../../config/appDataTypes';
 import { COMMENT_THREAD_CONTAINER_CYPRESS } from '../../config/selectors';
+import { CommentType } from '../../interfaces/comment';
+import { buildThread } from '../../utils/comments';
+import { useAppDataContext } from '../context/AppDataContext';
+import { CommentProvider } from '../context/CommentContext';
+import { useReviewContext } from '../context/ReviewContext';
+import Comment from './Comment';
+import CommentEditor from './CommentEditor';
 
 const CommentContainer = styled('div')(({ theme }) => ({
   backgroundColor: 'white',

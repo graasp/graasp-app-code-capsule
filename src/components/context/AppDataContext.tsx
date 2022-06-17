@@ -1,12 +1,15 @@
-import React, { createContext, FC, PropsWithChildren, useMemo } from 'react';
+import Immutable, { List } from 'immutable';
+
+import React, { FC, PropsWithChildren, createContext, useMemo } from 'react';
+
 import { AppData } from '@graasp/apps-query-client';
-import Immutable from 'immutable';
-import Loader from '../common/Loader';
-import { hooks, MUTATION_KEYS, useMutation } from '../../config/queryClient';
-import { VisibilityVariants } from '../../interfaces/comment';
-import { useSettings } from './SettingsContext';
-import { SETTINGS_KEYS } from '../../interfaces/settings';
+
 import { REVIEW_MODE_INDIVIDUAL } from '../../config/constants';
+import { MUTATION_KEYS, hooks, useMutation } from '../../config/queryClient';
+import { VisibilityVariants } from '../../interfaces/comment';
+import { SETTINGS_KEYS } from '../../interfaces/settings';
+import Loader from '../common/Loader';
+import { useSettings } from './SettingsContext';
 
 type PostAppDataType = {
   data: { [key: string]: unknown };
@@ -67,7 +70,7 @@ export const AppDataProvider: FC<PropsWithChildren<Prop>> = ({ children }) => {
       },
       patchAppData: patchAppData.mutate,
       deleteAppData: deleteAppData.mutate,
-      appData: appData.data || Immutable.List<AppData>(),
+      appData: appData.data || List<AppData>(),
     }),
     [appData, deleteAppData, patchAppData, postAppData, visibilityVariant],
   );

@@ -1,10 +1,12 @@
 import React, { FC, useContext } from 'react';
+
 import { Context } from '@graasp/apps-query-client';
-import AdminView from './AdminView';
-import PlayerView from '../read/PlayerView';
+
+import { hooks } from '../../../config/queryClient';
 import { PERMISSIONS } from '../../../config/settings';
 import Loader from '../../common/Loader';
-import { hooks } from '../../../config/queryClient';
+import PlayerView from '../read/PlayerView';
+import AdminView from './AdminView';
 
 const BuilderView: FC = () => {
   const context = useContext(Context);

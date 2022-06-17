@@ -1,13 +1,16 @@
+import * as Sentry from '@sentry/react';
+import { BrowserTracing } from '@sentry/tracing';
+
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
-import { BrowserTracing } from '@sentry/tracing';
-import * as Sentry from '@sentry/react';
+
 import { mockApi } from '@graasp/apps-query-client';
+
 import Root from './components/Root';
+import { generateSentryConfig } from './config/sentry';
 import { MOCK_API } from './config/settings';
 import buildDatabase, { mockContext } from './data/db';
-import { generateSentryConfig } from './config/sentry';
+import './index.css';
 
 Sentry.init({
   integrations: [new BrowserTracing()],

@@ -1,25 +1,29 @@
-import React, { FC, Fragment } from 'react';
-import Highlight, { defaultProps, Language } from 'prism-react-renderer';
-import theme from 'prism-react-renderer/themes/vsLight';
-import { IconButton, styled } from '@mui/material';
-import { Add } from '@mui/icons-material';
 import { List } from 'immutable';
-import { SETTINGS_KEYS } from '../../interfaces/settings';
-import { useReviewContext } from '../context/ReviewContext';
-import CommentThread from './CommentThread';
+import Highlight, { Language, defaultProps } from 'prism-react-renderer';
+import theme from 'prism-react-renderer/themes/vsLight';
+
+import React, { FC, Fragment } from 'react';
+
+import { Add } from '@mui/icons-material';
+import { IconButton, styled } from '@mui/material';
+
 import { APP_DATA_TYPES, APP_DATA_VISIBILITY } from '../../config/appDataTypes';
-import { CommentType } from '../../interfaces/comment';
-import CommentEditor from './CommentEditor';
-import { useAppDataContext } from '../context/AppDataContext';
-import { useSettings } from '../context/SettingsContext';
 import { REVIEW_MODE_INDIVIDUAL } from '../../config/constants';
 import {
-  buildAddButtonDataCy,
   CODE_REVIEW_ADD_BUTTON_CYPRESS,
   CODE_REVIEW_LINE_CYPRESS,
+  buildAddButtonDataCy,
 } from '../../config/selectors';
+import { CommentType } from '../../interfaces/comment';
+import { SETTINGS_KEYS } from '../../interfaces/settings';
 import { buildCodeRowKey } from '../../utils/utils';
+import { useAppDataContext } from '../context/AppDataContext';
+import { useCodeVersionContext } from '../context/CodeVersionContext';
+import { useReviewContext } from '../context/ReviewContext';
+import { useSettings } from '../context/SettingsContext';
 import { useVisibilityContext } from '../context/VisibilityContext';
+import CommentEditor from './CommentEditor';
+import CommentThread from './CommentThread';
 
 const Code = styled('div')({
   margin: 0,
@@ -72,16 +76,14 @@ const AddButton = styled(IconButton)({
   '&:hover': addButtonHoverStyle,
 });
 
-type Props = {
-  allowReplies?: boolean;
-  allowComments?: boolean;
-  code: string;
-  language: string;
-};
+// eslint-disable-next-line @typescript-eslint/ban-types
+type Props = {};
 
-const CodeReview: FC<Props> = ({ code, language }) => {
+const CodeReview: FC<Props> = () => {
   const { addComment, multilineRange, currentCommentLine, closeComment } =
     useReviewContext();
+  const { codeVersion } = useCodeVersionContext();
+  const { code, language } = codeVersion;
   const { lineHiddenState } = useVisibilityContext();
   const { settings } = useSettings();
   const allowComments = settings[SETTINGS_KEYS.ALLOW_COMMENTS];

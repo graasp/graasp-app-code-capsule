@@ -1,10 +1,12 @@
+import Highlight, { Language, defaultProps } from 'prism-react-renderer';
+import vsLight from 'prism-react-renderer/themes/vsLight';
+import remarkBreaks from 'remark-breaks';
+import remarkGfm from 'remark-gfm';
+
 import React, { FC, PropsWithChildren, ReactElement } from 'react';
 import ReactMarkdown from 'react-markdown';
-import remarkGfm from 'remark-gfm';
-import remarkBreaks from 'remark-breaks';
-import Highlight, { defaultProps, Language } from 'prism-react-renderer';
-import vsLight from 'prism-react-renderer/themes/vsLight';
 import { CodeProps } from 'react-markdown/lib/ast-to-react';
+
 import { styled } from '@mui/material';
 
 const StyledReactMarkdown = styled(ReactMarkdown)(({ theme }) => ({

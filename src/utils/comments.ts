@@ -1,5 +1,7 @@
 import { List } from 'immutable';
+
 import { AppData, UUID } from '@graasp/apps-query-client';
+
 import { CommentType } from '../interfaces/comment';
 
 const findCommentWithId = (

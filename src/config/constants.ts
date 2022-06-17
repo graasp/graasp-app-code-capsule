@@ -6,7 +6,13 @@ export const NB_COL_TABLE_VIEW_TABLE = 4;
 // reset timeout in ms for settings dialog
 export const CLOSE_SETTINGS_TIMEOUT = 500;
 
+// commit message truncation length
+export const DEFAULT_TRUNCATION_COMMIT_MESSAGE_LENGTH = 15;
+
 export const ANONYMOUS_USER = 'Anonymous';
+export const INSTRUCTOR_CODE_NAME = 'Default';
+
+export const INSTRUCTOR_CODE_ID = 'Instructor';
 
 export const JAVASCRIPT = 'javascript';
 export const JAVA = 'java';

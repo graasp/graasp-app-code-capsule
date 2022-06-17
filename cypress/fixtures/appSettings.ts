@@ -1,4 +1,5 @@
 import { v4 } from 'uuid';
+
 import { GENERAL_SETTINGS_KEY } from '../../src/config/appSettingsTypes';
 import { DEFAULT_GENERAL_SETTINGS } from '../../src/config/settings';
 

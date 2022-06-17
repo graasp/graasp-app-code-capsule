@@ -1,11 +1,13 @@
 import { v4 } from 'uuid';
+
 import type { LocalContext, Member } from '@graasp/apps-query-client';
-import { AppContext } from '../interfaces/appContext';
-import { Database } from '../interfaces/database';
-import { GENERAL_SETTINGS_KEY } from '../config/appSettingsTypes';
+
 import { APP_DATA_TYPES } from '../config/appDataTypes';
+import { GENERAL_SETTINGS_KEY } from '../config/appSettingsTypes';
 import { REACT_APP_API_HOST } from '../config/env';
 import { DEFAULT_GENERAL_SETTINGS } from '../config/settings';
+import { AppContext } from '../interfaces/appContext';
+import { Database } from '../interfaces/database';
 
 export const mockContext: LocalContext = {
   apiHost: REACT_APP_API_HOST,

@@ -1,11 +1,5 @@
 import React, { FC, useEffect, useState } from 'react';
-import {
-  Box,
-  Stack,
-  styled,
-  TextareaAutosize,
-  Typography,
-} from '@mui/material';
+import { useTranslation } from 'react-i18next';
 import {
   boldCommand,
   codeCommand,
@@ -14,6 +8,9 @@ import {
   quoteCommand,
   useTextAreaMarkdownEditor,
 } from 'react-mde';
+
+import { Button } from '@graasp/ui';
+
 import {
   Code,
   FormatBold,
@@ -21,11 +18,14 @@ import {
   FormatQuote,
   InsertLink,
 } from '@mui/icons-material';
-import { useTranslation } from 'react-i18next';
-import { Button } from '@graasp/ui';
-import ToolbarButton from '../layout/ToolbarButton';
-import { useReviewContext } from '../context/ReviewContext';
-import { CommentType } from '../../interfaces/comment';
+import {
+  Box,
+  Stack,
+  TextareaAutosize,
+  Typography,
+  styled,
+} from '@mui/material';
+
 import {
   COMMENT_EDITOR_BOLD_BUTTON_CYPRESS,
   COMMENT_EDITOR_CANCEL_BUTTON_CYPRESS,
@@ -38,6 +38,9 @@ import {
   COMMENT_EDITOR_SAVE_BUTTON_CYPRESS,
   COMMENT_EDITOR_TEXTAREA_CYPRESS,
 } from '../../config/selectors';
+import { CommentType } from '../../interfaces/comment';
+import { useReviewContext } from '../context/ReviewContext';
+import ToolbarButton from '../layout/ToolbarButton';
 
 const TextArea = styled(TextareaAutosize)(({ theme }) => ({
   borderRadius: '4px',

@@ -1,11 +1,12 @@
 import {
-  configureQueryClient,
   buildMockLocalContext,
   buildMockParentWindow,
+  configureQueryClient,
 } from '@graasp/apps-query-client';
+
+import { mockContext } from '../data/db';
 import { REACT_APP_GRAASP_APP_ID } from './env';
 import { MOCK_API } from './settings';
-import { mockContext } from '../data/db';
 
 const {
   queryClient,

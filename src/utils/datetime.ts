@@ -3,7 +3,7 @@
 // eslint-disable-next-line import/no-duplicates
 import { formatDistance } from 'date-fns';
 // eslint-disable-next-line import/no-duplicates
-import { fr, enGB } from 'date-fns/locale';
+import { enGB, fr } from 'date-fns/locale';
 
 // to add a new language to the dates
 const locales: { [key: string]: Locale } = {

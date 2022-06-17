@@ -1,4 +1,5 @@
-import React, { createContext, FC, ReactElement } from 'react';
+import React, { FC, ReactElement, createContext } from 'react';
+
 import { CommentType } from '../../interfaces/comment';
 
 const defaultContextValue = {};

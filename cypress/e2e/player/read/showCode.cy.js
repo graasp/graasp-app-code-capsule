@@ -1,9 +1,9 @@
+import {
+  PLAYER_VIEW_CYPRESS,
+  buildDataCy,
+} from '../../../../src/config/selectors';
 import { CONTEXTS, PERMISSIONS } from '../../../../src/config/settings';
 import { MOCK_APP_SETTINGS } from '../../../fixtures/appSettings';
-import {
-  buildDataCy,
-  PLAYER_VIEW_CYPRESS,
-} from '../../../../src/config/selectors';
 
 describe('Show code', () => {
   beforeEach(() => {

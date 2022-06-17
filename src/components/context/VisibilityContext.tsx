@@ -1,22 +1,23 @@
 import React, {
-  createContext,
   FC,
   PropsWithChildren,
+  createContext,
   useContext,
   useEffect,
   useMemo,
   useState,
 } from 'react';
+
 import { DEFAULT_LINE_HIDDEN_STATE } from '../../config/settings';
+import { useCodeVersionContext } from './CodeVersionContext';
 
 type VisibilityContextType = {
   lineHiddenState: boolean[];
   toggleLineVisibility: (lineIndex: number) => void;
   toggleAll: (value: boolean) => void;
 };
-type Prop = {
-  numberOfLines: number;
-};
+// eslint-disable-next-line @typescript-eslint/ban-types
+type Prop = {};
 
 const defaultContextValue: VisibilityContextType = {
   lineHiddenState: [],
@@ -31,8 +32,12 @@ const VisibilityContext =
 
 export const VisibilityProvider: FC<PropsWithChildren<Prop>> = ({
   children,
-  numberOfLines,
 }) => {
+  // todo: add code from codeVersions and compute the number of lines
+  const { codeVersion } = useCodeVersionContext();
+
+  const numberOfLines = codeVersion.code.split('\n').length;
+
   const defaultValue = Array.from(
     { length: numberOfLines },
     () => DEFAULT_LINE_HIDDEN_STATE,

@@ -1,9 +1,11 @@
 import React, { FC } from 'react';
-import { ListItemIcon, ListItemText, Menu, MenuItem } from '@mui/material';
-import { Delete, Edit } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
-import { useCommentContext } from '../context/CommentContext';
+
+import { Delete, Edit } from '@mui/icons-material';
+import { ListItemIcon, ListItemText, Menu, MenuItem } from '@mui/material';
+
 import { useAppDataContext } from '../context/AppDataContext';
+import { useCommentContext } from '../context/CommentContext';
 import { useReviewContext } from '../context/ReviewContext';
 
 type Props = {

@@ -1,4 +1,9 @@
+import { List } from 'immutable';
+
 import { FC, ReactElement, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+
+import InputIcon from '@mui/icons-material/Input';
 import {
   IconButton,
   Table,
@@ -8,9 +13,12 @@ import {
   TableHead,
   TableRow,
 } from '@mui/material';
-import InputIcon from '@mui/icons-material/Input';
-import { useTranslation } from 'react-i18next';
-import { List } from 'immutable';
+
+import { APP_DATA_TYPES } from '../../../config/appDataTypes';
+import {
+  ANONYMOUS_USER,
+  NB_COL_TABLE_VIEW_TABLE,
+} from '../../../config/constants';
 import {
   NUMBER_OF_COMMENTS_CYPRESS,
   TABLE_NO_COMMENTS_CYPRESS,
@@ -18,17 +26,12 @@ import {
   TABLE_VIEW_TABLE_CYPRESS,
   tableRowUserCypress,
 } from '../../../config/selectors';
-import { APP_DATA_TYPES } from '../../../config/appDataTypes';
-import {
-  ANONYMOUS_USER,
-  NB_COL_TABLE_VIEW_TABLE,
-} from '../../../config/constants';
-import CustomDialog from '../../common/CustomDialog';
-import OrphanComments from './OrphanComments';
-import { useAppDataContext } from '../../context/AppDataContext';
-import { useMembersContext } from '../../context/MembersContext';
 import { CommentType } from '../../../interfaces/comment';
 import { getOrphans } from '../../../utils/comments';
+import CustomDialog from '../../common/CustomDialog';
+import { useAppDataContext } from '../../context/AppDataContext';
+import { useMembersContext } from '../../context/MembersContext';
+import OrphanComments from './OrphanComments';
 
 const TableView: FC = () => {
   const { t } = useTranslation();

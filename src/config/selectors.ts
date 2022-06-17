@@ -56,6 +56,15 @@ export const TOOLBAR_RUN_CODE_BUTTON_CYPRESS = 'toolbar_run_code_button';
 export const COMMENT_CONTAINER_CYPRESS = 'comment_container';
 export const COMMENT_THREAD_CONTAINER_CYPRESS = 'comment_thread_container';
 export const ORPHAN_BUTTON_CYPRESS = 'orphan_button';
+export const CODE_EXECUTION_CONTAINER_CYPRESS = 'code_execution_container';
+export const CODE_EDITOR_CONTAINER_CYPRESS = 'code_editor_container';
+export const CODE_EDITOR_LANGUAGE_SELECT_CYPRESS =
+  'code_editor_language_select';
+export const CODE_EDITOR_COMMIT_MESSAGE_CYPRESS = 'code_editor_commit_message';
+export const CODE_EDITOR_COMMIT_DESCRIPTION_CYPRESS =
+  'code_editor_commit_description';
+export const CODE_EDITOR_SUBMIT_BUTTON_CYPRESS = 'code_editor_submit_button';
+export const CODE_EDITOR_CANCEL_BUTTON_CYPRESS = 'code_editor_cancel_button';
 
 export const buildDataCy = (selector: string): string =>
   `[data-cy=${selector}]`;

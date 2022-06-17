@@ -1,12 +1,14 @@
 import React, { FC, ReactElement, useContext } from 'react';
+
 import { Context } from '@graasp/apps-query-client';
+
+import { ANALYZER_VIEW_CYPRESS } from '../config/selectors';
 import { CONTEXTS } from '../config/settings';
-import BuilderView from './views/admin/BuilderView';
-import PlayerView from './views/read/PlayerView';
+import { AppDataProvider } from './context/AppDataContext';
 import { MembersProvider } from './context/MembersContext';
 import { SettingsProvider } from './context/SettingsContext';
-import { AppDataProvider } from './context/AppDataContext';
-import { ANALYZER_VIEW_CYPRESS } from '../config/selectors';
+import BuilderView from './views/admin/BuilderView';
+import PlayerView from './views/read/PlayerView';
 
 const App: FC = () => {
   const context = useContext(Context);

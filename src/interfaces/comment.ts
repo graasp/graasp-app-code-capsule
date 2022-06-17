@@ -1,5 +1,9 @@
 import { AppData } from '@graasp/apps-query-client';
 
+import { APP_DATA_TYPES } from '../config/appDataTypes';
+
+export type VisibilityVariants = 'member' | 'item';
+
 export interface CommentAppData {
   data: {
     line: number;
@@ -10,7 +14,7 @@ export interface CommentAppData {
       end: number;
     };
   };
+  type: APP_DATA_TYPES.COMMENT;
+  visibility?: VisibilityVariants;
 }
 export type CommentType = AppData & CommentAppData;
-
-export type VisibilityVariants = 'member' | 'item';
