@@ -1,6 +1,6 @@
 import {
-  buildDataCy,
   LEARN_REACT_LINK_CYPRESS,
+  buildDataCy,
 } from '../../src/config/selectors';
 
 describe('Renders Home', () => {

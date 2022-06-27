@@ -1,6 +1,6 @@
-# React project with Typescript and other bells and whistles
+# React App with Typescript and other bells and whistles
 
-Here you will get detailed steps on how ot setup a new **ReactJS** app using **TypeScript** and best practice tools:
+Here you will get detailed steps on how to set up a new **ReactJS** app using **TypeScript** and best practice tools:
 
 - linter: _eslint_
 - code formatter: _prettier_
@@ -14,15 +14,15 @@ Here you will get detailed steps on how ot setup a new **ReactJS** app using **T
 
 To bootstrap the project using `create-react-app` and `yarn` do:
 
-```
+```bash
 yarn create react-app <name_of_the_project> --template typescript
 ```
 
-This will create a new project with everything you need to create a react app using typescript.
+This will create a new project with everything you need to create a React app using typescript.
 
-Now, navigate inside the newly createated folder (using `cd`) and set the version of yarn to berry:
+Now, navigate inside the newly created folder (using `cd`) and set the version of yarn to berry:
 
-```
+```bash
 yarn set version stable
 ```
 
@@ -31,15 +31,15 @@ This will tell yarn to use the latest stable version.
 > **Notice:**
 > In this tutorial we use `yarn` because it is faster than `npm`.
 
-Install dependancies listed in `package.json` using:
+Install dependencies listed in `package.json` using:
 
-```
+```bash
 yarn
 ```
 
 Launch the project:
 
-```
+```bash
 yarn start
 ```
 
@@ -53,26 +53,30 @@ Remove the package `web-vitals` in `package.json`
 
 Source for this part is: [https://andrebnassis.medium.com/setting-eslint-on-a-react-typescript-project-2021-1190a43ffba](https://andrebnassis.medium.com/setting-eslint-on-a-react-typescript-project-2021-1190a43ffba)
 
-Remove the existing react config for eslint in `package.json`:
+Remove the existing React config for eslint in `package.json`:
 
 ```
-"eslintConfig": {
-	"extends": [
-	  "react-app",
-	  "react-app/jest"
-	]
-},
+{
+  ...
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  ...
+}
 ```
 
 Install eslint as a dev dependency:
 
-```
+```bash
 yarn add -D eslint
 ```
 
 To initialize the repo with a base config use:
 
-```
+```bash
 yarn eslint --init
 ```
 
@@ -96,17 +100,21 @@ And select these values:
 
 > Would you like to install them now with npm? **No**
 
-Copy paste the packages that are required and install them as dev dependancies using `yarn add -D <package name>`
+Copy and paste the packages that are required and install them as dev dependencies using `yarn add -D <package name>`
 
 ### Fixing errors
 
 To fix the `Unable to import App without file extension` error add
 
 ```
-"settings": {
-	"import/resolver": {
-		"typescript": {}
-	}
+{
+  ...
+  "settings": {
+    "import/resolver": {
+      "typescript": {}
+    }
+  },
+  ...
 }
 ```
 
@@ -115,8 +123,10 @@ to your `.eslintrc.json` file
 Same for `file extensions`:
 
 ```
-"rules": {
-	...
+{
+  ...
+  "rules": {
+    ...
     "import/extensions": [
       "error",
       "ignorePackages",
@@ -125,64 +135,64 @@ Same for `file extensions`:
         "tsx": "never"
       }
     ]
-  },
+  }
+}
 ```
 
 The final eslint config looks like this:
 
-```
+```json
 {
-	"env": {
-		"browser": true,
-		"es2021": true
-	},
-	"extends": [
-		"airbnb",
-		"plugin:react/recommended",
-		"plugin:@typescript-eslint/recommended"
-	],
-	"parser": "@typescript-eslint/parser",
-	"parserOptions": {
-		"ecmaFeatures": {
-			"jsx": true
-		},
-		"ecmaVersion": "latest",
-		"sourceType": "module"
-	},
-	"plugins": [
-		"react",
-		"react-hooks",
-		"@typescript-eslint"
-	],
-	"rules": {
-		"import/no-import-module-exports": "off",
-		"import/no-extraneous-dependencies": ["error", {"devDependencies": true}],
-		"import/extensions": [
-			"error",
-			"ignorePackages",
-			{
-				"ts": "never",
-				"tsx": "never"
-			}
-		],
-		"@typescript-eslint/explicit-function-return-type": [
-			"error",
-			{
-				"allowExpressions": true
-			}
-		],
-		"react-hooks/rules-of-hooks": "error",
-		"react-hooks/exhaustive-deps": "warn",
-		"comma-dangle": ["error", "never"],
-		"react/jsx-one-expression-per-line": "off",
-		"react/jsx-filename-extension": [ "warn", {"extensions": [".tsx"]} ],
-		"react/function-component-definition": [2, { "namedComponents": "arrow-function" }]
-	},
-	"settings": {
-		"import/resolver": {
-			"typescript": {}
-		}
-	}
+  "env": {
+    "browser": true,
+    "es2021": true
+  },
+  "extends": [
+    "airbnb",
+    "plugin:react/recommended",
+    "plugin:@typescript-eslint/recommended"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": "latest",
+    "sourceType": "module"
+  },
+  "plugins": ["react", "react-hooks", "@typescript-eslint"],
+  "rules": {
+    "import/no-import-module-exports": "off",
+    "import/no-extraneous-dependencies": ["error", { "devDependencies": true }],
+    "import/extensions": [
+      "error",
+      "ignorePackages",
+      {
+        "ts": "never",
+        "tsx": "never"
+      }
+    ],
+    "@typescript-eslint/explicit-function-return-type": [
+      "error",
+      {
+        "allowExpressions": true
+      }
+    ],
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn",
+    "comma-dangle": ["error", "never"],
+    "react/jsx-one-expression-per-line": "off",
+    "react/jsx-filename-extension": ["warn", { "extensions": [".tsx"] }],
+    "react/function-component-definition": [
+      2,
+      { "namedComponents": "arrow-function" }
+    ]
+  },
+  "settings": {
+    "import/resolver": {
+      "typescript": {}
+    }
+  }
 }
 ```
 
@@ -190,19 +200,22 @@ The final eslint config looks like this:
 
 Run this command:
 
-```
+```bash
 yarn add -D prettier
 ```
 
 Create a new `.prettierrc` file with the following content:
 
-```
+```json
 {
   "trailingComma": "all",
   "tabWidth": 2,
   "semi": true,
   "singleQuote": true,
-  "jsxSingleQuote": false
+  "jsxSingleQuote": false,
+  "importOrder": ["^react", "^@?graasp*", "^@?mui*", "^@.*", "^[./]"],
+  "importOrderSeparation": true,
+  "importOrderSortSpecifiers": true
 }
 ```
 
@@ -234,16 +247,20 @@ Add to `.eslintrc.json`:
 And add this to `package.json` to auto-fix with `yarn prettier:write`:
 
 ```
-"scripts": {
-	...
-	"prettier:write": "prettier src/**/*.{ts,tsx,js,jsx} --write",
-	...
+{
+  ...
+  "scripts": {
+    ...
+    "prettier:write": "prettier src/**/*.{ts,tsx,js,jsx} --write",
+    ...
+  }
+  ...
 }
 ```
 
 ## Add Husky for hooks
 
-We will use husky to dd git hooks to lint, build and test the code beore every commit, check that commit messages comply to [conventional commits](https://www.conventionalcommits.org/en/v1.0.0/), auto-install after checkout and print git status after commit.
+We will use husky to dd git hooks to lint, build and test the code before every commit, check that commit messages comply to [conventional commits](https://www.conventionalcommits.org/en/v1.0.0/), auto-install after checkout and print git status after commit.
 
 For this we will need to add the following packages into `package.json`:
 
@@ -260,11 +277,11 @@ yarn add -D husky @commitlint/cli @commitlint/config-conventional pretty-quick
 
 We can then install the git hooks with:
 
-```
+```bash
 yarn husky install
 ```
 
-To have the git hooks automatcally installed after install add the following script to your `package.json`:
+To have the git hooks automatically installed after install add the following script to your `package.json`:
 
 ```
 "scripts": {
@@ -275,7 +292,7 @@ To have the git hooks automatcally installed after install add the following scr
 
 To add new hooks you can use the following syntax:
 
-```
+```bash
 yarn husky add .husky/pre-push 'yarn test'
 ```
 
@@ -283,7 +300,7 @@ yarn husky add .husky/pre-push 'yarn test'
 
 Here are a few examples that you can add:
 
-```
+```bash
 yarn husky add .husky/commit-msg 'yarn commitlint --edit ${1}';
 yarn husky add .husky/post-checkout 'yarn install';
 yarn husky add .husky/pre-commit 'yarn pretty-quick --staged && yarn lint && yarn test';
@@ -294,11 +311,11 @@ yarn husky add .husky/post-merge 'yarn install';
 
 To use `commitlint` you will have to add a file named `commitlint.config.js` in the root folder with content:
 
-```
+```js
 module.exports = { extends: ['@commitlint/config-conventional'] };
 ```
 
-For convinience you can add these scripts to `packkage.json` in order to quickly install or uninstall husky hooks:
+For convenience you can add these scripts to `packkage.json` in order to quickly install or uninstall husky hooks:
 
 ```
 "hooks:install": "husky install",
@@ -307,19 +324,19 @@ For convinience you can add these scripts to `packkage.json` in order to quickly
 
 We advise you to commit those hooks in git:
 
-```
+```bash
 git add .husky;
 git commit -m "chore: added husky hooks";
 ```
 
 ## Add Github workflow to run cypress in ci
 
-Create a `.github/workflows` folder in which you should place your github workflow (a `.yml` file).
+Create a `.github/workflows` folder in which you should place your GitHub workflow (a `.yml` file).
 See GitHub documentation for more info.
 
 Here is an example of sucha a file:
 
-```
+```yml
 name: cypress tests
 on: [push]
 jobs:
@@ -377,7 +394,6 @@ jobs:
 
       - name: coverage report
         run: npx nyc report --reporter=text-summary
-
 ```
 
 ## Scripts to automate the testing when committing or pushing
@@ -400,13 +416,13 @@ The `-k` (`--kill-others`) option kills all other processes when one finishes. T
 
 Source: [Cypress docs on code-coverage](https://docs.cypress.io/guides/tooling/code-coverage#What-you-ll-learn)
 
-Setting up code-coverage is usefull to measure the fraction of the code that is covered by tests.
+Setting up code-coverage is useful to measure the fraction of the code that is covered by tests.
 In a React application created with CRA and using cypress tests, one cans add code-coverage by using the following package: `@cypress/code-coverage`, `@cypress/instrument-cra` and `nyc`.
 Run the following command to add them to your project:
 
 `yarn add @cypress/code-coverage @cypress/instrument-cra nyc`
 
-Next step is to add the require falg to the start script launching the application so it can instrument the code. Your start command should look something like this where we added the `-r @cypress/instrument-cra`:
+Next step is to add the required flags to the start script launching the application, so it can instrument the code. Your start command should look something like this where we added the `-r @cypress/instrument-cra`:
 
 `"start": "react-scripts -r @cypress/instrument-cra start"`
 

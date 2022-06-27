@@ -1,7 +1,6 @@
 # Code Capsule App
 
-This repository hosts the code for a Graasp app that lets users make code reviews,
-edit and annotate code, alone or in collaboration.
+This repository hosts the code for a Graasp app that lets users write code reviews, edit and annotate code, alone or in collaboration.
 
 ## Installation
 
