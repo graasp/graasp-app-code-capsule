@@ -1,18 +1,28 @@
-import { JAVASCRIPT } from '../../../../src/config/constants';
 import {
+  JAVASCRIPT,
+  REVIEW_MODE_COLLABORATIVE,
+} from '../../../../src/config/constants';
+import {
+  ALLOW_COMMENTS_SWITCH_CYPRESS,
+  ALLOW_REPLIES_SWITCH_CYPRESS,
+  CODE_EDITOR_CANCEL_BUTTON_CYPRESS,
   CODE_EDITOR_COMMIT_DESCRIPTION_CYPRESS,
   CODE_EDITOR_COMMIT_MESSAGE_CYPRESS,
   CODE_EDITOR_LANGUAGE_SELECT_CYPRESS,
-  PROGRAMMING_LANGUAGE_SELECT_CYPRESS,
+  CODE_EDITOR_SUBMIT_BUTTON_CYPRESS,
+  CODE_SETTINGS_FAB_CYPRESS,
+  DISPLAY_SETTINGS_FAB_CYPRESS,
+  REVIEW_MODES_SELECT_CYPRESS,
+  SETTINGS_CODE_DIALOG_WINDOW_CYPRESS,
   SETTINGS_DIALOG_CANCEL_BUTTON_CYPRESS,
   SETTINGS_DIALOG_SAVE_BUTTON_CYPRESS,
-  SETTINGS_DIALOG_WINDOW_CYPRESS,
-  SETTINGS_FAB_CYPRESS,
+  SETTINGS_DISPLAY_DIALOG_WINDOW_CYPRESS,
   buildDataCy,
 } from '../../../../src/config/selectors';
 import {
   CONTEXTS,
   DEFAULT_PROGRAMMING_LANGUAGE_SETTING,
+  DEFAULT_REVIEW_MODE_SETTING,
   PERMISSIONS,
 } from '../../../../src/config/settings';
 
@@ -28,17 +38,15 @@ describe('Settings', () => {
     cy.visit('/');
   });
 
-  it('Open settings', () => {
-    cy.get(buildDataCy(SETTINGS_FAB_CYPRESS))
+  it('Open Code settings', () => {
+    cy.get(buildDataCy(CODE_SETTINGS_FAB_CYPRESS))
       .should('be.visible')
-      .as('settingsFab')
+      .as('codeSettingsFab')
       .click();
 
     // check buttons are visible
-    cy.get(buildDataCy(SETTINGS_DIALOG_CANCEL_BUTTON_CYPRESS)).should(
-      'be.visible',
-    );
-    cy.get(buildDataCy(SETTINGS_DIALOG_SAVE_BUTTON_CYPRESS))
+    cy.get(buildDataCy(CODE_EDITOR_CANCEL_BUTTON_CYPRESS)).should('be.visible');
+    cy.get(buildDataCy(CODE_EDITOR_SUBMIT_BUTTON_CYPRESS))
       .as('saveButton')
       .should('be.visible');
 
@@ -83,11 +91,52 @@ describe('Settings', () => {
     ).should('have.value', commitDescription);
 
     cy.get('@saveButton').click();
-    cy.get(buildDataCy(SETTINGS_DIALOG_WINDOW_CYPRESS)).should(
+    cy.get(buildDataCy(SETTINGS_CODE_DIALOG_WINDOW_CYPRESS)).should(
       'not.be.visible',
     );
 
     // open settings
-    cy.get('@settingsFab').click();
+    cy.get('@codeSettingsFab').click();
+  });
+
+  it('Open Display settings', () => {
+    cy.get(buildDataCy(DISPLAY_SETTINGS_FAB_CYPRESS))
+      .should('be.visible')
+      .as('displaySettingsFab')
+      .click();
+
+    // check buttons are visible
+    cy.get(buildDataCy(SETTINGS_DIALOG_CANCEL_BUTTON_CYPRESS)).should(
+      'be.visible',
+    );
+    cy.get(buildDataCy(SETTINGS_DIALOG_SAVE_BUTTON_CYPRESS))
+      .as('saveButton')
+      .should('be.visible');
+
+    // check select (drop-down)
+    cy.get(buildDataCy(REVIEW_MODES_SELECT_CYPRESS)).should('be.visible');
+    cy.get(`${buildDataCy(REVIEW_MODES_SELECT_CYPRESS)} > input`).as('select');
+    cy.get('@select').should('have.value', DEFAULT_REVIEW_MODE_SETTING);
+    cy.get(buildDataCy(REVIEW_MODES_SELECT_CYPRESS)).click();
+    cy.get(`ul > li[data-value="${REVIEW_MODE_COLLABORATIVE}"]`).click();
+    cy.get('@select').should('have.value', REVIEW_MODE_COLLABORATIVE);
+
+    // switches
+    cy.get(buildDataCy(ALLOW_REPLIES_SWITCH_CYPRESS))
+      .should('be.visible')
+      .click()
+      .click();
+    cy.get(buildDataCy(ALLOW_COMMENTS_SWITCH_CYPRESS))
+      .should('be.visible')
+      .click()
+      .click();
+
+    cy.get('@saveButton').click();
+    cy.get(buildDataCy(SETTINGS_DISPLAY_DIALOG_WINDOW_CYPRESS)).should(
+      'not.be.visible',
+    );
+
+    // open settings
+    cy.get('@displaySettingsFab').click();
   });
 });

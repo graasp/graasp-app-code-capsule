@@ -29,8 +29,8 @@ const SettingsSelect: FC<Prop> = ({
   values,
   dataCy,
 }) => (
-  <FormControl>
-    <InputLabel>{label}</InputLabel>
+  <FormControl sx={{ pt: 1 }}>
+    <InputLabel sx={{ pt: 1 }}>{label}</InputLabel>
     <StyledSelect
       data-cy={dataCy}
       label={label}

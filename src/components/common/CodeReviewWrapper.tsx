@@ -10,6 +10,7 @@ import {
   CODE_EXECUTION_CONTAINER_CYPRESS,
   CODE_REVIEW_CONTAINER_CYPRESS,
 } from '../../config/selectors';
+import { useCodeVersionContext } from '../context/CodeVersionContext';
 import { ReviewProvider } from '../context/ReviewContext';
 import { VisibilityProvider } from '../context/VisibilityContext';
 import CodeEditor from './CodeEditor';
@@ -33,13 +34,17 @@ type Props = {};
 
 const CodeReviewWrapper: FC<Props> = () => {
   const [view, setView] = useState<AppViews>(AppViews.CodeReview);
+  const { codeVersion } = useCodeVersionContext();
 
   const getContent = (): ReactNode => {
     switch (view) {
       case AppViews.CodeEditor:
         return (
           <Container data-cy={CODE_EDITOR_CONTAINER_CYPRESS}>
-            <CodeEditor onClose={() => setView(AppViews.CodeReview)} />
+            <CodeEditor
+              onClose={() => setView(AppViews.CodeReview)}
+              seedValue={codeVersion}
+            />
           </Container>
         );
       case AppViews.CodeExecution:

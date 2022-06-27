@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import {
@@ -62,6 +62,7 @@ type Props = {
 const CodeReviewToolbar: FC<Props> = ({ setView }) => {
   const { t, i18n } = useTranslation();
   const { settings } = useSettings();
+  const { codeVersion } = useCodeVersionContext();
   const { toggleAll } = useVisibilityContext();
   const { groupedVersions, setCodeId } = useCodeVersionContext();
   const showToolbar = settings[SETTINGS_KEYS.SHOW_TOOLBAR];
@@ -69,7 +70,7 @@ const CodeReviewToolbar: FC<Props> = ({ setView }) => {
   const showVisibilityToggle = settings[SETTINGS_KEYS.SHOW_VISIBILITY_BUTTON];
   const showCommitInfo = settings[SETTINGS_KEYS.SHOW_VERSION_NAVIGATION];
   const isExecutable = SUPPORTED_EXECUTABLE_LANGUAGES.includes(
-    settings[SETTINGS_KEYS.PROGRAMMING_LANGUAGE],
+    codeVersion.language,
   );
   const [isHidden, setIsHidden] = useState(DEFAULT_LINE_HIDDEN_STATE);
   const [selectedUser, setSelectedUser] = useState(
@@ -79,22 +80,25 @@ const CodeReviewToolbar: FC<Props> = ({ setView }) => {
     groupedVersions[0].user.value,
   );
   const userOptions = groupedVersions.map((r) => r.user);
-  const versionOptions = groupedVersions
-    .find((v) => v.user.value === selectedUser)
-    ?.versions.map((v) => ({
-      label: getVersionLabel(v, i18n.language),
-      value: v.id,
-    })) || [{ label: INSTRUCTOR_CODE_NAME, value: INSTRUCTOR_CODE_ID }];
-
-  const changeAndShowVersion = (id: string): void => {
-    setSelectedVersion(id);
-    setCodeId(id);
-  };
+  const versionOptions = useMemo(
+    () =>
+      groupedVersions
+        .find((v) => v.user.value === selectedUser)
+        ?.versions.map((v) => ({
+          label: getVersionLabel(v, i18n.language),
+          value: v.id,
+        })) || [{ label: INSTRUCTOR_CODE_NAME, value: INSTRUCTOR_CODE_ID }],
+    [groupedVersions, i18n.language, selectedUser],
+  );
 
   useEffect(() => {
+    const changeAndShowVersion = (id: string): void => {
+      setSelectedVersion(id);
+      setCodeId(id);
+    };
     const defaultId = versionOptions[0].value;
     changeAndShowVersion(defaultId);
-  }, [selectedUser]);
+  }, [selectedUser, setCodeId, versionOptions]);
 
   if (!showToolbar) {
     return null;

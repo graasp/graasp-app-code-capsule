@@ -60,7 +60,7 @@ export const CodeEditingProvider: FC<PropsWithChildren<Prop>> = ({
   context,
   children,
 }) => {
-  const { codeId, codeVersion, setCodeId } = useCodeVersionContext();
+  const { codeVersion, setCodeId } = useCodeVersionContext();
   const postAppData = useMutation<
     CodeType,
     unknown,

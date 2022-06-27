@@ -21,8 +21,6 @@ export interface GeneralSettings {
   [SETTINGS_KEYS.SHOW_VISIBILITY_BUTTON]: boolean;
   [SETTINGS_KEYS.ALLOW_COMMENTS]: boolean;
   [SETTINGS_KEYS.ALLOW_REPLIES]: boolean;
-  [SETTINGS_KEYS.PROGRAMMING_LANGUAGE]: string;
-  [SETTINGS_KEYS.CODE]: string;
   [SETTINGS_KEYS.REVIEW_MODE]: string;
 
   // used to allow access using settings[settingKey] syntax

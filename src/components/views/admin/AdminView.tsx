@@ -5,7 +5,6 @@ import { Code, TableChart } from '@mui/icons-material';
 import { TabContext, TabList, TabPanel } from '@mui/lab';
 import { Tab } from '@mui/material';
 
-import { CodeContexts } from '../../../config/codeVersions';
 import {
   PRESET_VIEW_PANE_CYPRESS,
   TABLE_VIEW_PANE_CYPRESS,
@@ -13,7 +12,6 @@ import {
   TAB_TABLE_VIEW_CYPRESS,
 } from '../../../config/selectors';
 import PresetView from '../../common/CodeReviewWrapper';
-import { CodeEditingProvider } from '../../context/CodeEditingContext';
 import { CodeVersionProvider } from '../../context/CodeVersionContext';
 import SettingsFab from './SettingsFab';
 import TableView from './TableView';
@@ -61,10 +59,8 @@ const AdminView: FC = () => {
 
   return (
     <CodeVersionProvider>
-      <CodeEditingProvider context={CodeContexts.Instructor}>
-        {renderTable()}
-        <SettingsFab />
-      </CodeEditingProvider>
+      {renderTable()}
+      <SettingsFab />
     </CodeVersionProvider>
   );
 };

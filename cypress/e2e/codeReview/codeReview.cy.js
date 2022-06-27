@@ -30,6 +30,7 @@ import {
 } from '../../fixtures/appData';
 import {
   MOCK_CODE_SAMPLE,
+  MOCK_CODE_SETTINGS,
   MOCK_GENERAL_SETTINGS,
 } from '../../fixtures/appSettings';
 import { SLOW_DOWN_CYPRESS_DELAY } from '../../fixtures/constants';
@@ -44,7 +45,7 @@ describe('Code review single comments', () => {
     cy.setUpApi({
       database: {
         appData: SINGLE_LINE_MOCK_COMMENTS,
-        appSettings: [MOCK_GENERAL_SETTINGS],
+        appSettings: [MOCK_CODE_SETTINGS, MOCK_GENERAL_SETTINGS],
       },
       appContext: {
         context: CONTEXTS.PLAYER,
@@ -136,7 +137,7 @@ describe('Code Review thread comments', () => {
     cy.setUpApi({
       database: {
         appData: generateSingleLineCommentThread(threadOptions),
-        appSettings: [MOCK_GENERAL_SETTINGS],
+        appSettings: [MOCK_CODE_SETTINGS, MOCK_GENERAL_SETTINGS],
       },
       appContext: {
         context: CONTEXTS.PLAYER,
@@ -147,7 +148,7 @@ describe('Code Review thread comments', () => {
     cy.visit('/');
   });
 
-  it.only('should display threads', () => {
+  it('should display threads', () => {
     cy.get(buildDataCy(CODE_REVIEW_CONTAINER_CYPRESS)).should('exist');
 
     // check that the threads are rendered
@@ -173,9 +174,9 @@ describe('Code Review Tools', () => {
               ...DEFAULT_GENERAL_SETTINGS,
               [SETTINGS_KEYS.SHOW_EDIT_BUTTON]: true,
               [SETTINGS_KEYS.SHOW_VERSION_NAVIGATION]: true,
-              [SETTINGS_KEYS.CODE]: MOCK_CODE_SAMPLE,
             },
           },
+          MOCK_CODE_SETTINGS,
         ],
       },
       appContext: {
@@ -198,9 +199,12 @@ describe('Code Review Tools', () => {
     cy.get(buildDataCy(TOOLBAR_RUN_CODE_BUTTON_CYPRESS)).should('be.visible');
     cy.get(buildDataCy(TOOLBAR_VISIBILITY_BUTTON_CYPRESS)).should('be.visible');
 
+    const numberOfThreads = SINGLE_LINE_MOCK_COMMENTS.filter(
+      (c) => c.data.parent === null,
+    ).length;
     cy.get(buildDataCy(COMMENT_CONTAINER_CYPRESS)).should(
       'have.length',
-      SINGLE_LINE_MOCK_COMMENTS.length,
+      numberOfThreads,
     );
 
     // click the toggle visibility button
@@ -209,7 +213,7 @@ describe('Code Review Tools', () => {
     cy.get(buildDataCy(TOOLBAR_VISIBILITY_BUTTON_CYPRESS)).click();
     cy.get(buildDataCy(COMMENT_CONTAINER_CYPRESS)).should(
       'have.length',
-      SINGLE_LINE_MOCK_COMMENTS.length,
+      numberOfThreads,
     );
 
     // todo: test edit button

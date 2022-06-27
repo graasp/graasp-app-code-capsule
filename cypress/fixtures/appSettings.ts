@@ -1,6 +1,10 @@
 import { v4 } from 'uuid';
 
-import { GENERAL_SETTINGS_KEY } from '../../src/config/appSettingsTypes';
+import {
+  GENERAL_SETTINGS_KEY,
+  INSTRUCTOR_CODE_VERSION_SETTINGS_KEY,
+} from '../../src/config/appSettingsTypes';
+import { DEFAULT_CODE_VERSION_SETTING } from '../../src/config/codeVersions';
 import { DEFAULT_GENERAL_SETTINGS } from '../../src/config/settings';
 
 export const MOCK_CODE_SAMPLE = `# my sample code in python
@@ -24,8 +28,14 @@ print('See you !')
 export const MOCK_GENERAL_SETTINGS = {
   id: v4(),
   name: GENERAL_SETTINGS_KEY,
+  data: DEFAULT_GENERAL_SETTINGS,
+};
+
+export const MOCK_CODE_SETTINGS = {
+  id: v4(),
+  name: INSTRUCTOR_CODE_VERSION_SETTINGS_KEY,
   data: {
-    ...DEFAULT_GENERAL_SETTINGS,
+    ...DEFAULT_CODE_VERSION_SETTING,
     code: MOCK_CODE_SAMPLE,
   },
 };

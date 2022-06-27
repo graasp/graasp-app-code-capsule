@@ -1,25 +1,10 @@
-import { FC, ReactElement, useState } from 'react';
+import React, { FC, ReactElement, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { Button } from '@graasp/ui';
 
-import {
-  Code,
-  DisplaySettings,
-  Settings as SettingsIcon,
-} from '@mui/icons-material';
-import { TabContext, TabList, TabPanel } from '@mui/lab';
-import {
-  Box,
-  Divider,
-  Fab,
-  Stack,
-  Tab,
-  Typography,
-  styled,
-} from '@mui/material';
-
-import Editor from '@monaco-editor/react';
+import { Code, DisplaySettings } from '@mui/icons-material';
+import { Box, Divider, Fab, Stack, Tooltip, Typography } from '@mui/material';
 
 import {
   CLOSE_SETTINGS_TIMEOUT,
@@ -29,10 +14,13 @@ import {
 import {
   ALLOW_COMMENTS_SWITCH_CYPRESS,
   ALLOW_REPLIES_SWITCH_CYPRESS,
+  CODE_SETTINGS_FAB_CYPRESS,
+  DISPLAY_SETTINGS_FAB_CYPRESS,
+  REVIEW_MODES_SELECT_CYPRESS,
+  SETTINGS_CODE_DIALOG_WINDOW_CYPRESS,
   SETTINGS_DIALOG_CANCEL_BUTTON_CYPRESS,
   SETTINGS_DIALOG_SAVE_BUTTON_CYPRESS,
-  SETTINGS_DIALOG_WINDOW_CYPRESS,
-  SETTINGS_FAB_CYPRESS,
+  SETTINGS_DISPLAY_DIALOG_WINDOW_CYPRESS,
   SHOW_EDIT_BUTTON_SWITCH_CYPRESS,
   SHOW_HEADER_SWITCH_CYPRESS,
   SHOW_TOOLBAR_SWITCH_CYPRESS,
@@ -48,106 +36,70 @@ import { useCodeEditingContext } from '../../context/CodeEditingContext';
 import { useCodeVersionContext } from '../../context/CodeVersionContext';
 import { useSettings } from '../../context/SettingsContext';
 
-const StyledEditor = styled(Editor)({
-  padding: '8px',
-  border: 'solid silver 1px',
-  borderRadius: '4px',
-});
-
-enum TABS {
-  CODE_SETTINGS = 'code_settings',
-  DISPLAY_SETTINGS = 'display_settings',
-}
-
 const SettingsFab: FC = () => {
   const { t } = useTranslation();
-  const [openSettings, setOpenSettings] = useState(false);
-  const [tab, setTab] = useState(TABS.CODE_SETTINGS);
+  const [openDisplaySettings, setOpenDisplaySettings] = useState(false);
+  const [openCodeSettings, setOpenCodeSettings] = useState(false);
   const { saveSettings, resetSettings, unsavedChanges } = useSettings();
   const { submit: saveCodeVersionSetting } = useCodeEditingContext();
   const { setCodeId } = useCodeVersionContext();
 
   const renderSettings = (): ReactElement => (
-    <TabContext value={tab}>
-      <TabList
-        textColor="secondary"
-        indicatorColor="secondary"
-        onChange={(_, newTab) => setTab(newTab)}
-        centered
-      >
-        <Tab
-          value={TABS.CODE_SETTINGS}
-          label={t('Code Settings')}
-          icon={<Code />}
-          iconPosition="start"
-        />
-        <Tab
-          value={TABS.DISPLAY_SETTINGS}
-          label={t('Display Settings')}
-          icon={<DisplaySettings />}
-          iconPosition="start"
-        />
-      </TabList>
-      <TabPanel value={TABS.CODE_SETTINGS}>
-        <CodeEditor showButtonBar={false} />
-      </TabPanel>
-      <TabPanel value={TABS.DISPLAY_SETTINGS}>
-        <Stack sx={{ height: '50vh' }}>
-          <Typography variant="subtitle2">{t('App Customization')}</Typography>
-          <SettingsSwitch
-            settingKey={SETTINGS_KEYS.SHOW_HEADER}
-            label={t('Show Header to Students')}
-            dataCy={SHOW_HEADER_SWITCH_CYPRESS}
-          />
-          <SettingsSwitch
-            settingKey={SETTINGS_KEYS.SHOW_TOOLBAR}
-            label={t('Show Toolbar to Students')}
-            dataCy={SHOW_TOOLBAR_SWITCH_CYPRESS}
-          />
-          <SettingsSwitch
-            settingKey={SETTINGS_KEYS.SHOW_VERSION_NAVIGATION}
-            label={t('Show Version Navigation')}
-            dataCy={SHOW_VERSION_NAVIGATION_SWITCH_CYPRESS}
-          />
-          <SettingsSwitch
-            settingKey={SETTINGS_KEYS.SHOW_EDIT_BUTTON}
-            label={t('Show Code Edit Button')}
-            dataCy={SHOW_EDIT_BUTTON_SWITCH_CYPRESS}
-          />
-          <SettingsSwitch
-            settingKey={SETTINGS_KEYS.SHOW_VISIBILITY_BUTTON}
-            label={t('Show Visibility Toggle')}
-            dataCy={SHOW_VISIBILITY_SWITCH_CYPRESS}
-          />
+    <Stack>
+      <Typography variant="subtitle2">{t('App Customization')}</Typography>
+      <SettingsSwitch
+        settingKey={SETTINGS_KEYS.SHOW_HEADER}
+        label={t('Show Header to Students')}
+        dataCy={SHOW_HEADER_SWITCH_CYPRESS}
+      />
+      <SettingsSwitch
+        settingKey={SETTINGS_KEYS.SHOW_TOOLBAR}
+        label={t('Show Toolbar to Students')}
+        dataCy={SHOW_TOOLBAR_SWITCH_CYPRESS}
+      />
+      <SettingsSwitch
+        settingKey={SETTINGS_KEYS.SHOW_VERSION_NAVIGATION}
+        label={t('Show Version Navigation')}
+        dataCy={SHOW_VERSION_NAVIGATION_SWITCH_CYPRESS}
+      />
+      <SettingsSwitch
+        settingKey={SETTINGS_KEYS.SHOW_EDIT_BUTTON}
+        label={t('Show Code Edit Button')}
+        dataCy={SHOW_EDIT_BUTTON_SWITCH_CYPRESS}
+      />
+      <SettingsSwitch
+        settingKey={SETTINGS_KEYS.SHOW_VISIBILITY_BUTTON}
+        label={t('Show Visibility Toggle')}
+        dataCy={SHOW_VISIBILITY_SWITCH_CYPRESS}
+      />
 
-          <Divider sx={{ mt: 1 }} />
-          <Typography variant="subtitle2">
-            {t('Define Interaction Mode')}
-          </Typography>
+      <Divider sx={{ mt: 1 }} />
+      <Typography variant="subtitle2">
+        {t('Define Interaction Mode')}
+      </Typography>
 
-          <SettingsSwitch
-            settingKey={SETTINGS_KEYS.ALLOW_COMMENTS}
-            label={t('Allow Comments')}
-            dataCy={ALLOW_COMMENTS_SWITCH_CYPRESS}
-          />
-          <SettingsSwitch
-            settingKey={SETTINGS_KEYS.ALLOW_REPLIES}
-            label={t('Allow Replies')}
-            dataCy={ALLOW_REPLIES_SWITCH_CYPRESS}
-          />
+      <SettingsSwitch
+        settingKey={SETTINGS_KEYS.ALLOW_COMMENTS}
+        label={t('Allow Comments')}
+        dataCy={ALLOW_COMMENTS_SWITCH_CYPRESS}
+      />
+      <SettingsSwitch
+        settingKey={SETTINGS_KEYS.ALLOW_REPLIES}
+        label={t('Allow Replies')}
+        dataCy={ALLOW_REPLIES_SWITCH_CYPRESS}
+      />
 
-          <SettingsSelect
-            settingsKey={SETTINGS_KEYS.REVIEW_MODE}
-            label={t('Define Review Mode')}
-            values={REVIEW_MODES.map(({ label, value }) => ({
-              // @ts-ignore
-              label: t(label),
-              value,
-            }))}
-          />
-        </Stack>
-      </TabPanel>
-    </TabContext>
+      <SettingsSelect
+        dataCy={REVIEW_MODES_SELECT_CYPRESS}
+        settingsKey={SETTINGS_KEYS.REVIEW_MODE}
+        label={t('Define Review Mode')}
+        values={REVIEW_MODES.map(({ label, value }) => ({
+          // @ts-ignore
+          label: t(label),
+          value,
+        }))}
+      />
+    </Stack>
   );
 
   const handleClose = (save: boolean): void => {
@@ -160,7 +112,7 @@ const SettingsFab: FC = () => {
       setTimeout(() => resetSettings(), CLOSE_SETTINGS_TIMEOUT);
     }
     // close the dialog
-    setOpenSettings(false);
+    setOpenDisplaySettings(false);
   };
   const renderActions = (): ReactElement => (
     <Box>
@@ -169,6 +121,7 @@ const SettingsFab: FC = () => {
         dataCy={SETTINGS_DIALOG_CANCEL_BUTTON_CYPRESS}
         onClick={() => handleClose(false)}
         color="error"
+        variant="outlined"
       >
         {t('Cancel')}
       </Button>
@@ -177,6 +130,7 @@ const SettingsFab: FC = () => {
         dataCy={SETTINGS_DIALOG_SAVE_BUTTON_CYPRESS}
         onClick={() => handleClose(true)}
         disabled={!unsavedChanges}
+        variant="outlined"
       >
         {unsavedChanges ? t('Save') : t('Saved')}
       </Button>
@@ -186,24 +140,60 @@ const SettingsFab: FC = () => {
   return (
     <>
       <CustomDialog
-        dataCy={SETTINGS_DIALOG_WINDOW_CYPRESS}
-        open={openSettings}
-        title={t('Settings')}
+        dataCy={SETTINGS_DISPLAY_DIALOG_WINDOW_CYPRESS}
+        open={openDisplaySettings}
+        title={
+          <Stack direction="row" spacing={2} alignItems="center">
+            <DisplaySettings sx={{ pr: 2 }} />
+            {t('Display Settings')}
+          </Stack>
+        }
         content={renderSettings()}
         actions={renderActions()}
       />
-      <Fab
-        color="primary"
-        data-cy={SETTINGS_FAB_CYPRESS}
-        onClick={() => setOpenSettings(true)}
-        sx={{
-          position: 'fixed !important',
-          bottom: '1rem',
-          right: '1rem',
-        }}
+      <CustomDialog
+        dataCy={SETTINGS_CODE_DIALOG_WINDOW_CYPRESS}
+        open={openCodeSettings}
+        title={
+          <Stack direction="row" spacing={2} alignItems="center">
+            <Code sx={{ pr: 2 }} />
+            {t('Code Settings')}
+          </Stack>
+        }
+        content={
+          <CodeEditor
+            submitTarget="settings"
+            onClose={() => setOpenCodeSettings(false)}
+          />
+        }
+      />
+      <Stack
+        spacing={1}
+        sx={{ position: 'fixed !important', right: '1rem', bottom: '1rem' }}
       >
-        <SettingsIcon />
-      </Fab>
+        <Tooltip title={t('Code Settings')} placement="left">
+          <Fab
+            color="primary"
+            onClick={() => {
+              setOpenCodeSettings(true);
+            }}
+            data-cy={CODE_SETTINGS_FAB_CYPRESS}
+          >
+            <Code />
+          </Fab>
+        </Tooltip>
+        <Tooltip title={t('Display Settings')} placement="left">
+          <Fab
+            color="primary"
+            data-cy={DISPLAY_SETTINGS_FAB_CYPRESS}
+            onClick={() => {
+              setOpenDisplaySettings(true);
+            }}
+          >
+            <DisplaySettings />
+          </Fab>
+        </Tooltip>
+      </Stack>
     </>
   );
 };

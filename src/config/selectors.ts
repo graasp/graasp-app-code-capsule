@@ -10,7 +10,9 @@ export const TABLE_ROW_USERS_CYPRESS = 'table_row_users';
 export const TABLE_VIEW_BODY_USERS_CYPRESS = 'table_view_body_users';
 export const NUMBER_OF_COMMENTS_CYPRESS = 'number_of_comments';
 export const TABLE_NO_COMMENTS_CYPRESS = 'table_no_comments';
-export const SETTINGS_FAB_CYPRESS = 'settings_fab';
+export const SETTINGS_SPEED_FAB_CYPRESS = 'settings_speed_fab';
+export const DISPLAY_SETTINGS_FAB_CYPRESS = 'display_settings_fab';
+export const CODE_SETTINGS_FAB_CYPRESS = 'code_settings_fab';
 export const SETTINGS_DIALOG_CANCEL_BUTTON_CYPRESS =
   'settings_dialog_cancel_button';
 export const SETTINGS_DIALOG_SAVE_BUTTON_CYPRESS =
@@ -18,7 +20,10 @@ export const SETTINGS_DIALOG_SAVE_BUTTON_CYPRESS =
 export const PROGRAMMING_LANGUAGE_SELECT_ID = 'programmingLanguageSelect';
 export const PROGRAMMING_LANGUAGE_SELECT_CYPRESS =
   'programming_language_select';
-export const SETTINGS_DIALOG_WINDOW_CYPRESS = 'settings_dialog_window';
+export const SETTINGS_CODE_DIALOG_WINDOW_CYPRESS =
+  'settings_code_dialog_window';
+export const SETTINGS_DISPLAY_DIALOG_WINDOW_CYPRESS =
+  'settings_display_dialog_window';
 export const SHOW_HEADER_SWITCH_CYPRESS = 'show_header_switch';
 export const SHOW_TOOLBAR_SWITCH_CYPRESS = 'show_toolbar_switch';
 export const SHOW_VERSION_NAVIGATION_SWITCH_CYPRESS =
@@ -27,6 +32,8 @@ export const SHOW_EDIT_BUTTON_SWITCH_CYPRESS = 'show_edit_button_switch';
 export const SHOW_VISIBILITY_SWITCH_CYPRESS = 'show_visibility_switch';
 export const ALLOW_COMMENTS_SWITCH_CYPRESS = 'allow_comments_switch';
 export const ALLOW_REPLIES_SWITCH_CYPRESS = 'allow_replies_switch';
+export const REVIEW_MODES_SELECT_CYPRESS = 'review_modes_select';
+
 export const tableRowUserCypress = (id: string): string =>
   `${TABLE_ROW_USERS_CYPRESS}-${id}`;
 export const CODE_REVIEW_CONTAINER_CYPRESS = 'code_review_container';
@@ -70,3 +77,5 @@ export const buildDataCy = (selector: string): string =>
   `[data-cy=${selector}]`;
 export const buildTableRowCypress = (selector: string): string =>
   `[data-cy=${selector}]`;
+
+export const CODE_EDITOR_CYPRESS = '.monaco-editor textarea:first';
