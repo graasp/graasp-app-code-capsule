@@ -1,17 +1,18 @@
 import React, { FC } from 'react';
-import logo from './logo.svg';
+
 import './App.css';
+import { LEARN_REACT_LINK_CYPRESS } from './config/selectors';
 
 const App: FC = () => (
   <div className="App">
     <header className="App-header">
-      <img src={logo} className="App-logo" alt="logo" />
       <p>
         Here <code>src/App.tsx</code> and save to reload.
       </p>
       <p>Hello world</p>
       <a
         className="App-link"
+        data-cy={LEARN_REACT_LINK_CYPRESS}
         href="https://reactjs.org"
         target="_blank"
         rel="noopener noreferrer"

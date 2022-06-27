@@ -4,11 +4,16 @@
     "es2021": true
   },
   "extends": [
-    "plugin:react/recommended",
     "airbnb",
     "plugin:@typescript-eslint/recommended",
-    "prettier"
+    "prettier",
+    "plugin:react/recommended",
+    "plugin:cypress/recommended"
   ],
+  "globals": {
+    "cy": true,
+    "Cypress": true
+  },
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "ecmaFeatures": {
@@ -19,6 +24,9 @@
   },
   "plugins": ["react", "react-hooks", "@typescript-eslint", "prettier"],
   "rules": {
+    "import/no-import-module-exports": "off",
+    "import/no-extraneous-dependencies": ["error", { "devDependencies": true }],
+    "import/prefer-default-export": "off",
     "prettier/prettier": "error",
     "import/extensions": [
       "error",
@@ -34,6 +42,8 @@
         "allowExpressions": true
       }
     ],
+    "@typescript-eslint/no-var-requires": "off",
+    "global-require": "off",
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "warn",
     "comma-dangle": "off",

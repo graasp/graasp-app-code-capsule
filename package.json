@@ -1,33 +1,70 @@
 {
-  "name": "graasp-code-review-app-test",
+  "name": "graasp-app-code-capsule",
   "version": "0.1.0",
   "private": true,
+  "license": "AGPL-3.0-only",
+  "author": "React EPFL",
+  "contributors": [
+    "Juan Carlos Farah",
+    "Basile Spaenlehauer"
+  ],
   "dependencies": {
-    "@testing-library/jest-dom": "^5.14.1",
-    "@testing-library/react": "^13.0.0",
-    "@testing-library/user-event": "^13.2.1",
-    "@types/jest": "^27.0.1",
-    "@types/node": "^16.7.13",
-    "@types/react": "^18.0.0",
-    "@types/react-dom": "^18.0.0",
-    "react": "^18.1.0",
-    "react-dom": "^18.1.0",
+    "@testing-library/cypress": "8.0.2",
+    "@testing-library/jest-dom": "5.16.4",
+    "@testing-library/react": "13.2.0",
+    "@testing-library/user-event": "14.1.1",
+    "@types/jest": "27.5.0",
+    "@types/node": "16.11.33",
+    "@types/react": "18.0.8",
+    "@types/react-dom": "18.0.3",
+    "react": "18.1.0",
+    "react-dom": "18.1.0",
     "react-scripts": "5.0.1",
-    "typescript": "^4.4.2",
-    "web-vitals": "^2.1.0"
+    "typescript": "4.6.4"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "env-cmd -f ./.env.local react-scripts -r @cypress/instrument-cra start",
+    "start:test": "env-cmd -f ./.env.test react-scripts -r @cypress/instrument-cra start",
+    "start:ci": "react-scripts -r @cypress/instrument-cra start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test:cra": "react-scripts test",
     "eject": "react-scripts eject",
+    "postinstall": "husky install",
     "prettier:write": "prettier {src,cypress}/**/*.{ts,tsx,js,jsx} --write",
     "prettier:check": "prettier {src,cypress}/**/*.{ts,tsx,js,jsx} --check",
     "hooks:install": "husky install",
     "hooks:uninstall": "husky uninstall",
     "lint": "eslint .",
-    "test:once": "",
-    "test:ci": "env-cmd -f ./.env.test cypress run"
+    "cypress:open": "env-cmd -f ./.env.local cypress open",
+    "test": "concurrently -k -s first \"yarn start:test\" \"wait-on http://localhost:3333 && yarn test:ci\" ",
+    "test:ci": "env-cmd -f ./.env.test cypress run && nyc report --reporter=text --reporter=text-summary",
+    "cov:report": "open ./coverage/lcov-report/index.html"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "16.2.4",
+    "@commitlint/config-conventional": "16.2.4",
+    "@cypress/code-coverage": "3.9.12",
+    "@cypress/instrument-cra": "1.4.0",
+    "@trivago/prettier-plugin-sort-imports": "3.2.0",
+    "@typescript-eslint/eslint-plugin": "5.22.0",
+    "@typescript-eslint/parser": "5.22.0",
+    "concurrently": "7.1.0",
+    "cypress": "9.6.0",
+    "eslint": "8.14.0",
+    "eslint-config-airbnb": "19.0.4",
+    "eslint-config-prettier": "8.5.0",
+    "eslint-import-resolver-typescript": "2.7.1",
+    "eslint-plugin-cypress": "2.12.1",
+    "eslint-plugin-import": "2.26.0",
+    "eslint-plugin-jsx-a11y": "6.5.1",
+    "eslint-plugin-prettier": "4.0.0",
+    "eslint-plugin-react": "7.29.4",
+    "eslint-plugin-react-hooks": "4.5.0",
+    "husky": "7.0.4",
+    "nyc": "15.1.0",
+    "prettier": "2.6.2",
+    "pretty-quick": "3.1.3",
+    "standard-version": "9.3.2"
   },
   "browserslist": {
     "production": [
@@ -41,23 +78,13 @@
       "last 1 safari version"
     ]
   },
-  "packageManager": "yarn@3.2.0",
-  "devDependencies": {
-    "@commitlint/cli": "16.1.0",
-    "@commitlint/config-conventional": "16.0.0",
-    "@typescript-eslint/eslint-plugin": "^5.22.0",
-    "@typescript-eslint/parser": "^5.22.0",
-    "eslint": "^8.14.0",
-    "eslint-config-airbnb": "^19.0.4",
-    "eslint-config-prettier": "^8.5.0",
-    "eslint-import-resolver-typescript": "^2.7.1",
-    "eslint-plugin-import": "^2.26.0",
-    "eslint-plugin-jsx-a11y": "^6.5.1",
-    "eslint-plugin-prettier": "^4.0.0",
-    "eslint-plugin-react": "^7.29.4",
-    "eslint-plugin-react-hooks": "^4.5.0",
-    "husky": "^7.0.4",
-    "prettier": "^2.6.2",
-    "pretty-quick": "^3.1.3"
-  }
+  "nyc": {
+    "all": true,
+    "include": "src/*.{js,ts,jsx,tsx}",
+    "exclude": [
+      "src/setupTests.ts",
+      "src/*.d.ts"
+    ]
+  },
+  "packageManager": "yarn@3.2.0"
 }
