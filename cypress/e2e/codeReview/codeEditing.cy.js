@@ -14,7 +14,7 @@ import {
 } from '../../../src/config/settings';
 import { SETTINGS_KEYS } from '../../../src/interfaces/settings';
 import {
-  MOCK_CODE_SAMPLE,
+  MOCK_CODE_SETTINGS,
   MOCK_GENERAL_SETTINGS,
 } from '../../fixtures/appSettings';
 import { CURRENT_MEMBER } from '../../fixtures/members';
@@ -29,10 +29,10 @@ describe('Code Editing', () => {
             ...MOCK_GENERAL_SETTINGS,
             data: {
               ...DEFAULT_GENERAL_SETTINGS,
-              [SETTINGS_KEYS.CODE]: MOCK_CODE_SAMPLE,
               [SETTINGS_KEYS.SHOW_EDIT_BUTTON]: true,
             },
           },
+          MOCK_CODE_SETTINGS,
         ],
       },
       appContext: {
