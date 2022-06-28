@@ -28,6 +28,7 @@ import {
   DEFAULT_COMMIT_MESSAGE_SETTING,
 } from '../../config/settings';
 import { CodeType, CodeVersionType } from '../../interfaces/codeVersions';
+import { useCodeVersionContext } from '../context/CodeVersionContext';
 import CustomSelect from '../layout/CustomSelect';
 import Loader from './Loader';
 
@@ -52,6 +53,7 @@ const CodeEditor: FC<Props> = ({
   showButtonBar = true,
 }) => {
   const { t } = useTranslation();
+  const { setCodeId } = useCodeVersionContext();
   const {
     code: seedCode,
     language: seedLanguage,
@@ -71,8 +73,8 @@ const CodeEditor: FC<Props> = ({
   const patchSettings = useMutation<unknown, unknown, Partial<AppSetting>>(
     MUTATION_KEYS.PATCH_APP_SETTING,
   );
-  const postAppData = useMutation<unknown, unknown, Partial<CodeType>>(
-    MUTATION_KEYS.PATCH_APP_SETTING,
+  const postAppData = useMutation<CodeType, unknown, Partial<CodeType>>(
+    MUTATION_KEYS.POST_APP_DATA,
   );
   const appSettings = hooks.useAppSettings();
   const codeVersionSettings = appSettings.data?.find(
@@ -130,7 +132,7 @@ const CodeEditor: FC<Props> = ({
           data: editedCodeData,
           type: APP_DATA_TYPES.CODE,
         })
-        .then((data) => console.log(data));
+        .then((data) => setCodeId(data.id));
     }
     onClose?.();
   };
