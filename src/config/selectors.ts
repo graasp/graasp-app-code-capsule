@@ -8,6 +8,22 @@ export const TAB_PRESET_VIEW_CYPRESS = 'tab_preset_view';
 export const TAB_TABLE_VIEW_CYPRESS = 'tab_table_view';
 export const TABLE_ROW_USERS_CYPRESS = 'table_row_users';
 export const TABLE_VIEW_BODY_USERS_CYPRESS = 'table_view_body_users';
+export const TABLE_VIEW_OPEN_REVIEW_BUTTON_CYPRESS =
+  'table_view_open_review_button';
+export const TABLE_VIEW_USER_REVIEW_DIALOG_CYPRESS =
+  'table_view_user_review_dialog';
+export const TABLE_VIEW_USERNAME_CELL_CYPRESS = 'table_view_username_cell';
+export const TABLE_VIEW_HELP_NEEDED_CELL_CYPRESS =
+  'table_view_help_needed_cell';
+export const TABLE_VIEW_NB_COMMENTS_CELL_CYPRESS =
+  'table_view_nb_comments_cell';
+export const TABLE_VIEW_VIEW_COMMENTS_CELL_CYPRESS =
+  'table_view_view_comments_cell';
+export const TABLE_VIEW_REVIEW_DIALOG_CLOSE_BUTTON_CYPRESS =
+  'table_view_review_dialog_close_button';
+
+export const CUSTOM_DIALOG_TITLE_CYPRESS = 'custom_dialog_title';
+
 export const NUMBER_OF_COMMENTS_CYPRESS = 'number_of_comments';
 export const TABLE_NO_COMMENTS_CYPRESS = 'table_no_comments';
 export const SETTINGS_SPEED_FAB_CYPRESS = 'settings_speed_fab';

@@ -30,7 +30,7 @@
     "View Student comments": "Voir les commentaires",
     "Select a bot to impersonate": "Sélectionnez un bot à utiliser",
     "Close": "Fermer",
-    "Viewing comments from ": "Affichage des commentaires de ",
+    "Viewing comments from": "Affichage des commentaires de {{user}}",
     "Bot Users": "Utilisateurs robots",
     "Avatar": "Avatar",
     "Instructor": "Instructeur",

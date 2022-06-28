@@ -1,4 +1,4 @@
-import { AppData } from '@graasp/apps-query-client';
+import { AppData, AppSetting } from '@graasp/apps-query-client';
 
 import { APP_DATA_TYPES } from '../config/appDataTypes';
 
@@ -21,4 +21,6 @@ export interface CodeAppData {
   type: APP_DATA_TYPES.CODE;
 }
 
-export type CodeType = AppData & CodeAppData;
+export type CodeType =
+  | (AppData & CodeAppData)
+  | ({ data: CodeVersionType } & AppSetting);

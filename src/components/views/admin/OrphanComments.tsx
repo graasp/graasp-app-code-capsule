@@ -39,6 +39,7 @@ const OrphanComments: FC<Prop> = ({ comments }) => {
 
   const orphanThreads = getOrphanComments(comments);
 
+  console.log(orphanThreads);
   if (!orphanThreads.size) {
     return null;
   }

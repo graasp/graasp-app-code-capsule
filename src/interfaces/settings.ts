@@ -26,3 +26,17 @@ export interface GeneralSettings {
   // used to allow access using settings[settingKey] syntax
   [key: string]: unknown;
 }
+
+export interface CodeVersionSettings {
+  [SETTINGS_KEYS.SHOW_HEADER]: boolean;
+  [SETTINGS_KEYS.SHOW_TOOLBAR]: boolean;
+  [SETTINGS_KEYS.SHOW_VERSION_NAVIGATION]: boolean;
+  [SETTINGS_KEYS.SHOW_EDIT_BUTTON]: boolean;
+  [SETTINGS_KEYS.SHOW_VISIBILITY_BUTTON]: boolean;
+  [SETTINGS_KEYS.ALLOW_COMMENTS]: boolean;
+  [SETTINGS_KEYS.ALLOW_REPLIES]: boolean;
+  [SETTINGS_KEYS.REVIEW_MODE]: string;
+
+  // used to allow access using settings[settingKey] syntax
+  [key: string]: unknown;
+}

@@ -7,7 +7,7 @@ import {
   Visibility,
   VisibilityOff,
 } from '@mui/icons-material';
-import { Stack, Tooltip } from '@mui/material';
+import { Stack, Tooltip, styled } from '@mui/material';
 
 import { faInfo } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -35,6 +35,8 @@ import { useSettings } from '../context/SettingsContext';
 import { useVisibilityContext } from '../context/VisibilityContext';
 import CustomSelect from '../layout/CustomSelect';
 import ToolbarButton from '../layout/ToolbarButton';
+import CommitInfo from './CommitInfo';
+import CustomDialog from './CustomDialog';
 
 const getVersionLabel = (
   { data, updatedAt }: CodeVersionSelectType,
@@ -55,6 +57,10 @@ const getVersionLabel = (
   return `${msg} - ${date}`;
 };
 
+const StyledStack = styled(Stack)(({ theme }) => ({
+  marginBottom: theme.spacing(2),
+}));
+
 type Props = {
   setView: (view: AppViews) => void;
 };
@@ -62,7 +68,7 @@ type Props = {
 const CodeReviewToolbar: FC<Props> = ({ setView }) => {
   const { t, i18n } = useTranslation();
   const { settings } = useSettings();
-  const { codeVersion } = useCodeVersionContext();
+  const { codeVersion, codeVersionResource } = useCodeVersionContext();
   const { toggleAll } = useVisibilityContext();
   const { groupedVersions, setCodeId } = useCodeVersionContext();
   const showToolbar = settings[SETTINGS_KEYS.SHOW_TOOLBAR];
@@ -72,6 +78,7 @@ const CodeReviewToolbar: FC<Props> = ({ setView }) => {
   const isExecutable = SUPPORTED_EXECUTABLE_LANGUAGES.includes(
     codeVersion.language,
   );
+  const [openCommitInfo, setOpenCommitInfo] = useState(false);
   const [isHidden, setIsHidden] = useState(DEFAULT_LINE_HIDDEN_STATE);
   const [selectedUser, setSelectedUser] = useState(
     groupedVersions[0].user.value,
@@ -148,7 +155,7 @@ const CodeReviewToolbar: FC<Props> = ({ setView }) => {
     <Tooltip title={t('Commit Info')}>
       <ToolbarButton
         dataCy={TOOLBAR_COMMIT_INFO_BUTTON_CYPRESS}
-        onClick={() => console.log('info clicked')}
+        onClick={() => setOpenCommitInfo(true)}
       >
         <FontAwesomeIcon width={14} fontSize="inherit" icon={faInfo} />
       </ToolbarButton>
@@ -182,25 +189,37 @@ const CodeReviewToolbar: FC<Props> = ({ setView }) => {
   );
 
   return (
-    <Stack
-      direction="row"
-      alignItems="center"
-      justifyContent="space-between"
-      data-cy={CODE_REVIEW_TOOLBAR_CYPRESS}
-    >
-      <Stack direction="row" spacing={1}>
-        {userSelect}
-        {versionSelect}
-      </Stack>
-      <Stack direction="row" spacing={1}>
-        <>
-          {showCommitInfo && infoButton}
-          {showEditButton && editButton}
-          {isExecutable && executeCodeButton}
-          {showVisibilityToggle && toggleVisibilityButton}
-        </>
-      </Stack>
-    </Stack>
+    <>
+      <StyledStack
+        direction="row"
+        alignItems="center"
+        justifyContent="space-between"
+        data-cy={CODE_REVIEW_TOOLBAR_CYPRESS}
+      >
+        {showCommitInfo ? (
+          <Stack direction="row" spacing={1}>
+            {userSelect}
+            {versionSelect}
+          </Stack>
+        ) : (
+          <span />
+        )}
+        <Stack direction="row" spacing={1}>
+          <>
+            {showCommitInfo && infoButton}
+            {showEditButton && editButton}
+            {isExecutable && executeCodeButton}
+            {showVisibilityToggle && toggleVisibilityButton}
+          </>
+        </Stack>
+      </StyledStack>
+      <CustomDialog
+        title={t('Commit Info')}
+        open={openCommitInfo}
+        onClose={() => setOpenCommitInfo(false)}
+        content={<CommitInfo commitResource={codeVersionResource} />}
+      />
+    </>
   );
 };
 

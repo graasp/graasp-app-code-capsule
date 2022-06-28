@@ -43,9 +43,14 @@ const defaultContextValue = {
 const AppDataContext = createContext<AppDataContextType>(defaultContextValue);
 
 // eslint-disable-next-line @typescript-eslint/ban-types
-type Prop = {};
+type Prop = {
+  currentUserId?: string;
+};
 
-export const AppDataProvider: FC<PropsWithChildren<Prop>> = ({ children }) => {
+export const AppDataProvider: FC<PropsWithChildren<Prop>> = ({
+  currentUserId,
+  children,
+}) => {
   const appData = hooks.useAppData();
   const { settings } = useSettings();
   // set the default visibility following the review mode
@@ -63,17 +68,26 @@ export const AppDataProvider: FC<PropsWithChildren<Prop>> = ({ children }) => {
     MUTATION_KEYS.DELETE_APP_DATA,
   );
 
-  const contextValue = useMemo(
-    () => ({
+  const contextValue = useMemo(() => {
+    const filteredAppData = currentUserId
+      ? appData.data?.filter((res) => res.creator === currentUserId)
+      : appData.data;
+    return {
       postAppData: (payload: PostAppDataType) => {
         postAppData.mutate({ visibility: visibilityVariant, ...payload });
       },
       patchAppData: patchAppData.mutate,
       deleteAppData: deleteAppData.mutate,
-      appData: appData.data || List<AppData>(),
-    }),
-    [appData, deleteAppData, patchAppData, postAppData, visibilityVariant],
-  );
+      appData: filteredAppData || List<AppData>(),
+    };
+  }, [
+    appData.data,
+    currentUserId,
+    deleteAppData.mutate,
+    patchAppData.mutate,
+    postAppData,
+    visibilityVariant,
+  ]);
 
   if (appData.isLoading) {
     return <Loader />;

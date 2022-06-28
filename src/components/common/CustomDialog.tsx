@@ -1,12 +1,15 @@
 import React, { FC, MutableRefObject, ReactElement, RefObject } from 'react';
 
 import {
+  Breakpoint,
   Dialog,
   DialogActions,
   DialogContent,
   DialogTitle,
   styled,
 } from '@mui/material';
+
+import { CUSTOM_DIALOG_TITLE_CYPRESS } from '../../config/selectors';
 
 type RefType =
   | null
@@ -38,6 +41,8 @@ type Props = {
   onClose?: () => void;
   dataCy?: string;
   keepMounted?: boolean;
+  fullScreen?: boolean;
+  maxWidth?: Breakpoint;
   anchor?: RefType;
 };
 
@@ -49,17 +54,23 @@ const CustomDialog: FC<Props> = ({
   onClose,
   dataCy,
   keepMounted = true,
+  fullScreen = false,
+  maxWidth = 'sm',
   anchor = null,
 }) => (
   <Dialog
     keepMounted={keepMounted}
     data-cy={dataCy}
     fullWidth
+    fullScreen={fullScreen}
+    maxWidth={maxWidth}
     open={open}
     onClose={onClose}
     PaperProps={anchor ? { style: getPlacedModalStyle(anchor) } : {}}
   >
-    <StyledDialogTitle>{title}</StyledDialogTitle>
+    <StyledDialogTitle data-cy={CUSTOM_DIALOG_TITLE_CYPRESS}>
+      {title}
+    </StyledDialogTitle>
     <DialogContent>{content}</DialogContent>
     <DialogActions>{actions}</DialogActions>
   </Dialog>

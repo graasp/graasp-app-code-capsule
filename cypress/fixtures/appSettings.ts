@@ -25,6 +25,10 @@ print('Done!')
 print('See you !')
 `;
 
+const MOCK_COMMIT_MESSAGE = 'This is a mock commit message';
+const MOCK_COMMIT_DESCRIPTION =
+  'This is a mock commit Description\nOn multiple lines';
+
 export const MOCK_GENERAL_SETTINGS = {
   id: v4(),
   name: GENERAL_SETTINGS_KEY,
@@ -36,6 +40,8 @@ export const MOCK_CODE_SETTINGS = {
   name: INSTRUCTOR_CODE_VERSION_SETTINGS_KEY,
   data: {
     ...DEFAULT_CODE_VERSION_SETTING,
+    commitMessage: MOCK_COMMIT_MESSAGE,
+    commitDescription: MOCK_COMMIT_DESCRIPTION,
     code: MOCK_CODE_SAMPLE,
   },
 };

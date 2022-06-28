@@ -23,7 +23,7 @@ const Container = styled('div')({
   padding: '16px',
   maxWidth: '600px',
   width: '80vw',
-  border: 'solid var(--graasp-primary) 1px',
+  // border: 'solid var(--graasp-primary) 1px',
   borderRadius: '4px',
   wordWrap: 'break-word',
 });

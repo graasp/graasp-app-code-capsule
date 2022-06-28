@@ -25,6 +25,7 @@ import { useAppDataContext } from './AppDataContext';
 import { useMembersContext } from './MembersContext';
 
 type CodeVersionContextType = {
+  codeVersionResource: CodeVersionSelectType;
   codeVersion: CodeVersionType;
   groupedVersions: {
     user: { value: string; label: string };
@@ -42,6 +43,7 @@ const defaultCodeVersion = {
 };
 
 const defaultContextValue = {
+  codeVersionResource: defaultCodeVersion,
   codeVersion: defaultCodeVersion.data,
   groupedVersions: [],
   codeId: INSTRUCTOR_CODE_ID,
@@ -92,10 +94,11 @@ export const CodeVersionProvider: FC<PropsWithChildren<Prop>> = ({
         },
         versions: versions.toArray() as CodeVersionSelectType[],
       }));
+    const codeVersionResource =
+      allCodeVersions?.find((c) => c.id === codeId) || instructorCodeVersion;
     return {
-      codeVersion:
-        allCodeVersions?.find((c) => c.id === codeId)?.data ||
-        instructorCodeVersion.data,
+      codeVersionResource,
+      codeVersion: codeVersionResource.data,
       // compile all versions and put teacher version first
       groupedVersions: [
         {

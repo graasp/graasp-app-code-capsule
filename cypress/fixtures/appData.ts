@@ -46,7 +46,7 @@ export const SINGLE_LINE_MOCK_COMMENTS: AppData[] = [
     id: uuid(),
     data: {
       line: 4,
-      content: 'Other Thread start\n\nComment on line 3\n\nFrom Bob',
+      content: 'Other Thread start\n\nComment on line 3\n\nFrom Anna',
       parent: null,
     },
     memberId: CURRENT_MEMBER.id,
@@ -56,21 +56,22 @@ export const SINGLE_LINE_MOCK_COMMENTS: AppData[] = [
     updatedAt: new Date().toISOString(),
     type: APP_DATA_TYPES.COMMENT,
   },
-  {
-    id: uuid(),
-    data: {
-      line: 1,
-      content: 'Orphan comment',
-      parent: uuid(),
-    },
-    memberId: MEMBERS.BOB.id,
-    creator: MEMBERS.BOB.id,
-    itemId: MOCK_SERVER_ITEM.id,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
-    type: APP_DATA_TYPES.COMMENT,
-  },
 ];
+
+export const MOCK_ORPHAN_COMMENT = {
+  id: uuid(),
+  data: {
+    line: 1,
+    content: 'Orphan comment',
+    parent: '123456789',
+  },
+  memberId: MEMBERS.BOB.id,
+  creator: MEMBERS.BOB.id,
+  itemId: MOCK_SERVER_ITEM.id,
+  createdAt: new Date().toISOString(),
+  updatedAt: new Date().toISOString(),
+  type: APP_DATA_TYPES.COMMENT,
+};
 
 export const MULTILINE_MOCK_COMMENTS: AppData[] = [
   {
