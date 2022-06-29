@@ -117,13 +117,13 @@ __metadata:
   linkType: hard
 
 "@babel/generator@npm:^7.13.0, @babel/generator@npm:^7.13.9, @babel/generator@npm:^7.18.6, @babel/generator@npm:^7.7.2":
-  version: 7.18.6
-  resolution: "@babel/generator@npm:7.18.6"
+  version: 7.18.7
+  resolution: "@babel/generator@npm:7.18.7"
   dependencies:
-    "@babel/types": ^7.18.6
-    "@jridgewell/gen-mapping": ^0.3.0
+    "@babel/types": ^7.18.7
+    "@jridgewell/gen-mapping": ^0.3.2
     jsesc: ^2.5.1
-  checksum: 580c219aa97715fb5d60403be09c65286fae9047666ed7390d463ac063e0637521abb6ee3e6bd406df0d3ea8440f786d5f254282b63008c4f7a139dde0b68d2f
+  checksum: aad4b6873130165e9483af2888bce5a3a5ad9cca0757fc90ae11a0396757d0b295a3bff49282c8df8ab01b31972cc855ae88fd9ddc9ab00d9427dc0e01caeea9
   languageName: node
   linkType: hard
 
@@ -1557,13 +1557,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/types@npm:^7.0.0, @babel/types@npm:^7.12.6, @babel/types@npm:^7.13.0, @babel/types@npm:^7.18.6, @babel/types@npm:^7.3.0, @babel/types@npm:^7.3.3, @babel/types@npm:^7.4.4, @babel/types@npm:^7.8.3":
-  version: 7.18.6
-  resolution: "@babel/types@npm:7.18.6"
+"@babel/types@npm:^7.0.0, @babel/types@npm:^7.12.6, @babel/types@npm:^7.13.0, @babel/types@npm:^7.18.6, @babel/types@npm:^7.18.7, @babel/types@npm:^7.3.0, @babel/types@npm:^7.3.3, @babel/types@npm:^7.4.4, @babel/types@npm:^7.8.3":
+  version: 7.18.7
+  resolution: "@babel/types@npm:7.18.7"
   dependencies:
     "@babel/helper-validator-identifier": ^7.18.6
     to-fast-properties: ^2.0.0
-  checksum: 9561d9ffba7ab879aca36dfb7a9b632944952d995e99faaabb6e5f14300e01516894b6fd1976cdd3c515fff12120ec708bdcb3fbc4f92ccead274e9c6c1ce031
+  checksum: 3114ce161c4ebcb70271e168aa5af5cecedf3278209161d5ba6124bd3f9cb02e3f3ace587ad1b53f7baa153b6b3714720721c72a9ef3ec451663862f9cc1f014
   languageName: node
   linkType: hard
 
@@ -2291,8 +2291,8 @@ __metadata:
   linkType: hard
 
 "@graasp/apps-query-client@github:graasp/graasp-apps-query-client#38/HOCTypes":
-  version: 0.1.1
-  resolution: "@graasp/apps-query-client@https://github.com/graasp/graasp-apps-query-client.git#commit=7ad1b42a16f063370a98fc145b5177e31fd452a7"
+  version: 0.2.0
+  resolution: "@graasp/apps-query-client@https://github.com/graasp/graasp-apps-query-client.git#commit=d9412bfa2e8170eb6f7140c9333de10d93fabaff"
   dependencies:
     "@graasp/utils": "github:graasp/graasp-utils"
     axios: 0.27.2
@@ -2306,7 +2306,7 @@ __metadata:
     uuid: 8.3.2
   peerDependencies:
     react: ^17.0.0
-  checksum: 39832f693aca0ff7ceca6a0f972a3996572eeec0bd0a8971197d5636d89d4ef4a86aa46f34911a9b3967824bd0e291a3137fe218af2b952fe91a167de1e6088d
+  checksum: 089b41e5dabd7932b6f58e48f6303b6042365885f7d2cb3e3c2fd2002656d11e728c4762c95c1f129834665adfb936379827e18605bc47a96132f0415a736a21
   languageName: node
   linkType: hard
 
@@ -2676,7 +2676,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@jridgewell/gen-mapping@npm:^0.3.0":
+"@jridgewell/gen-mapping@npm:^0.3.0, @jridgewell/gen-mapping@npm:^0.3.2":
   version: 0.3.2
   resolution: "@jridgewell/gen-mapping@npm:0.3.2"
   dependencies:
@@ -5496,16 +5496,16 @@ __metadata:
   linkType: hard
 
 "browserslist@npm:^4.0.0, browserslist@npm:^4.14.5, browserslist@npm:^4.16.6, browserslist@npm:^4.18.1, browserslist@npm:^4.20.2, browserslist@npm:^4.20.3, browserslist@npm:^4.21.0":
-  version: 4.21.0
-  resolution: "browserslist@npm:4.21.0"
+  version: 4.21.1
+  resolution: "browserslist@npm:4.21.1"
   dependencies:
-    caniuse-lite: ^1.0.30001358
-    electron-to-chromium: ^1.4.164
+    caniuse-lite: ^1.0.30001359
+    electron-to-chromium: ^1.4.172
     node-releases: ^2.0.5
-    update-browserslist-db: ^1.0.0
+    update-browserslist-db: ^1.0.4
   bin:
     browserslist: cli.js
-  checksum: dfad21090d0a4745f55c4c126172bc4d5743a500440791c731773f215a16f201a0b8a114c040fa5788ce2d1a13076601f751e54ee6c5f9de59f0cee3ce9875e3
+  checksum: 4904a9ded0702381adc495e003e7f77970abb7f8c8b8edd9e54f026354b5a96b1bddc26e6d9a7df9f043e468ecd2fcff2c8f40fc489909a042880117c2aca8ff
   languageName: node
   linkType: hard
 
@@ -5679,10 +5679,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"caniuse-lite@npm:^1.0.0, caniuse-lite@npm:^1.0.30001335, caniuse-lite@npm:^1.0.30001358":
-  version: 1.0.30001359
-  resolution: "caniuse-lite@npm:1.0.30001359"
-  checksum: e15dbf4ea445367e998ad525c54620275ae382446d0bc289d14bf014a159074a2207881b46406b011a72676686f8a734457ea8e8d4856dc3f700c3391e89b43e
+"caniuse-lite@npm:^1.0.0, caniuse-lite@npm:^1.0.30001335, caniuse-lite@npm:^1.0.30001359":
+  version: 1.0.30001361
+  resolution: "caniuse-lite@npm:1.0.30001361"
+  checksum: 3b56c9b4edf8f0b4a1891b0883f6fc7ab758858f4018d4c98aae474d235405cc2271b83c01af856add322a85df6f748514a7db020cade873ad6356e0a80b940c
   languageName: node
   linkType: hard
 
@@ -7419,10 +7419,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"electron-to-chromium@npm:^1.4.164":
-  version: 1.4.172
-  resolution: "electron-to-chromium@npm:1.4.172"
-  checksum: fe1db1c41cea55d700871f051f4662c5d988db9eca5f3f234294b73ccbaa2eabfd8349fa9c68433f5d6160988c604eff6bbf41f0600694ec03e758c0eb010355
+"electron-to-chromium@npm:^1.4.172":
+  version: 1.4.173
+  resolution: "electron-to-chromium@npm:1.4.173"
+  checksum: c7f1fa54f104eca689099e08c8c17ccea2819749b15c882443cae0524b4b3e30e8c12367b9ba966b09f9444e944d65ae164c985a7f233b0a7ecc0daf9e6eb057
   languageName: node
   linkType: hard
 
@@ -7487,12 +7487,12 @@ __metadata:
   linkType: hard
 
 "enhanced-resolve@npm:^5.9.3":
-  version: 5.9.3
-  resolution: "enhanced-resolve@npm:5.9.3"
+  version: 5.10.0
+  resolution: "enhanced-resolve@npm:5.10.0"
   dependencies:
     graceful-fs: ^4.2.4
     tapable: ^2.2.0
-  checksum: 64c2dbbdd608d1a4df93b6e60786c603a1faf3b2e66dfd051d62cf4cfaeeb5e800166183685587208d62e9f7afff3f78f3d5978e32cd80125ba0c83b59a79d78
+  checksum: 0bb9830704db271610f900e8d79d70a740ea16f251263362b0c91af545576d09fe50103496606c1300a05e588372d6f9780a9bc2e30ce8ef9b827ec8f44687ff
   languageName: node
   linkType: hard
 
@@ -8844,9 +8844,9 @@ __metadata:
   linkType: hard
 
 "get-tsconfig@npm:^4.0.6":
-  version: 4.0.7
-  resolution: "get-tsconfig@npm:4.0.7"
-  checksum: 44c2f60fa397e7606e08052465247461301e3bbf4681f104ea7b710813f5b03c47a1c15db05dc1a2d8bd1fc117b118caf03d96e2f2813dd96386ead9824b50ae
+  version: 4.1.0
+  resolution: "get-tsconfig@npm:4.1.0"
+  checksum: a1a29cdf53609a1e9e111bf863ea209494c03e425964ed2603e3a2657ed1d38213d4a8e3efbfd945f2ec908fe99b76d3ee87422fac5d8ec4fdd858bbb502efbf
   languageName: node
   linkType: hard
 
@@ -12421,11 +12421,11 @@ __metadata:
   linkType: hard
 
 "minipass@npm:^3.0.0, minipass@npm:^3.1.1, minipass@npm:^3.1.6":
-  version: 3.3.3
-  resolution: "minipass@npm:3.3.3"
+  version: 3.3.4
+  resolution: "minipass@npm:3.3.4"
   dependencies:
     yallist: ^4.0.0
-  checksum: 523a338f42140c2e62bff3429f236cc44a32ddd29a70d5221e0570ace237057190981cad406fd3a420f03a95cc001ad58a388d902b9519038e27f190bb88a6e7
+  checksum: 5d95a7738c54852ba78d484141e850c792e062666a2d0c681a5ac1021275beb7e1acb077e59f9523ff1defb80901aea4e30fac10ded9a20a25d819a42916ef1b
   languageName: node
   linkType: hard
 
@@ -17109,7 +17109,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"update-browserslist-db@npm:^1.0.0":
+"update-browserslist-db@npm:^1.0.4":
   version: 1.0.4
   resolution: "update-browserslist-db@npm:1.0.4"
   dependencies:

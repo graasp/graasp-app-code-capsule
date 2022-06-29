@@ -19,14 +19,10 @@ const StyledTypography = styled(Typography)({
   whiteSpace: 'pre-line',
 });
 
-// todo: remove this once there are props
-// eslint-disable-next-line @typescript-eslint/ban-types
 type Props = {
   commitResource: CodeVersionSelectType;
 };
 
-// todo: remove if not needed
-// eslint-disable-next-line arrow-body-style
 const CommitInfo: FC<Props> = ({ commitResource }) => {
   const members = useMembersContext();
   const { t, i18n } = useTranslation();
