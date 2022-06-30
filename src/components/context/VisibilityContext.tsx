@@ -22,8 +22,10 @@ type Prop = {};
 const defaultContextValue: VisibilityContextType = {
   lineHiddenState: [],
   toggleLineVisibility: (lineIndex: number) =>
+    // eslint-disable-next-line no-console
     console.log(`Toggling line index ${lineIndex}`),
   toggleAll: (value: boolean) =>
+    // eslint-disable-next-line no-console
     console.log(`toggled line visibility to ${value}`),
 };
 

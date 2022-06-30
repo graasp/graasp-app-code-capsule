@@ -30,16 +30,21 @@ export type ReviewContextType = {
 
 const defaultContextValue = {
   addComment: (lineNumber: number, multiline?: boolean) =>
+    // eslint-disable-next-line no-console
     console.log(`comment added on ${lineNumber} (multiline: ${multiline})`),
   addResponse: (commentId: string) =>
+    // eslint-disable-next-line no-console
     console.log(`response added to ${commentId}`),
   editComment: (commentId: string) =>
+    // eslint-disable-next-line no-console
     console.log(`comment with id ${commentId} is edited`),
   currentCommentLine: NO_COMMENT_OPENED,
   multilineRange: defaultMultilineRange,
   currentEditedCommentId: NO_COMMENT_EDITED,
   currentRepliedCommentId: NO_COMMENT_EDITED,
+  // eslint-disable-next-line no-console
   closeComment: () => console.log(`comment closed`),
+  // eslint-disable-next-line no-console
   closeEditingComment: () => console.log(`comment finished editing`),
 };
 

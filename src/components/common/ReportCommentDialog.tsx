@@ -43,6 +43,7 @@ const ReportCommentDialog: FC<Props> = ({ commentRef, open, setOpen }) => {
             onClick={() => {
               setOpen(false);
               // send the report with the reason
+              // eslint-disable-next-line no-console
               console.log(`sending report, ${reason}`);
             }}
           >
