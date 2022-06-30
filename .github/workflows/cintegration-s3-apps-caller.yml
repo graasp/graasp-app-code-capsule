@@ -17,7 +17,7 @@ on:
 jobs:
   graasp-deploy-s3-apps-workflow:
     name: Graasp app code capsule
-    uses: graasp/graasp-deploy/.github/workflows/cintegration-s3-apps.yml@main
+    uses: graasp/graasp-deploy/.github/workflows/cintegration-s3-apps.yml@47eeb660577c7771d451178c64f4639d03bd8e55
     with:
       build-folder: 'build'
       version: 'latest'
@@ -28,4 +28,4 @@ jobs:
       aws-s3-bucket-name: ${{ secrets.AWS_S3_BUCKET_NAME_APPS_DEV }}
       app-id: ${{ secrets.APP_ID }}
       graasp-domain-dev: ${{ secrets.DEV_GRAASP_DOMAIN }}
-      cloudfront-distribution: ${{ secrets.CLOUDFRONT_DISTRIBUTION_APPS_DEV }}
+      cloudfront-distribution-id: ${{ secrets.CLOUDFRONT_DISTRIBUTION_APPS_DEV }}
