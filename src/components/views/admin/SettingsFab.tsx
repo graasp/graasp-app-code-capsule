@@ -32,7 +32,6 @@ import CodeEditor from '../../common/CodeEditor';
 import CustomDialog from '../../common/CustomDialog';
 import SettingsSelect from '../../common/settings/SettingsSelect';
 import SettingsSwitch from '../../common/settings/SettingsSwitch';
-import { useCodeEditingContext } from '../../context/CodeEditingContext';
 import { useCodeVersionContext } from '../../context/CodeVersionContext';
 import { useSettings } from '../../context/SettingsContext';
 
@@ -41,7 +40,6 @@ const SettingsFab: FC = () => {
   const [openDisplaySettings, setOpenDisplaySettings] = useState(false);
   const [openCodeSettings, setOpenCodeSettings] = useState(false);
   const { saveSettings, resetSettings, unsavedChanges } = useSettings();
-  const { submit: saveCodeVersionSetting } = useCodeEditingContext();
   const { setCodeId } = useCodeVersionContext();
 
   const renderSettings = (): ReactElement => (
@@ -105,7 +103,6 @@ const SettingsFab: FC = () => {
   const handleClose = (save: boolean): void => {
     if (save) {
       saveSettings();
-      saveCodeVersionSetting();
       setCodeId(INSTRUCTOR_CODE_ID);
     } else {
       // restore old settings after some short delay to not glitch the display
