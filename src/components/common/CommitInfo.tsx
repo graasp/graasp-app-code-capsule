@@ -46,7 +46,6 @@ const CommitInfo: FC<Props> = ({ commitResource }) => {
     <Stack>
       {commitInfo.map(({ label, value }) => (
         <Stack spacing={2} key={label} direction="row">
-          {/* @ts-ignore */}
           <FormLabel>{t(label)}</FormLabel>
           <StyledTypography variant="body1">{value}</StyledTypography>
         </Stack>
