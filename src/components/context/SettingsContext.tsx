@@ -63,8 +63,11 @@ export const SettingsProvider: FC<Prop> = ({ children }) => {
     [appSettings.data],
   );
 
-  const contextValue = useMemo(
-    () => ({
+  const contextValue = useMemo(() => {
+    const generalSettings = appSettings.data?.find(
+      (s) => s.name === GENERAL_SETTINGS_KEY,
+    );
+    return {
       settings,
       changeSetting: (key: string, value: unknown): void => {
         setSettings({
@@ -73,35 +76,26 @@ export const SettingsProvider: FC<Prop> = ({ children }) => {
         });
       },
       saveSettings: () => {
-        if (!settings) {
+        if (generalSettings === undefined) {
           postSettings.mutate({
             data: settings,
             name: GENERAL_SETTINGS_KEY,
           });
         } else {
           patchSettings.mutate({
-            id: appSettings.data?.find(
-              (setting) => setting.name === GENERAL_SETTINGS_KEY,
-            )?.id,
+            id: generalSettings.id,
             data: settings,
           });
         }
       },
       resetSettings: () =>
         setSettings(
-          (appSettings.data?.find(
-            (setting) => setting.name === GENERAL_SETTINGS_KEY,
-          )?.data as GeneralSettings) ?? DEFAULT_GENERAL_SETTINGS,
+          (generalSettings?.data as GeneralSettings) ??
+            DEFAULT_GENERAL_SETTINGS,
         ),
-      unsavedChanges: !_.isEqual(
-        appSettings.data?.find(
-          (setting) => setting.name === GENERAL_SETTINGS_KEY,
-        )?.data,
-        settings,
-      ),
-    }),
-    [appSettings.data, patchSettings, postSettings, settings],
-  );
+      unsavedChanges: !_.isEqual(generalSettings?.data, settings),
+    };
+  }, [appSettings.data, patchSettings, postSettings, settings]);
 
   if (appSettings.isLoading) {
     return <Loader />;
