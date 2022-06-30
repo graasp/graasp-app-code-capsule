@@ -13,19 +13,25 @@ on:
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
+    inputs:
+      version:
+        description: 'App version'
+        required: true
+        default: 'latest'
+        type: string
 
 jobs:
   graasp-deploy-s3-apps-workflow:
     name: Graasp app code capsule
-    uses: graasp/graasp-deploy/.github/workflows/cintegration-s3-apps.yml@main
+    uses: graasp/graasp-deploy/.github/workflows/cintegration-s3-apps.yml@47eeb660577c7771d451178c64f4639d03bd8e55
     with:
       build-folder: 'build'
-      version: 'latest'
+      version: ${{ inputs.version }}
     secrets:
       aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID_DEV }}
       aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_DEV }}
       aws-region: ${{ secrets.APPS_AWS_REGION }}
       aws-s3-bucket-name: ${{ secrets.AWS_S3_BUCKET_NAME_APPS_DEV }}
       app-id: ${{ secrets.APP_ID }}
-      graasp-domain-dev: ${{ secrets.DEV_GRAASP_DOMAIN }}
-      cloudfront-distribution: ${{ secrets.CLOUDFRONT_DISTRIBUTION_APPS_DEV }}
+      graasp-domain: ${{ secrets.DEV_GRAASP_DOMAIN }}
+      cloudfront-distribution-id: ${{ secrets.CLOUDFRONT_DISTRIBUTION_APPS_DEV }}
