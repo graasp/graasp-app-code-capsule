@@ -21,9 +21,12 @@ import { AppViews } from '../../config/layout';
 import { SUPPORTED_EXECUTABLE_LANGUAGES } from '../../config/programmingLanguages';
 import {
   CODE_REVIEW_TOOLBAR_CYPRESS,
+  COMMIT_INFO_DIALOG_CYPRESS,
   TOOLBAR_COMMIT_INFO_BUTTON_CYPRESS,
   TOOLBAR_EDIT_CODE_BUTTON_CYPRESS,
   TOOLBAR_RUN_CODE_BUTTON_CYPRESS,
+  TOOLBAR_USER_SELECT_CYPRESS,
+  TOOLBAR_VERSION_SELECT_CYPRESS,
   TOOLBAR_VISIBILITY_BUTTON_CYPRESS,
 } from '../../config/selectors';
 import { DEFAULT_LINE_HIDDEN_STATE } from '../../config/settings';
@@ -49,7 +52,7 @@ const getVersionLabel = (
     msg = `${commitMessage.slice(
       0,
       DEFAULT_TRUNCATION_COMMIT_MESSAGE_LENGTH,
-    )}...`;
+    )}…`;
   }
   // format createdAt date
   // a placeholder is used if the property does not exist (fake API)
@@ -68,9 +71,14 @@ type Props = {
 const CodeReviewToolbar: FC<Props> = ({ setView }) => {
   const { t, i18n } = useTranslation();
   const { settings } = useSettings();
-  const { codeVersion, codeVersionResource } = useCodeVersionContext();
   const { toggleAll } = useVisibilityContext();
-  const { groupedVersions, setCodeId } = useCodeVersionContext();
+  const {
+    groupedVersions,
+    setCodeId,
+    codeVersion,
+    codeId,
+    codeVersionResource,
+  } = useCodeVersionContext();
   const showToolbar = settings[SETTINGS_KEYS.SHOW_TOOLBAR];
   const showEditButton = settings[SETTINGS_KEYS.SHOW_EDIT_BUTTON];
   const showVisibilityToggle = settings[SETTINGS_KEYS.SHOW_VISIBILITY_BUTTON];
@@ -83,9 +91,7 @@ const CodeReviewToolbar: FC<Props> = ({ setView }) => {
   const [selectedUser, setSelectedUser] = useState(
     groupedVersions[0].user.value,
   );
-  const [selectedVersion, setSelectedVersion] = useState(
-    groupedVersions[0].user.value,
-  );
+
   const userOptions = groupedVersions.map((r) => r.user);
   const versionOptions = useMemo(
     () =>
@@ -95,17 +101,40 @@ const CodeReviewToolbar: FC<Props> = ({ setView }) => {
           label: getVersionLabel(v, i18n.language),
           value: v.id,
         })) || [{ label: INSTRUCTOR_CODE_NAME, value: INSTRUCTOR_CODE_ID }],
-    [groupedVersions, i18n.language, selectedUser],
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [i18n.language, selectedUser],
   );
 
-  useEffect(() => {
-    const changeAndShowVersion = (id: string): void => {
-      setSelectedVersion(id);
-      setCodeId(id);
-    };
+  const [selectedVersion, setSelectedVersion] = useState(
+    versionOptions[0].value,
+  );
+
+  const changeAndShowVersion = (id: string): void => {
+    // setSelectedVersion(id);
+    setCodeId(id);
+  };
+
+  const resetVersionSelect = (): void => {
     const defaultId = versionOptions[0].value;
     changeAndShowVersion(defaultId);
-  }, [selectedUser, setCodeId, versionOptions]);
+  };
+  //
+  // useEffect(
+  //   () => {
+  //     resetVersionSelect();
+  //   },
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  //   [selectedUser],
+  // );
+
+  // update the selects when the codeId changes
+  useEffect(() => {
+    const version = groupedVersions.find((a) =>
+      a.versions.find((b) => b.id === codeId),
+    );
+    setSelectedUser(version?.user.value ?? groupedVersions[0].user.value);
+    setSelectedVersion(codeId);
+  }, [codeId, groupedVersions]);
 
   if (!showToolbar) {
     return null;
@@ -118,8 +147,12 @@ const CodeReviewToolbar: FC<Props> = ({ setView }) => {
 
   const userSelect = (
     <CustomSelect
-      onChange={setSelectedUser}
-      label={t('User Select')}
+      dataCy={TOOLBAR_USER_SELECT_CYPRESS}
+      onChange={(id) => {
+        setSelectedUser(id);
+        resetVersionSelect();
+      }}
+      label={t('User')}
       value={selectedUser}
       values={userOptions}
     />
@@ -127,11 +160,11 @@ const CodeReviewToolbar: FC<Props> = ({ setView }) => {
 
   const versionSelect = (
     <CustomSelect
+      dataCy={TOOLBAR_VERSION_SELECT_CYPRESS}
       onChange={(id) => {
-        setSelectedVersion(id);
-        setCodeId(id);
+        changeAndShowVersion(id);
       }}
-      label={t('User Select')}
+      label={t('Version')}
       value={selectedVersion}
       values={versionOptions}
     />
@@ -195,9 +228,10 @@ const CodeReviewToolbar: FC<Props> = ({ setView }) => {
         alignItems="center"
         justifyContent="space-between"
         data-cy={CODE_REVIEW_TOOLBAR_CYPRESS}
+        spacing={1}
       >
         {showCommitInfo ? (
-          <Stack direction="row" spacing={1}>
+          <Stack direction="row" spacing={1} maxWidth="70%">
             {userSelect}
             {versionSelect}
           </Stack>
@@ -214,6 +248,7 @@ const CodeReviewToolbar: FC<Props> = ({ setView }) => {
         </Stack>
       </StyledStack>
       <CustomDialog
+        dataCy={COMMIT_INFO_DIALOG_CYPRESS}
         title={t('Commit Info')}
         open={openCommitInfo}
         onClose={() => setOpenCommitInfo(false)}

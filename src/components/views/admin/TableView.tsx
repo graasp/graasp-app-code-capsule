@@ -1,5 +1,3 @@
-import { List } from 'immutable';
-
 import { FC, ReactElement, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -15,7 +13,6 @@ import {
   TableRow,
 } from '@mui/material';
 
-import { APP_DATA_TYPES } from '../../../config/appDataTypes';
 import {
   ANONYMOUS_USER,
   NB_COL_TABLE_VIEW_TABLE,
@@ -33,7 +30,6 @@ import {
   TABLE_VIEW_VIEW_COMMENTS_CELL_CYPRESS,
   tableRowUserCypress,
 } from '../../../config/selectors';
-import { CommentType } from '../../../interfaces/comment';
 import { getOrphans } from '../../../utils/comments';
 import CodeReviewWrapper from '../../common/CodeReviewWrapper';
 import CustomDialog from '../../common/CustomDialog';
@@ -54,11 +50,7 @@ const TableView: FC = () => {
   const [openCommentView, setOpenCommentView] = useState(false);
   const [currentUser, setCurrentUser] = useState(DEFAULT_CURRENT_USER);
   const members = useMembersContext();
-  const { appData } = useAppDataContext();
-
-  const comments = appData?.filter(
-    (res) => res.type === APP_DATA_TYPES.COMMENT,
-  ) as List<CommentType>;
+  const { comments } = useAppDataContext();
 
   const renderTableBody = (): ReactElement[] | ReactElement | null => {
     const orphansId = getOrphans(comments).map((c) => c.id);

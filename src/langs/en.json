@@ -1,7 +1,5 @@
 {
   "translations": {
-    "This is the student view. Switch to the teacher view by clicking on the URL below.": "This is the student view. Switch to the teacher view by clicking on the URL below.",
-    "This is the teacher view. Switch to the student view by clicking on the URL below.": "This is the teacher view. Switch to the student view by clicking on the URL below.",
     "Welcome to the Graasp App Starter Kit": "Welcome to the Graasp App Starter Kit",
     "Cancel": "Cancel",
     "Finish": "Finish",
@@ -12,6 +10,8 @@
     "Yes": "Yes",
     "Write": "Write",
     "Preview": "Preview",
+    "User": "User",
+    "Version": "Version",
     "Are you sure you want to delete this comment?": "Are you sure you want to delete this comment?",
     "View the Users in the Sample Space": "View the Users in the Sample Space",
     "Selected Student is:": "Selected Student is:",
@@ -37,7 +37,7 @@
     "Actions": "Actions",
     "No Bots": "No Bots",
     "Add a New Bot User": "Add a New Bot User",
-    "Warning ! You are impersonating a bot. Clear the field above to write comments as yourself.": "Warning ! You are impersonating a bot. Clear the field above to write comments as yourself.",
+    "Warning! You are impersonating a bot. Clear the field above to write comments as yourself.": "Warning! You are impersonating a bot. Clear the field above to write comments as yourself.",
     "[DELETED]": "[DELETED]",
     "Toggle Visibility": "Toggle Visibility",
     "show more": "show more",
@@ -92,7 +92,7 @@
     "Individual - Each student works in isolation": "Individual - Each student works in isolation",
     "Collaborative - Students see other students work": "Collaborative - Students see other students work",
     "Remove orphans": "Remove orphans",
-    "Orphan threads": "Orphan threads",
+    "Number of orphan threads": "Orphan threads: {{threads}} ({{totalComments}} total comments)",
     "total comments": "total comments",
     "Submit Code": "Submit Code",
     "User Select": "User Select"

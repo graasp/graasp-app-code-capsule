@@ -105,8 +105,11 @@ describe('Builder with Admin access', () => {
     it('should open a student responses', () => {
       // select the first row in the users table
       cy.get(buildDataCy(TABLE_VIEW_BODY_USERS_CYPRESS)).children('tr').first();
+
+      // get usernames in table
       cy.get(buildDataCy(TABLE_VIEW_USERNAME_CELL_CYPRESS)).as('usernames');
-      // cy.pause();
+
+      // open every review and check that the names match
       cy.get(buildDataCy(TABLE_VIEW_OPEN_REVIEW_BUTTON_CYPRESS)).each(
         (el, idx) => {
           let contentText;

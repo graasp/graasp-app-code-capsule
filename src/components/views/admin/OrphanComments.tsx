@@ -55,11 +55,13 @@ const OrphanComments: FC<Prop> = ({ comments }) => {
       {t('Remove orphans')}
     </Button>
   );
-  const buttonLabel = `${t('Orphan threads')}: ${
-    orphanThreads.size
-  } (${orphanThreads
+  const totalNumberOfOrphanComments = orphanThreads
     .map((thread) => thread.length)
-    .reduce((tot, length) => tot + length, 0)} ${t('total comments')})`;
+    .reduce((tot, length) => tot + length, 0);
+  const buttonLabel = t('Number of orphan threads', {
+    threads: orphanThreads.size,
+    totalComments: totalNumberOfOrphanComments,
+  });
 
   return <FormControlLabel control={buttonControl} label={buttonLabel} />;
 };

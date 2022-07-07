@@ -7,6 +7,7 @@ export type VisibilityVariants = 'member' | 'item';
 export interface CommentAppData {
   data: {
     line: number;
+    codeId: string;
     content: string;
     parent: string;
     multiline?: {

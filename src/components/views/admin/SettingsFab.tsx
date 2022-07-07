@@ -6,6 +6,7 @@ import { Button } from '@graasp/ui';
 import { Code, DisplaySettings } from '@mui/icons-material';
 import { Box, Divider, Fab, Stack, Tooltip, Typography } from '@mui/material';
 
+import { CodeEditorSubmitTarget } from '../../../config/appSettingsTypes';
 import {
   CLOSE_SETTINGS_TIMEOUT,
   INSTRUCTOR_CODE_ID,
@@ -159,7 +160,7 @@ const SettingsFab: FC = () => {
         }
         content={
           <CodeEditor
-            submitTarget="settings"
+            submitTarget={CodeEditorSubmitTarget.Settings}
             onClose={() => setOpenCodeSettings(false)}
           />
         }

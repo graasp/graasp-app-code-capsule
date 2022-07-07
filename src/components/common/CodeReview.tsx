@@ -82,29 +82,28 @@ type Props = {};
 const CodeReview: FC<Props> = () => {
   const { addComment, multilineRange, currentCommentLine, closeComment } =
     useReviewContext();
-  const { codeVersion } = useCodeVersionContext();
+  const { codeVersion, codeId } = useCodeVersionContext();
   const { code, language } = codeVersion;
   const { lineHiddenState } = useVisibilityContext();
   const { settings } = useSettings();
   const allowComments = settings[SETTINGS_KEYS.ALLOW_COMMENTS];
   const reviewMode = settings[SETTINGS_KEYS.REVIEW_MODE];
-  const { postAppData, appData } = useAppDataContext();
+  const { postAppData, comments } = useAppDataContext();
 
-  const comments = appData?.filter(
-    (res) => res.type === APP_DATA_TYPES.COMMENT,
-  ) as List<CommentType>;
+  const versionComments = comments?.filter((c) => c.data.codeId === codeId);
 
-  const groupedComments = comments?.groupBy(({ data }) => data.line);
+  const groupedComments = versionComments?.groupBy(({ data }) => data.line);
 
   const handleClick = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
     i: number,
   ): void => {
+    // support multiline selection by holding shift on click
     if (e.shiftKey) {
-      addComment(i + 1, true);
+      addComment(i, true);
       return;
     }
-    addComment(i + 1);
+    addComment(i);
   };
 
   return (
@@ -132,7 +131,7 @@ const CodeReview: FC<Props> = () => {
                   {allowComments && (
                     <AddButton
                       data-cy={CODE_REVIEW_ADD_BUTTON_CYPRESS}
-                      button-cy={buildAddButtonDataCy(i + 1)}
+                      button-cy={buildAddButtonDataCy(i)}
                       size="medium"
                       sx={
                         // add hover style on buttons that are in the selected line range
@@ -140,8 +139,8 @@ const CodeReview: FC<Props> = () => {
                           multilineRange?.start &&
                           multilineRange?.start <= i &&
                           multilineRange?.end > i) ||
-                        currentCommentLine - 1 === i ||
-                        (multilineRange?.start || 0) - 1 === i
+                        currentCommentLine === i ||
+                        (multilineRange?.start || 0) === i
                           ? addButtonHoverStyle
                           : null
                       }
@@ -153,7 +152,7 @@ const CodeReview: FC<Props> = () => {
                 </LineNoContainer>
                 {line.map((token, key) => (
                   <span
-                    key={`code-${key + 1}-${line}`}
+                    key={`code-${key}-${line}`}
                     {...getTokenProps({
                       token,
                       key,
@@ -161,39 +160,38 @@ const CodeReview: FC<Props> = () => {
                   />
                 ))}
                 {
-                  // show line toggle button
+                  // todo: show line toggle button
                 }
               </Line>
-              {
-                // currentCommentLine is 1-indexed while the index i is 0-indexed
-                currentCommentLine - 1 === i && (
-                  <CommentEditor
-                    onCancel={closeComment}
-                    onSend={(text) => {
-                      postAppData({
-                        data: {
-                          content: text,
-                          line: i + 1,
-                          // comment on top level has no parent
-                          parent: null,
-                          ...(multilineRange?.start &&
-                            multilineRange?.end && {
-                              multiline: multilineRange,
-                            }),
-                        },
-                        type: APP_DATA_TYPES.COMMENT,
-                        visibility:
-                          reviewMode === REVIEW_MODE_INDIVIDUAL
-                            ? APP_DATA_VISIBILITY.MEMBER
-                            : APP_DATA_VISIBILITY.ITEM,
-                      });
-                      closeComment();
-                    }}
-                  />
-                )
-              }
+              {currentCommentLine === i && (
+                <CommentEditor
+                  onCancel={closeComment}
+                  onSend={(text) => {
+                    postAppData({
+                      data: {
+                        content: text,
+                        line: i,
+                        // codeId corresponding to current code version
+                        codeId,
+                        // comment on top level has no parent
+                        parent: null,
+                        ...(multilineRange?.start &&
+                          multilineRange?.end && {
+                            multiline: multilineRange,
+                          }),
+                      },
+                      type: APP_DATA_TYPES.COMMENT,
+                      visibility:
+                        reviewMode === REVIEW_MODE_INDIVIDUAL
+                          ? APP_DATA_VISIBILITY.MEMBER
+                          : APP_DATA_VISIBILITY.ITEM,
+                    });
+                    closeComment();
+                  }}
+                />
+              )}
               <CommentThread hiddenState={lineHiddenState[i]}>
-                {groupedComments.get(i + 1)?.toList() as List<CommentType>}
+                {groupedComments.get(i)?.toList() as List<CommentType>}
               </CommentThread>
             </Fragment>
           ))}

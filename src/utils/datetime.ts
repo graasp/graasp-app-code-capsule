@@ -17,6 +17,7 @@ const getFormattedTime = (time: string, lang: string): string => {
   return Number.isNaN(parsedInputDate)
     ? 'N.D.'
     : formatDistance(parsedInputDate, new Date(), {
+        includeSeconds: true,
         addSuffix: true, // adds "ago" at the end
         locale: locales[lang], // provides localization
       });

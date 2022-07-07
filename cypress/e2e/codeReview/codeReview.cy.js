@@ -1,4 +1,8 @@
+import { INSTRUCTOR_CODE_ID } from '../../../src/config/constants';
 import {
+  CODE_EDITOR_COMMIT_MESSAGE_CYPRESS,
+  CODE_EDITOR_CYPRESS,
+  CODE_EDITOR_SUBMIT_BUTTON_CYPRESS,
   CODE_REVIEW_ADD_BUTTON_CYPRESS,
   CODE_REVIEW_CONTAINER_CYPRESS,
   CODE_REVIEW_LINE_CYPRESS,
@@ -10,12 +14,17 @@ import {
   COMMENT_EDITOR_SAVE_BUTTON_CYPRESS,
   COMMENT_EDITOR_TEXTAREA_CYPRESS,
   COMMENT_THREAD_CONTAINER_CYPRESS,
+  COMMIT_INFO_DIALOG_CYPRESS,
+  CUSTOM_DIALOG_TITLE_CYPRESS,
   PLAYER_VIEW_CYPRESS,
   TOOLBAR_COMMIT_INFO_BUTTON_CYPRESS,
   TOOLBAR_EDIT_CODE_BUTTON_CYPRESS,
   TOOLBAR_RUN_CODE_BUTTON_CYPRESS,
+  TOOLBAR_USER_SELECT_CYPRESS,
   TOOLBAR_VISIBILITY_BUTTON_CYPRESS,
   buildAddButtonDataCy,
+  buildCommitFieldCypress,
+  buildCommitFieldDataCy,
   buildDataCy,
 } from '../../../src/config/selectors';
 import {
@@ -23,8 +32,10 @@ import {
   DEFAULT_GENERAL_SETTINGS,
   PERMISSIONS,
 } from '../../../src/config/settings';
+import { Fields } from '../../../src/interfaces/commitInfo';
 import { SETTINGS_KEYS } from '../../../src/interfaces/settings';
 import {
+  MOCK_COMMIT_MESSAGE,
   SINGLE_LINE_MOCK_COMMENTS,
   generateSingleLineCommentThread,
 } from '../../fixtures/appData';
@@ -34,7 +45,7 @@ import {
   MOCK_GENERAL_SETTINGS,
 } from '../../fixtures/appSettings';
 import { SLOW_DOWN_CYPRESS_DELAY } from '../../fixtures/constants';
-import { CURRENT_MEMBER } from '../../fixtures/members';
+import { CURRENT_MEMBER, MEMBERS } from '../../fixtures/members';
 
 // importing a const from a file and using it in cy.wait() produces an error:
 // https://github.com/cypress-io/eslint-plugin-cypress/issues/43#issuecomment-986675657
@@ -50,7 +61,6 @@ describe('Code review single comments', () => {
       appContext: {
         context: CONTEXTS.PLAYER,
         permission: PERMISSIONS.ADMIN,
-        currentMember: CURRENT_MEMBER,
       },
     });
     cy.visit('/');
@@ -75,15 +85,13 @@ describe('Code review single comments', () => {
     );
     // check each button individually
     codeLines.forEach((line, index) => {
-      cy.get(`[button-cy=${buildAddButtonDataCy(index + 1)}`).should(
-        'be.visible',
-      );
+      cy.get(`[button-cy=${buildAddButtonDataCy(index)}`).should('be.visible');
     });
   });
 
   it('should open single line comment', () => {
     // click on the second button
-    cy.get(`[button-cy=${buildAddButtonDataCy(2)}`).click();
+    cy.get(`[button-cy=${buildAddButtonDataCy(1)}`).click();
     cy.get(buildDataCy(COMMENT_EDITOR_CYPRESS)).should('be.visible');
     cy.get(buildDataCy(COMMENT_EDITOR_LINE_INFO_TEXT_CYPRESS)).should(
       'contain',
@@ -142,7 +150,6 @@ describe('Code Review thread comments', () => {
       appContext: {
         context: CONTEXTS.PLAYER,
         permission: PERMISSIONS.ADMIN,
-        currentMember: CURRENT_MEMBER,
       },
     });
     cy.visit('/');
@@ -178,11 +185,12 @@ describe('Code Review Tools', () => {
           },
           MOCK_CODE_SETTINGS,
         ],
+        members: Object.values(MEMBERS),
       },
       appContext: {
         context: CONTEXTS.PLAYER,
         permission: PERMISSIONS.ADMIN,
-        currentMember: CURRENT_MEMBER,
+        lang: 'fr',
       },
     });
     cy.visit('/');
@@ -215,9 +223,58 @@ describe('Code Review Tools', () => {
       'have.length',
       numberOfThreads,
     );
+  });
 
-    // todo: test edit button
+  it('should edit code', () => {
+    const newCode = '#testing new code';
+    // open editing
+    cy.get(buildDataCy(TOOLBAR_EDIT_CODE_BUTTON_CYPRESS))
+      .should('be.visible')
+      .click();
 
-    // todo: test code info button
+    // enter new code (need to clear two times because otherwise it does not clear everything
+    cy.wait(waitingDelay);
+    cy.get(CODE_EDITOR_CYPRESS).type(
+      `{selectall}{backspace}{selectall}{backspace}${newCode}`,
+    );
+
+    // enter a commit message
+    cy.get(buildDataCy(CODE_EDITOR_COMMIT_MESSAGE_CYPRESS)).type(
+      MOCK_COMMIT_MESSAGE,
+    );
+    cy.get(buildDataCy(CODE_EDITOR_SUBMIT_BUTTON_CYPRESS)).click();
+
+    // check that the version was updated in the dropdowns
+    const currentMemberId = CURRENT_MEMBER.id;
+    cy.get(`${buildDataCy(TOOLBAR_USER_SELECT_CYPRESS)} > input`).as('select');
+    cy.get(buildDataCy(TOOLBAR_USER_SELECT_CYPRESS)).click();
+    cy.get(`ul > li[data-value="${currentMemberId}"]`).click();
+    cy.get('@select').should('have.value', currentMemberId);
+  });
+
+  it('should show commit info', () => {
+    cy.get(buildDataCy(TOOLBAR_COMMIT_INFO_BUTTON_CYPRESS)).click();
+
+    cy.get(
+      `${buildDataCy(COMMIT_INFO_DIALOG_CYPRESS)} ${buildDataCy(
+        CUSTOM_DIALOG_TITLE_CYPRESS,
+      )}`,
+    )
+      .should('be.visible')
+      .and('contain.text', 'Commit'.toLowerCase());
+
+    const fieldValues = {
+      [Fields.Author]: INSTRUCTOR_CODE_ID,
+      [Fields.Message]: MOCK_CODE_SETTINGS.data.commitMessage,
+      [Fields.Description]: MOCK_CODE_SETTINGS.data.commitDescription,
+      // we do not check the date
+      [Fields.Created]: '',
+    };
+
+    Object.values(Fields).forEach((field) => {
+      cy.get(buildCommitFieldCypress(buildCommitFieldDataCy(field)))
+        .should('be.visible')
+        .and('contain.text', fieldValues[field]);
+    });
   });
 });

@@ -9,7 +9,7 @@ import { BrowserTracing } from '@sentry/tracing';
 import Root from './components/Root';
 import { generateSentryConfig } from './config/sentry';
 import { MOCK_API } from './config/settings';
-import buildDatabase, { mockContext } from './data/db';
+import buildDatabase, { mockContext, mockMembers } from './data/db';
 import './index.css';
 
 Sentry.init({
@@ -26,7 +26,9 @@ Sentry.init({
 if (MOCK_API) {
   mockApi({
     appContext: window.Cypress ? window.appContext : mockContext,
-    database: window.Cypress ? window.database : buildDatabase(mockContext),
+    database: window.Cypress
+      ? window.database
+      : buildDatabase(mockContext, mockMembers),
   });
 }
 

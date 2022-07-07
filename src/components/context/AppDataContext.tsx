@@ -4,9 +4,10 @@ import React, { FC, PropsWithChildren, createContext, useMemo } from 'react';
 
 import { AppData } from '@graasp/apps-query-client';
 
+import { APP_DATA_TYPES } from '../../config/appDataTypes';
 import { REVIEW_MODE_INDIVIDUAL } from '../../config/constants';
 import { MUTATION_KEYS, hooks, useMutation } from '../../config/queryClient';
-import { VisibilityVariants } from '../../interfaces/comment';
+import { CommentType, VisibilityVariants } from '../../interfaces/comment';
 import { SETTINGS_KEYS } from '../../interfaces/settings';
 import Loader from '../common/Loader';
 import { useSettings } from './SettingsContext';
@@ -31,6 +32,7 @@ export type AppDataContextType = {
   patchAppData: (payload: PatchAppDataType) => void;
   deleteAppData: (payload: DeleteAppDataType) => void;
   appData: Immutable.List<AppData>;
+  comments: Immutable.List<CommentType>;
 };
 
 const defaultContextValue = {
@@ -38,6 +40,7 @@ const defaultContextValue = {
   patchAppData: () => null,
   deleteAppData: () => null,
   appData: Immutable.List<AppData>(),
+  comments: Immutable.List<CommentType>(),
 };
 
 const AppDataContext = createContext<AppDataContextType>(defaultContextValue);
@@ -72,6 +75,9 @@ export const AppDataProvider: FC<PropsWithChildren<Prop>> = ({
     const filteredAppData = currentUserId
       ? appData.data?.filter((res) => res.creator === currentUserId)
       : appData.data;
+    const comments = filteredAppData?.filter(
+      (res) => res.type === APP_DATA_TYPES.COMMENT,
+    ) as List<CommentType>;
     return {
       postAppData: (payload: PostAppDataType) => {
         postAppData.mutate({ visibility: visibilityVariant, ...payload });
@@ -79,6 +85,7 @@ export const AppDataProvider: FC<PropsWithChildren<Prop>> = ({
       patchAppData: patchAppData.mutate,
       deleteAppData: deleteAppData.mutate,
       appData: filteredAppData || List<AppData>(),
+      comments,
     };
   }, [
     appData.data,

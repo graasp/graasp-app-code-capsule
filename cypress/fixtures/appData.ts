@@ -4,6 +4,7 @@ import { AppData } from '@graasp/apps-query-client';
 
 import { APP_DATA_TYPES } from '../../src/config/appDataTypes';
 import { GENERAL_SETTINGS_KEY } from '../../src/config/appSettingsTypes';
+import { INSTRUCTOR_CODE_ID } from '../../src/config/constants';
 import { DEFAULT_GENERAL_SETTINGS } from '../../src/config/settings';
 import { MOCK_CODE_SAMPLE } from './appSettings';
 import { CURRENT_MEMBER, MEMBERS } from './members';
@@ -18,6 +19,7 @@ export const SINGLE_LINE_MOCK_COMMENTS: AppData[] = [
     id: uuid(),
     data: {
       line: 1,
+      codeId: INSTRUCTOR_CODE_ID,
       content: 'Thread start\n\nComment on line 1',
       parent: null,
     },
@@ -32,6 +34,7 @@ export const SINGLE_LINE_MOCK_COMMENTS: AppData[] = [
     id: uuid(),
     data: {
       line: 3,
+      codeId: INSTRUCTOR_CODE_ID,
       content: 'Other Thread start\n\nComment on line 3\n\nFrom Bob',
       parent: null,
     },
@@ -46,6 +49,7 @@ export const SINGLE_LINE_MOCK_COMMENTS: AppData[] = [
     id: uuid(),
     data: {
       line: 4,
+      codeId: INSTRUCTOR_CODE_ID,
       content: 'Other Thread start\n\nComment on line 3\n\nFrom Anna',
       parent: null,
     },
@@ -62,6 +66,7 @@ export const MOCK_ORPHAN_COMMENT = {
   id: uuid(),
   data: {
     line: 1,
+    codeId: INSTRUCTOR_CODE_ID,
     content: 'Orphan comment',
     parent: '123456789',
   },
@@ -78,6 +83,7 @@ export const MULTILINE_MOCK_COMMENTS: AppData[] = [
     id: uuid(),
     data: {
       line: 3,
+      codeId: INSTRUCTOR_CODE_ID,
       multiline: {
         start: 1,
         end: 3,
@@ -138,6 +144,7 @@ export const generateSingleLineThread = (
       id: uuid(),
       data: {
         line: lineIndex,
+        codeId: INSTRUCTOR_CODE_ID,
         content: `Thread content ${idx + 1}`,
         parent: parentId,
       },
@@ -174,3 +181,6 @@ const MOCK_APP_SETTINGS = [
     updatedAt: new Date().toISOString(),
   },
 ];
+
+export const MOCK_COMMIT_MESSAGE = 'My commit message';
+export const MOCK_COMMIT_DESCRIPTION = 'Full description\nOn multiple lines';

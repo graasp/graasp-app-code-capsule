@@ -1,9 +1,10 @@
-import React, { FC, ReactElement, useContext } from 'react';
+import React, { FC, ReactElement, useContext, useEffect } from 'react';
 
 import { Context } from '@graasp/apps-query-client';
 
+import i18n from '../config/i18n';
 import { ANALYZER_VIEW_CYPRESS } from '../config/selectors';
-import { CONTEXTS } from '../config/settings';
+import { CONTEXTS, DEFAULT_CONTEXT_LANGUAGE } from '../config/settings';
 import { AppDataProvider } from './context/AppDataContext';
 import { MembersProvider } from './context/MembersContext';
 import { SettingsProvider } from './context/SettingsContext';
@@ -12,6 +13,15 @@ import PlayerView from './views/read/PlayerView';
 
 const App: FC = () => {
   const context = useContext(Context);
+
+  useEffect(() => {
+    // handle a change of language
+    const lang = context?.get('lang') ?? DEFAULT_CONTEXT_LANGUAGE;
+    if (i18n.language !== lang) {
+      i18n.changeLanguage(lang);
+    }
+  }, [context]);
+
   const renderContent = (): ReactElement => {
     switch (context.get('context')) {
       // eslint-disable-next-line default-case-last

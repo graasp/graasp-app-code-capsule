@@ -9,7 +9,10 @@ import { Stack, TextField, styled } from '@mui/material';
 import Editor from '@monaco-editor/react';
 
 import { APP_DATA_TYPES } from '../../config/appDataTypes';
-import { INSTRUCTOR_CODE_VERSION_SETTINGS_KEY } from '../../config/appSettingsTypes';
+import {
+  CodeEditorSubmitTarget,
+  INSTRUCTOR_CODE_VERSION_SETTINGS_KEY,
+} from '../../config/appSettingsTypes';
 import { DEFAULT_CODE_VERSION_SETTING } from '../../config/codeVersions';
 import {
   programmingLanguageSelect,
@@ -40,14 +43,14 @@ const StyledEditor = styled(Editor)({
 });
 
 type Props = {
-  submitTarget?: 'settings' | 'code';
+  submitTarget?: CodeEditorSubmitTarget;
   seedValue?: CodeVersionType;
   onClose?: () => void;
   showButtonBar?: boolean;
 };
 
 const CodeEditor: FC<Props> = ({
-  submitTarget = 'code',
+  submitTarget = CodeEditorSubmitTarget.Code,
   seedValue,
   onClose = () => null,
   showButtonBar = true,
@@ -67,41 +70,53 @@ const CodeEditor: FC<Props> = ({
     seedCommitDescription,
   );
 
-  const postSettings = useMutation<unknown, unknown, Partial<AppSetting>>(
-    MUTATION_KEYS.POST_APP_SETTING,
-  );
-  const patchSettings = useMutation<unknown, unknown, Partial<AppSetting>>(
-    MUTATION_KEYS.PATCH_APP_SETTING,
-  );
-  const postAppData = useMutation<CodeType, unknown, Partial<CodeType>>(
-    MUTATION_KEYS.POST_APP_DATA,
-  );
+  const { mutate: postSettings } = useMutation<
+    unknown,
+    unknown,
+    Partial<AppSetting>
+  >(MUTATION_KEYS.POST_APP_SETTING);
+  const { mutate: patchSettings } = useMutation<
+    unknown,
+    unknown,
+    Partial<AppSetting>
+  >(MUTATION_KEYS.PATCH_APP_SETTING);
+  const { mutateAsync: postAppData } = useMutation<
+    CodeType,
+    unknown,
+    Partial<CodeType>
+  >(MUTATION_KEYS.POST_APP_DATA);
   const appSettings = hooks.useAppSettings();
   const codeVersionSettings = appSettings.data?.find(
     (res) => res.name === INSTRUCTOR_CODE_VERSION_SETTINGS_KEY,
   );
 
   useEffect(() => {
-    if (submitTarget === 'settings') {
-      const {
-        code: codeSetting,
-        language: languageSetting,
-        commitMessage: commitMessageSetting,
-        commitDescription: commitDescriptionSetting,
-      } = (codeVersionSettings?.data as CodeVersionType) ||
-      DEFAULT_CODE_VERSION_SETTING;
-      setCode(codeSetting);
-      setLanguage(languageSetting);
-      setCommitMessage(commitMessageSetting);
-      setCommitDescription(commitDescriptionSetting);
-    }
-    if (submitTarget === 'code') {
-      const { code: newSeedCode, language: newSeedLanguage } =
-        seedValue || DEFAULT_CODE_VERSION_SETTING;
-      setCode(newSeedCode);
-      setLanguage(newSeedLanguage);
-      setCommitMessage(DEFAULT_COMMIT_MESSAGE_SETTING);
-      setCommitDescription(DEFAULT_COMMIT_DESCRIPTION_SETTING);
+    switch (submitTarget) {
+      case CodeEditorSubmitTarget.Settings:
+        // eslint-disable-next-line no-case-declarations
+        const {
+          code: codeSetting,
+          language: languageSetting,
+          commitMessage: commitMessageSetting,
+          commitDescription: commitDescriptionSetting,
+        } = (codeVersionSettings?.data as CodeVersionType) ||
+        DEFAULT_CODE_VERSION_SETTING;
+        setCode(codeSetting);
+        setLanguage(languageSetting);
+        setCommitMessage(commitMessageSetting);
+        setCommitDescription(commitDescriptionSetting);
+        break;
+      case CodeEditorSubmitTarget.Code:
+        // eslint-disable-next-line no-case-declarations
+        const { code: newSeedCode, language: newSeedLanguage } =
+          seedValue || DEFAULT_CODE_VERSION_SETTING;
+        setCode(newSeedCode);
+        setLanguage(newSeedLanguage);
+        setCommitMessage(DEFAULT_COMMIT_MESSAGE_SETTING);
+        setCommitDescription(DEFAULT_COMMIT_DESCRIPTION_SETTING);
+        break;
+      default:
+        break;
     }
   }, [submitTarget, codeVersionSettings, seedValue]);
 
@@ -112,32 +127,35 @@ const CodeEditor: FC<Props> = ({
       commitMessage,
       commitDescription,
     };
-    if (submitTarget === 'settings') {
-      // settings already exists
-      if (codeVersionSettings !== undefined) {
-        patchSettings.mutate({
-          data: editedCodeData,
-          id: codeVersionSettings.id,
-        });
-      } else {
-        // create setting
-        postSettings.mutate({
-          data: editedCodeData,
-          name: INSTRUCTOR_CODE_VERSION_SETTINGS_KEY,
-        });
-      }
-    } else {
-      postAppData
-        .mutateAsync({
+    switch (submitTarget) {
+      case CodeEditorSubmitTarget.Settings:
+        // settings already exists
+        if (codeVersionSettings !== undefined) {
+          patchSettings({
+            data: editedCodeData,
+            id: codeVersionSettings.id,
+          });
+        } else {
+          // create setting
+          postSettings({
+            data: editedCodeData,
+            name: INSTRUCTOR_CODE_VERSION_SETTINGS_KEY,
+          });
+        }
+        break;
+      case CodeEditorSubmitTarget.Code:
+        postAppData({
           data: editedCodeData,
           type: APP_DATA_TYPES.CODE,
-        })
-        .then((data) => setCodeId(data.id));
+        }).then((data) => setCodeId(data.id));
+        break;
+      default:
+        break;
     }
     onClose?.();
   };
   const onChangeCode = (value?: string): void => {
-    if (value) {
+    if (value !== undefined) {
       setCode(value);
     }
   };

@@ -156,7 +156,8 @@ const CommentEditor: FC<Props> = ({ onCancel, onSend, comment }) => {
           ) : (
             <Typography>
               {t('LineComment', {
-                line: comment?.data.line ?? currentCommentLine,
+                // only for display we use 1-indexed values
+                line: (comment?.data.line ?? currentCommentLine) + 1,
               })}
             </Typography>
           )}

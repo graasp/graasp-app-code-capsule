@@ -43,6 +43,7 @@ Cypress.Commands.add(
       };
       // eslint-disable-next-line no-param-reassign
       win.appContext = {
+        memberId: currentMember.id,
         itemId: MOCK_SERVER_ITEM.id,
         apiHost: Cypress.env('REACT_APP_API_HOST') || MOCK_SERVER_API_HOST,
         ...appContext,

@@ -1,13 +1,11 @@
 import { v4 } from 'uuid';
 
-import type { LocalContext, Member } from '@graasp/apps-query-client';
+import type { Database, LocalContext, Member } from '@graasp/apps-query-client';
 
 import { APP_DATA_TYPES } from '../config/appDataTypes';
 import { GENERAL_SETTINGS_KEY } from '../config/appSettingsTypes';
 import { REACT_APP_API_HOST } from '../config/env';
 import { DEFAULT_GENERAL_SETTINGS } from '../config/settings';
-import { AppContext } from '../interfaces/appContext';
-import { Database } from '../interfaces/database';
 
 export const mockContext: LocalContext = {
   apiHost: REACT_APP_API_HOST,
@@ -52,7 +50,10 @@ print('See you !')
 
 const commentParent = v4();
 
-const buildDatabase = (appContext: Partial<AppContext>): Database => ({
+const buildDatabase = (
+  appContext: Partial<LocalContext>,
+  members?: Member[],
+): Database => ({
   appData: [
     {
       id: v4(),
@@ -124,11 +125,7 @@ And some text to **finish** _off_`,
     },
   ],
   appActions: [],
-  members: [
-    ...mockMembers,
-    // in case there is no members defined, we spread an empty array
-    ...(appContext.members ?? []),
-  ],
+  members: members ?? mockMembers,
   appSettings: [
     {
       id: v4(),

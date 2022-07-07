@@ -14,10 +14,13 @@ import {
 } from '../../../src/config/settings';
 import { SETTINGS_KEYS } from '../../../src/interfaces/settings';
 import {
+  MOCK_COMMIT_DESCRIPTION,
+  MOCK_COMMIT_MESSAGE,
+} from '../../fixtures/appData';
+import {
   MOCK_CODE_SETTINGS,
   MOCK_GENERAL_SETTINGS,
 } from '../../fixtures/appSettings';
-import { CURRENT_MEMBER } from '../../fixtures/members';
 
 describe('Code Editing', () => {
   beforeEach(() => {
@@ -38,7 +41,6 @@ describe('Code Editing', () => {
       appContext: {
         context: CONTEXTS.PLAYER,
         permission: PERMISSIONS.WRITE,
-        currentMember: CURRENT_MEMBER,
       },
     });
     cy.visit('/');
@@ -55,10 +57,10 @@ describe('Code Editing', () => {
       .type(`{selectall}print('Hello World')`);
 
     cy.get(`${buildDataCy(CODE_EDITOR_COMMIT_MESSAGE_CYPRESS)}`).type(
-      'My commit message',
+      MOCK_COMMIT_MESSAGE,
     );
     cy.get(buildDataCy(CODE_EDITOR_COMMIT_DESCRIPTION_CYPRESS)).type(
-      'Full description\nOn multiple lines',
+      MOCK_COMMIT_DESCRIPTION,
     );
 
     // click the submit button
