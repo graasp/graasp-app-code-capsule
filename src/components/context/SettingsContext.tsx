@@ -76,7 +76,8 @@ export const SettingsProvider: FC<Prop> = ({ children }) => {
         });
       },
       saveSettings: () => {
-        if (generalSettings === undefined) {
+        // generalSettings do not exist
+        if (!generalSettings) {
           postSettings.mutate({
             data: settings,
             name: GENERAL_SETTINGS_KEY,

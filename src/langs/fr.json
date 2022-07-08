@@ -92,6 +92,9 @@
     "Remove orphans": "Supprimer les commentaires orphelins",
     "Number of orphan threads": "Discussions orphelines: {{threads}} ({{totalComments}} commentaires au total)",
     "Submit Code": "Soumettre le Code",
-    "User Select": "Sélection de l'auteur"
+    "User Select": "Sélection de l'auteur",
+    "This is the Code Execution panel": "Ceci est la vue d'exécution de code",
+    "Back to Code Review": "Retour à la révision de code",
+    "noCommitMessage": "~Pas de message~"
   }
 }

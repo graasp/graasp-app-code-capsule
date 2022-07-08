@@ -12,8 +12,6 @@ const StyledGraaspLogo = styled(GraaspLogo)({
   fill: '#fff',
 });
 
-// type Props = {};
-
 const Header: FC = () => {
   const { t } = useTranslation();
 

@@ -14,6 +14,7 @@ import {
   INSTRUCTOR_CODE_VERSION_SETTINGS_KEY,
 } from '../../config/appSettingsTypes';
 import { DEFAULT_CODE_VERSION_SETTING } from '../../config/codeVersions';
+import { SMALL_BORDER_RADIUS } from '../../config/layout';
 import {
   programmingLanguageSelect,
   programmingLanguageSettings,
@@ -38,7 +39,7 @@ import Loader from './Loader';
 const StyledEditor = styled(Editor)({
   padding: '8px',
   border: 'solid silver 1px',
-  borderRadius: '4px',
+  borderRadius: SMALL_BORDER_RADIUS,
   height: '40vh',
 });
 

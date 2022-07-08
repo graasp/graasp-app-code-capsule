@@ -30,11 +30,11 @@ import {
 } from '../../../config/selectors';
 import { SETTINGS_KEYS } from '../../../interfaces/settings';
 import CodeEditor from '../../common/CodeEditor';
-import CustomDialog from '../../common/CustomDialog';
 import SettingsSelect from '../../common/settings/SettingsSelect';
 import SettingsSwitch from '../../common/settings/SettingsSwitch';
 import { useCodeVersionContext } from '../../context/CodeVersionContext';
 import { useSettings } from '../../context/SettingsContext';
+import CustomDialog from '../../layout/CustomDialog';
 
 const SettingsFab: FC = () => {
   const { t } = useTranslation();
@@ -93,7 +93,6 @@ const SettingsFab: FC = () => {
         settingsKey={SETTINGS_KEYS.REVIEW_MODE}
         label={t('Define Review Mode')}
         values={REVIEW_MODES.map(({ label, value }) => ({
-          // @ts-ignore
           label: t(label),
           value,
         }))}

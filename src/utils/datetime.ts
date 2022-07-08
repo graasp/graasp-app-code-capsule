@@ -11,11 +11,13 @@ const locales: { [key: string]: Locale } = {
   en: enGB,
 };
 
+export const NO_DATE_PLACEHOLDER = 'N.D.';
+
 const getFormattedTime = (time: string, lang: string): string => {
   const parsedInputDate = Date.parse(time);
 
   return Number.isNaN(parsedInputDate)
-    ? 'N.D.'
+    ? NO_DATE_PLACEHOLDER
     : formatDistance(parsedInputDate, new Date(), {
         includeSeconds: true,
         addSuffix: true, // adds "ago" at the end

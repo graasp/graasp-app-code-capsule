@@ -4,8 +4,9 @@ import { AppData } from '@graasp/apps-query-client';
 
 import { APP_DATA_TYPES } from '../../src/config/appDataTypes';
 import { GENERAL_SETTINGS_KEY } from '../../src/config/appSettingsTypes';
-import { INSTRUCTOR_CODE_ID } from '../../src/config/constants';
+import { INSTRUCTOR_CODE_ID, PYTHON } from '../../src/config/constants';
 import { DEFAULT_GENERAL_SETTINGS } from '../../src/config/settings';
+import { CodeType } from '../../src/interfaces/codeVersions';
 import { MOCK_CODE_SAMPLE } from './appSettings';
 import { CURRENT_MEMBER, MEMBERS } from './members';
 
@@ -184,3 +185,66 @@ const MOCK_APP_SETTINGS = [
 
 export const MOCK_COMMIT_MESSAGE = 'My commit message';
 export const MOCK_COMMIT_DESCRIPTION = 'Full description\nOn multiple lines';
+
+export const MOCK_CODE_VERSIONS: CodeType[] = [
+  {
+    id: uuid(),
+    itemId: MOCK_SERVER_ITEM.id,
+    type: APP_DATA_TYPES.CODE,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+    creator: MEMBERS.BOB.id,
+    memberId: MEMBERS.BOB.id,
+    data: {
+      code: 'sample code from bob',
+      language: PYTHON,
+      commitMessage: 'Bob 1',
+      commitDescription: 'Long Bob 1',
+    },
+  },
+  {
+    id: uuid(),
+    itemId: MOCK_SERVER_ITEM.id,
+    type: APP_DATA_TYPES.CODE,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+    creator: MEMBERS.ANNA.id,
+    memberId: MEMBERS.ANNA.id,
+    data: {
+      code: 'sample code from Anna',
+      language: PYTHON,
+      commitMessage: 'Anna 1',
+      commitDescription: 'Long Anna 1',
+    },
+  },
+  {
+    id: uuid(),
+    itemId: MOCK_SERVER_ITEM.id,
+    type: APP_DATA_TYPES.CODE,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+    creator: MEMBERS.BOB.id,
+    memberId: MEMBERS.BOB.id,
+    data: {
+      code: 'sample code from bob 2',
+      language: PYTHON,
+      commitMessage: 'Bob 2',
+      commitDescription: 'Long Bob 2',
+    },
+  },
+  {
+    id: uuid(),
+    itemId: MOCK_SERVER_ITEM.id,
+    type: APP_DATA_TYPES.CODE,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+    creator: MEMBERS.ANNA.id,
+    memberId: MEMBERS.ANNA.id,
+    data: {
+      code: 'sample code from Anna 2',
+      language: PYTHON,
+      commitMessage: 'Anna 2',
+      commitDescription: 'Long Anna 2',
+    },
+  },
+];

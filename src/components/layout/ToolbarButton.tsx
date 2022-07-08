@@ -26,6 +26,8 @@ const ToolbarButton: ForwardRefRenderFunction<
       disabled={disabled}
       sx={{
         p: 1,
+        // ensure that buttons stay as small as possible
+        // MuiButton has a min-width of 64px by default
         minWidth: '0px',
       }}
       variant="outlined"

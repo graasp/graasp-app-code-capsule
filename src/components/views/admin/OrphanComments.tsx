@@ -55,9 +55,10 @@ const OrphanComments: FC<Prop> = ({ comments }) => {
       {t('Remove orphans')}
     </Button>
   );
-  const totalNumberOfOrphanComments = orphanThreads
-    .map((thread) => thread.length)
-    .reduce((tot, length) => tot + length, 0);
+  const totalNumberOfOrphanComments = orphanThreads.reduce(
+    (tot, thread) => tot + thread.length,
+    0,
+  );
   const buttonLabel = t('Number of orphan threads', {
     threads: orphanThreads.size,
     totalComments: totalNumberOfOrphanComments,

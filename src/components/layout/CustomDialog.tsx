@@ -29,9 +29,7 @@ const getPlacedModalStyle = (
   return {};
 };
 
-const StyledDialogTitle = styled(DialogTitle)({
-  // paddingBottom: 0,
-});
+const StyledDialogTitle = styled(DialogTitle)({});
 
 type Props = {
   open: boolean;

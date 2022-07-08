@@ -3,7 +3,6 @@ import { useTranslation } from 'react-i18next';
 
 import { MoreVert } from '@mui/icons-material';
 import {
-  Avatar,
   Card,
   CardContent,
   CardHeader,
@@ -14,17 +13,19 @@ import {
 } from '@mui/material';
 
 import { ANONYMOUS_USER } from '../../config/constants';
+import { BIG_BORDER_RADIUS } from '../../config/layout';
 import { COMMENT_CONTAINER_CYPRESS } from '../../config/selectors';
 import { CommentType } from '../../interfaces/comment';
 import { getFormattedTime } from '../../utils/datetime';
 import { useMembersContext } from '../context/MembersContext';
+import CustomAvatar from '../layout/CustomAvatar';
 import CommentActions from './CommentActions';
 import CommentBody from './CommentBody';
 import ReportCommentDialog from './ReportCommentDialog';
 
-const CustomCard = styled(Card)<CardProps>(({ theme }) => ({
-  borderRadius: theme.spacing(1),
-}));
+const CustomCard = styled(Card)<CardProps>({
+  borderRadius: BIG_BORDER_RADIUS,
+});
 
 type Props = {
   comment: CommentType;
@@ -38,8 +39,8 @@ const Comment: FC<Props> = ({ comment }) => {
   const [openFlagDialog, setOpenFlagDialog] = useState(false);
   const commentRef = useRef<HTMLDivElement>(null);
 
-  const userName =
-    members.find((u) => u.id === comment.memberId)?.name || ANONYMOUS_USER;
+  const member = members.find((u) => u.id === comment.memberId);
+  const userName = member?.name || ANONYMOUS_USER;
 
   const renderCommentActions = (): ReactElement => (
     <>
@@ -77,9 +78,7 @@ const Comment: FC<Props> = ({ comment }) => {
       <CardHeader
         title={userName}
         subheader={getFormattedTime(comment.updatedAt, i18n.language)}
-        avatar={
-          <Avatar src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Logo_wikibot.svg/240px-Logo_wikibot.svg.png" />
-        }
+        avatar={<CustomAvatar member={member} />}
         action={renderCommentActions()}
       />
       <CardContent sx={{ p: 2, py: 0, '&:last-child': { pb: 0 } }}>

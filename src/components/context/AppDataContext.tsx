@@ -2,11 +2,14 @@ import Immutable, { List } from 'immutable';
 
 import React, { FC, PropsWithChildren, createContext, useMemo } from 'react';
 
-import { AppData } from '@graasp/apps-query-client';
-
 import { APP_DATA_TYPES } from '../../config/appDataTypes';
-import { REVIEW_MODE_INDIVIDUAL } from '../../config/constants';
+import {
+  REVIEW_MODE_INDIVIDUAL,
+  VISIBILITY_ITEM,
+  VISIBILITY_MEMBER,
+} from '../../config/constants';
 import { MUTATION_KEYS, hooks, useMutation } from '../../config/queryClient';
+import { CodeType } from '../../interfaces/codeVersions';
 import { CommentType, VisibilityVariants } from '../../interfaces/comment';
 import { SETTINGS_KEYS } from '../../interfaces/settings';
 import Loader from '../common/Loader';
@@ -31,7 +34,7 @@ export type AppDataContextType = {
   postAppData: (payload: PostAppDataType) => void;
   patchAppData: (payload: PatchAppDataType) => void;
   deleteAppData: (payload: DeleteAppDataType) => void;
-  appData: Immutable.List<AppData>;
+  codeAppData: Immutable.List<CodeType>;
   comments: Immutable.List<CommentType>;
 };
 
@@ -39,7 +42,7 @@ const defaultContextValue = {
   postAppData: () => null,
   patchAppData: () => null,
   deleteAppData: () => null,
-  appData: Immutable.List<AppData>(),
+  codeAppData: Immutable.List<CodeType>(),
   comments: Immutable.List<CommentType>(),
 };
 
@@ -59,17 +62,23 @@ export const AppDataProvider: FC<PropsWithChildren<Prop>> = ({
   // set the default visibility following the review mode
   const visibilityVariant =
     settings[SETTINGS_KEYS.REVIEW_MODE] === REVIEW_MODE_INDIVIDUAL
-      ? 'member'
-      : 'item';
-  const postAppData = useMutation<unknown, unknown, PostAppDataType>(
-    MUTATION_KEYS.POST_APP_DATA,
-  );
-  const patchAppData = useMutation<unknown, unknown, PatchAppDataType>(
-    MUTATION_KEYS.PATCH_APP_DATA,
-  );
-  const deleteAppData = useMutation<unknown, unknown, DeleteAppDataType>(
-    MUTATION_KEYS.DELETE_APP_DATA,
-  );
+      ? VISIBILITY_MEMBER
+      : VISIBILITY_ITEM;
+  const { mutate: postAppData } = useMutation<
+    unknown,
+    unknown,
+    PostAppDataType
+  >(MUTATION_KEYS.POST_APP_DATA);
+  const { mutate: patchAppData } = useMutation<
+    unknown,
+    unknown,
+    PatchAppDataType
+  >(MUTATION_KEYS.PATCH_APP_DATA);
+  const { mutate: deleteAppData } = useMutation<
+    unknown,
+    unknown,
+    DeleteAppDataType
+  >(MUTATION_KEYS.DELETE_APP_DATA);
 
   const contextValue = useMemo(() => {
     const filteredAppData = currentUserId
@@ -78,20 +87,23 @@ export const AppDataProvider: FC<PropsWithChildren<Prop>> = ({
     const comments = filteredAppData?.filter(
       (res) => res.type === APP_DATA_TYPES.COMMENT,
     ) as List<CommentType>;
+    const codeAppData = filteredAppData?.filter(
+      (res) => res.type === APP_DATA_TYPES.CODE,
+    ) as List<CodeType>;
     return {
       postAppData: (payload: PostAppDataType) => {
-        postAppData.mutate({ visibility: visibilityVariant, ...payload });
+        postAppData({ visibility: visibilityVariant, ...payload });
       },
-      patchAppData: patchAppData.mutate,
-      deleteAppData: deleteAppData.mutate,
-      appData: filteredAppData || List<AppData>(),
+      patchAppData,
+      deleteAppData,
+      codeAppData,
       comments,
     };
   }, [
     appData.data,
     currentUserId,
-    deleteAppData.mutate,
-    patchAppData.mutate,
+    deleteAppData,
+    patchAppData,
     postAppData,
     visibilityVariant,
   ]);

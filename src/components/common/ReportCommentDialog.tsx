@@ -5,7 +5,7 @@ import { Button } from '@graasp/ui';
 
 import { TextField, Typography } from '@mui/material';
 
-import CustomDialog from './CustomDialog';
+import CustomDialog from '../layout/CustomDialog';
 
 type Props = {
   commentRef: RefObject<HTMLElement | undefined>;

@@ -10,19 +10,14 @@ import { DEFAULT_GENERAL_SETTINGS } from '../../src/config/settings';
 export const MOCK_CODE_SAMPLE = `# my sample code in python
 
 age = input('What is your age ?')
-print(f'Your age is {age}')
 
 # ask another question
 print('wait a bit')
-''' and here starts a
-multiline comment 
-that continues here also
+''' 
+and here starts a
+multiline comment
 '''
-for i in range(10000):
-    pass
-
 print('Done!')
-print('See you !')
 `;
 
 const MOCK_COMMIT_MESSAGE = 'This is a mock commit message';

@@ -21,6 +21,7 @@ export interface CodeAppData {
   type: APP_DATA_TYPES.CODE;
 }
 
+// stripped out version of a code Resource but without the AppData properties like id, creator ...
 export type CodeType =
   | (AppData & CodeAppData)
   | ({ data: CodeVersionType } & AppSetting);

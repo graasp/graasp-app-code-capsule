@@ -95,6 +95,9 @@
     "Number of orphan threads": "Orphan threads: {{threads}} ({{totalComments}} total comments)",
     "total comments": "total comments",
     "Submit Code": "Submit Code",
-    "User Select": "User Select"
+    "User Select": "User Select",
+    "This is the Code Execution panel": "This is the Code Execution panel",
+    "Back to Code Review": "Back to Code Review",
+    "noCommitMessage": "~No message~"
   }
 }

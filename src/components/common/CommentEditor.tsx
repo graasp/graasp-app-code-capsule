@@ -26,6 +26,7 @@ import {
   styled,
 } from '@mui/material';
 
+import { SMALL_BORDER_RADIUS } from '../../config/layout';
 import {
   COMMENT_EDITOR_BOLD_BUTTON_CYPRESS,
   COMMENT_EDITOR_CANCEL_BUTTON_CYPRESS,
@@ -39,11 +40,11 @@ import {
   COMMENT_EDITOR_TEXTAREA_CYPRESS,
 } from '../../config/selectors';
 import { CommentType } from '../../interfaces/comment';
-import { useReviewContext } from '../context/ReviewContext';
+import { NO_COMMENT_OPENED, useReviewContext } from '../context/ReviewContext';
 import ToolbarButton from '../layout/ToolbarButton';
 
 const TextArea = styled(TextareaAutosize)(({ theme }) => ({
-  borderRadius: '4px',
+  borderRadius: SMALL_BORDER_RADIUS,
   padding: theme.spacing(2),
   fontSize: '1rem',
   boxSizing: 'border-box',
@@ -151,16 +152,19 @@ const CommentEditor: FC<Props> = ({ onCancel, onSend, comment }) => {
           alignItems="center"
           justifyContent="space-between"
         >
-          {multiline ? (
-            <Typography>{t('MultiLineComment', multiline)}</Typography>
-          ) : (
-            <Typography>
-              {t('LineComment', {
-                // only for display we use 1-indexed values
-                line: (comment?.data.line ?? currentCommentLine) + 1,
-              })}
-            </Typography>
-          )}
+          {
+            // checks that all values of the multiline object are different from the 'no comment' value
+            Object.values(multiline).every((v) => v !== NO_COMMENT_OPENED) ? (
+              <Typography>{t('MultiLineComment', multiline)}</Typography>
+            ) : (
+              <Typography>
+                {t('LineComment', {
+                  // only for display we use 1-indexed values
+                  line: (comment?.data.line ?? currentCommentLine) + 1,
+                })}
+              </Typography>
+            )
+          }
           <Stack direction="row" spacing={1} justifyContent="end">
             <Button
               dataCy={COMMENT_EDITOR_CANCEL_BUTTON_CYPRESS}

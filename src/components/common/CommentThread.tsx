@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { TextField, styled } from '@mui/material';
 
 import { APP_DATA_TYPES } from '../../config/appDataTypes';
+import { BIG_BORDER_RADIUS } from '../../config/layout';
 import { COMMENT_THREAD_CONTAINER_CYPRESS } from '../../config/selectors';
 import { CommentType } from '../../interfaces/comment';
 import { buildThread } from '../../utils/comments';
@@ -20,7 +21,7 @@ const CommentContainer = styled('div')(({ theme }) => ({
   border: 'solid silver 1px',
   marginTop: theme.spacing(1),
   marginBottom: theme.spacing(1),
-  borderRadius: theme.spacing(1),
+  borderRadius: BIG_BORDER_RADIUS,
 }));
 
 const ResponseContainer = styled('div')(({ theme }) => ({

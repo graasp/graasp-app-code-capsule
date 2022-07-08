@@ -8,7 +8,6 @@ import React, {
   useState,
 } from 'react';
 
-import { APP_DATA_TYPES } from '../../config/appDataTypes';
 import { INSTRUCTOR_CODE_VERSION_SETTINGS_KEY } from '../../config/appSettingsTypes';
 import { DEFAULT_CODE_VERSION_SETTING } from '../../config/codeVersions';
 import {
@@ -61,15 +60,13 @@ export const CodeVersionProvider: FC<PropsWithChildren<Prop>> = ({
   const [codeId, setCodeId] = useState(INSTRUCTOR_CODE_ID);
   const appSettings = hooks.useAppSettings();
   const members = useMembersContext();
-  const { appData } = useAppDataContext();
-  const codeVersions = appData
-    .filter((res) => res.type === APP_DATA_TYPES.CODE)
-    ?.map(({ id, data, creator, updatedAt }) => ({
-      id,
-      data,
-      creator,
-      updatedAt,
-    })) as List<CodeVersionSelectType>;
+  const { codeAppData } = useAppDataContext();
+  const codeVersions = codeAppData?.map(({ id, data, creator, updatedAt }) => ({
+    id,
+    data,
+    creator,
+    updatedAt,
+  })) as List<CodeVersionSelectType>;
 
   const instructorCodeVersionSetting = appSettings.data?.find(
     (s) => s.name === INSTRUCTOR_CODE_VERSION_SETTINGS_KEY,
@@ -80,7 +77,8 @@ export const CodeVersionProvider: FC<PropsWithChildren<Prop>> = ({
       ...defaultCodeVersion,
       data: (instructorCodeVersionSetting?.data ||
         DEFAULT_CODE_VERSION_SETTING) as CodeVersionType,
-      updatedAt: instructorCodeVersionSetting?.updatedAt || '',
+      updatedAt:
+        instructorCodeVersionSetting?.updatedAt || defaultCodeVersion.updatedAt,
     };
     const allCodeVersions = codeVersions.push(instructorCodeVersion);
 

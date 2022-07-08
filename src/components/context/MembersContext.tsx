@@ -1,12 +1,6 @@
 import { List } from 'immutable';
 
-import React, {
-  FC,
-  ReactElement,
-  createContext,
-  useEffect,
-  useState,
-} from 'react';
+import React, { FC, ReactElement, createContext, useMemo } from 'react';
 
 import { Member } from '@graasp/apps-query-client';
 
@@ -24,16 +18,12 @@ type Prop = {
 
 export const MembersProvider: FC<Prop> = ({ children }) => {
   const appContext = hooks.useAppContext();
-  const [members, setMembers] = useState(defaultContextValue);
 
-  useEffect(() => {
-    if (
-      appContext.data?.get('members') &&
-      members !== appContext.data?.get('members')
-    ) {
-      setMembers(appContext.data.get('members') as List<Member>);
-    }
-  }, [appContext, members]);
+  const members = useMemo(() => {
+    const updatedMembers = appContext.data?.get('members');
+
+    return updatedMembers ?? defaultContextValue;
+  }, [appContext.data]);
 
   if (appContext.isLoading) {
     return <Loader />;

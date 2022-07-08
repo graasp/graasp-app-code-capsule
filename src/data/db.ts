@@ -134,6 +134,7 @@ And some text to **finish** _off_`,
       itemId: appContext.itemId || '',
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
+      creator: mockMembers[0].id,
     },
   ],
 });

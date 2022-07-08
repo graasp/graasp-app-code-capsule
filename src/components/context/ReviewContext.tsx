@@ -6,22 +6,25 @@ import React, {
   useState,
 } from 'react';
 
-const NO_COMMENT_OPENED = -1;
+export const NO_COMMENT_OPENED = -1;
 const NO_COMMENT_EDITED = '';
 
 type MultilineRange = {
-  start?: number;
-  end?: number;
+  start: number;
+  end: number;
 };
 
-const defaultMultilineRange = null;
+const defaultMultilineRange = {
+  start: NO_COMMENT_OPENED,
+  end: NO_COMMENT_OPENED,
+};
 
 export type ReviewContextType = {
   addComment: (lineNumber: number, multiline?: boolean) => void;
   addResponse: (commentId: string) => void;
   editComment: (commentId: string) => void;
   currentCommentLine: number;
-  multilineRange: MultilineRange | null;
+  multilineRange: MultilineRange;
   currentEditedCommentId: string;
   currentRepliedCommentId: string;
   closeComment: () => void;
@@ -61,43 +64,59 @@ export const ReviewProvider: FC<Prop> = ({ children }) => {
     useState<string>(NO_COMMENT_EDITED);
   const [currentRepliedCommentId, setCurrentRepliedCommentId] =
     useState<string>(NO_COMMENT_EDITED);
-  const [multilineRange, setMultilineRange] = useState<MultilineRange | null>(
-    null,
+  const [multilineRange, setMultilineRange] = useState<MultilineRange>(
+    defaultMultilineRange,
   );
   const contextValue = useMemo(
     () => ({
       addComment: (lineNumber: number, multiline?: boolean) => {
+        // comment is multiline
         if (multiline) {
-          if (!multilineRange?.start) {
-            // multiline start
-            setMultilineRange({ start: lineNumber });
-            return;
+          switch (true) {
+            // multiline start is not set -> first click
+            case multilineRange.start === NO_COMMENT_OPENED:
+              // multiline start
+              setMultilineRange((prevState) => ({
+                ...prevState,
+                start: lineNumber,
+              }));
+              break;
+
+            // multiline stop
+            case lineNumber === multilineRange.start:
+              // line is same as start -> convert to single line comment
+              setMultilineRange(defaultMultilineRange);
+              setCurrentCommentLine(lineNumber);
+              break;
+
+            case lineNumber < multilineRange.start:
+              // invert range
+              setMultilineRange({
+                end: multilineRange.start,
+                start: lineNumber,
+              });
+              // set last line as the comment line
+              setCurrentCommentLine(multilineRange.start);
+              break;
+
+            case lineNumber > multilineRange.start:
+              setMultilineRange((prevState) => ({
+                ...prevState,
+                end: lineNumber,
+              }));
+              setCurrentCommentLine(lineNumber);
+              break;
+
+            default:
+              setCurrentCommentLine(lineNumber);
           }
-          // multiline stop
-          if (lineNumber === multilineRange?.start) {
-            // line is same as start -> convert to single line comment
-            setMultilineRange(defaultMultilineRange);
-            setCurrentCommentLine(lineNumber);
-            return;
-          }
-          if (lineNumber < multilineRange?.start) {
-            // invert range
-            setMultilineRange({
-              end: multilineRange?.start,
-              start: lineNumber,
-            });
-            setCurrentCommentLine(multilineRange?.start);
-            return;
-          }
-          setMultilineRange({
-            ...multilineRange,
-            end: lineNumber,
-          });
+        } else {
+          // comment is single line
+          // reset multiline range
+          setMultilineRange(defaultMultilineRange);
+          // set the single comment line
           setCurrentCommentLine(lineNumber);
-          return;
         }
-        setMultilineRange(defaultMultilineRange);
-        setCurrentCommentLine(lineNumber);
       },
       addResponse: (commentId: string) => {
         setCurrentRepliedCommentId(commentId);
@@ -108,7 +127,7 @@ export const ReviewProvider: FC<Prop> = ({ children }) => {
       currentEditedCommentId,
       currentRepliedCommentId,
       closeComment: () => {
-        setMultilineRange(null);
+        setMultilineRange(defaultMultilineRange);
         setCurrentCommentLine(NO_COMMENT_OPENED);
         setCurrentRepliedCommentId(NO_COMMENT_EDITED);
       },

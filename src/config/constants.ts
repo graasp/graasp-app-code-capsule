@@ -9,10 +9,12 @@ export const CLOSE_SETTINGS_TIMEOUT = 500;
 // commit message truncation length
 export const DEFAULT_TRUNCATION_COMMIT_MESSAGE_LENGTH = 15;
 
+export const MAX_INITIALS_AVATAR = 2;
+
 export const ANONYMOUS_USER = 'Anonymous';
 export const INSTRUCTOR_CODE_NAME = 'Default';
 
-export const INSTRUCTOR_CODE_ID = 'Instructor';
+export const INSTRUCTOR_CODE_ID = 'instructor';
 
 export const JAVASCRIPT = 'javascript';
 export const JAVA = 'java';
@@ -22,6 +24,9 @@ export const JSON_LANG = 'json';
 
 export const REVIEW_MODE_INDIVIDUAL = 'individual';
 export const REVIEW_MODE_COLLABORATIVE = 'collaborative';
+
+export const VISIBILITY_MEMBER = 'member';
+export const VISIBILITY_ITEM = 'item';
 
 export const REVIEW_MODES = [
   {

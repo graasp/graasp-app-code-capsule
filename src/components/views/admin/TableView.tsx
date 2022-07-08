@@ -32,12 +32,12 @@ import {
 } from '../../../config/selectors';
 import { getOrphans } from '../../../utils/comments';
 import CodeReviewWrapper from '../../common/CodeReviewWrapper';
-import CustomDialog from '../../common/CustomDialog';
 import {
   AppDataProvider,
   useAppDataContext,
 } from '../../context/AppDataContext';
 import { useMembersContext } from '../../context/MembersContext';
+import CustomDialog from '../../layout/CustomDialog';
 import OrphanComments from './OrphanComments';
 
 const DEFAULT_CURRENT_USER = {
@@ -57,7 +57,8 @@ const TableView: FC = () => {
     const nonOrphanComments = comments?.filter(
       (c) => !orphansId.includes(c.id),
     );
-    if (nonOrphanComments?.isEmpty()) {
+    // nonOrphanComments is undefined or, is an empty list -> there are not resources to display
+    if (!nonOrphanComments || nonOrphanComments.isEmpty()) {
       // show that there are no comments available
       return (
         <TableRow>
@@ -71,41 +72,39 @@ const TableView: FC = () => {
       );
     }
     const commentsByUsers = nonOrphanComments
-      ?.groupBy(({ memberId }) => memberId)
+      .groupBy(({ memberId }) => memberId)
       .toArray();
-    return (
-      commentsByUsers?.map(([userId, userComments]) => {
-        const userName =
-          members?.find(({ id }) => id === userId)?.name || ANONYMOUS_USER;
-        return (
-          <TableRow key={userId} data-cy={tableRowUserCypress(userId)}>
-            <TableCell data-cy={TABLE_VIEW_USERNAME_CELL_CYPRESS}>
-              {userName}
-            </TableCell>
-            <TableCell data-cy={TABLE_VIEW_HELP_NEEDED_CELL_CYPRESS}>
-              {false}
-            </TableCell>
-            <TableCell data-cy={TABLE_VIEW_NB_COMMENTS_CELL_CYPRESS}>
-              <div>{userComments.count()}</div>
-            </TableCell>
-            <TableCell data-cy={TABLE_VIEW_VIEW_COMMENTS_CELL_CYPRESS}>
-              <IconButton
-                data-cy={TABLE_VIEW_OPEN_REVIEW_BUTTON_CYPRESS}
-                onClick={() => {
-                  setCurrentUser({
-                    name: userName,
-                    id: userId,
-                  });
-                  setOpenCommentView(true);
-                }}
-              >
-                <InputIcon color="primary" />
-              </IconButton>
-            </TableCell>
-          </TableRow>
-        );
-      }) || null
-    );
+    return commentsByUsers.map(([userId, userComments]) => {
+      const userName =
+        members.find(({ id }) => id === userId)?.name || ANONYMOUS_USER;
+      return (
+        <TableRow key={userId} data-cy={tableRowUserCypress(userId)}>
+          <TableCell data-cy={TABLE_VIEW_USERNAME_CELL_CYPRESS}>
+            {userName}
+          </TableCell>
+          <TableCell data-cy={TABLE_VIEW_HELP_NEEDED_CELL_CYPRESS}>
+            {false}
+          </TableCell>
+          <TableCell data-cy={TABLE_VIEW_NB_COMMENTS_CELL_CYPRESS}>
+            <div>{userComments.count()}</div>
+          </TableCell>
+          <TableCell data-cy={TABLE_VIEW_VIEW_COMMENTS_CELL_CYPRESS}>
+            <IconButton
+              data-cy={TABLE_VIEW_OPEN_REVIEW_BUTTON_CYPRESS}
+              onClick={() => {
+                setCurrentUser({
+                  name: userName,
+                  id: userId,
+                });
+                setOpenCommentView(true);
+              }}
+            >
+              <InputIcon color="primary" />
+            </IconButton>
+          </TableCell>
+        </TableRow>
+      );
+    });
   };
 
   const onCloseDialog = (): void => {

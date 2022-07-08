@@ -9,10 +9,11 @@ import { CodeProps } from 'react-markdown/lib/ast-to-react';
 
 import { styled } from '@mui/material';
 
+import { BIG_BORDER_RADIUS } from '../../config/layout';
+
 const StyledReactMarkdown = styled(ReactMarkdown)(({ theme }) => ({
   '& .prism-code': {
     fontFamily: 'var(--monospace-fonts)',
-    // margin: theme.spacing(1),
     backgroundColor: 'transparent !important',
     fontSize: '0.8rem',
     padding: theme.spacing(1),
@@ -38,19 +39,18 @@ const StyledReactMarkdown = styled(ReactMarkdown)(({ theme }) => ({
     paddingInlineStart: theme.spacing(2),
   },
   '& code': {
-    padding: '0.2em 0.4em',
-    borderRadius: theme.spacing(1),
+    padding: theme.spacing(0.5, 1),
+    borderRadius: BIG_BORDER_RADIUS,
     backgroundColor: 'var(--code-bg)',
     wordWrap: 'break-word',
     whiteSpace: 'pre-wrap',
-    fontSize: '90%',
+    fontSize: '0.9rem',
     fontFamily: 'var(--monospace-fonts)',
   },
   '& pre': {
     margin: theme.spacing(1, 2),
     backgroundColor: 'var(--code-bg)',
-    // border: 'solid 1px silver',
-    borderRadius: theme.spacing(1),
+    borderRadius: BIG_BORDER_RADIUS,
   },
   '& blockquote': {
     borderLeft: 'solid darkgray 4px',

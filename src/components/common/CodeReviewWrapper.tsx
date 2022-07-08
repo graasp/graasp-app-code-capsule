@@ -1,10 +1,11 @@
-import React, { FC, ReactNode, useState } from 'react';
+import React, { FC, ReactElement, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { Button } from '@graasp/ui';
 
 import { styled } from '@mui/material';
 
-import { AppViews } from '../../config/layout';
+import { AppView, SMALL_BORDER_RADIUS } from '../../config/layout';
 import {
   CODE_EDITOR_CONTAINER_CYPRESS,
   CODE_EXECUTION_CONTAINER_CYPRESS,
@@ -17,46 +18,45 @@ import CodeEditor from './CodeEditor';
 import CodeReview from './CodeReview';
 import CodeReviewToolbar from './CodeReviewToolbar';
 
-const Container = styled('div')({
+const Container = styled('div')(({ theme }) => ({
   margin: 'auto',
   fontSize: '1.1rem',
-  padding: '16px',
+  padding: theme.spacing(2),
   maxWidth: '600px',
   width: '80vw',
-  // border: 'solid var(--graasp-primary) 1px',
-  borderRadius: '4px',
+  borderRadius: SMALL_BORDER_RADIUS,
   wordWrap: 'break-word',
-});
+}));
 
-// todo: remove this once there are props
 // eslint-disable-next-line @typescript-eslint/ban-types
 type Props = {};
 
 const CodeReviewWrapper: FC<Props> = () => {
-  const [view, setView] = useState<AppViews>(AppViews.CodeReview);
+  const { t } = useTranslation();
+  const [view, setView] = useState<AppView>(AppView.CodeReview);
   const { codeVersion } = useCodeVersionContext();
 
-  const getContent = (): ReactNode => {
+  const getContent = (): ReactElement => {
     switch (view) {
-      case AppViews.CodeEditor:
+      case AppView.CodeEditor:
         return (
           <Container data-cy={CODE_EDITOR_CONTAINER_CYPRESS}>
             <CodeEditor
-              onClose={() => setView(AppViews.CodeReview)}
+              onClose={() => setView(AppView.CodeReview)}
               seedValue={codeVersion}
             />
           </Container>
         );
-      case AppViews.CodeExecution:
+      case AppView.CodeExecution:
         return (
           <Container data-cy={CODE_EXECUTION_CONTAINER_CYPRESS}>
-            <div>This is the Code Execution panel</div>
-            <Button onClick={() => setView(AppViews.CodeReview)}>
-              Back to CodeReview
+            <div>{t('This is the Code Execution panel')}</div>
+            <Button onClick={() => setView(AppView.CodeReview)}>
+              {t('Back to Code Review')}
             </Button>
           </Container>
         );
-      case AppViews.CodeReview:
+      case AppView.CodeReview:
       default:
         return (
           <ReviewProvider>
@@ -71,7 +71,7 @@ const CodeReviewWrapper: FC<Props> = () => {
     }
   };
 
-  return <>{getContent()}</>;
+  return getContent();
 };
 
 export default CodeReviewWrapper;

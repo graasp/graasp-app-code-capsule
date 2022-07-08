@@ -9,6 +9,7 @@ import { IconButton, styled } from '@mui/material';
 
 import { APP_DATA_TYPES, APP_DATA_VISIBILITY } from '../../config/appDataTypes';
 import { REVIEW_MODE_INDIVIDUAL } from '../../config/constants';
+import { SMALL_BORDER_RADIUS } from '../../config/layout';
 import {
   CODE_REVIEW_ADD_BUTTON_CYPRESS,
   CODE_REVIEW_LINE_CYPRESS,
@@ -70,7 +71,7 @@ const AddButton = styled(IconButton)({
   height: '1.5rem',
   width: '1.5rem',
   opacity: 0.3,
-  borderRadius: '4px',
+  borderRadius: SMALL_BORDER_RADIUS,
   // shrink the icon to have the spring out effect
   transform: 'scale(0.8, 0.8)',
   '&:hover': addButtonHoverStyle,
