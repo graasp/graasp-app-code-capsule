@@ -2,6 +2,7 @@ enum APP_DATA_TYPES {
   COMMENT = 'comment',
   TEACHER_COMMENT = 'teacher_comment',
   CODE = 'code',
+  FLAG = 'flag',
 }
 
 enum APP_DATA_VISIBILITY {

@@ -50,14 +50,14 @@ const getVersionLabel = (
 ): string => {
   const { commitMessage } = data;
   let msg = commitMessage || i18n.t('noCommitMessage');
-  // if message id too long: truncate and add ellipsis
+  // if message is too long: truncate and add ellipsis
   if (msg.length > DEFAULT_TRUNCATION_COMMIT_MESSAGE_LENGTH) {
     msg = `${commitMessage.slice(
       0,
       DEFAULT_TRUNCATION_COMMIT_MESSAGE_LENGTH,
     )}…`;
   }
-  // format createdAt date
+  // format updatedAt date
   // a placeholder is used if the property does not exist (fake API)
   const date = updatedAt
     ? getFormattedTime(updatedAt, i18n.language)

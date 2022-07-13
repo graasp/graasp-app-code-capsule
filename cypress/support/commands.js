@@ -1,5 +1,10 @@
 import '@testing-library/cypress/add-commands';
 
+import {
+  CODE_EDITOR_CYPRESS,
+  TOOLBAR_EDIT_CODE_BUTTON_CYPRESS,
+  buildDataCy,
+} from '../../src/config/selectors';
 import { MOCK_SERVER_API_HOST, MOCK_SERVER_ITEM } from '../fixtures/appData';
 import { CURRENT_MEMBER, MEMBERS } from '../fixtures/members';
 
@@ -50,4 +55,16 @@ Cypress.Commands.add(
       };
     });
   },
+);
+
+Cypress.Commands.add('openCodeEditor', () =>
+  cy.get(buildDataCy(TOOLBAR_EDIT_CODE_BUTTON_CYPRESS)).click(),
+);
+
+Cypress.Commands.add('typeInEditor', (content) =>
+  cy
+    .get(CODE_EDITOR_CYPRESS)
+    .click()
+    .focused()
+    .type(`{selectAll}{backspace}{selectAll}{backspace}${content}`),
 );

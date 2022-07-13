@@ -7,8 +7,7 @@ export enum SETTINGS_KEYS {
   SHOW_VISIBILITY_BUTTON = 'showVisibilityButton',
   ALLOW_COMMENTS = 'allowComments',
   ALLOW_REPLIES = 'allowReplies',
-  PROGRAMMING_LANGUAGE = 'programmingLanguage',
-  CODE = 'code',
+  ALLOW_COMMENT_REPORTING = 'allowCommentReporting',
   REVIEW_MODE = 'reviewMode',
 }
 
@@ -21,6 +20,7 @@ export interface GeneralSettings {
   [SETTINGS_KEYS.SHOW_VISIBILITY_BUTTON]: boolean;
   [SETTINGS_KEYS.ALLOW_COMMENTS]: boolean;
   [SETTINGS_KEYS.ALLOW_REPLIES]: boolean;
+  [SETTINGS_KEYS.ALLOW_COMMENT_REPORTING]: boolean;
   [SETTINGS_KEYS.REVIEW_MODE]: string;
 
   // used to allow access using settings[settingKey] syntax

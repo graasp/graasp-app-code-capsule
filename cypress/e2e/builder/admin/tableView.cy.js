@@ -1,4 +1,5 @@
 import { List } from 'immutable';
+import countBy from 'lodash.countby';
 
 import { APP_DATA_TYPES } from '../../../../src/config/appDataTypes';
 import {
@@ -60,11 +61,9 @@ describe('Builder with Admin access', () => {
       const nonOrphanComments = comments?.filter(
         (c) => !orphansId.includes(c.id),
       );
-      const users = nonOrphanComments.map((r) => r.memberId);
-      const userCounts = users.reduce((acc, user) => {
-        acc[user] = acc[user] ? acc[user] + 1 : 1;
-        return acc;
-      }, {});
+      // map resources to memberId and convert to JS to use the countBy function
+      const users = nonOrphanComments.map((r) => r.memberId).toJS();
+      const userCounts = countBy(users);
 
       cy.get(buildDataCy(TABLE_VIEW_TABLE_CYPRESS)).should('be.visible');
       cy.get(buildDataCy(TABLE_VIEW_BODY_USERS_CYPRESS))

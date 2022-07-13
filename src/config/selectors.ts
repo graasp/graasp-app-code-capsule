@@ -55,6 +55,7 @@ export const tableRowUserCypress = (id: string): string =>
 export const CODE_REVIEW_CONTAINER_CYPRESS = 'code_review_container';
 export const CODE_REVIEW_ADD_BUTTON_CYPRESS = 'code_review_add_button';
 export const CODE_REVIEW_LINE_CYPRESS = 'code_review_line';
+export const CODE_REVIEW_LINE_CONTENT_CYPRESS = 'code_review_line_content';
 export const buildAddButtonDataCy = (index: number): string =>
   `${CODE_REVIEW_ADD_BUTTON_CYPRESS}-${index}`;
 export const COMMENT_EDITOR_CYPRESS = 'comment_editor';

@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { Delete, Edit } from '@mui/icons-material';
+import { Delete, Edit, Flag } from '@mui/icons-material';
 import { ListItemIcon, ListItemText, Menu, MenuItem } from '@mui/material';
 
 import { useAppDataContext } from '../context/AppDataContext';
@@ -12,16 +12,20 @@ type Props = {
   open: boolean;
   menuAnchorEl: null | HTMLElement;
   onClose: () => void;
+  onClickFlag?: () => void;
   showDelete?: boolean;
   showEdit?: boolean;
+  showFlag?: boolean;
 };
 
 const CommentActions: FC<Props> = ({
   open,
   menuAnchorEl,
   onClose,
+  onClickFlag,
   showDelete = true,
   showEdit = true,
+  showFlag = true,
 }) => {
   const { t } = useTranslation();
   const comment = useCommentContext();
@@ -68,6 +72,19 @@ const CommentActions: FC<Props> = ({
             <Delete color="error" />
           </ListItemIcon>
           <ListItemText>{t('Delete')}</ListItemText>
+        </MenuItem>
+      )}
+      {showFlag && (
+        <MenuItem
+          onClick={() => {
+            onClickFlag?.();
+            onClose();
+          }}
+        >
+          <ListItemIcon>
+            <Flag color="warning" />
+          </ListItemIcon>
+          <ListItemText>{t('Report')}</ListItemText>
         </MenuItem>
       )}
     </Menu>

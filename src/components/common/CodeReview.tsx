@@ -12,6 +12,7 @@ import { REVIEW_MODE_INDIVIDUAL } from '../../config/constants';
 import { SMALL_BORDER_RADIUS } from '../../config/layout';
 import {
   CODE_REVIEW_ADD_BUTTON_CYPRESS,
+  CODE_REVIEW_LINE_CONTENT_CYPRESS,
   CODE_REVIEW_LINE_CYPRESS,
   buildAddButtonDataCy,
 } from '../../config/selectors';
@@ -151,15 +152,17 @@ const CodeReview: FC<Props> = () => {
                     </AddButton>
                   )}
                 </LineNoContainer>
-                {line.map((token, key) => (
-                  <span
-                    key={`code-${key}-${line}`}
-                    {...getTokenProps({
-                      token,
-                      key,
-                    })}
-                  />
-                ))}
+                <div data-cy={CODE_REVIEW_LINE_CONTENT_CYPRESS}>
+                  {line.map((token, key) => (
+                    <span
+                      key={`code-${key}-${line}`}
+                      {...getTokenProps({
+                        token,
+                        key,
+                      })}
+                    />
+                  ))}
+                </div>
                 {
                   // todo: show line toggle button
                 }

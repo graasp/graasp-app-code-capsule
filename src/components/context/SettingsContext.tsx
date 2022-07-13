@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import isEqual from 'lodash.isequal';
 
 import React, {
   FC,
@@ -54,7 +54,7 @@ export const SettingsProvider: FC<Prop> = ({ children }) => {
         const generalAppSettings = appSettings.data?.find(
           (setting) => setting.name === GENERAL_SETTINGS_KEY,
         )?.data as GeneralSettings;
-        if (generalAppSettings && !_.isEqual(settings, generalAppSettings)) {
+        if (generalAppSettings && !isEqual(settings, generalAppSettings)) {
           setSettings(generalAppSettings);
         }
       }
@@ -94,7 +94,7 @@ export const SettingsProvider: FC<Prop> = ({ children }) => {
           (generalSettings?.data as GeneralSettings) ??
             DEFAULT_GENERAL_SETTINGS,
         ),
-      unsavedChanges: !_.isEqual(generalSettings?.data, settings),
+      unsavedChanges: !isEqual(generalSettings?.data, settings),
     };
   }, [appSettings.data, patchSettings, postSettings, settings]);
 

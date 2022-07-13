@@ -1,7 +1,6 @@
 import { INSTRUCTOR_CODE_ID } from '../../../src/config/constants';
 import {
   CODE_EDITOR_COMMIT_MESSAGE_CYPRESS,
-  CODE_EDITOR_CYPRESS,
   CODE_EDITOR_SUBMIT_BUTTON_CYPRESS,
   CODE_REVIEW_ADD_BUTTON_CYPRESS,
   CODE_REVIEW_CONTAINER_CYPRESS,
@@ -228,15 +227,11 @@ describe('Code Review Tools', () => {
   it('should edit code', () => {
     const newCode = '#testing new code';
     // open editing
-    cy.get(buildDataCy(TOOLBAR_EDIT_CODE_BUTTON_CYPRESS))
-      .should('be.visible')
-      .click();
+    cy.openCodeEditor();
 
     // enter new code (need to clear two times because otherwise it does not clear everything
     cy.wait(waitingDelay);
-    cy.get(CODE_EDITOR_CYPRESS).type(
-      `{selectall}{backspace}{selectall}{backspace}${newCode}`,
-    );
+    cy.typeInEditor(newCode);
 
     // enter a commit message
     cy.get(buildDataCy(CODE_EDITOR_COMMIT_MESSAGE_CYPRESS)).type(

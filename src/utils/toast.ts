@@ -1,4 +1,5 @@
-import _ from 'lodash';
+import isObject from 'lodash.isobject';
+import isString from 'lodash.isstring';
 
 import { toast } from 'react-toastify';
 
@@ -6,9 +7,9 @@ import { UNEXPECTED_ERROR_MESSAGE } from '../constants/messages';
 
 const showErrorToast = (payload: string | { message: string }): void => {
   let message = UNEXPECTED_ERROR_MESSAGE;
-  if (_.isString(payload)) {
+  if (isString(payload)) {
     message = payload;
-  } else if (_.isObject(payload)) {
+  } else if (isObject(payload)) {
     if (payload.message) {
       ({ message } = payload);
     }

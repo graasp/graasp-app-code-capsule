@@ -86,8 +86,8 @@ const CodeEditor: FC<Props> = ({
     unknown,
     Partial<CodeType>
   >(MUTATION_KEYS.POST_APP_DATA);
-  const appSettings = hooks.useAppSettings();
-  const codeVersionSettings = appSettings.data?.find(
+  const appSettingsQuery = hooks.useAppSettings();
+  const codeVersionSettings = appSettingsQuery.data?.find(
     (res) => res.name === INSTRUCTOR_CODE_VERSION_SETTINGS_KEY,
   );
 
@@ -131,7 +131,7 @@ const CodeEditor: FC<Props> = ({
     switch (submitTarget) {
       case CodeEditorSubmitTarget.Settings:
         // settings already exists
-        if (codeVersionSettings !== undefined) {
+        if (codeVersionSettings) {
           patchSettings({
             data: editedCodeData,
             id: codeVersionSettings.id,
@@ -156,7 +156,8 @@ const CodeEditor: FC<Props> = ({
     onClose?.();
   };
   const onChangeCode = (value?: string): void => {
-    if (value !== undefined) {
+    // allow to save an empty string value but not null or undefined
+    if (value || value === '') {
       setCode(value);
     }
   };

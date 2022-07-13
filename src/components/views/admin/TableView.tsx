@@ -41,7 +41,7 @@ import CustomDialog from '../../layout/CustomDialog';
 import OrphanComments from './OrphanComments';
 
 const DEFAULT_CURRENT_USER = {
-  name: '',
+  name: ANONYMOUS_USER,
   id: '',
 };
 
