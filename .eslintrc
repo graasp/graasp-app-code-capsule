@@ -5,10 +5,10 @@
   },
   "extends": [
     "airbnb",
+    "plugin:cypress/recommended",
     "plugin:@typescript-eslint/recommended",
     "prettier",
-    "plugin:react/recommended",
-    "plugin:cypress/recommended"
+    "plugin:react/recommended"
   ],
   "globals": {
     "cy": true,
@@ -24,8 +24,19 @@
   },
   "plugins": ["react", "react-hooks", "@typescript-eslint", "prettier"],
   "rules": {
+    "react/no-array-index-key": "off",
+    "react/jsx-props-no-spreading": "off",
+    "react/destructuring-assignment": "off",
+    "react/require-default-props": "off",
+    "react/react-in-jsx-scope": "off",
+    "@typescript-eslint/ban-ts-comment": "off",
     "import/no-import-module-exports": "off",
-    "import/no-extraneous-dependencies": ["error", { "devDependencies": true }],
+    "import/no-extraneous-dependencies": [
+      "error",
+      {
+        "devDependencies": true
+      }
+    ],
     "import/prefer-default-export": "off",
     "prettier/prettier": "error",
     "import/extensions": [
@@ -33,6 +44,7 @@
       "ignorePackages",
       {
         "ts": "never",
+        "js": "never",
         "tsx": "never"
       }
     ],
@@ -60,11 +72,20 @@
       {
         "namedComponents": "arrow-function"
       }
-    ]
+    ],
+    // eslint rule reports false error
+    "no-shadow": "off",
+    "@typescript-eslint/no-shadow": ["error"]
   },
   "settings": {
+    "react": {
+      "version": "detect"
+    },
     "import/resolver": {
       "typescript": {}
+    },
+    "import/parsers": {
+      "@typescript-eslint/parser": [".ts", ".tsx"]
     }
   }
 }
