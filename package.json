@@ -73,7 +73,11 @@
     "cypress:open": "env-cmd -f ./.env.development cypress open",
     "test": "concurrently -k -s first \"yarn start:test\" \"wait-on http://127.0.0.1:3333 && yarn test:ci\" ",
     "test:ci": "env-cmd -f ./.env.test cypress run --browser chrome --headless && nyc report --reporter=text --reporter=text-summary",
-    "cov:report": "open ./coverage/lcov-report/index.html"
+    "cov:report": "open ./coverage/lcov-report/index.html",
+    "release": "standard-version -a",
+    "release:first": "standard-version -a --first-release",
+    "release:minor": "standard-version -a --release-as minor",
+    "release:major": "standard-version -a --release-as major"
   },
   "devDependencies": {
     "@commitlint/cli": "17.0.3",
