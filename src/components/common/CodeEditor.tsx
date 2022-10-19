@@ -4,9 +4,12 @@ import { useTranslation } from 'react-i18next';
 import { AppSetting } from '@graasp/apps-query-client';
 import { Button } from '@graasp/ui';
 
-import { Stack, TextField, styled } from '@mui/material';
+import { Box, Stack, TextField, styled, useTheme } from '@mui/material';
 
-import Editor from '@monaco-editor/react';
+import { java } from '@codemirror/lang-java';
+import { javascript } from '@codemirror/lang-javascript';
+import { python } from '@codemirror/lang-python';
+import CodeMirror from '@uiw/react-codemirror';
 
 import { APP_DATA_TYPES } from '../../config/appDataTypes';
 import {
@@ -15,15 +18,13 @@ import {
 } from '../../config/appSettingsTypes';
 import { DEFAULT_CODE_VERSION_SETTING } from '../../config/codeVersions';
 import { SMALL_BORDER_RADIUS } from '../../config/layout';
-import {
-  programmingLanguageSelect,
-  programmingLanguageSettings,
-} from '../../config/programmingLanguages';
+import { programmingLanguageSelect } from '../../config/programmingLanguages';
 import { MUTATION_KEYS, hooks, useMutation } from '../../config/queryClient';
 import {
   CODE_EDITOR_CANCEL_BUTTON_CYPRESS,
   CODE_EDITOR_COMMIT_DESCRIPTION_CYPRESS,
   CODE_EDITOR_COMMIT_MESSAGE_CYPRESS,
+  CODE_EDITOR_ID_CY,
   CODE_EDITOR_LANGUAGE_SELECT_CYPRESS,
   CODE_EDITOR_SUBMIT_BUTTON_CYPRESS,
 } from '../../config/selectors';
@@ -34,28 +35,26 @@ import {
 import { CodeType, CodeVersionType } from '../../interfaces/codeVersions';
 import { useCodeVersionContext } from '../context/CodeVersionContext';
 import CustomSelect from '../layout/CustomSelect';
-import Loader from './Loader';
 
-const StyledEditor = styled(Editor)({
-  padding: '8px',
+const StyledEditorContainer = styled(Box)({
   border: 'solid silver 1px',
   borderRadius: SMALL_BORDER_RADIUS,
-  height: '40vh',
+  maxHeight: '40vh',
+  overflow: 'hidden',
 });
 
 type Props = {
   submitTarget?: CodeEditorSubmitTarget;
   seedValue?: CodeVersionType;
   onClose?: () => void;
-  showButtonBar?: boolean;
 };
 
 const CodeEditor: FC<Props> = ({
   submitTarget = CodeEditorSubmitTarget.Code,
   seedValue,
   onClose = () => null,
-  showButtonBar = true,
 }) => {
+  const theme = useTheme();
   const { t } = useTranslation();
   const { setCodeId } = useCodeVersionContext();
   const {
@@ -169,7 +168,7 @@ const CodeEditor: FC<Props> = ({
   };
 
   return (
-    <Stack display="flex" direction="column" spacing={1}>
+    <Stack display="flex" direction="column" spacing={1} maxHeight="100%">
       <CustomSelect
         dataCy={CODE_EDITOR_LANGUAGE_SELECT_CYPRESS}
         onChange={setLanguage}
@@ -177,18 +176,19 @@ const CodeEditor: FC<Props> = ({
         label={t('Programming Language')}
         values={programmingLanguageSelect}
       />
-      <StyledEditor
-        defaultLanguage={language}
-        language={language}
-        value={code}
-        onChange={(value) => onChangeCode(value)}
-        options={{
-          scrollBeyondLastLine: false,
-          detectIndentation: false,
-          tabSize: programmingLanguageSettings[language].tabSize,
-        }}
-        loading={<Loader />}
-      />
+      <StyledEditorContainer>
+        <CodeMirror
+          id={CODE_EDITOR_ID_CY}
+          onChange={(value) => onChangeCode(value)}
+          height="100%"
+          style={{
+            height: '100%',
+          }}
+          theme={theme.palette.mode}
+          basicSetup
+          extensions={[python(), javascript(), java()]}
+        />
+      </StyledEditorContainer>
 
       <TextField
         data-cy={CODE_EDITOR_COMMIT_MESSAGE_CYPRESS}
@@ -203,28 +203,27 @@ const CodeEditor: FC<Props> = ({
         label={t('Optional Extended Description')}
         placeholder={t('Optional Extended Description')}
         multiline
-        maxRows={3}
+        maxRows={2}
         onChange={({ target }) => onChangeCommitDescription(target.value)}
       />
-      {showButtonBar && (
-        <Stack direction="row" justifyContent="end" spacing={1}>
-          <Button
-            dataCy={CODE_EDITOR_CANCEL_BUTTON_CYPRESS}
-            onClick={onClose}
-            color="error"
-            variant="outlined"
-          >
-            {t('Cancel')}
-          </Button>
-          <Button
-            dataCy={CODE_EDITOR_SUBMIT_BUTTON_CYPRESS}
-            variant="outlined"
-            onClick={() => onSubmitCode()}
-          >
-            {t('Submit Code')}
-          </Button>
-        </Stack>
-      )}
+
+      <Stack direction="row" justifyContent="end" spacing={1}>
+        <Button
+          dataCy={CODE_EDITOR_CANCEL_BUTTON_CYPRESS}
+          onClick={onClose}
+          color="error"
+          variant="outlined"
+        >
+          {t('Cancel')}
+        </Button>
+        <Button
+          dataCy={CODE_EDITOR_SUBMIT_BUTTON_CYPRESS}
+          variant="outlined"
+          onClick={() => onSubmitCode()}
+        >
+          {t('Submit Code')}
+        </Button>
+      </Stack>
     </Stack>
   );
 };

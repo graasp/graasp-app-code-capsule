@@ -189,7 +189,6 @@ const CodeReviewToolbar: FC<Props> = ({ setView }) => {
     <Tooltip title={t('Run')}>
       <span>
         <ToolbarButton
-          disabled
           dataCy={TOOLBAR_RUN_CODE_BUTTON_CYPRESS}
           onClick={() => setView(AppView.CodeExecution)}
         >

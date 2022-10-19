@@ -9,8 +9,7 @@ import { DEFAULT_GENERAL_SETTINGS } from '../../src/config/settings';
 import { CodeType } from '../../src/interfaces/codeVersions';
 import { MOCK_CODE_SAMPLE } from './appSettings';
 import { CURRENT_MEMBER, MEMBERS } from './members';
-
-export const MOCK_SERVER_ITEM = { id: '1234567890' };
+import { MOCK_SERVER_ITEM } from './mockItem';
 
 export const MOCK_SERVER_API_HOST = 'http://localhost:3636';
 

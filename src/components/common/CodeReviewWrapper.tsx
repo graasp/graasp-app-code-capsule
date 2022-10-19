@@ -14,13 +14,14 @@ import {
 import { useCodeVersionContext } from '../context/CodeVersionContext';
 import { ReviewProvider } from '../context/ReviewContext';
 import { VisibilityProvider } from '../context/VisibilityContext';
+import Repl from '../repl/Repl';
 import CodeEditor from './CodeEditor';
 import CodeReview from './CodeReview';
 import CodeReviewToolbar from './CodeReviewToolbar';
 
 const Container = styled('div')(({ theme }) => ({
   margin: 'auto',
-  fontSize: '1.1rem',
+  fontSize: '1rem',
   padding: theme.spacing(2),
   maxWidth: '600px',
   width: '80vw',
@@ -51,6 +52,7 @@ const CodeReviewWrapper: FC<Props> = () => {
         return (
           <Container data-cy={CODE_EXECUTION_CONTAINER_CYPRESS}>
             <div>{t('This is the Code Execution panel')}</div>
+            <Repl />
             <Button onClick={() => setView(AppView.CodeReview)}>
               {t('Back to Code Review')}
             </Button>

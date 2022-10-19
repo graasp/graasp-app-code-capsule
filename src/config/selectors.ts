@@ -83,6 +83,7 @@ export const COMMENT_CONTAINER_CYPRESS = 'comment_container';
 export const COMMENT_THREAD_CONTAINER_CYPRESS = 'comment_thread_container';
 export const ORPHAN_BUTTON_CYPRESS = 'orphan_button';
 export const CODE_EXECUTION_CONTAINER_CYPRESS = 'code_execution_container';
+export const CODE_EDITOR_ID_CY = 'code_editor';
 export const CODE_EDITOR_CONTAINER_CYPRESS = 'code_editor_container';
 export const CODE_EDITOR_LANGUAGE_SELECT_CYPRESS =
   'code_editor_language_select';
@@ -97,6 +98,8 @@ export const COMMIT_INFO_FIELD_CYPRESS = 'commit_info_field';
 export const buildCommitFieldDataCy = (fieldName: string): string =>
   `${COMMIT_INFO_FIELD_CYPRESS}-${fieldName}`;
 
+export const REPL_CONTAINER_CY = 'repl_container';
+
 export const buildDataCy = (selector: string): string =>
   `[data-cy=${selector}]`;
 export const buildTableRowCypress = (selector: string): string =>
@@ -104,4 +107,4 @@ export const buildTableRowCypress = (selector: string): string =>
 export const buildCommitFieldCypress = (selector: string): string =>
   `[data-cy=${selector}]`;
 
-export const CODE_EDITOR_CYPRESS = '.monaco-editor textarea:first';
+// export const CODE_EDITOR_CY = '.monaco-editor textarea:first';

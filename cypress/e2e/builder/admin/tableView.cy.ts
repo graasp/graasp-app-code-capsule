@@ -19,6 +19,7 @@ import {
   tableRowUserCypress,
 } from '../../../../src/config/selectors';
 import { CONTEXTS, PERMISSIONS } from '../../../../src/config/settings';
+import { CommentType } from '../../../../src/interfaces/comment';
 import { getOrphans } from '../../../../src/utils/comments';
 import {
   MOCK_ORPHAN_COMMENT,
@@ -56,7 +57,7 @@ describe('Builder with Admin access', () => {
         SINGLE_LINE_MOCK_COMMENTS.filter(
           (r) => r.type === APP_DATA_TYPES.COMMENT,
         ),
-      );
+      ) as List<CommentType>;
       const orphansId = getOrphans(comments).map((c) => c.id);
       const nonOrphanComments = comments?.filter(
         (c) => !orphansId.includes(c.id),

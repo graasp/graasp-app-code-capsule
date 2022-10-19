@@ -1,3 +1,4 @@
+import { CodeVersionType } from '../interfaces/codeVersions';
 import {
   DEFAULT_CODE_SETTING,
   DEFAULT_COMMIT_DESCRIPTION_SETTING,
@@ -10,7 +11,7 @@ export enum CodeContexts {
   Student,
 }
 
-export const DEFAULT_CODE_VERSION_SETTING = {
+export const DEFAULT_CODE_VERSION_SETTING: CodeVersionType = {
   code: DEFAULT_CODE_SETTING,
   language: DEFAULT_PROGRAMMING_LANGUAGE_SETTING,
   commitMessage: DEFAULT_COMMIT_MESSAGE_SETTING,

@@ -60,6 +60,8 @@ describe('Code Editing', () => {
       MOCK_COMMIT_DESCRIPTION,
     );
 
+    cy.pause();
+
     // click the submit button
     cy.get(buildDataCy(CODE_EDITOR_SUBMIT_BUTTON_CYPRESS))
       .should('be.visible')

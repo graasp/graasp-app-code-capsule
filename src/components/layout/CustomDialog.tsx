@@ -41,6 +41,7 @@ type Props = {
   keepMounted?: boolean;
   fullScreen?: boolean;
   maxWidth?: Breakpoint;
+  noPadding?: boolean;
   anchor?: RefType;
 };
 
@@ -54,6 +55,7 @@ const CustomDialog: FC<Props> = ({
   keepMounted = true,
   fullScreen = false,
   maxWidth = 'sm',
+  noPadding = false,
   anchor = null,
 }) => (
   <Dialog
@@ -69,7 +71,7 @@ const CustomDialog: FC<Props> = ({
     <StyledDialogTitle data-cy={CUSTOM_DIALOG_TITLE_CYPRESS}>
       {title}
     </StyledDialogTitle>
-    <DialogContent>{content}</DialogContent>
+    <DialogContent sx={noPadding ? { py: 0 } : {}}>{content}</DialogContent>
     <DialogActions>{actions}</DialogActions>
   </Dialog>
 );

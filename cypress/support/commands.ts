@@ -1,12 +1,13 @@
-import '@testing-library/cypress/add-commands';
-
+/// <reference types="../../src/window" />
 import {
-  CODE_EDITOR_CYPRESS,
+  CODE_EDITOR_ID_CY,
   TOOLBAR_EDIT_CODE_BUTTON_CYPRESS,
+  TOOLBAR_RUN_CODE_BUTTON_CYPRESS,
   buildDataCy,
 } from '../../src/config/selectors';
-import { MOCK_SERVER_API_HOST, MOCK_SERVER_ITEM } from '../fixtures/appData';
+import { MOCK_SERVER_API_HOST } from '../fixtures/appData';
 import { CURRENT_MEMBER, MEMBERS } from '../fixtures/members';
+import { MOCK_SERVER_ITEM } from '../fixtures/mockItem';
 
 // ***********************************************
 // This example commands.js shows you how to
@@ -36,13 +37,14 @@ import { CURRENT_MEMBER, MEMBERS } from '../fixtures/members';
 
 Cypress.Commands.add(
   'setUpApi',
-  ({ currentMember = CURRENT_MEMBER, database = {}, appContext } = {}) => {
+  ({ currentMember = CURRENT_MEMBER, database, appContext } = {}) => {
     // mock api and database
-    Cypress.on('window:before:load', (win) => {
+    Cypress.on('window:before:load', (win: Window) => {
       // eslint-disable-next-line no-param-reassign
       win.database = {
-        currentMember,
-        currentItemId: MOCK_SERVER_ITEM.id,
+        appData: [],
+        appActions: [],
+        appSettings: [],
         members: Object.values(MEMBERS),
         ...database,
       };
@@ -61,10 +63,13 @@ Cypress.Commands.add('openCodeEditor', () =>
   cy.get(buildDataCy(TOOLBAR_EDIT_CODE_BUTTON_CYPRESS)).click(),
 );
 
+Cypress.Commands.add('openRepl', () =>
+  cy.get(buildDataCy(TOOLBAR_RUN_CODE_BUTTON_CYPRESS)).click(),
+);
+
 Cypress.Commands.add('typeInEditor', (content) =>
   cy
-    .get(CODE_EDITOR_CYPRESS)
-    .click()
-    .focused()
-    .type(`{selectAll}{backspace}{selectAll}{backspace}${content}`),
+    .get(`#${CODE_EDITOR_ID_CY}`)
+    .find('[contenteditable]')
+    .type(`{selectAll}{backspace}${content}`),
 );

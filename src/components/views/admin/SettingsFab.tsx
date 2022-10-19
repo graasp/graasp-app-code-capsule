@@ -140,8 +140,8 @@ const SettingsFab: FC = () => {
         dataCy={SETTINGS_DISPLAY_DIALOG_WINDOW_CYPRESS}
         open={openDisplaySettings}
         title={
-          <Stack direction="row" spacing={2} alignItems="center">
-            <DisplaySettings sx={{ pr: 2 }} />
+          <Stack direction="row" alignItems="center">
+            <DisplaySettings sx={{ mr: 1 }} />
             {t('Display Settings')}
           </Stack>
         }
@@ -151,9 +151,10 @@ const SettingsFab: FC = () => {
       <CustomDialog
         dataCy={SETTINGS_CODE_DIALOG_WINDOW_CYPRESS}
         open={openCodeSettings}
+        noPadding
         title={
-          <Stack direction="row" spacing={2} alignItems="center">
-            <Code sx={{ pr: 2 }} />
+          <Stack direction="row" alignItems="center">
+            <Code sx={{ mr: 1 }} />
             {t('Code Settings')}
           </Stack>
         }

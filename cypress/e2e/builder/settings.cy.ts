@@ -1,7 +1,7 @@
 import {
   JAVASCRIPT,
   REVIEW_MODE_COLLABORATIVE,
-} from '../../../../src/config/constants';
+} from '../../../src/config/constants';
 import {
   ALLOW_COMMENTS_SWITCH_CYPRESS,
   ALLOW_REPLIES_SWITCH_CYPRESS,
@@ -18,13 +18,13 @@ import {
   SETTINGS_DIALOG_SAVE_BUTTON_CYPRESS,
   SETTINGS_DISPLAY_DIALOG_WINDOW_CYPRESS,
   buildDataCy,
-} from '../../../../src/config/selectors';
+} from '../../../src/config/selectors';
 import {
   CONTEXTS,
   DEFAULT_PROGRAMMING_LANGUAGE_SETTING,
   DEFAULT_REVIEW_MODE_SETTING,
   PERMISSIONS,
-} from '../../../../src/config/settings';
+} from '../../../src/config/settings';
 
 describe('Settings', () => {
   beforeEach(() => {
@@ -38,7 +38,8 @@ describe('Settings', () => {
     cy.visit('/');
   });
 
-  it('Open Code settings', () => {
+  it.only('Open Code settings', () => {
+    // click on the code settings FAB
     cy.get(buildDataCy(CODE_SETTINGS_FAB_CYPRESS))
       .should('be.visible')
       .as('codeSettingsFab')
@@ -57,6 +58,7 @@ describe('Settings', () => {
     cy.get(`${buildDataCy(CODE_EDITOR_LANGUAGE_SELECT_CYPRESS)} > input`).as(
       'select',
     );
+    // check initial value of programming language select
     cy.get('@select').should(
       'have.value',
       DEFAULT_PROGRAMMING_LANGUAGE_SETTING,
@@ -66,11 +68,8 @@ describe('Settings', () => {
     cy.get('@select').should('have.value', JAVASCRIPT);
 
     // type in editor
-    const testCode = `const greeting = 'Hello World';`;
-    cy.get('.monaco-editor textarea:first')
-      .click()
-      .focused()
-      .type(`{selectall}${testCode}`);
+    const testCode = `const greeting = 'Hello World';{enter}// Wow !{enter}{enter}`;
+    cy.typeInEditor(testCode);
 
     // type a commit message
     const commitMessage = 'This is my commit message';
