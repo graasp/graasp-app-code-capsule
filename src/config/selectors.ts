@@ -1,11 +1,13 @@
 export const GRAASP_LOGO_CYPRESS = 'graasp_logo';
 export const TABLE_VIEW_TABLE_CYPRESS = 'table_view_table';
 export const TABLE_VIEW_PANE_CYPRESS = 'table_view_pane';
+export const SETTINGS_VIEW_PANE_CYPRESS = 'settings_view_pane';
 export const PRESET_VIEW_PANE_CYPRESS = 'preset_view_pane_';
 export const PLAYER_VIEW_CYPRESS = 'player_view';
 export const ANALYZER_VIEW_CYPRESS = 'analyzer_view';
 export const TAB_PRESET_VIEW_CYPRESS = 'tab_preset_view';
 export const TAB_TABLE_VIEW_CYPRESS = 'tab_table_view';
+export const TAB_SETTINGS_VIEW_CYPRESS = 'tab_settings_view';
 export const TABLE_ROW_USERS_CYPRESS = 'table_row_users';
 export const TABLE_VIEW_BODY_USERS_CYPRESS = 'table_view_body_users';
 export const TABLE_VIEW_OPEN_REVIEW_BUTTON_CYPRESS =

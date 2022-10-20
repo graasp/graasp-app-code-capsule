@@ -76,8 +76,9 @@
     "Default Version": "Default Version",
     "Help needed": "Help needed",
     "Table View": "Table View",
+    "Settings View": "Settings View",
     "Preset View": "Preset View",
-    "No Comments": "Pas de commentaires",
+    "No Comments": "No Comments",
     "Define Interaction Mode": "Define Interaction Mode",
     "App Customization": "App Customization",
     "Delete": "Delete",
@@ -99,6 +100,9 @@
     "User Select": "User Select",
     "This is the Code Execution panel": "This is the Code Execution panel",
     "Back to Code Review": "Back to Code Review",
-    "noCommitMessage": "~No message~"
+    "noCommitMessage": "~No message~",
+    "Execute Code": "Execute Code",
+    "Review Code": "Review Code",
+    "Collaborate on Code": "Collaborate on Code"
   }
 }

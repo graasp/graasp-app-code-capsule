@@ -17,6 +17,7 @@ import {
   SETTINGS_DIALOG_CANCEL_BUTTON_CYPRESS,
   SETTINGS_DIALOG_SAVE_BUTTON_CYPRESS,
   SETTINGS_DISPLAY_DIALOG_WINDOW_CYPRESS,
+  TAB_SETTINGS_VIEW_CYPRESS,
   buildDataCy,
 } from '../../../src/config/selectors';
 import {
@@ -38,7 +39,11 @@ describe('Settings', () => {
     cy.visit('/');
   });
 
-  it.only('Open Code settings', () => {
+  it.only('Change Settings in tab', () => {
+    cy.get(buildDataCy(TAB_SETTINGS_VIEW_CYPRESS)).should('be.visible').click();
+  });
+
+  it('Open Code settings', () => {
     // click on the code settings FAB
     cy.get(buildDataCy(CODE_SETTINGS_FAB_CYPRESS))
       .should('be.visible')

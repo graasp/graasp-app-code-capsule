@@ -75,6 +75,9 @@
     "Restart interaction": "Recommencer l'interaction",
     "Default Version": "Version par défaut",
     "Help needed": "Aide demandée",
+    "Table View": "Réponses",
+    "Settings View": "Réglages",
+    "Preset View": "Pré-réglages",
     "No Comments": "Pas de commentaires",
     "Define Interaction Mode": "Définir le mode d'interaction",
     "App Customization": "Personnaliser l'app",
@@ -96,6 +99,9 @@
     "User Select": "Sélection de l'auteur",
     "This is the Code Execution panel": "Ceci est la vue d'exécution de code",
     "Back to Code Review": "Retour à la révision de code",
-    "noCommitMessage": "~Pas de message~"
+    "noCommitMessage": "~Pas de message~",
+    "Execute Code": "Exécuter du code",
+    "Review Code": "Réviser du code",
+    "Collaborate on Code": "Collaborer sur du code"
   }
 }
