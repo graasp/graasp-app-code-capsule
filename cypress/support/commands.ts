@@ -67,9 +67,13 @@ Cypress.Commands.add('openRepl', () =>
   cy.get(buildDataCy(TOOLBAR_RUN_CODE_BUTTON_CYPRESS)).click(),
 );
 
-Cypress.Commands.add('typeInEditor', (content) =>
+Cypress.Commands.add('typeInEditor', (content, editorID = CODE_EDITOR_ID_CY) =>
   cy
-    .get(`#${CODE_EDITOR_ID_CY}`)
+    .get(`#${editorID}`)
     .find('[contenteditable]')
     .type(`{selectAll}{backspace}${content}`),
+);
+
+Cypress.Commands.add('openTab', (tabId) =>
+  cy.get(buildDataCy(tabId)).should('be.visible').click(),
 );

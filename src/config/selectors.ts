@@ -101,6 +101,18 @@ export const buildCommitFieldDataCy = (fieldName: string): string =>
   `${COMMIT_INFO_FIELD_CYPRESS}-${fieldName}`;
 
 export const REPL_CONTAINER_CY = 'repl_container';
+export const REPL_EDITOR_ID_CY = 'repl_editor';
+
+export const APP_MODE_EXECUTE_BUTTON_CY = 'app_mode_execute';
+export const APP_MODE_REVIEW_BUTTON_CY = 'app_mode_review';
+export const APP_MODE_COLLABORATE_BUTTON_CY = 'app_mode_collaborate';
+
+export const SETTING_MAIN_CODE_EDITOR_CY = 'setting_main_code_editor';
+export const SETTING_HEADER_CODE_EDITOR_CY = 'setting_header_code_editor';
+export const SETTING_FOOTER_CODE_EDITOR_CY = 'setting_footer_code_editor';
+
+export const REPL_RUN_CODE_BUTTON_CY = 'repl_run_code_button';
+export const REPL_OUTPUT_CONSOLE_CY = 'repl_output_console_area';
 
 export const buildDataCy = (selector: string): string =>
   `[data-cy=${selector}]`;
@@ -108,5 +120,6 @@ export const buildTableRowCypress = (selector: string): string =>
   `[data-cy=${selector}]`;
 export const buildCommitFieldCypress = (selector: string): string =>
   `[data-cy=${selector}]`;
+export const settingKeyDataCy = (key: string): string => `setting-${key}`;
 
 // export const CODE_EDITOR_CY = '.monaco-editor textarea:first';

@@ -1,37 +1,60 @@
-import isEqual from 'lodash.isequal';
-
-import React, {
-  FC,
-  ReactElement,
-  createContext,
-  useContext,
-  useEffect,
-  useMemo,
-  useState,
-} from 'react';
+import { FC, ReactElement, createContext, useContext, useMemo } from 'react';
 
 import { AppSetting } from '@graasp/apps-query-client';
 
-import { GENERAL_SETTINGS_KEY } from '../../config/appSettingsTypes';
+import {
+  APP_MODE_SETTINGS_NAME,
+  CODE_EXECUTION_SETTINGS_NAME,
+  GENERAL_SETTINGS_NAME,
+} from '../../config/appSettingsTypes';
 import { MUTATION_KEYS, hooks, useMutation } from '../../config/queryClient';
-import { DEFAULT_GENERAL_SETTINGS } from '../../config/settings';
-import { GeneralSettings } from '../../interfaces/settings';
+import {
+  DEFAULT_APP_MODE_SETTING,
+  DEFAULT_CODE_EXECUTION_SETTINGS,
+  DEFAULT_GENERAL_SETTINGS,
+} from '../../config/settings';
+import {
+  AppModeSetting,
+  CodeExecutionSettings,
+  GeneralSettings,
+} from '../../interfaces/settings';
 import Loader from '../common/Loader';
 
-export type SettingsContextType = {
-  settings: GeneralSettings;
-  changeSetting: (name: string, value: unknown) => void;
-  saveSettings: () => void;
-  resetSettings: () => void;
-  unsavedChanges: boolean;
+// mapping between Setting names and their data type
+interface AllSettingsType {
+  [GENERAL_SETTINGS_NAME]?: GeneralSettings;
+  [CODE_EXECUTION_SETTINGS_NAME]?: CodeExecutionSettings;
+  [APP_MODE_SETTINGS_NAME]?: AppModeSetting;
+}
+
+// default values for the data property of settings by name
+const defaultSettingsValues: AllSettingsType = {
+  [GENERAL_SETTINGS_NAME]: DEFAULT_GENERAL_SETTINGS,
+  [CODE_EXECUTION_SETTINGS_NAME]: DEFAULT_CODE_EXECUTION_SETTINGS,
+  [APP_MODE_SETTINGS_NAME]: DEFAULT_APP_MODE_SETTING,
+};
+
+// list of the settings names
+const ALL_SETTING_NAMES = [
+  GENERAL_SETTINGS_NAME,
+  CODE_EXECUTION_SETTINGS_NAME,
+  APP_MODE_SETTINGS_NAME,
+] as const;
+
+// automatically generated types
+type AllSettingsNameType = typeof ALL_SETTING_NAMES[number];
+type AllSettingsDataType = AllSettingsType[keyof AllSettingsType];
+
+export type SettingsContextType = AllSettingsType & {
+  saveSettings: (
+    name: AllSettingsNameType,
+    newValue: AllSettingsDataType,
+  ) => void;
 };
 
 const SettingsContext = createContext<SettingsContextType>({
-  settings: DEFAULT_GENERAL_SETTINGS,
-  changeSetting: () => null,
+  ...defaultSettingsValues,
   saveSettings: () => null,
-  resetSettings: () => null,
-  unsavedChanges: false,
 });
 
 type Prop = {
@@ -46,57 +69,40 @@ export const SettingsProvider: FC<Prop> = ({ children }) => {
     MUTATION_KEYS.PATCH_APP_SETTING,
   );
   const appSettings = hooks.useAppSettings();
-  const [settings, setSettings] = useState(DEFAULT_GENERAL_SETTINGS);
-
-  useEffect(
-    () => {
-      if (appSettings.data) {
-        const generalAppSettings = appSettings.data?.find(
-          (setting) => setting.name === GENERAL_SETTINGS_KEY,
-        )?.data as GeneralSettings;
-        if (generalAppSettings && !isEqual(settings, generalAppSettings)) {
-          setSettings(generalAppSettings);
-        }
-      }
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [appSettings.data],
-  );
 
   const contextValue = useMemo(() => {
-    const generalSettings = appSettings.data?.find(
-      (s) => s.name === GENERAL_SETTINGS_KEY,
-    );
-    return {
-      settings,
-      changeSetting: (key: string, value: unknown): void => {
-        setSettings({
-          ...settings,
-          [key]: value,
-        });
+    const allSettings: AllSettingsType = ALL_SETTING_NAMES.reduce(
+      <T extends AllSettingsNameType>(acc: AllSettingsType, key: T) => {
+        const setting = appSettings.data?.find((s) => s.name === key);
+        const settingData = setting?.data;
+        acc[key] = settingData as AllSettingsType[T];
+        return acc;
       },
-      saveSettings: () => {
+      {},
+    );
+
+    return {
+      ...allSettings,
+      saveSettings: (
+        name: AllSettingsNameType,
+        newValue: AllSettingsDataType,
+      ) => {
+        const previousSetting = appSettings.data?.find((s) => s.name === name);
         // generalSettings do not exist
-        if (!generalSettings) {
+        if (!previousSetting) {
           postSettings.mutate({
-            data: settings,
-            name: GENERAL_SETTINGS_KEY,
+            data: newValue,
+            name,
           });
         } else {
           patchSettings.mutate({
-            id: generalSettings.id,
-            data: settings,
+            id: previousSetting.id,
+            data: newValue,
           });
         }
       },
-      resetSettings: () =>
-        setSettings(
-          (generalSettings?.data as GeneralSettings) ??
-            DEFAULT_GENERAL_SETTINGS,
-        ),
-      unsavedChanges: !isEqual(generalSettings?.data, settings),
     };
-  }, [appSettings.data, patchSettings, postSettings, settings]);
+  }, [appSettings.data, patchSettings, postSettings]);
 
   if (appSettings.isLoading) {
     return <Loader />;

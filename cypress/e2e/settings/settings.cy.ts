@@ -1,3 +1,5 @@
+import { Context, PermissionLevel } from '@graasp/sdk';
+
 import {
   JAVASCRIPT,
   REVIEW_MODE_COLLABORATIVE,
@@ -5,6 +7,7 @@ import {
 import {
   ALLOW_COMMENTS_SWITCH_CYPRESS,
   ALLOW_REPLIES_SWITCH_CYPRESS,
+  APP_MODE_EXECUTE_BUTTON_CY,
   CODE_EDITOR_CANCEL_BUTTON_CYPRESS,
   CODE_EDITOR_COMMIT_DESCRIPTION_CYPRESS,
   CODE_EDITOR_COMMIT_MESSAGE_CYPRESS,
@@ -17,22 +20,22 @@ import {
   SETTINGS_DIALOG_CANCEL_BUTTON_CYPRESS,
   SETTINGS_DIALOG_SAVE_BUTTON_CYPRESS,
   SETTINGS_DISPLAY_DIALOG_WINDOW_CYPRESS,
+  SETTING_FOOTER_CODE_EDITOR_CY,
+  SETTING_HEADER_CODE_EDITOR_CY,
   TAB_SETTINGS_VIEW_CYPRESS,
   buildDataCy,
 } from '../../../src/config/selectors';
 import {
-  CONTEXTS,
   DEFAULT_PROGRAMMING_LANGUAGE_SETTING,
   DEFAULT_REVIEW_MODE_SETTING,
-  PERMISSIONS,
 } from '../../../src/config/settings';
 
 describe('Settings', () => {
   beforeEach(() => {
     cy.setUpApi({
       appContext: {
-        context: CONTEXTS.BUILDER,
-        permission: PERMISSIONS.ADMIN,
+        context: Context.BUILDER,
+        permission: PermissionLevel.Admin,
       },
     });
 
@@ -40,7 +43,27 @@ describe('Settings', () => {
   });
 
   it.only('Change Settings in tab', () => {
-    cy.get(buildDataCy(TAB_SETTINGS_VIEW_CYPRESS)).should('be.visible').click();
+    // open the settings tab
+    cy.openTab(TAB_SETTINGS_VIEW_CYPRESS);
+
+    // choose a mode
+    cy.get(buildDataCy(APP_MODE_EXECUTE_BUTTON_CY))
+      .should('be.visible')
+      .click();
+
+    cy.get(`#${SETTING_HEADER_CODE_EDITOR_CY}`).should('be.visible');
+    cy.get(`#${SETTING_FOOTER_CODE_EDITOR_CY}`).should('be.visible');
+
+    // set the header code
+    cy.typeInEditor(
+      `print('hello world')\n# this is the end of the header code`,
+      SETTING_HEADER_CODE_EDITOR_CY,
+    );
+    // set the footer code
+    cy.typeInEditor(
+      `# beginning of the footer code\nprint('Goodbye')`,
+      SETTING_FOOTER_CODE_EDITOR_CY,
+    );
   });
 
   it('Open Code settings', () => {

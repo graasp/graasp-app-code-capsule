@@ -10,8 +10,9 @@ import React, {
 import { styled } from '@mui/material';
 
 import { DEFAULT_REPL_INPUT_VALUE } from '../../config/constants';
+import { REPL_OUTPUT_CONSOLE_CY } from '../../config/selectors';
 
-const StyledTextArea = styled('textarea')(({ theme }) => ({
+const StyledTextArea = styled('textarea')({
   fontFamily: 'monospace',
   width: '100%',
   resize: 'none',
@@ -22,7 +23,7 @@ const StyledTextArea = styled('textarea')(({ theme }) => ({
   '&:focus-visible': {
     outline: 'none',
   },
-}));
+});
 
 type Props = {
   prompt: string;
@@ -74,6 +75,7 @@ const InputArea: FC<Props> = ({ prompt, readOnly, onValidate, onCancel }) => {
   return (
     <div ref={containerRef} style={{ overflowY: 'scroll', width: '100%' }}>
       <StyledTextArea
+        data-cy={REPL_OUTPUT_CONSOLE_CY}
         readOnly={readOnly}
         ref={inputRef}
         onChange={onChangeInput}

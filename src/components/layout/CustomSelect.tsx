@@ -22,13 +22,7 @@ const StyledSelect = styled(Select)(({ theme }) => ({
   },
 }));
 
-const SettingsSelect: FC<Prop> = ({
-  onChange,
-  label,
-  value,
-  values,
-  dataCy,
-}) => (
+const CustomSelect: FC<Prop> = ({ onChange, label, value, values, dataCy }) => (
   <FormControl sx={{ pt: 1 }}>
     <InputLabel sx={{ pt: 1 }}>{label}</InputLabel>
     <StyledSelect
@@ -46,4 +40,4 @@ const SettingsSelect: FC<Prop> = ({
   </FormControl>
 );
 
-export default SettingsSelect;
+export default CustomSelect;

@@ -8,7 +8,10 @@ declare global {
        * Custom command to enter the specified content into the code editor.
        * @example cy.typeInEditor('print("Hello World")')
        */
-      typeInEditor(content: string): Chainable<JQuery<HTMLElement>>;
+      typeInEditor(
+        content: string,
+        editorID?: string,
+      ): Chainable<JQuery<HTMLElement>>;
       /**
        * Custom command to select DOM element by data-cy attribute.
        * @example cy.dataCy('greeting')
@@ -32,6 +35,11 @@ declare global {
        * @example cy.openRepl()
        */
       openRepl(): void;
+      /**
+       * Custom command to open the repl to execute code from the toolbar.
+       * @example cy.openRepl()
+       */
+      openTab(tabId: string): void;
     }
   }
 }

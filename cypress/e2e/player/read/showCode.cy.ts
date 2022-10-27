@@ -1,8 +1,9 @@
+import { Context, PermissionLevel } from '@graasp/sdk';
+
 import {
   PLAYER_VIEW_CYPRESS,
   buildDataCy,
 } from '../../../../src/config/selectors';
-import { CONTEXTS, PERMISSIONS } from '../../../../src/config/settings';
 import { MOCK_APP_SETTINGS } from '../../../fixtures/appSettings';
 
 describe('Show code', () => {
@@ -13,8 +14,8 @@ describe('Show code', () => {
         appSettings: MOCK_APP_SETTINGS,
       },
       appContext: {
-        context: CONTEXTS.PLAYER,
-        permission: PERMISSIONS.READ,
+        context: Context.PLAYER,
+        permission: PermissionLevel.Read,
       },
     });
     cy.visit('/');

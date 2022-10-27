@@ -1,3 +1,5 @@
+import { AppMode } from '../config/appSettingsTypes';
+
 // general settings keys
 export enum SETTINGS_KEYS {
   SHOW_HEADER = 'showHeader',
@@ -11,8 +13,19 @@ export enum SETTINGS_KEYS {
   REVIEW_MODE = 'reviewMode',
 }
 
+// Code Execution settings keys
+export enum CodeExecutionSettingsKeys {
+  HeaderCode = 'header_code',
+  FooterCode = 'footer_code',
+}
+
+// App Mode Setting keys
+export enum AppModeSettingsKeys {
+  Mode = 'mode',
+}
+
 // type of general settings
-export interface GeneralSettings {
+export type GeneralSettings = {
   [SETTINGS_KEYS.SHOW_HEADER]: boolean;
   [SETTINGS_KEYS.SHOW_TOOLBAR]: boolean;
   [SETTINGS_KEYS.SHOW_VERSION_NAVIGATION]: boolean;
@@ -25,9 +38,9 @@ export interface GeneralSettings {
 
   // used to allow access using settings[settingKey] syntax
   [key: string]: unknown;
-}
+};
 
-export interface CodeVersionSettings {
+export type CodeVersionSettings = {
   [SETTINGS_KEYS.SHOW_HEADER]: boolean;
   [SETTINGS_KEYS.SHOW_TOOLBAR]: boolean;
   [SETTINGS_KEYS.SHOW_VERSION_NAVIGATION]: boolean;
@@ -39,4 +52,19 @@ export interface CodeVersionSettings {
 
   // used to allow access using settings[settingKey] syntax
   [key: string]: unknown;
-}
+};
+
+export type CodeExecutionSettings = {
+  [CodeExecutionSettingsKeys.HeaderCode]: string;
+  [CodeExecutionSettingsKeys.FooterCode]: string;
+
+  // used to allow access using settings[settingKey] syntax
+  [key: string]: unknown;
+};
+
+export type AppModeSetting = {
+  [AppModeSettingsKeys.Mode]: AppMode;
+
+  // used to allow access using settings[settingKey] syntax
+  [key: string]: unknown;
+};

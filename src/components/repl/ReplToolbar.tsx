@@ -15,6 +15,7 @@ import {
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
+import { REPL_RUN_CODE_BUTTON_CY } from '../../config/selectors';
 import ReplStatusIndicator from './ReplStatusIndicator';
 
 library.add(fas);
@@ -54,6 +55,7 @@ const ReplToolbar: FC<Props> = ({
       >
         <ReplStatusIndicator status={status} />
         <LoadingButton
+          data-cy={REPL_RUN_CODE_BUTTON_CY}
           variant="outlined"
           loading={isLoading}
           disabled={isRunning}

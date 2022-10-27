@@ -1,3 +1,5 @@
+import { Context, PermissionLevel } from '@graasp/sdk';
+
 import {
   DEFAULT_TRUNCATION_COMMIT_MESSAGE_LENGTH,
   INSTRUCTOR_CODE_ID,
@@ -9,11 +11,7 @@ import {
   TOOLBAR_VERSION_SELECT_CYPRESS,
   buildDataCy,
 } from '../../../src/config/selectors';
-import {
-  CONTEXTS,
-  DEFAULT_GENERAL_SETTINGS,
-  PERMISSIONS,
-} from '../../../src/config/settings';
+import { DEFAULT_GENERAL_SETTINGS } from '../../../src/config/settings';
 import { SETTINGS_KEYS } from '../../../src/interfaces/settings';
 import { MOCK_CODE_VERSIONS } from '../../fixtures/appData';
 import {
@@ -40,8 +38,8 @@ describe('Code Versions', () => {
         ],
       },
       appContext: {
-        context: CONTEXTS.PLAYER,
-        permission: PERMISSIONS.ADMIN,
+        context: Context.PLAYER,
+        permission: PermissionLevel.Admin,
       },
     });
     cy.visit('/');

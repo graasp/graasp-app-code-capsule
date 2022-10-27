@@ -3,12 +3,14 @@ import Immutable, { List } from 'immutable';
 import React, { FC, PropsWithChildren, createContext, useMemo } from 'react';
 
 import { APP_DATA_TYPES } from '../../config/appDataTypes';
+import { GENERAL_SETTINGS_NAME } from '../../config/appSettingsTypes';
 import {
   REVIEW_MODE_INDIVIDUAL,
   VISIBILITY_ITEM,
   VISIBILITY_MEMBER,
 } from '../../config/constants';
 import { MUTATION_KEYS, hooks, useMutation } from '../../config/queryClient';
+import { DEFAULT_GENERAL_SETTINGS } from '../../config/settings';
 import { CodeType } from '../../interfaces/codeVersions';
 import { CommentType, VisibilityVariants } from '../../interfaces/comment';
 import { SETTINGS_KEYS } from '../../interfaces/settings';
@@ -58,7 +60,8 @@ export const AppDataProvider: FC<PropsWithChildren<Prop>> = ({
   children,
 }) => {
   const appData = hooks.useAppData();
-  const { settings } = useSettings();
+  const { [GENERAL_SETTINGS_NAME]: settings = DEFAULT_GENERAL_SETTINGS } =
+    useSettings();
   // set the default visibility following the review mode
   const visibilityVariant =
     settings[SETTINGS_KEYS.REVIEW_MODE] === REVIEW_MODE_INDIVIDUAL

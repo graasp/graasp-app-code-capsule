@@ -1,108 +1,69 @@
-import React, { FC, ReactElement, useState } from 'react';
+import isEqual from 'lodash.isequal';
+
+import { FC, ReactElement, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { Button } from '@graasp/ui';
 
-import { Code, DisplaySettings } from '@mui/icons-material';
-import { Box, Divider, Fab, Stack, Tooltip, Typography } from '@mui/material';
+import {
+  Code,
+  DisplaySettings as DisplaySettingsIcon,
+} from '@mui/icons-material';
+import { Box, Fab, Stack, Tooltip } from '@mui/material';
 
-import { CodeEditorSubmitTarget } from '../../../config/appSettingsTypes';
+import {
+  CodeEditorSubmitTarget,
+  GENERAL_SETTINGS_NAME,
+} from '../../../config/appSettingsTypes';
 import {
   CLOSE_SETTINGS_TIMEOUT,
   INSTRUCTOR_CODE_ID,
-  REVIEW_MODES,
 } from '../../../config/constants';
 import {
-  ALLOW_COMMENTS_SWITCH_CYPRESS,
-  ALLOW_REPLIES_SWITCH_CYPRESS,
   CODE_SETTINGS_FAB_CYPRESS,
   DISPLAY_SETTINGS_FAB_CYPRESS,
-  REVIEW_MODES_SELECT_CYPRESS,
   SETTINGS_CODE_DIALOG_WINDOW_CYPRESS,
   SETTINGS_DIALOG_CANCEL_BUTTON_CYPRESS,
   SETTINGS_DIALOG_SAVE_BUTTON_CYPRESS,
   SETTINGS_DISPLAY_DIALOG_WINDOW_CYPRESS,
-  SHOW_EDIT_BUTTON_SWITCH_CYPRESS,
-  SHOW_HEADER_SWITCH_CYPRESS,
-  SHOW_TOOLBAR_SWITCH_CYPRESS,
-  SHOW_VERSION_NAVIGATION_SWITCH_CYPRESS,
-  SHOW_VISIBILITY_SWITCH_CYPRESS,
 } from '../../../config/selectors';
-import { SETTINGS_KEYS } from '../../../interfaces/settings';
+import { DEFAULT_GENERAL_SETTINGS } from '../../../config/settings';
 import CodeEditor from '../../common/CodeEditor';
-import SettingsSelect from '../../common/settings/SettingsSelect';
-import SettingsSwitch from '../../common/settings/SettingsSwitch';
 import { useCodeVersionContext } from '../../context/CodeVersionContext';
 import { useSettings } from '../../context/SettingsContext';
 import CustomDialog from '../../layout/CustomDialog';
+import DisplaySettings from './settings/DisplaySettings';
 
 const SettingsFab: FC = () => {
   const { t } = useTranslation();
+  const {
+    [GENERAL_SETTINGS_NAME]: settings = DEFAULT_GENERAL_SETTINGS,
+    saveSettings,
+  } = useSettings();
+  const { setCodeId } = useCodeVersionContext();
   const [openDisplaySettings, setOpenDisplaySettings] = useState(false);
   const [openCodeSettings, setOpenCodeSettings] = useState(false);
-  const { saveSettings, resetSettings, unsavedChanges } = useSettings();
-  const { setCodeId } = useCodeVersionContext();
+  const [localSettings, setLocalSettings] = useState(settings);
 
-  const renderSettings = (): ReactElement => (
-    <Stack>
-      <Typography variant="subtitle2">{t('App Customization')}</Typography>
-      <SettingsSwitch
-        settingKey={SETTINGS_KEYS.SHOW_HEADER}
-        label={t('Show Header to Students')}
-        dataCy={SHOW_HEADER_SWITCH_CYPRESS}
-      />
-      <SettingsSwitch
-        settingKey={SETTINGS_KEYS.SHOW_TOOLBAR}
-        label={t('Show Toolbar to Students')}
-        dataCy={SHOW_TOOLBAR_SWITCH_CYPRESS}
-      />
-      <SettingsSwitch
-        settingKey={SETTINGS_KEYS.SHOW_VERSION_NAVIGATION}
-        label={t('Show Version Navigation')}
-        dataCy={SHOW_VERSION_NAVIGATION_SWITCH_CYPRESS}
-      />
-      <SettingsSwitch
-        settingKey={SETTINGS_KEYS.SHOW_EDIT_BUTTON}
-        label={t('Show Code Edit Button')}
-        dataCy={SHOW_EDIT_BUTTON_SWITCH_CYPRESS}
-      />
-      <SettingsSwitch
-        settingKey={SETTINGS_KEYS.SHOW_VISIBILITY_BUTTON}
-        label={t('Show Visibility Toggle')}
-        dataCy={SHOW_VISIBILITY_SWITCH_CYPRESS}
-      />
+  useEffect(() => setLocalSettings(settings), [settings]);
 
-      <Divider sx={{ mt: 1 }} />
-      <Typography variant="subtitle2">
-        {t('Define Interaction Mode')}
-      </Typography>
+  const unsavedChanges = !isEqual(settings, localSettings);
 
-      <SettingsSwitch
-        settingKey={SETTINGS_KEYS.ALLOW_COMMENTS}
-        label={t('Allow Comments')}
-        dataCy={ALLOW_COMMENTS_SWITCH_CYPRESS}
-      />
-      <SettingsSwitch
-        settingKey={SETTINGS_KEYS.ALLOW_REPLIES}
-        label={t('Allow Replies')}
-        dataCy={ALLOW_REPLIES_SWITCH_CYPRESS}
-      />
+  const resetSettings = (): void => setLocalSettings(settings);
 
-      <SettingsSelect
-        dataCy={REVIEW_MODES_SELECT_CYPRESS}
-        settingsKey={SETTINGS_KEYS.REVIEW_MODE}
-        label={t('Define Review Mode')}
-        values={REVIEW_MODES.map(({ label, value }) => ({
-          label: t(label),
-          value,
-        }))}
-      />
-    </Stack>
-  );
+  const changeSetting = (
+    settingKey: string,
+    newValue: string | boolean,
+  ): void => {
+    setLocalSettings({
+      ...localSettings,
+      [settingKey]: newValue,
+    });
+  };
 
   const handleClose = (save: boolean): void => {
     if (save) {
-      saveSettings();
+      saveSettings(GENERAL_SETTINGS_NAME, localSettings);
       setCodeId(INSTRUCTOR_CODE_ID);
     } else {
       // restore old settings after some short delay to not glitch the display
@@ -111,6 +72,7 @@ const SettingsFab: FC = () => {
     // close the dialog
     setOpenDisplaySettings(false);
   };
+
   const renderActions = (): ReactElement => (
     <Box>
       <Button
@@ -141,11 +103,16 @@ const SettingsFab: FC = () => {
         open={openDisplaySettings}
         title={
           <Stack direction="row" alignItems="center">
-            <DisplaySettings sx={{ mr: 1 }} />
+            <DisplaySettingsIcon sx={{ mr: 1 }} />
             {t('Display Settings')}
           </Stack>
         }
-        content={renderSettings()}
+        content={
+          <DisplaySettings
+            localSettings={localSettings}
+            changeSetting={changeSetting}
+          />
+        }
         actions={renderActions()}
       />
       <CustomDialog
@@ -188,7 +155,7 @@ const SettingsFab: FC = () => {
               setOpenDisplaySettings(true);
             }}
           >
-            <DisplaySettings />
+            <DisplaySettingsIcon />
           </Fab>
         </Tooltip>
       </Stack>

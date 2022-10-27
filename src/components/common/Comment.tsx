@@ -1,7 +1,7 @@
-import React, { FC, ReactElement, useContext, useRef, useState } from 'react';
+import React, { FC, ReactElement, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { Context } from '@graasp/apps-query-client';
+import { useLocalContext } from '@graasp/apps-query-client';
 
 import { MoreVert } from '@mui/icons-material';
 import {
@@ -15,10 +15,12 @@ import {
 } from '@mui/material';
 
 import { APP_DATA_TYPES } from '../../config/appDataTypes';
+import { GENERAL_SETTINGS_NAME } from '../../config/appSettingsTypes';
 import { ANONYMOUS_USER } from '../../config/constants';
 import { BIG_BORDER_RADIUS } from '../../config/layout';
 import { MUTATION_KEYS, useMutation } from '../../config/queryClient';
 import { COMMENT_CONTAINER_CYPRESS } from '../../config/selectors';
+import { DEFAULT_GENERAL_SETTINGS } from '../../config/settings';
 import { CommentType } from '../../interfaces/comment';
 import { ReportedCommentType } from '../../interfaces/reportedComment';
 import { SETTINGS_KEYS } from '../../interfaces/settings';
@@ -41,8 +43,9 @@ type Props = {
 const Comment: FC<Props> = ({ comment }) => {
   const { t, i18n } = useTranslation();
   const members = useMembersContext();
-  const { settings } = useSettings();
-  const currentMember = useContext(Context).get('memberId');
+  const { [GENERAL_SETTINGS_NAME]: settings = DEFAULT_GENERAL_SETTINGS } =
+    useSettings();
+  const currentMember = useLocalContext().get('memberId');
   const { mutate: postAppData } = useMutation<
     ReportedCommentType,
     unknown,

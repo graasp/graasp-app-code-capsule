@@ -1,15 +1,16 @@
+import { Context, PermissionLevel } from '@graasp/sdk';
+
 import {
   ANALYZER_VIEW_CYPRESS,
   buildDataCy,
 } from '../../../src/config/selectors';
-import { CONTEXTS, PERMISSIONS } from '../../../src/config/settings';
 
 describe('Analyzer View', () => {
   beforeEach(() => {
     cy.setUpApi({
       appContext: {
-        context: CONTEXTS.ANALYZER,
-        permission: PERMISSIONS.ADMIN,
+        context: Context.ANALYTICS,
+        permission: PermissionLevel.Admin,
       },
     });
     cy.visit('/');

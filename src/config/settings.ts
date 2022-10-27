@@ -1,24 +1,24 @@
-import { GeneralSettings, SETTINGS_KEYS } from '../interfaces/settings';
+import { Context, PermissionLevel } from '@graasp/sdk';
+
+import {
+  AppModeSetting,
+  AppModeSettingsKeys,
+  CodeExecutionSettings,
+  CodeExecutionSettingsKeys,
+  GeneralSettings,
+  SETTINGS_KEYS,
+} from '../interfaces/settings';
+import { AppMode } from './appSettingsTypes';
 import { PYTHON, REVIEW_MODE_INDIVIDUAL } from './constants';
 import { REACT_APP_MOCK_API } from './env';
+import { AppView } from './layout';
 
 export const MOCK_API = REACT_APP_MOCK_API === 'true';
+export const DEFAULT_APP_MODE = AppMode.Execute;
+export const DEFAULT_APP_VIEW = AppView;
 
-export const CONTEXTS = {
-  BUILDER: 'builder',
-  PLAYER: 'player',
-  ANALYZER: 'analyzer',
-  STANDALONE: 'standalone',
-} as const;
-
-export const PERMISSIONS = {
-  READ: 'read',
-  WRITE: 'write',
-  ADMIN: 'admin',
-};
-
-export const DEFAULT_CONTEXT = CONTEXTS.BUILDER;
-export const DEFAULT_PERMISSION = PERMISSIONS.READ;
+export const DEFAULT_CONTEXT = Context.BUILDER;
+export const DEFAULT_PERMISSION = PermissionLevel.Read;
 export const DEFAULT_LINE_HIDDEN_STATE = false;
 
 export const DEFAULT_CONTEXT_API_HOST = '';
@@ -58,4 +58,15 @@ export const DEFAULT_GENERAL_SETTINGS: GeneralSettings = {
   [SETTINGS_KEYS.ALLOW_REPLIES]: DEFAULT_ALLOW_REPLIES_SETTING,
   [SETTINGS_KEYS.ALLOW_COMMENT_REPORTING]: DEFAULT_ALLOW_COMMENT_REPORTING,
   [SETTINGS_KEYS.REVIEW_MODE]: DEFAULT_REVIEW_MODE_SETTING,
+};
+
+// code Execution settings
+export const DEFAULT_CODE_EXECUTION_SETTINGS: CodeExecutionSettings = {
+  [CodeExecutionSettingsKeys.HeaderCode]: '',
+  [CodeExecutionSettingsKeys.FooterCode]: '',
+};
+
+// app mode setting
+export const DEFAULT_APP_MODE_SETTING: AppModeSetting = {
+  [AppModeSettingsKeys.Mode]: DEFAULT_APP_MODE,
 };

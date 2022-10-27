@@ -1,3 +1,5 @@
+import { Context, PermissionLevel } from '@graasp/sdk';
+
 import {
   TABLE_NO_COMMENTS_CYPRESS,
   TABLE_VIEW_PANE_CYPRESS,
@@ -5,15 +7,14 @@ import {
   TAB_TABLE_VIEW_CYPRESS,
   buildDataCy,
 } from '../../../../src/config/selectors';
-import { CONTEXTS, PERMISSIONS } from '../../../../src/config/settings';
 
 describe('Builder with Admin access', () => {
   beforeEach(() => {
     cy.setUpApi({
       database: { appData: [] },
       appContext: {
-        context: CONTEXTS.BUILDER,
-        permission: PERMISSIONS.ADMIN,
+        context: Context.BUILDER,
+        permission: PermissionLevel.Admin,
       },
     });
     cy.visit('/');

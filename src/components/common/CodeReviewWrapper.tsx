@@ -1,18 +1,22 @@
-import React, { FC, ReactElement, useState } from 'react';
+import React, { FC, ReactElement, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { Button } from '@graasp/ui';
 
-import { styled } from '@mui/material';
+import { Stack, styled } from '@mui/material';
 
+import { APP_MODE_SETTINGS_NAME, AppMode } from '../../config/appSettingsTypes';
 import { AppView, SMALL_BORDER_RADIUS } from '../../config/layout';
 import {
   CODE_EDITOR_CONTAINER_CYPRESS,
   CODE_EXECUTION_CONTAINER_CYPRESS,
   CODE_REVIEW_CONTAINER_CYPRESS,
 } from '../../config/selectors';
+import { DEFAULT_APP_MODE_SETTING } from '../../config/settings';
+import { AppModeSettingsKeys } from '../../interfaces/settings';
 import { useCodeVersionContext } from '../context/CodeVersionContext';
 import { ReviewProvider } from '../context/ReviewContext';
+import { useSettings } from '../context/SettingsContext';
 import { VisibilityProvider } from '../context/VisibilityContext';
 import Repl from '../repl/Repl';
 import CodeEditor from './CodeEditor';
@@ -34,8 +38,25 @@ type Props = {};
 
 const CodeReviewWrapper: FC<Props> = () => {
   const { t } = useTranslation();
-  const [view, setView] = useState<AppView>(AppView.CodeReview);
   const { codeVersion } = useCodeVersionContext();
+  const {
+    [APP_MODE_SETTINGS_NAME]: appModeSetting = DEFAULT_APP_MODE_SETTING,
+  } = useSettings();
+  const [view, setView] = useState<AppView>(AppView.CodeExecution);
+
+  useEffect(() => {
+    switch (appModeSetting[AppModeSettingsKeys.Mode]) {
+      case AppMode.Execute:
+        setView(AppView.CodeExecution);
+        break;
+      case AppMode.Collaborate:
+        setView(AppView.CodeEditor);
+        break;
+      case AppMode.Review:
+      default:
+        setView(AppView.CodeReview);
+    }
+  }, [appModeSetting]);
 
   const getContent = (): ReactElement => {
     switch (view) {
@@ -50,13 +71,12 @@ const CodeReviewWrapper: FC<Props> = () => {
         );
       case AppView.CodeExecution:
         return (
-          <Container data-cy={CODE_EXECUTION_CONTAINER_CYPRESS}>
-            <div>{t('This is the Code Execution panel')}</div>
+          <Stack m={2} spacing={2} data-cy={CODE_EXECUTION_CONTAINER_CYPRESS}>
             <Repl />
             <Button onClick={() => setView(AppView.CodeReview)}>
               {t('Back to Code Review')}
             </Button>
-          </Container>
+          </Stack>
         );
       case AppView.CodeReview:
       default:

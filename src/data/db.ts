@@ -3,7 +3,7 @@ import { v4 } from 'uuid';
 import type { Database, LocalContext, Member } from '@graasp/apps-query-client';
 
 import { APP_DATA_TYPES } from '../config/appDataTypes';
-import { GENERAL_SETTINGS_KEY } from '../config/appSettingsTypes';
+import { GENERAL_SETTINGS_NAME } from '../config/appSettingsTypes';
 import { REACT_APP_API_HOST } from '../config/env';
 import { DEFAULT_GENERAL_SETTINGS } from '../config/settings';
 
@@ -129,7 +129,7 @@ And some text to **finish** _off_`,
   appSettings: [
     {
       id: v4(),
-      name: GENERAL_SETTINGS_KEY,
+      name: GENERAL_SETTINGS_NAME,
       data: { ...DEFAULT_GENERAL_SETTINGS, code: mockPythonCode },
       itemId: appContext.itemId || '',
       createdAt: new Date().toISOString(),

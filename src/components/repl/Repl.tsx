@@ -5,8 +5,12 @@ import { PyWorker, PyodideStatus } from '@graasp/pyodide';
 import { Alert, Stack } from '@mui/material';
 import Grid from '@mui/material/Unstable_Grid2';
 
+import { CODE_EXECUTION_SETTINGS_NAME } from '../../config/appSettingsTypes';
 import { MAX_REPL_HEIGHT } from '../../config/layout';
-import { REPL_CONTAINER_CY } from '../../config/selectors';
+import { REPL_CONTAINER_CY, REPL_EDITOR_ID_CY } from '../../config/selectors';
+import { DEFAULT_CODE_EXECUTION_SETTINGS } from '../../config/settings';
+import { CodeExecutionSettingsKeys } from '../../interfaces/settings';
+import { useSettings } from '../context/SettingsContext';
 import CodeEditor from './CodeEditor';
 import InputArea from './InputArea';
 import ReplToolbar from './ReplToolbar';
@@ -19,7 +23,14 @@ const Repl: FC = () => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [error, setError] = useState<string | null>(null);
   const [figures, setFigures] = useState<string[]>([]);
+
+  // todo: get value from app data for the user
   const [value, setValue] = useState('');
+  const {
+    [CODE_EXECUTION_SETTINGS_NAME]:
+      codeExecSettings = DEFAULT_CODE_EXECUTION_SETTINGS,
+  } = useSettings();
+
   const [isExecuting, setIsExecuting] = useState(false);
   const [isWaitingForInput, setIsWaitingForInput] = useState(false);
   const [replStatus, setReplStatus] = useState<PyodideStatus>(
@@ -44,7 +55,8 @@ const Repl: FC = () => {
       setPrompt(newPrompt);
     };
 
-    workerInstance.onError = (newError: any) => {
+    workerInstance.onError = (newError) => {
+      // eslint-disable-next-line no-console
       console.error(newError);
       // setError(newError.data);
     };
@@ -73,12 +85,17 @@ const Repl: FC = () => {
     // - previous run must be done
     // - worker must be set
     // - value must be true
-    if (!isExecuting && worker && value) {
-      setIsExecuting(true);
-      // reset output
-      worker.clearOutput();
-      setOutput('');
-      worker.run(value);
+    if (!isExecuting && worker) {
+      const headerCode = codeExecSettings[CodeExecutionSettingsKeys.HeaderCode];
+      const footerCode = codeExecSettings[CodeExecutionSettingsKeys.FooterCode];
+      const fullCode = `${headerCode}\n${value}\n${footerCode}`;
+      if (fullCode.trim()) {
+        setIsExecuting(true);
+        // reset output
+        worker.clearOutput();
+        setOutput('');
+        worker.run(fullCode);
+      }
     }
   };
 
@@ -134,7 +151,11 @@ const Repl: FC = () => {
             overflow: 'hidden',
           }}
         >
-          <CodeEditor setValue={setValue} />
+          <CodeEditor
+            id={REPL_EDITOR_ID_CY}
+            value={value}
+            setValue={setValue}
+          />
         </Grid>
         <Grid
           container

@@ -1,8 +1,9 @@
+import { Context, PermissionLevel } from '@graasp/sdk';
+
 import {
   PLAYER_VIEW_CYPRESS,
   buildDataCy,
 } from '../../../../src/config/selectors';
-import { CONTEXTS, PERMISSIONS } from '../../../../src/config/settings';
 import { SINGLE_LINE_MOCK_COMMENTS } from '../../../fixtures/appData';
 
 describe('Builder', () => {
@@ -10,8 +11,8 @@ describe('Builder', () => {
     cy.setUpApi({
       database: { appData: SINGLE_LINE_MOCK_COMMENTS },
       appContext: {
-        context: CONTEXTS.BUILDER,
-        permission: PERMISSIONS.WRITE,
+        context: Context.BUILDER,
+        permission: PermissionLevel.Write,
       },
     });
     cy.visit('/');

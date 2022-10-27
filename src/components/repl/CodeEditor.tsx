@@ -5,13 +5,19 @@ import { useTheme } from '@mui/material';
 import { python } from '@codemirror/lang-python';
 import CodeMirror from '@uiw/react-codemirror';
 
-type Props = { setValue: (v: string) => void };
+type Props = {
+  id: string;
+  value: string;
+  setValue: (v: string) => void;
+};
 
-const CodeEditor: FC<Props> = ({ setValue }) => {
+const CodeEditor: FC<Props> = ({ value, setValue, id }) => {
   const theme = useTheme();
   return (
     <CodeMirror
-      onChange={(value) => setValue(value)}
+      id={id}
+      value={value}
+      onChange={(newValue) => setValue(newValue)}
       height="100%"
       style={{
         height: '100%',

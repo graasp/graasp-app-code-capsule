@@ -1,6 +1,8 @@
 import { List } from 'immutable';
 import countBy from 'lodash.countby';
 
+import { Context, PermissionLevel } from '@graasp/sdk';
+
 import { APP_DATA_TYPES } from '../../../../src/config/appDataTypes';
 import {
   CUSTOM_DIALOG_TITLE_CYPRESS,
@@ -18,7 +20,6 @@ import {
   buildTableRowCypress,
   tableRowUserCypress,
 } from '../../../../src/config/selectors';
-import { CONTEXTS, PERMISSIONS } from '../../../../src/config/settings';
 import { CommentType } from '../../../../src/interfaces/comment';
 import { getOrphans } from '../../../../src/utils/comments';
 import {
@@ -41,8 +42,8 @@ describe('Builder with Admin access', () => {
           appSettings: [MOCK_CODE_SETTINGS],
         },
         appContext: {
-          context: CONTEXTS.BUILDER,
-          permission: PERMISSIONS.ADMIN,
+          context: Context.BUILDER,
+          permission: PermissionLevel.Admin,
         },
       });
       cy.visit('/');
@@ -95,8 +96,8 @@ describe('Builder with Admin access', () => {
           appSettings: [MOCK_CODE_SETTINGS],
         },
         appContext: {
-          context: CONTEXTS.BUILDER,
-          permission: PERMISSIONS.ADMIN,
+          context: Context.BUILDER,
+          permission: PermissionLevel.Admin,
         },
       });
       cy.visit('/');

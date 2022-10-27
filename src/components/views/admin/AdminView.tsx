@@ -14,6 +14,7 @@ import {
   TAB_TABLE_VIEW_CYPRESS,
 } from '../../../config/selectors';
 import PresetView from '../../common/CodeReviewWrapper';
+import { AppModeProvider } from '../../context/AppModeContext';
 import { CodeVersionProvider } from '../../context/CodeVersionContext';
 import SettingsFab from './SettingsFab';
 import TableView from './TableView';
@@ -63,7 +64,9 @@ const AdminView: FC = () => {
         <TableView />
       </TabPanel>
       <TabPanel value={Tabs.SETTINGS_VIEW} data-cy={SETTINGS_VIEW_PANE_CYPRESS}>
-        <SettingsView />
+        <AppModeProvider>
+          <SettingsView />
+        </AppModeProvider>
       </TabPanel>
       <TabPanel value={Tabs.PRESET_VIEW} data-cy={PRESET_VIEW_PANE_CYPRESS}>
         <PresetView />

@@ -1,4 +1,4 @@
-import { i18n as i18nType } from 'i18next';
+import { TFunction } from 'i18next';
 
 import React, { FC, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -14,6 +14,7 @@ import { Stack, Tooltip, styled } from '@mui/material';
 import { faInfo } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
+import { GENERAL_SETTINGS_NAME } from '../../config/appSettingsTypes';
 import {
   DEFAULT_TRUNCATION_COMMIT_MESSAGE_LENGTH,
   INSTRUCTOR_CODE_ID,
@@ -31,7 +32,10 @@ import {
   TOOLBAR_VERSION_SELECT_CYPRESS,
   TOOLBAR_VISIBILITY_BUTTON_CYPRESS,
 } from '../../config/selectors';
-import { DEFAULT_LINE_HIDDEN_STATE } from '../../config/settings';
+import {
+  DEFAULT_GENERAL_SETTINGS,
+  DEFAULT_LINE_HIDDEN_STATE,
+} from '../../config/settings';
 import { CodeVersionSelectType } from '../../interfaces/codeVersions';
 import { SETTINGS_KEYS } from '../../interfaces/settings';
 import { NO_DATE_PLACEHOLDER, getFormattedTime } from '../../utils/datetime';
@@ -46,10 +50,11 @@ import CommitInfo from './CommitInfo';
 // generate the labels
 const getVersionLabel = (
   { data, updatedAt }: CodeVersionSelectType,
-  i18n: i18nType,
+  t: TFunction,
+  lang: string,
 ): string => {
   const { commitMessage } = data;
-  let msg = commitMessage || i18n.t('noCommitMessage');
+  let msg = commitMessage || t('no Commit Message');
   // if message is too long: truncate and add ellipsis
   if (msg.length > DEFAULT_TRUNCATION_COMMIT_MESSAGE_LENGTH) {
     msg = `${commitMessage.slice(
@@ -60,7 +65,7 @@ const getVersionLabel = (
   // format updatedAt date
   // a placeholder is used if the property does not exist (fake API)
   const date = updatedAt
-    ? getFormattedTime(updatedAt, i18n.language)
+    ? getFormattedTime(updatedAt, lang)
     : NO_DATE_PLACEHOLDER;
   return `${msg} - ${date}`;
 };
@@ -75,7 +80,8 @@ type Props = {
 
 const CodeReviewToolbar: FC<Props> = ({ setView }) => {
   const { t, i18n } = useTranslation();
-  const { settings } = useSettings();
+  const { [GENERAL_SETTINGS_NAME]: settings = DEFAULT_GENERAL_SETTINGS } =
+    useSettings();
   const { toggleAll } = useVisibilityContext();
   const {
     groupedVersions,
@@ -101,7 +107,7 @@ const CodeReviewToolbar: FC<Props> = ({ setView }) => {
     versions: CodeVersionSelectType[],
   ): { label: string; value: string }[] =>
     versions.map((v) => ({
-      label: getVersionLabel(v, i18n),
+      label: getVersionLabel(v, t, i18n.language),
       value: v.id,
     })) || [{ label: INSTRUCTOR_CODE_NAME, value: INSTRUCTOR_CODE_ID }];
 

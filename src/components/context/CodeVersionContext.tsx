@@ -8,7 +8,7 @@ import React, {
   useState,
 } from 'react';
 
-import { INSTRUCTOR_CODE_VERSION_SETTINGS_KEY } from '../../config/appSettingsTypes';
+import { INSTRUCTOR_CODE_VERSION_SETTINGS_NAME } from '../../config/appSettingsTypes';
 import { DEFAULT_CODE_VERSION_SETTING } from '../../config/codeVersions';
 import {
   ANONYMOUS_USER,
@@ -69,7 +69,7 @@ export const CodeVersionProvider: FC<PropsWithChildren<Prop>> = ({
   })) as List<CodeVersionSelectType>;
 
   const instructorCodeVersionSetting = appSettings.data?.find(
-    (s) => s.name === INSTRUCTOR_CODE_VERSION_SETTINGS_KEY,
+    (s) => s.name === INSTRUCTOR_CODE_VERSION_SETTINGS_NAME,
   );
 
   const contextValue = useMemo(() => {

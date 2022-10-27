@@ -3,7 +3,7 @@ import { v4 as uuid } from 'uuid';
 import { AppData } from '@graasp/apps-query-client';
 
 import { APP_DATA_TYPES } from '../../src/config/appDataTypes';
-import { GENERAL_SETTINGS_KEY } from '../../src/config/appSettingsTypes';
+import { GENERAL_SETTINGS_NAME } from '../../src/config/appSettingsTypes';
 import { INSTRUCTOR_CODE_ID, PYTHON } from '../../src/config/constants';
 import { DEFAULT_GENERAL_SETTINGS } from '../../src/config/settings';
 import { CodeType } from '../../src/interfaces/codeVersions';
@@ -171,7 +171,7 @@ export const generateSingleLineCommentThread = (
 const MOCK_APP_SETTINGS = [
   {
     id: uuid(),
-    name: GENERAL_SETTINGS_KEY,
+    name: GENERAL_SETTINGS_NAME,
     data: {
       ...DEFAULT_GENERAL_SETTINGS,
       code: MOCK_CODE_SAMPLE,

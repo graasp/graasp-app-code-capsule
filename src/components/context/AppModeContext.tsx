@@ -6,26 +6,26 @@ import React, {
   useState,
 } from 'react';
 
-export enum AppMode {
-  Execute,
-  Review,
-  Collaborate,
-}
+import { AppMode } from '../../config/appSettingsTypes';
+import { DEFAULT_APP_MODE } from '../../config/settings';
 
 type AppModeContextType = {
-  value?: AppMode;
+  appMode?: AppMode;
   onChange: (newValue: AppMode) => void;
 };
 
 const AppModeContext = React.createContext<AppModeContextType>({
-  value: undefined,
+  appMode: DEFAULT_APP_MODE,
   onChange: () => null,
 });
 
 export const AppModeProvider: FC<PropsWithChildren> = ({ children }) => {
   const [value, setValue] = useState<AppMode | undefined>();
   const contextValue = useMemo(
-    () => ({ value, onChange: (newValue: AppMode) => setValue(newValue) }),
+    () => ({
+      appMode: value,
+      onChange: (newValue: AppMode) => setValue(newValue),
+    }),
     [value],
   );
   return (

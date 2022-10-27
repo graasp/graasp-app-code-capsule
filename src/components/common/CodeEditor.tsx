@@ -14,7 +14,7 @@ import CodeMirror from '@uiw/react-codemirror';
 import { APP_DATA_TYPES } from '../../config/appDataTypes';
 import {
   CodeEditorSubmitTarget,
-  INSTRUCTOR_CODE_VERSION_SETTINGS_KEY,
+  INSTRUCTOR_CODE_VERSION_SETTINGS_NAME,
 } from '../../config/appSettingsTypes';
 import { DEFAULT_CODE_VERSION_SETTING } from '../../config/codeVersions';
 import { SMALL_BORDER_RADIUS } from '../../config/layout';
@@ -87,7 +87,7 @@ const CodeEditor: FC<Props> = ({
   >(MUTATION_KEYS.POST_APP_DATA);
   const appSettingsQuery = hooks.useAppSettings();
   const codeVersionSettings = appSettingsQuery.data?.find(
-    (res) => res.name === INSTRUCTOR_CODE_VERSION_SETTINGS_KEY,
+    (res) => res.name === INSTRUCTOR_CODE_VERSION_SETTINGS_NAME,
   );
 
   useEffect(() => {
@@ -139,7 +139,7 @@ const CodeEditor: FC<Props> = ({
           // create setting
           postSettings({
             data: editedCodeData,
-            name: INSTRUCTOR_CODE_VERSION_SETTINGS_KEY,
+            name: INSTRUCTOR_CODE_VERSION_SETTINGS_NAME,
           });
         }
         break;

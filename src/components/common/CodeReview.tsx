@@ -8,6 +8,7 @@ import { Add } from '@mui/icons-material';
 import { IconButton, styled } from '@mui/material';
 
 import { APP_DATA_TYPES, APP_DATA_VISIBILITY } from '../../config/appDataTypes';
+import { GENERAL_SETTINGS_NAME } from '../../config/appSettingsTypes';
 import { REVIEW_MODE_INDIVIDUAL } from '../../config/constants';
 import { SMALL_BORDER_RADIUS } from '../../config/layout';
 import {
@@ -16,6 +17,7 @@ import {
   CODE_REVIEW_LINE_CYPRESS,
   buildAddButtonDataCy,
 } from '../../config/selectors';
+import { DEFAULT_GENERAL_SETTINGS } from '../../config/settings';
 import { CommentType } from '../../interfaces/comment';
 import { SETTINGS_KEYS } from '../../interfaces/settings';
 import { buildCodeRowKey } from '../../utils/utils';
@@ -87,7 +89,8 @@ const CodeReview: FC<Props> = () => {
   const { codeVersion, codeId } = useCodeVersionContext();
   const { code, language } = codeVersion;
   const { lineHiddenState } = useVisibilityContext();
-  const { settings } = useSettings();
+  const { [GENERAL_SETTINGS_NAME]: settings = DEFAULT_GENERAL_SETTINGS } =
+    useSettings();
   const allowComments = settings[SETTINGS_KEYS.ALLOW_COMMENTS];
   const reviewMode = settings[SETTINGS_KEYS.REVIEW_MODE];
   const { postAppData, comments } = useAppDataContext();

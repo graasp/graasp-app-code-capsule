@@ -1,3 +1,5 @@
+import { Context, PermissionLevel } from '@graasp/sdk';
+
 import {
   CODE_EDITOR_COMMIT_DESCRIPTION_CYPRESS,
   CODE_EDITOR_COMMIT_MESSAGE_CYPRESS,
@@ -7,11 +9,7 @@ import {
   CODE_REVIEW_LINE_CYPRESS,
   buildDataCy,
 } from '../../../src/config/selectors';
-import {
-  CONTEXTS,
-  DEFAULT_GENERAL_SETTINGS,
-  PERMISSIONS,
-} from '../../../src/config/settings';
+import { DEFAULT_GENERAL_SETTINGS } from '../../../src/config/settings';
 import { SETTINGS_KEYS } from '../../../src/interfaces/settings';
 import {
   MOCK_COMMIT_DESCRIPTION,
@@ -39,8 +37,8 @@ describe('Code Editing', () => {
         ],
       },
       appContext: {
-        context: CONTEXTS.PLAYER,
-        permission: PERMISSIONS.WRITE,
+        context: Context.PLAYER,
+        permission: PermissionLevel.Write,
       },
     });
     cy.visit('/');

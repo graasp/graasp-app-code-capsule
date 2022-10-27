@@ -1,16 +1,17 @@
+import { Context, PermissionLevel } from '@graasp/sdk';
+
 import {
   PLAYER_VIEW_CYPRESS,
   buildDataCy,
 } from '../../../../src/config/selectors';
-import { CONTEXTS, PERMISSIONS } from '../../../../src/config/settings';
 
 describe('Read access', () => {
   beforeEach(() => {
     cy.setUpApi({
       database: { appData: [] },
       appContext: {
-        context: CONTEXTS.BUILDER,
-        permission: PERMISSIONS.READ,
+        context: Context.BUILDER,
+        permission: PermissionLevel.Read,
       },
     });
     cy.visit('/');

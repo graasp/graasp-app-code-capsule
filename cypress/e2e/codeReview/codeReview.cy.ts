@@ -1,3 +1,5 @@
+import { Context, PermissionLevel } from '@graasp/sdk';
+
 import { INSTRUCTOR_CODE_ID } from '../../../src/config/constants';
 import {
   CODE_EDITOR_COMMIT_MESSAGE_CYPRESS,
@@ -26,11 +28,7 @@ import {
   buildCommitFieldDataCy,
   buildDataCy,
 } from '../../../src/config/selectors';
-import {
-  CONTEXTS,
-  DEFAULT_GENERAL_SETTINGS,
-  PERMISSIONS,
-} from '../../../src/config/settings';
+import { DEFAULT_GENERAL_SETTINGS } from '../../../src/config/settings';
 import { Fields } from '../../../src/interfaces/commitInfo';
 import { SETTINGS_KEYS } from '../../../src/interfaces/settings';
 import {
@@ -58,8 +56,8 @@ describe('Code review single comments', () => {
         appSettings: [MOCK_CODE_SETTINGS, MOCK_GENERAL_SETTINGS],
       },
       appContext: {
-        context: CONTEXTS.PLAYER,
-        permission: PERMISSIONS.ADMIN,
+        context: Context.PLAYER,
+        permission: PermissionLevel.Admin,
       },
     });
     cy.visit('/');
@@ -147,8 +145,8 @@ describe('Code Review thread comments', () => {
         appSettings: [MOCK_CODE_SETTINGS, MOCK_GENERAL_SETTINGS],
       },
       appContext: {
-        context: CONTEXTS.PLAYER,
-        permission: PERMISSIONS.ADMIN,
+        context: Context.PLAYER,
+        permission: PermissionLevel.Admin,
       },
     });
     cy.visit('/');
@@ -187,8 +185,8 @@ describe('Code Review Tools', () => {
         members: Object.values(MEMBERS),
       },
       appContext: {
-        context: CONTEXTS.PLAYER,
-        permission: PERMISSIONS.ADMIN,
+        context: Context.PLAYER,
+        permission: PermissionLevel.Admin,
         lang: 'fr',
       },
     });
