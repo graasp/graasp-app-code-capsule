@@ -5,6 +5,8 @@ import { PyodideStatus } from '@graasp/pyodide';
 import { Check, Edit, ErrorOutline, HourglassEmpty } from '@mui/icons-material';
 import { Paper, Typography } from '@mui/material';
 
+import { REPL_STATUS_INDICATOR_CY } from '../../config/selectors';
+
 type Props = {
   status: PyodideStatus;
 };
@@ -53,6 +55,7 @@ const ReplStatusIndicator: FC<Props> = ({ status }) => {
 
   return (
     <Paper
+      data-cy={REPL_STATUS_INDICATOR_CY}
       sx={{
         height: '100%',
         display: 'flex',

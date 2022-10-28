@@ -15,6 +15,7 @@ import { DEFAULT_GENERAL_SETTINGS } from '../../../src/config/settings';
 import { SETTINGS_KEYS } from '../../../src/interfaces/settings';
 import { MOCK_CODE_VERSIONS } from '../../fixtures/appData';
 import {
+  CODE_REVIEW_MODE_SETTING,
   MOCK_CODE_SETTINGS,
   MOCK_GENERAL_SETTINGS,
 } from '../../fixtures/appSettings';
@@ -26,6 +27,7 @@ describe('Code Versions', () => {
       database: {
         appData: MOCK_CODE_VERSIONS,
         appSettings: [
+          CODE_REVIEW_MODE_SETTING,
           MOCK_CODE_SETTINGS,
           {
             ...MOCK_GENERAL_SETTINGS,

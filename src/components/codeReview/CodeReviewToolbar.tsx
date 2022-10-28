@@ -39,13 +39,13 @@ import {
 import { CodeVersionSelectType } from '../../interfaces/codeVersions';
 import { SETTINGS_KEYS } from '../../interfaces/settings';
 import { NO_DATE_PLACEHOLDER, getFormattedTime } from '../../utils/datetime';
+import CommitInfo from '../common/CommitInfo';
 import { useCodeVersionContext } from '../context/CodeVersionContext';
 import { useSettings } from '../context/SettingsContext';
 import { useVisibilityContext } from '../context/VisibilityContext';
 import CustomDialog from '../layout/CustomDialog';
 import CustomSelect from '../layout/CustomSelect';
 import ToolbarButton from '../layout/ToolbarButton';
-import CommitInfo from './CommitInfo';
 
 // generate the labels
 const getVersionLabel = (
@@ -75,7 +75,7 @@ const StyledStack = styled(Stack)(({ theme }) => ({
 }));
 
 type Props = {
-  setView: (view: AppView) => void;
+  setView?: (view: AppView) => void;
 };
 
 const CodeReviewToolbar: FC<Props> = ({ setView }) => {
@@ -191,7 +191,7 @@ const CodeReviewToolbar: FC<Props> = ({ setView }) => {
     />
   );
 
-  const executeCodeButton = (
+  const executeCodeButton = setView && (
     <Tooltip title={t('Run')}>
       <span>
         <ToolbarButton
@@ -215,7 +215,7 @@ const CodeReviewToolbar: FC<Props> = ({ setView }) => {
     </Tooltip>
   );
 
-  const editButton = (
+  const editButton = setView && (
     <Tooltip title={t('Edit')}>
       <ToolbarButton
         dataCy={TOOLBAR_EDIT_CODE_BUTTON_CYPRESS}

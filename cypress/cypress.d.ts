@@ -36,10 +36,20 @@ declare global {
        */
       openRepl(): void;
       /**
+       * Custom command to run the code in the repl.
+       * @example cy.runRepl()
+       */
+      runRepl(): void;
+      /**
        * Custom command to open the repl to execute code from the toolbar.
        * @example cy.openRepl()
        */
       openTab(tabId: string): void;
+      /**
+       * Custom command to wait until the repl is ready to execute code.
+       * @example cy.waitForReplReady()
+       */
+      waitForReplReady(): Chainable<JQuery<HTMLElement>>;
     }
   }
 }

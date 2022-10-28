@@ -4,7 +4,7 @@ import { useLocalContext } from '@graasp/apps-query-client';
 import { Context } from '@graasp/sdk';
 
 import i18n from '../config/i18n';
-import { ANALYZER_VIEW_CYPRESS } from '../config/selectors';
+import { ANALYTICS_VIEW_CY } from '../config/selectors';
 import { DEFAULT_CONTEXT_LANGUAGE } from '../config/settings';
 import { AppDataProvider } from './context/AppDataContext';
 import { MembersProvider } from './context/MembersContext';
@@ -30,7 +30,7 @@ const App: FC = () => {
         return <BuilderView />;
 
       case Context.ANALYTICS:
-        return <div data-cy={ANALYZER_VIEW_CYPRESS}>Analyzer View</div>;
+        return <div data-cy={ANALYTICS_VIEW_CY}>Analytics View</div>;
 
       case Context.PLAYER:
       default:

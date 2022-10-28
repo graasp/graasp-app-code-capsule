@@ -2,7 +2,7 @@ import { FC } from 'react';
 
 import { PyodideStatus } from '@graasp/pyodide';
 
-import { PlayArrow, Square } from '@mui/icons-material';
+import { PlayArrow, Save, Square } from '@mui/icons-material';
 import { LoadingButton } from '@mui/lab';
 import { Button, Stack } from '@mui/material';
 
@@ -15,7 +15,10 @@ import {
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import { REPL_RUN_CODE_BUTTON_CY } from '../../config/selectors';
+import {
+  REPLY_SAVE_BUTTON_CY,
+  REPL_RUN_CODE_BUTTON_CY,
+} from '../../config/selectors';
 import ReplStatusIndicator from './ReplStatusIndicator';
 
 library.add(fas);
@@ -26,6 +29,7 @@ type Props = {
   onRunCode: () => void;
   onStopCode: () => void;
   onClearOutput: () => void;
+  onSaveCode: () => void;
   status: PyodideStatus;
 };
 
@@ -33,6 +37,7 @@ const ReplToolbar: FC<Props> = ({
   onRunCode,
   onStopCode,
   onClearOutput,
+  onSaveCode,
   status,
 }) => {
   const isLoading = [
@@ -89,6 +94,14 @@ const ReplToolbar: FC<Props> = ({
           onClick={onClearOutput}
         >
           Clear
+        </Button>
+        <Button
+          data-cy={REPLY_SAVE_BUTTON_CY}
+          variant="outlined"
+          startIcon={<Save />}
+          onClick={onSaveCode}
+        >
+          Save
         </Button>
       </Stack>
     </Stack>

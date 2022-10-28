@@ -37,6 +37,7 @@ import {
   generateSingleLineCommentThread,
 } from '../../fixtures/appData';
 import {
+  CODE_REVIEW_MODE_SETTING,
   MOCK_CODE_SAMPLE,
   MOCK_CODE_SETTINGS,
   MOCK_GENERAL_SETTINGS,
@@ -53,7 +54,11 @@ describe('Code review single comments', () => {
     cy.setUpApi({
       database: {
         appData: SINGLE_LINE_MOCK_COMMENTS,
-        appSettings: [MOCK_CODE_SETTINGS, MOCK_GENERAL_SETTINGS],
+        appSettings: [
+          CODE_REVIEW_MODE_SETTING,
+          MOCK_CODE_SETTINGS,
+          MOCK_GENERAL_SETTINGS,
+        ],
       },
       appContext: {
         context: Context.PLAYER,
@@ -142,7 +147,11 @@ describe('Code Review thread comments', () => {
     cy.setUpApi({
       database: {
         appData: generateSingleLineCommentThread(threadOptions),
-        appSettings: [MOCK_CODE_SETTINGS, MOCK_GENERAL_SETTINGS],
+        appSettings: [
+          CODE_REVIEW_MODE_SETTING,
+          MOCK_CODE_SETTINGS,
+          MOCK_GENERAL_SETTINGS,
+        ],
       },
       appContext: {
         context: Context.PLAYER,
@@ -172,6 +181,7 @@ describe('Code Review Tools', () => {
       database: {
         appData: SINGLE_LINE_MOCK_COMMENTS,
         appSettings: [
+          CODE_REVIEW_MODE_SETTING,
           {
             ...MOCK_GENERAL_SETTINGS,
             data: {

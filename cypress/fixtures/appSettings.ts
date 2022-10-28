@@ -24,6 +24,9 @@ import {
 import { MEMBERS } from './members';
 import { MOCK_SERVER_ITEM } from './mockItem';
 
+export const HEADER_CODE_MESSAGE = 'Hello World';
+export const FOOTER_CODE_MESSAGE = 'GoodBye World';
+export const printMessageCode = (msg: string): string => `print('${msg}')`;
 export const MOCK_CODE_SAMPLE = `# my sample code in python
 
 age = input('What is your age ?')
@@ -66,7 +69,8 @@ export const MOCK_CODE_EXECUTION_SETTINGS: AppSetting & {
   name: CODE_EXECUTION_SETTINGS_NAME,
   data: {
     ...DEFAULT_CODE_EXECUTION_SETTINGS,
-    header_code: `print('Hello World')`,
+    header_code: printMessageCode(HEADER_CODE_MESSAGE),
+    footer_code: printMessageCode(FOOTER_CODE_MESSAGE),
   },
 };
 

@@ -9,7 +9,10 @@ import {
   styled,
 } from '@mui/material';
 
-import { CUSTOM_DIALOG_TITLE_CYPRESS } from '../../config/selectors';
+import {
+  CUSTOM_DIALOG_CONTENT_CY,
+  CUSTOM_DIALOG_TITLE_CYPRESS,
+} from '../../config/selectors';
 
 type RefType =
   | null
@@ -71,7 +74,12 @@ const CustomDialog: FC<Props> = ({
     <StyledDialogTitle data-cy={CUSTOM_DIALOG_TITLE_CYPRESS}>
       {title}
     </StyledDialogTitle>
-    <DialogContent sx={noPadding ? { py: 0 } : {}}>{content}</DialogContent>
+    <DialogContent
+      data-cy={CUSTOM_DIALOG_CONTENT_CY}
+      sx={noPadding ? { py: 0 } : {}}
+    >
+      {content}
+    </DialogContent>
     <DialogActions>{actions}</DialogActions>
   </Dialog>
 );

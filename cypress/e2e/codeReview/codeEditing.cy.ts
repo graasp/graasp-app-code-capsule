@@ -16,6 +16,7 @@ import {
   MOCK_COMMIT_MESSAGE,
 } from '../../fixtures/appData';
 import {
+  CODE_REVIEW_MODE_SETTING,
   MOCK_CODE_SETTINGS,
   MOCK_GENERAL_SETTINGS,
 } from '../../fixtures/appSettings';
@@ -26,6 +27,7 @@ describe('Code Editing', () => {
       database: {
         appData: [],
         appSettings: [
+          CODE_REVIEW_MODE_SETTING,
           {
             ...MOCK_GENERAL_SETTINGS,
             data: {
@@ -57,8 +59,6 @@ describe('Code Editing', () => {
     cy.get(buildDataCy(CODE_EDITOR_COMMIT_DESCRIPTION_CYPRESS)).type(
       MOCK_COMMIT_DESCRIPTION,
     );
-
-    cy.pause();
 
     // click the submit button
     cy.get(buildDataCy(CODE_EDITOR_SUBMIT_BUTTON_CYPRESS))

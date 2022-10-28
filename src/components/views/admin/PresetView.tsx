@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 
-import CodeReviewWrapper from '../../common/CodeReviewWrapper';
+import CodeReviewWrapper from '../../codeReview/CodeReviewWrapper';
 
 const PresetView: FC = () => <CodeReviewWrapper />;
 

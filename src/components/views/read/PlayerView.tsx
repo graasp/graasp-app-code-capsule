@@ -3,7 +3,7 @@ import React, { FC } from 'react';
 import { styled } from '@mui/material';
 
 import { PLAYER_VIEW_CYPRESS } from '../../../config/selectors';
-import CodeReviewWrapper from '../../common/CodeReviewWrapper';
+import CodeReviewWrapper from '../../codeReview/CodeReviewWrapper';
 import { CodeVersionProvider } from '../../context/CodeVersionContext';
 import { SettingsProvider } from '../../context/SettingsContext';
 

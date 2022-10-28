@@ -4,7 +4,7 @@ export const TABLE_VIEW_PANE_CYPRESS = 'table_view_pane';
 export const SETTINGS_VIEW_PANE_CYPRESS = 'settings_view_pane';
 export const PRESET_VIEW_PANE_CYPRESS = 'preset_view_pane_';
 export const PLAYER_VIEW_CYPRESS = 'player_view';
-export const ANALYZER_VIEW_CYPRESS = 'analyzer_view';
+export const ANALYTICS_VIEW_CY = 'analytics_view';
 export const TAB_PRESET_VIEW_CYPRESS = 'tab_preset_view';
 export const TAB_TABLE_VIEW_CYPRESS = 'tab_table_view';
 export const TAB_SETTINGS_VIEW_CYPRESS = 'tab_settings_view';
@@ -25,6 +25,7 @@ export const TABLE_VIEW_REVIEW_DIALOG_CLOSE_BUTTON_CYPRESS =
   'table_view_review_dialog_close_button';
 
 export const CUSTOM_DIALOG_TITLE_CYPRESS = 'custom_dialog_title';
+export const CUSTOM_DIALOG_CONTENT_CY = 'custom_dialog_content';
 
 export const NUMBER_OF_COMMENTS_CYPRESS = 'number_of_comments';
 export const TABLE_NO_COMMENTS_CYPRESS = 'table_no_comments';
@@ -113,6 +114,8 @@ export const SETTING_FOOTER_CODE_EDITOR_CY = 'setting_footer_code_editor';
 
 export const REPL_RUN_CODE_BUTTON_CY = 'repl_run_code_button';
 export const REPL_OUTPUT_CONSOLE_CY = 'repl_output_console_area';
+export const REPL_STATUS_INDICATOR_CY = 'repl_status_indicator';
+export const REPLY_SAVE_BUTTON_CY = 'repl_save_button';
 
 export const buildDataCy = (selector: string): string =>
   `[data-cy=${selector}]`;

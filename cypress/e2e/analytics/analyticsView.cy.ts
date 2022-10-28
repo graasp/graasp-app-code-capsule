@@ -1,11 +1,8 @@
 import { Context, PermissionLevel } from '@graasp/sdk';
 
-import {
-  ANALYZER_VIEW_CYPRESS,
-  buildDataCy,
-} from '../../../src/config/selectors';
+import { ANALYTICS_VIEW_CY, buildDataCy } from '../../../src/config/selectors';
 
-describe('Analyzer View', () => {
+describe('Analytics View', () => {
   beforeEach(() => {
     cy.setUpApi({
       appContext: {
@@ -16,9 +13,9 @@ describe('Analyzer View', () => {
     cy.visit('/');
   });
 
-  it('should open Analyzer view', () => {
-    cy.get(buildDataCy(ANALYZER_VIEW_CYPRESS))
+  it('should open Analytics view', () => {
+    cy.get(buildDataCy(ANALYTICS_VIEW_CY))
       .should('be.visible')
-      .and('contain.text', 'Analyzer View');
+      .and('have.text', 'Analytics View');
   });
 });

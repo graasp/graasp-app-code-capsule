@@ -131,12 +131,17 @@ const Repl: FC = () => {
     }
   };
 
+  const onClickSaveCode = (): void => {
+    // todo: logic to save to app data
+  };
+
   return (
     <Stack direction="column" spacing={1} data-cy={REPL_CONTAINER_CY}>
       <ReplToolbar
         onRunCode={onClickRunCode}
         onStopCode={onClickStopCode}
         onClearOutput={onClickClearOutput}
+        onSaveCode={onClickSaveCode}
         status={replStatus}
       />
       <Grid container direction="row">

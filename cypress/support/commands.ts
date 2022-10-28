@@ -1,11 +1,13 @@
 /// <reference types="../../src/window" />
 import {
   CODE_EDITOR_ID_CY,
+  REPL_RUN_CODE_BUTTON_CY,
   TOOLBAR_EDIT_CODE_BUTTON_CYPRESS,
   TOOLBAR_RUN_CODE_BUTTON_CYPRESS,
   buildDataCy,
 } from '../../src/config/selectors';
 import { MOCK_SERVER_API_HOST } from '../fixtures/appData';
+import { REPL_TIMEOUT } from '../fixtures/constants';
 import { CURRENT_MEMBER, MEMBERS } from '../fixtures/members';
 import { MOCK_SERVER_ITEM } from '../fixtures/mockItem';
 
@@ -77,3 +79,11 @@ Cypress.Commands.add('typeInEditor', (content, editorID = CODE_EDITOR_ID_CY) =>
 Cypress.Commands.add('openTab', (tabId) =>
   cy.get(buildDataCy(tabId)).should('be.visible').click(),
 );
+
+Cypress.Commands.add('waitForReplReady', () =>
+  cy
+    .get(buildDataCy(REPL_RUN_CODE_BUTTON_CY), { timeout: REPL_TIMEOUT })
+    .should('not.be.disabled'),
+);
+
+Cypress.Commands.add('runRepl', () => cy.waitForReplReady().click());

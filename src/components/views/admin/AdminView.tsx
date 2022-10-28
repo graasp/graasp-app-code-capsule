@@ -13,9 +13,9 @@ import {
   TAB_SETTINGS_VIEW_CYPRESS,
   TAB_TABLE_VIEW_CYPRESS,
 } from '../../../config/selectors';
-import PresetView from '../../common/CodeReviewWrapper';
 import { AppModeProvider } from '../../context/AppModeContext';
 import { CodeVersionProvider } from '../../context/CodeVersionContext';
+import PresetView from './PresetView';
 import SettingsFab from './SettingsFab';
 import TableView from './TableView';
 import SettingsView from './settings/SettingsView';

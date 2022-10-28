@@ -21,13 +21,13 @@ import { DEFAULT_GENERAL_SETTINGS } from '../../config/settings';
 import { CommentType } from '../../interfaces/comment';
 import { SETTINGS_KEYS } from '../../interfaces/settings';
 import { buildCodeRowKey } from '../../utils/utils';
+import CommentEditor from '../common/CommentEditor';
+import CommentThread from '../common/CommentThread';
 import { useAppDataContext } from '../context/AppDataContext';
 import { useCodeVersionContext } from '../context/CodeVersionContext';
 import { useReviewContext } from '../context/ReviewContext';
 import { useSettings } from '../context/SettingsContext';
 import { useVisibilityContext } from '../context/VisibilityContext';
-import CommentEditor from './CommentEditor';
-import CommentThread from './CommentThread';
 
 const Code = styled('div')({
   margin: 0,
@@ -83,7 +83,7 @@ const AddButton = styled(IconButton)({
 // eslint-disable-next-line @typescript-eslint/ban-types
 type Props = {};
 
-const CodeReview: FC<Props> = () => {
+const CodeReviewBody: FC<Props> = () => {
   const { addComment, multilineRange, currentCommentLine, closeComment } =
     useReviewContext();
   const { codeVersion, codeId } = useCodeVersionContext();
@@ -208,4 +208,4 @@ const CodeReview: FC<Props> = () => {
   );
 };
 
-export default CodeReview;
+export default CodeReviewBody;
