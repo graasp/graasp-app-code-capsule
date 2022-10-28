@@ -5,19 +5,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: set up node
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
           node-version: '16'
 
-      - name: install yarn
-        # avoid checksum errors with github packages
-        run: YARN_CHECKSUM_BEHAVIOR=update yarn
-
       - name: cypress run
-        uses: cypress-io/github-action@v2
+        uses: cypress-io/github-action@v4
         env:
           REACT_APP_API_HOST: http://localhost:3636
           REACT_APP_GRAASP_DOMAIN: localhost
@@ -25,13 +21,12 @@ jobs:
           REACT_APP_MOCK_API: true
           NODE_ENV: test
         with:
-          install: false
+          build: yarn build
           config: baseUrl=http://localhost:3000
           start: yarn start:ci
           wait-on: 'http://localhost:3000'
           wait-on-timeout: 180
           browser: chrome
-          headless: true
           quiet: true
           # point to new cypress@10 config file
           config-file: cypress.config.ts
