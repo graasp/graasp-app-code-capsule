@@ -1,10 +1,10 @@
 import { FC } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { PyodideStatus } from '@graasp/pyodide';
 
 import { PlayArrow, Save, Square } from '@mui/icons-material';
-import { LoadingButton } from '@mui/lab';
-import { Button, Stack } from '@mui/material';
+import { Stack } from '@mui/material';
 
 import {
   IconDefinition,
@@ -16,9 +16,12 @@ import { fas } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import {
+  REPLY_CLEAR_BUTTON_CY,
   REPLY_SAVE_BUTTON_CY,
+  REPLY_STOP_BUTTON_CY,
   REPL_RUN_CODE_BUTTON_CY,
 } from '../../config/selectors';
+import MiniButton from '../layout/MiniButton';
 import ReplStatusIndicator from './ReplStatusIndicator';
 
 library.add(fas);
@@ -40,6 +43,7 @@ const ReplToolbar: FC<Props> = ({
   onSaveCode,
   status,
 }) => {
+  const { t } = useTranslation();
   const isLoading = [
     PyodideStatus.LOADING_MODULE,
     PyodideStatus.LOADING_PYODIDE,
@@ -60,24 +64,20 @@ const ReplToolbar: FC<Props> = ({
       >
         <ReplStatusIndicator status={status} />
         <Stack direction="row" spacing={1}>
-          <Button
-            data-cy={REPLY_SAVE_BUTTON_CY}
-            variant="outlined"
-            startIcon={<Save />}
+          <MiniButton
+            dataCy={REPLY_SAVE_BUTTON_CY}
+            icon={<Save />}
             onClick={onSaveCode}
-          >
-            Save
-          </Button>
-          <LoadingButton
-            data-cy={REPL_RUN_CODE_BUTTON_CY}
-            variant="outlined"
-            loading={isLoading}
+            text={t('Save')}
+          />
+          <MiniButton
+            dataCy={REPL_RUN_CODE_BUTTON_CY}
+            isLoading={isLoading}
             disabled={isRunning}
-            startIcon={<PlayArrow />}
+            icon={<PlayArrow />}
             onClick={onRunCode}
-          >
-            Run
-          </LoadingButton>
+            text={t('Run')}
+          />
         </Stack>
       </Stack>
       <Stack
@@ -86,25 +86,28 @@ const ReplToolbar: FC<Props> = ({
         spacing={1}
         width="50%"
       >
-        <Button
-          variant="outlined"
+        <MiniButton
+          dataCy={REPLY_STOP_BUTTON_CY}
           color="error"
           disabled={!isRunning}
-          startIcon={<Square />}
+          icon={<Square />}
           onClick={onStopCode}
-        >
-          Stop
-        </Button>
-        <Button
-          variant="outlined"
+          text={t('Stop')}
+        />
+        <MiniButton
+          dataCy={REPLY_CLEAR_BUTTON_CY}
           color="error"
-          startIcon={
-            <FontAwesomeIcon icon={broomIconDefinition} color="error" />
+          icon={
+            <FontAwesomeIcon
+              icon={broomIconDefinition}
+              color="error"
+              width="24px"
+              height="24px"
+            />
           }
           onClick={onClearOutput}
-        >
-          Clear
-        </Button>
+          text={t('Clear')}
+        />
       </Stack>
     </Stack>
   );

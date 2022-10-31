@@ -116,6 +116,8 @@ export const REPL_RUN_CODE_BUTTON_CY = 'repl_run_code_button';
 export const REPL_OUTPUT_CONSOLE_CY = 'repl_output_console_area';
 export const REPL_STATUS_INDICATOR_CY = 'repl_status_indicator';
 export const REPLY_SAVE_BUTTON_CY = 'repl_save_button';
+export const REPLY_STOP_BUTTON_CY = 'repl_stop_button';
+export const REPLY_CLEAR_BUTTON_CY = 'repl_clear_button';
 
 export const buildDataCy = (selector: string): string =>
   `[data-cy=${selector}]`;

@@ -1,9 +1,12 @@
 /// <reference types="cypress" />
+import { mount } from 'cypress/react18';
+
 import { Database, LocalContext, Member } from '@graasp/apps-query-client';
 
 declare global {
   namespace Cypress {
     interface Chainable {
+      mount: typeof mount;
       /**
        * Custom command to enter the specified content into the code editor.
        * @example cy.typeInEditor('print("Hello World")')
