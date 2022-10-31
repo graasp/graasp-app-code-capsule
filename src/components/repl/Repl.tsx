@@ -19,10 +19,12 @@ import ShowFigures from './ShowFigures';
 
 type Props = {
   seedValue: CodeVersionType;
+  // todo: implement "bo-back" button
+  // eslint-disable-next-line react/no-unused-prop-types
   onClose: () => void;
 };
 
-const Repl: FC<Props> = ({ seedValue, onClose }) => {
+const Repl: FC<Props> = ({ seedValue }) => {
   const [worker, setWorker] = useState<PyWorker | null>(null);
   const [output, setOutput] = useState<string>('');
   const [prompt, setPrompt] = useState<string>('');
