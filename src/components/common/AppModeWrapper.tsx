@@ -1,7 +1,4 @@
 import React, { FC, ReactElement, useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
-
-import { Button } from '@graasp/ui';
 
 import { Stack } from '@mui/material';
 
@@ -13,18 +10,17 @@ import {
 } from '../../config/selectors';
 import { DEFAULT_APP_MODE_SETTING } from '../../config/settings';
 import { AppModeSettingsKeys } from '../../interfaces/settings';
-import CodeEditor from '../common/CodeEditor';
+import CodeReview from '../codeReview/CodeReview';
 import { useCodeVersionContext } from '../context/CodeVersionContext';
 import { useSettings } from '../context/SettingsContext';
 import CodeReviewContainer from '../layout/CodeReviewContainer';
 import Repl from '../repl/Repl';
-import CodeReview from './CodeReview';
+import CodeEditor from './CodeEditor';
 
 // eslint-disable-next-line @typescript-eslint/ban-types
 type Props = {};
 
-const CodeReviewWrapper: FC<Props> = () => {
-  const { t } = useTranslation();
+const AppModeWrapper: FC<Props> = () => {
   const { codeVersion } = useCodeVersionContext();
   const {
     [APP_MODE_SETTINGS_NAME]: appModeSetting = DEFAULT_APP_MODE_SETTING,
@@ -58,11 +54,11 @@ const CodeReviewWrapper: FC<Props> = () => {
         );
       case AppView.CodeExecution:
         return (
-          <Stack m={2} spacing={2} data-cy={CODE_EXECUTION_CONTAINER_CYPRESS}>
-            <Repl seedValue={codeVersion} />
-            <Button onClick={() => setView(AppView.CodeReview)}>
-              {t('Back to Code Review')}
-            </Button>
+          <Stack p={2} data-cy={CODE_EXECUTION_CONTAINER_CYPRESS} height="100%">
+            <Repl
+              seedValue={codeVersion}
+              onClose={() => setView(AppView.CodeReview)}
+            />
           </Stack>
         );
       case AppView.CodeReview:
@@ -74,4 +70,4 @@ const CodeReviewWrapper: FC<Props> = () => {
   return getContent();
 };
 
-export default CodeReviewWrapper;
+export default AppModeWrapper;

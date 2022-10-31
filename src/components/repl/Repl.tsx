@@ -6,7 +6,6 @@ import { Alert, Stack } from '@mui/material';
 import Grid from '@mui/material/Unstable_Grid2';
 
 import { CODE_EXECUTION_SETTINGS_NAME } from '../../config/appSettingsTypes';
-import { MAX_REPL_HEIGHT } from '../../config/layout';
 import { REPL_CONTAINER_CY, REPL_EDITOR_ID_CY } from '../../config/selectors';
 import { DEFAULT_CODE_EXECUTION_SETTINGS } from '../../config/settings';
 import { CodeVersionType } from '../../interfaces/codeVersions';
@@ -20,9 +19,10 @@ import ShowFigures from './ShowFigures';
 
 type Props = {
   seedValue: CodeVersionType;
+  onClose: () => void;
 };
 
-const Repl: FC<Props> = ({ seedValue }) => {
+const Repl: FC<Props> = ({ seedValue, onClose }) => {
   const [worker, setWorker] = useState<PyWorker | null>(null);
   const [output, setOutput] = useState<string>('');
   const [prompt, setPrompt] = useState<string>('');
@@ -152,7 +152,12 @@ const Repl: FC<Props> = ({ seedValue }) => {
   };
 
   return (
-    <Stack direction="column" spacing={1} data-cy={REPL_CONTAINER_CY}>
+    <Stack
+      direction="column"
+      height="100%"
+      spacing={1}
+      data-cy={REPL_CONTAINER_CY}
+    >
       <ReplToolbar
         onRunCode={onClickRunCode}
         onStopCode={onClickStopCode}
@@ -160,7 +165,7 @@ const Repl: FC<Props> = ({ seedValue }) => {
         onSaveCode={onClickSaveCode}
         status={replStatus}
       />
-      <Grid container direction="row">
+      <Grid container direction="row" height="100%">
         <Grid
           xs
           sx={{
@@ -168,7 +173,6 @@ const Repl: FC<Props> = ({ seedValue }) => {
             border: 1,
             borderRadius: 1,
             borderColor: 'error.main',
-            height: MAX_REPL_HEIGHT,
             overflow: 'hidden',
           }}
         >
@@ -184,12 +188,12 @@ const Repl: FC<Props> = ({ seedValue }) => {
           direction="column"
           sx={{
             ml: 0.5,
-            height: MAX_REPL_HEIGHT,
           }}
         >
           <Grid
             xs
             display="flex"
+            width="100%"
             sx={{
               p: 1,
               overflow: 'hidden',
@@ -197,7 +201,6 @@ const Repl: FC<Props> = ({ seedValue }) => {
               border: 1,
               borderRadius: 1,
               borderColor: 'info.main',
-              width: '100%',
             }}
           >
             <InputArea
