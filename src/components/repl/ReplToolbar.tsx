@@ -59,16 +59,26 @@ const ReplToolbar: FC<Props> = ({
         width="50%"
       >
         <ReplStatusIndicator status={status} />
-        <LoadingButton
-          data-cy={REPL_RUN_CODE_BUTTON_CY}
-          variant="outlined"
-          loading={isLoading}
-          disabled={isRunning}
-          startIcon={<PlayArrow />}
-          onClick={onRunCode}
-        >
-          Run
-        </LoadingButton>
+        <Stack direction="row" spacing={1}>
+          <Button
+            data-cy={REPLY_SAVE_BUTTON_CY}
+            variant="outlined"
+            startIcon={<Save />}
+            onClick={onSaveCode}
+          >
+            Save
+          </Button>
+          <LoadingButton
+            data-cy={REPL_RUN_CODE_BUTTON_CY}
+            variant="outlined"
+            loading={isLoading}
+            disabled={isRunning}
+            startIcon={<PlayArrow />}
+            onClick={onRunCode}
+          >
+            Run
+          </LoadingButton>
+        </Stack>
       </Stack>
       <Stack
         direction="row"
@@ -94,14 +104,6 @@ const ReplToolbar: FC<Props> = ({
           onClick={onClearOutput}
         >
           Clear
-        </Button>
-        <Button
-          data-cy={REPLY_SAVE_BUTTON_CY}
-          variant="outlined"
-          startIcon={<Save />}
-          onClick={onSaveCode}
-        >
-          Save
         </Button>
       </Stack>
     </Stack>

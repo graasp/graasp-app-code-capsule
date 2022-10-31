@@ -9,11 +9,17 @@ import {
   REPL_STATUS_INDICATOR_CY,
   buildDataCy,
 } from '../../../src/config/selectors';
+// import {
+//   MOCK_CODE_APP_DATA_BOB_PY,
+//   MOCK_CODE_APP_DATA_OLD_BOB_PY,
+//   MOCK_CODE_VERSIONS,
+// } from '../../fixtures/appData';
 import {
   CODE_EXECUTION_MODE_SETTING,
   FOOTER_CODE_MESSAGE,
   HEADER_CODE_MESSAGE,
   MOCK_CODE_EXECUTION_SETTINGS,
+  MOCK_CODE_SETTINGS,
 } from '../../fixtures/appSettings';
 import { REPL_TIMEOUT } from '../../fixtures/constants';
 
@@ -75,4 +81,73 @@ describe('Display Code Execution', () => {
     cy.typeInEditor('# Save to App Data', REPL_EDITOR_ID_CY);
     cy.get(buildDataCy(REPLY_SAVE_BUTTON_CY)).should('be.visible').click();
   });
+});
+
+describe('Initial Code value', () => {
+  describe('Seed', () => {
+    const seed = `print('I am the seed')`;
+    beforeEach(() => {
+      cy.setUpApi({
+        database: {
+          appSettings: [
+            CODE_EXECUTION_MODE_SETTING,
+            {
+              ...MOCK_CODE_SETTINGS,
+              data: { ...MOCK_CODE_SETTINGS.data, code: seed },
+            },
+          ],
+        },
+        appContext: {
+          context: Context.PLAYER,
+          permission: PermissionLevel.Write,
+        },
+      });
+      cy.visit('/');
+    });
+
+    it('Use seed', () => {
+      cy.waitForReplReady();
+      cy.get(`#${REPL_EDITOR_ID_CY}`).should('contain', seed);
+    });
+  });
+
+  // todo: un-comment when the instructor version is fixed
+  // describe('Most recent CodeVersion', () => {
+  //   const latestCodeVersion = `print('I am the most recent')`;
+  //   const oldCodeVersion = `print('I am old')`;
+  //   beforeEach(() => {
+  //     cy.setUpApi({
+  //       database: {
+  //         appSettings: [CODE_EXECUTION_MODE_SETTING],
+  //         appData: [
+  //           {
+  //             ...MOCK_CODE_APP_DATA_BOB_PY,
+  //             data: {
+  //               ...MOCK_CODE_APP_DATA_BOB_PY.data,
+  //               code: latestCodeVersion,
+  //             },
+  //           },
+
+  //           {
+  //             ...MOCK_CODE_APP_DATA_OLD_BOB_PY,
+  //             data: {
+  //               ...MOCK_CODE_APP_DATA_OLD_BOB_PY.data,
+  //               code: oldCodeVersion,
+  //             },
+  //           },
+  //         ],
+  //       },
+  //       appContext: {
+  //         context: Context.PLAYER,
+  //         permission: PermissionLevel.Write,
+  //       },
+  //     });
+  //     cy.visit('/');
+  //   });
+
+  //   it('Use latest code version', () => {
+  //     cy.waitForReplReady();
+  //     cy.get(`#${REPL_EDITOR_ID_CY}`).should('contain', latestCodeVersion);
+  //   });
+  // });
 });

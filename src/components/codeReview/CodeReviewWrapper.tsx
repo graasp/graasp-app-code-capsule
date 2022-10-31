@@ -59,7 +59,7 @@ const CodeReviewWrapper: FC<Props> = () => {
       case AppView.CodeExecution:
         return (
           <Stack m={2} spacing={2} data-cy={CODE_EXECUTION_CONTAINER_CYPRESS}>
-            <Repl />
+            <Repl seedValue={codeVersion} />
             <Button onClick={() => setView(AppView.CodeReview)}>
               {t('Back to Code Review')}
             </Button>

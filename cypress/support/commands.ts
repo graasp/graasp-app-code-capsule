@@ -7,7 +7,7 @@ import {
   buildDataCy,
 } from '../../src/config/selectors';
 import { MOCK_SERVER_API_HOST } from '../fixtures/appData';
-import { REPL_TIMEOUT } from '../fixtures/constants';
+import { REPL_TIMEOUT, SLOW_TYPING_IN_EDITOR } from '../fixtures/constants';
 import { CURRENT_MEMBER, MEMBERS } from '../fixtures/members';
 import { MOCK_SERVER_ITEM } from '../fixtures/mockItem';
 
@@ -73,7 +73,7 @@ Cypress.Commands.add('typeInEditor', (content, editorID = CODE_EDITOR_ID_CY) =>
   cy
     .get(`#${editorID}`)
     .find('[contenteditable]')
-    .type(`{selectAll}{backspace}${content}`),
+    .type(`{selectAll}{backspace}${content}`, { delay: SLOW_TYPING_IN_EDITOR }),
 );
 
 Cypress.Commands.add('openTab', (tabId) =>

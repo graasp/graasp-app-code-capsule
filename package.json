@@ -19,7 +19,7 @@
     "@fortawesome/free-regular-svg-icons": "6.2.0",
     "@fortawesome/free-solid-svg-icons": "6.2.0",
     "@fortawesome/react-fontawesome": "latest",
-    "@graasp/apps-query-client": "github:graasp/graasp-apps-query-client#52-expose-local-context-hook",
+    "@graasp/apps-query-client": "github:graasp/graasp-apps-query-client",
     "@graasp/pyodide": "github:spaenleh/graasp-pyodide",
     "@graasp/sdk": "github:graasp/graasp-sdk",
     "@graasp/ui": "github:graasp/graasp-ui#v0.3.0",

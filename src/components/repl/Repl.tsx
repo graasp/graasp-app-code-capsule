@@ -9,14 +9,20 @@ import { CODE_EXECUTION_SETTINGS_NAME } from '../../config/appSettingsTypes';
 import { MAX_REPL_HEIGHT } from '../../config/layout';
 import { REPL_CONTAINER_CY, REPL_EDITOR_ID_CY } from '../../config/selectors';
 import { DEFAULT_CODE_EXECUTION_SETTINGS } from '../../config/settings';
+import { CodeVersionType } from '../../interfaces/codeVersions';
 import { CodeExecutionSettingsKeys } from '../../interfaces/settings';
+import { useAppDataContext } from '../context/AppDataContext';
 import { useSettings } from '../context/SettingsContext';
 import CodeEditor from './CodeEditor';
 import InputArea from './InputArea';
 import ReplToolbar from './ReplToolbar';
 import ShowFigures from './ShowFigures';
 
-const Repl: FC = () => {
+type Props = {
+  seedValue: CodeVersionType;
+};
+
+const Repl: FC<Props> = ({ seedValue }) => {
   const [worker, setWorker] = useState<PyWorker | null>(null);
   const [output, setOutput] = useState<string>('');
   const [prompt, setPrompt] = useState<string>('');
@@ -24,8 +30,18 @@ const Repl: FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [figures, setFigures] = useState<string[]>([]);
 
+  const { codeAppData } = useAppDataContext();
+  // sort app data by the latest to the oldest
+  const sortedCodeVersions = codeAppData.sort((a, b) =>
+    Date.parse(a.updatedAt) > Date.parse(b.updatedAt) ? 1 : -1,
+  );
+  const latestCode = sortedCodeVersions.get(0)?.data?.code || '';
+
+  const currentCode = seedValue ? seedValue.code : latestCode;
+
   // todo: get value from app data for the user
-  const [value, setValue] = useState('');
+  const [value, setValue] = useState(currentCode);
+
   const {
     [CODE_EXECUTION_SETTINGS_NAME]:
       codeExecSettings = DEFAULT_CODE_EXECUTION_SETTINGS,

@@ -2736,9 +2736,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/apps-query-client@github:graasp/graasp-apps-query-client#52-expose-local-context-hook":
+"@graasp/apps-query-client@github:graasp/graasp-apps-query-client":
   version: 0.2.0
-  resolution: "@graasp/apps-query-client@https://github.com/graasp/graasp-apps-query-client.git#commit=4bf0788fb861410c0519f3b48faaa0d5db53a3c5"
+  resolution: "@graasp/apps-query-client@https://github.com/graasp/graasp-apps-query-client.git#commit=ef813b19eff9ddc5ee827df2f8a7d2a6a783b16e"
   dependencies:
     "@graasp/sdk": "github:graasp/graasp-sdk"
     axios: 0.27.2
@@ -10268,7 +10268,7 @@ __metadata:
     "@fortawesome/free-regular-svg-icons": 6.2.0
     "@fortawesome/free-solid-svg-icons": 6.2.0
     "@fortawesome/react-fontawesome": latest
-    "@graasp/apps-query-client": "github:graasp/graasp-apps-query-client#52-expose-local-context-hook"
+    "@graasp/apps-query-client": "github:graasp/graasp-apps-query-client"
     "@graasp/pyodide": "github:spaenleh/graasp-pyodide"
     "@graasp/sdk": "github:graasp/graasp-sdk"
     "@graasp/ui": "github:graasp/graasp-ui#v0.3.0"
