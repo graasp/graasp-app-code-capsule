@@ -1,5 +1,5 @@
-# This workflow triggers a new workflow inside the graasp-deploy repository. It passes a json 
-# with the repository name and the latest tag pushed from the caller repository. 
+# This workflow triggers a new workflow inside the graasp-deploy repository. It passes a json
+# with the repository name and the latest tag pushed from the caller repository.
 name: Push new tag to graasp-deploy repository
 
 # Controls when the action will run
@@ -14,11 +14,11 @@ on:
         # Default value if no value is explicitly provided
         # Input does not have to be provided for the workflow to run
         type: choice
-        options: 
-        - first
-        - patch        
-        - minor        
-        - major
+        options:
+          - first
+          - patch
+          - minor
+          - major
         default: patch
         required: true
 
@@ -29,7 +29,7 @@ jobs:
     name: Graasp app code capsule
     # Replace 'main' with the hash of a commit, so it points to an specific version of the reusable workflow that is used
     # Reference reusable workflow file. Using the commit SHA is the safest for stability and security
-    uses: graasp/graasp-deploy/.github/workflows/update-staging-version.yml@2c1fbb283ea5db70258237bb0fe0fd1a09064861
+    uses: graasp/graasp-deploy/.github/workflows/update-staging-version.yml@v1
     with:
       release-type: ${{ inputs.release-type }}
     secrets:

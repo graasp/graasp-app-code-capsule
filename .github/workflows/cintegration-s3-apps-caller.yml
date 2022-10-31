@@ -15,7 +15,7 @@ on:
 jobs:
   graasp-deploy-s3-apps-workflow:
     name: Code Capsule App
-    uses: graasp/graasp-deploy/.github/workflows/cintegration-s3-apps.yml@a5e6f97c18c86d97e3e8f15b27e4d898746327cf
+    uses: graasp/graasp-deploy/.github/workflows/cintegration-s3-apps.yml@v1
     with:
       build-folder: 'build'
       version: 'latest'
