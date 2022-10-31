@@ -13,6 +13,7 @@ describe('MiniButton.cy.ts', () => {
         id={testId}
         text={testText}
         icon={<Edit />}
+        // eslint-disable-next-line no-console
         onClick={() => console.log('clicked')}
       />,
     );
@@ -27,6 +28,7 @@ describe('MiniButton.cy.ts', () => {
         id={testId}
         text={testText}
         icon={<Edit />}
+        // eslint-disable-next-line no-console
         onClick={() => console.log('clicked')}
       />,
     );
