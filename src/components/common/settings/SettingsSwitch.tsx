@@ -21,9 +21,6 @@ const SettingsSwitch: FC<Props> = ({
   dataCy,
   changeSetting,
 }) => {
-  // const { [GENERAL_SETTINGS_KEY]: settings = DEFAULT_GENERAL_SETTINGS } =
-  //   useSettings();
-  // const value = settings[settingKey] as boolean;
   const switchControl = (
     <Switch
       color="primary"

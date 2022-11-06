@@ -9,11 +9,6 @@ import {
   REPL_STATUS_INDICATOR_CY,
   buildDataCy,
 } from '../../../src/config/selectors';
-// import {
-//   MOCK_CODE_APP_DATA_BOB_PY,
-//   MOCK_CODE_APP_DATA_OLD_BOB_PY,
-//   MOCK_CODE_VERSIONS,
-// } from '../../fixtures/appData';
 import {
   CODE_EXECUTION_MODE_SETTING,
   FOOTER_CODE_MESSAGE,

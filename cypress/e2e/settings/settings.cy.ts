@@ -42,7 +42,7 @@ describe('Settings', () => {
     cy.visit('/');
   });
 
-  it.only('Change Settings in tab', () => {
+  it('Change Settings in tab', () => {
     // open the settings tab
     cy.openTab(TAB_SETTINGS_VIEW_CYPRESS);
 

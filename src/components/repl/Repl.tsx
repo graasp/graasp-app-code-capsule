@@ -28,7 +28,6 @@ const Repl: FC<Props> = ({ seedValue }) => {
   const [worker, setWorker] = useState<PyWorker | null>(null);
   const [output, setOutput] = useState<string>('');
   const [prompt, setPrompt] = useState<string>('');
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [error, setError] = useState<string | null>(null);
   const [figures, setFigures] = useState<string[]>([]);
 
@@ -73,10 +72,10 @@ const Repl: FC<Props> = ({ seedValue }) => {
       setPrompt(newPrompt);
     };
 
-    workerInstance.onError = (newError) => {
-      // eslint-disable-next-line no-console
-      console.error(newError);
-      // setError(newError.data);
+    // todo: improve type of function to be able to remove the ts error
+    // @ts-ignore
+    workerInstance.onError = (newError: { data: string }) => {
+      setError(newError.data);
     };
 
     workerInstance.onTerminated = () => {

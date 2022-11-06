@@ -109,8 +109,7 @@ describe('Builder as Admin', () => {
           .children(buildDataCy(TABLE_VIEW_NB_COMMENTS_CELL_CYPRESS))
           .should('contain.text', count);
       });
-      // todo: remove is not used
-      // cy.wait(waitingDelay);
+
       cy.get(buildDataCy(ORPHAN_BUTTON_CYPRESS)).should('exist').click();
 
       // number of displayed comments should not have changed

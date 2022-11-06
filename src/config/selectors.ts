@@ -126,5 +126,3 @@ export const buildTableRowCypress = (selector: string): string =>
 export const buildCommitFieldCypress = (selector: string): string =>
   `[data-cy=${selector}]`;
 export const settingKeyDataCy = (key: string): string => `setting-${key}`;
-
-// export const CODE_EDITOR_CY = '.monaco-editor textarea:first';

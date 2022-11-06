@@ -31,12 +31,7 @@ const RadioButton: FC<RadioButtonProps> = ({ dataCy, value, label }) => {
   );
 };
 
-type Props = {
-  // appMode: AppMode;
-  // setMode: (mode: AppMode) => void;
-};
-
-const AppModeSelect: FC<Props> = () => {
+const AppModeSelect: FC = () => {
   const { t } = useTranslation();
 
   return (

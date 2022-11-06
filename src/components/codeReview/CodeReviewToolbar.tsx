@@ -54,7 +54,7 @@ const getVersionLabel = (
   lang: string,
 ): string => {
   const { commitMessage } = data;
-  let msg = commitMessage || t('no Commit Message');
+  let msg = commitMessage || t('No Commit Message');
   // if message is too long: truncate and add ellipsis
   if (msg.length > DEFAULT_TRUNCATION_COMMIT_MESSAGE_LENGTH) {
     msg = `${commitMessage.slice(

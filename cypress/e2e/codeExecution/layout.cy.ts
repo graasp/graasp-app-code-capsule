@@ -20,7 +20,7 @@ describe('Button Layout', () => {
     cy.visit('/');
   });
 
-  it.only('Small Screen', () => {
+  it('Small Screen', () => {
     cy.viewport('iphone-x');
     cy.waitForReplReady();
     cy.get(buildDataCy(REPLY_SAVE_BUTTON_CY)).should(
