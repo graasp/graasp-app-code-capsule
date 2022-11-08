@@ -111,6 +111,7 @@
     "Code to review": "Code to review",
     "Input requested": "Input requested",
     "Submit": "Submit",
-    "Unsaved modifications": "Unsaved modifications"
+    "Unsaved modifications": "Unsaved modifications",
+    "APP_VERSION": "version v{{ version }}"
   }
 }

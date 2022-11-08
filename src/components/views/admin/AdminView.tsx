@@ -3,8 +3,9 @@ import { useTranslation } from 'react-i18next';
 
 import { Code, Settings, TableChart } from '@mui/icons-material';
 import { TabContext, TabList, TabPanel } from '@mui/lab';
-import { Tab } from '@mui/material';
+import { Tab, Typography, styled } from '@mui/material';
 
+import { REACT_APP_VERSION } from '../../../config/env';
 import {
   PRESET_VIEW_PANE_CYPRESS,
   SETTINGS_VIEW_PANE_CYPRESS,
@@ -19,6 +20,12 @@ import PresetView from './PresetView';
 import SettingsFab from './SettingsFab';
 import TableView from './TableView';
 import SettingsView from './settings/SettingsView';
+
+const VersionIndicator = styled(Typography)(({ theme }) => ({
+  position: 'absolute',
+  bottom: theme.spacing(0),
+  left: theme.spacing(1),
+}));
 
 enum Tabs {
   TABLE_VIEW = 'TABLE_VIEW',
@@ -78,6 +85,9 @@ const AdminView: FC = () => {
     <CodeVersionProvider>
       {renderTable()}
       <SettingsFab />
+      <VersionIndicator variant="caption">
+        {t('APP_VERSION', { version: REACT_APP_VERSION })}
+      </VersionIndicator>
     </CodeVersionProvider>
   );
 };

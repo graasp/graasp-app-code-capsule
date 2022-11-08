@@ -18,6 +18,7 @@ import { REPL_CONTAINER_CY, REPL_EDITOR_ID_CY } from '../../config/selectors';
 import { DEFAULT_CODE_EXECUTION_SETTINGS } from '../../config/settings';
 import { CodeVersionType } from '../../interfaces/codeVersions';
 import { CodeExecutionSettingsKeys } from '../../interfaces/settings';
+import { sortAppDataFromNewest } from '../../utils/utils';
 import { useAppDataContext } from '../context/AppDataContext';
 import { useSettings } from '../context/SettingsContext';
 import CodeEditor from './CodeEditor';
@@ -57,9 +58,7 @@ const Repl: FC<Props> = ({ seedValue }) => {
 
   const { liveCode, postAppData } = useAppDataContext();
   // sort app data by the latest to the oldest
-  const sortedCodeVersions = liveCode.sort((a, b) =>
-    Date.parse(a.updatedAt) < Date.parse(b.updatedAt) ? 1 : -1,
-  );
+  const sortedCodeVersions = sortAppDataFromNewest(liveCode);
   const latestCode = sortedCodeVersions.get(0)?.data?.code;
   const currentCode = latestCode || (seedValue ? seedValue.code : '');
 

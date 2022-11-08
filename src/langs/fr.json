@@ -110,6 +110,7 @@
     "Code to review": "Code à review",
     "Input requested": "Saisie demandée",
     "Submit": "Soumettre",
-    "Unsaved modifications": "Modification non enregistrées"
+    "Unsaved modifications": "Modification non enregistrées",
+    "APP_VERSION": "version v{{ version }}"
   }
 }
