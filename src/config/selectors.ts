@@ -118,6 +118,11 @@ export const REPL_STATUS_INDICATOR_CY = 'repl_status_indicator';
 export const REPLY_SAVE_BUTTON_CY = 'repl_save_button';
 export const REPLY_STOP_BUTTON_CY = 'repl_stop_button';
 export const REPLY_CLEAR_BUTTON_CY = 'repl_clear_button';
+export const REPL_INPUT_DIALOG_BUTTON_CONTAINER_CY = 'repl_input_container';
+export const REPL_INPUT_DIALOG_CANCEL_BUTTON_CY = 'repl_input_cancel_button';
+export const REPL_INPUT_DIALOG_SUBMIT_BUTTON_CY = 'repl_input_submit_button';
+export const REPL_INPUT_DIALOG_PROMPT_TEXT_CY = 'repl_input_prompt_text';
+export const REPL_INPUT_DIALOG_TEXTFIELD_CY = 'repl_input_textfield';
 
 export const buildDataCy = (selector: string): string =>
   `[data-cy=${selector}]`;

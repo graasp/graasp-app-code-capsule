@@ -19,8 +19,11 @@ const CodeEditor: FC<Props> = ({ value, setValue, id }) => {
       value={value}
       onChange={(newValue) => setValue(newValue)}
       height="100%"
+      width="100%"
       style={{
+        // used to stretch the editor when it does not fill the entire height
         height: '100%',
+        width: '100%',
       }}
       theme={theme.palette.mode}
       basicSetup

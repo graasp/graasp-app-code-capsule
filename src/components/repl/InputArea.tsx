@@ -62,8 +62,8 @@ const InputArea: FC<Props> = ({ prompt, readOnly, onValidate, onCancel }) => {
 
   const onKeyPress = (event: KeyboardEvent<HTMLTextAreaElement>): void => {
     if (event.key === 'Enter') {
-      setInput(DEFAULT_REPL_INPUT_VALUE);
       onValidate(input);
+      setInput(DEFAULT_REPL_INPUT_VALUE);
       event.preventDefault();
     } else if (event.ctrlKey && event.key === 'c') {
       setInput(DEFAULT_REPL_INPUT_VALUE);

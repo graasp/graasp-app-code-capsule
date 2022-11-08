@@ -54,12 +54,10 @@ const AppModeWrapper: FC<Props> = () => {
         );
       case AppView.CodeExecution:
         return (
-          <Stack p={2} data-cy={CODE_EXECUTION_CONTAINER_CYPRESS} height="100%">
-            <Repl
-              seedValue={codeVersion}
-              onClose={() => setView(AppView.CodeReview)}
-            />
-          </Stack>
+          <Repl
+            seedValue={codeVersion}
+            onClose={() => setView(AppView.CodeReview)}
+          />
         );
       case AppView.CodeReview:
       default:

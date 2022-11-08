@@ -5,6 +5,7 @@ import { AppData } from '@graasp/apps-query-client';
 import { APP_DATA_TYPES } from '../../src/config/appDataTypes';
 import { INSTRUCTOR_CODE_ID, PYTHON } from '../../src/config/constants';
 import { CodeType } from '../../src/interfaces/codeVersions';
+import { LiveCodeType } from '../../src/interfaces/liveCode';
 import { CURRENT_MEMBER, MEMBERS } from './members';
 import { MOCK_SERVER_ITEM } from './mockItem';
 
@@ -167,41 +168,33 @@ export const generateSingleLineCommentThread = (
 export const MOCK_COMMIT_MESSAGE = 'My commit message';
 export const MOCK_COMMIT_DESCRIPTION = 'Full description\nOn multiple lines';
 
-export const MOCK_CODE_APP_DATA_BOB_PY: CodeType = {
+export const MOCK_CODE_APP_DATA_BOB_PY: LiveCodeType = {
   id: uuid(),
   itemId: MOCK_SERVER_ITEM.id,
-  type: APP_DATA_TYPES.CODE,
+  type: APP_DATA_TYPES.LIVE_CODE,
   createdAt: new Date().toISOString(),
   updatedAt: new Date().toISOString(),
   creator: MEMBERS.BOB.id,
   memberId: MEMBERS.BOB.id,
   data: {
     code: 'sample code from bob',
-    language: PYTHON,
-    commitMessage: 'Bob 1',
-    commitDescription: 'Long Bob 1',
   },
 };
 
-export const MOCK_CODE_APP_DATA_OLD_BOB_PY: CodeType = {
+export const MOCK_CODE_APP_DATA_OLD_BOB_PY: LiveCodeType = {
   id: uuid(),
   itemId: MOCK_SERVER_ITEM.id,
-  type: APP_DATA_TYPES.CODE,
+  type: APP_DATA_TYPES.LIVE_CODE,
   createdAt: new Date('2020-06-02').toISOString(),
   updatedAt: new Date('2020-06-02').toISOString(),
   creator: MEMBERS.BOB.id,
   memberId: MEMBERS.BOB.id,
   data: {
     code: 'sample code from bob 2',
-    language: PYTHON,
-    commitMessage: 'Bob 2',
-    commitDescription: 'Long Bob 2',
   },
 };
 
 export const MOCK_CODE_VERSIONS: CodeType[] = [
-  MOCK_CODE_APP_DATA_BOB_PY,
-  MOCK_CODE_APP_DATA_OLD_BOB_PY,
   {
     id: uuid(),
     itemId: MOCK_SERVER_ITEM.id,

@@ -9,7 +9,7 @@ import React, {
 } from 'react';
 
 import { INSTRUCTOR_CODE_VERSION_SETTINGS_NAME } from '../../config/appSettingsTypes';
-import { DEFAULT_CODE_VERSION_SETTING } from '../../config/codeVersions';
+import { DEFAULT_CODE_VERSION_SETTING } from '../../config/codeVersionType';
 import {
   ANONYMOUS_USER,
   INSTRUCTOR_CODE_ID,

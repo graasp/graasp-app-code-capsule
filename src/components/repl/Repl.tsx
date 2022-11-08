@@ -1,10 +1,16 @@
-import { FC, useEffect, useState } from 'react';
+import { FC, KeyboardEvent, useEffect, useState } from 'react';
 
 import { PyWorker, PyodideStatus } from '@graasp/pyodide';
 
-import { Alert, Stack } from '@mui/material';
-import Grid from '@mui/material/Unstable_Grid2';
+import {
+  Alert,
+  Box,
+  Stack,
+  styled,
+  experimental_sx as sx,
+} from '@mui/material';
 
+import { APP_DATA_TYPES } from '../../config/appDataTypes';
 import { CODE_EXECUTION_SETTINGS_NAME } from '../../config/appSettingsTypes';
 import { REPL_CONTAINER_CY, REPL_EDITOR_ID_CY } from '../../config/selectors';
 import { DEFAULT_CODE_EXECUTION_SETTINGS } from '../../config/settings';
@@ -13,9 +19,19 @@ import { CodeExecutionSettingsKeys } from '../../interfaces/settings';
 import { useAppDataContext } from '../context/AppDataContext';
 import { useSettings } from '../context/SettingsContext';
 import CodeEditor from './CodeEditor';
-import InputArea from './InputArea';
+import NoobInput from './NoobInput';
+import OutputConsole from './OutputConsole';
 import ReplToolbar from './ReplToolbar';
 import ShowFigures from './ShowFigures';
+
+const OutlineWrapper = styled(Box)(
+  sx({
+    border: 1,
+    borderColor: 'info.main',
+    borderRadius: 1,
+    // overflow: 'hidden',
+  }),
+);
 
 type Props = {
   seedValue: CodeVersionType;
@@ -31,14 +47,13 @@ const Repl: FC<Props> = ({ seedValue }) => {
   const [error, setError] = useState<string | null>(null);
   const [figures, setFigures] = useState<string[]>([]);
 
-  const { codeAppData } = useAppDataContext();
+  const { liveCode, postAppData } = useAppDataContext();
   // sort app data by the latest to the oldest
-  const sortedCodeVersions = codeAppData.sort((a, b) =>
-    Date.parse(a.updatedAt) > Date.parse(b.updatedAt) ? 1 : -1,
+  const sortedCodeVersions = liveCode.sort((a, b) =>
+    Date.parse(a.updatedAt) < Date.parse(b.updatedAt) ? 1 : -1,
   );
-  const latestCode = sortedCodeVersions.get(0)?.data?.code || '';
-
-  const currentCode = seedValue ? seedValue.code : latestCode;
+  const latestCode = sortedCodeVersions.get(0)?.data?.code;
+  const currentCode = latestCode || (seedValue ? seedValue.code : '');
 
   // todo: get value from app data for the user
   const [value, setValue] = useState(currentCode);
@@ -56,7 +71,6 @@ const Repl: FC<Props> = ({ seedValue }) => {
 
   // register worker on mount
   useEffect(() => {
-    // todo: reconciliate the concat output option
     const workerInstance = new PyWorker(
       'https://spaenleh.github.io/graasp-pyodide/fullWorker.min.js',
     );
@@ -117,6 +131,8 @@ const Repl: FC<Props> = ({ seedValue }) => {
   };
 
   const onClickClearOutput = (): void => {
+    worker?.stop();
+    worker?.create();
     setOutput('');
     setFigures([]);
     worker?.clearOutput();
@@ -149,15 +165,26 @@ const Repl: FC<Props> = ({ seedValue }) => {
   };
 
   const onClickSaveCode = (): void => {
-    // todo: logic to save to app data
+    // creates a new app data each time the user saves
+    postAppData({ data: { code: value }, type: APP_DATA_TYPES.LIVE_CODE });
+  };
+
+  const handleEditorKeyDown = (event: KeyboardEvent<HTMLDivElement>): void => {
+    if (event.ctrlKey && event.key === 'Enter') {
+      event.preventDefault();
+      (document.activeElement as HTMLDivElement)?.blur();
+      onClickRunCode();
+    }
   };
 
   return (
     <Stack
+      display="flex"
       direction="column"
-      height="100%"
-      spacing={1}
+      height="100vh"
       data-cy={REPL_CONTAINER_CY}
+      spacing={1}
+      p={2}
     >
       <ReplToolbar
         onRunCode={onClickRunCode}
@@ -166,67 +193,40 @@ const Repl: FC<Props> = ({ seedValue }) => {
         onSaveCode={onClickSaveCode}
         status={replStatus}
       />
-      <Grid container direction="row" height="100%">
-        <Grid
-          xs
-          sx={{
-            mr: 0.5,
-            border: 1,
-            borderRadius: 1,
-            borderColor: 'error.main',
-            overflow: 'hidden',
-          }}
+      <Stack flex={1} direction="row" spacing={1} overflow="hidden">
+        <OutlineWrapper
+          flex={1}
+          overflow="hidden"
+          onKeyDown={handleEditorKeyDown}
         >
           <CodeEditor
             id={REPL_EDITOR_ID_CY}
             value={value}
             setValue={setValue}
           />
-        </Grid>
-        <Grid
-          container
-          xs
+        </OutlineWrapper>
+        <Stack
+          display="flex"
+          flex={1}
           direction="column"
-          sx={{
-            ml: 0.5,
-          }}
+          spacing={1}
+          overflow="hidden"
         >
-          <Grid
-            xs
-            display="flex"
-            width="100%"
-            sx={{
-              p: 1,
-              overflow: 'hidden',
-              mb: 0.5,
-              border: 1,
-              borderRadius: 1,
-              borderColor: 'info.main',
-            }}
-          >
-            <InputArea
+          <OutlineWrapper display="flex" flex={1} p={1}>
+            <OutputConsole output={output} />
+            <NoobInput
+              prompt={prompt}
+              isWaitingForInput={isWaitingForInput}
               onValidate={onClickValidateInput}
               onCancel={onClickCancel}
-              prompt={output + (isWaitingForInput ? prompt : '')}
-              readOnly={!isWaitingForInput}
             />
-          </Grid>
-          <Grid
-            xs
-            display="flex"
-            overflow="hidden"
-            sx={{
-              mt: 0.5,
-              border: 1,
-              borderRadius: 1,
-              borderColor: 'info.main',
-            }}
-          >
+          </OutlineWrapper>
+          <OutlineWrapper>
             <ShowFigures figures={figures} />
-          </Grid>
-        </Grid>
-      </Grid>
-      {error && <Alert color="error">{error}</Alert>}
+          </OutlineWrapper>
+        </Stack>
+        {error && <Alert color="error">{error}</Alert>}
+      </Stack>
     </Stack>
   );
 };

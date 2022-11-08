@@ -13,6 +13,7 @@ import { MUTATION_KEYS, hooks, useMutation } from '../../config/queryClient';
 import { DEFAULT_GENERAL_SETTINGS } from '../../config/settings';
 import { CodeType } from '../../interfaces/codeVersions';
 import { CommentType, VisibilityVariants } from '../../interfaces/comment';
+import { LiveCodeType } from '../../interfaces/liveCode';
 import { SETTINGS_KEYS } from '../../interfaces/settings';
 import Loader from '../common/Loader';
 import { useSettings } from './SettingsContext';
@@ -38,6 +39,7 @@ export type AppDataContextType = {
   deleteAppData: (payload: DeleteAppDataType) => void;
   codeAppData: Immutable.List<CodeType>;
   comments: Immutable.List<CommentType>;
+  liveCode: Immutable.List<LiveCodeType>;
 };
 
 const defaultContextValue = {
@@ -46,6 +48,7 @@ const defaultContextValue = {
   deleteAppData: () => null,
   codeAppData: Immutable.List<CodeType>(),
   comments: Immutable.List<CommentType>(),
+  liveCode: Immutable.List<LiveCodeType>(),
 };
 
 const AppDataContext = createContext<AppDataContextType>(defaultContextValue);
@@ -93,6 +96,9 @@ export const AppDataProvider: FC<PropsWithChildren<Prop>> = ({
     const codeAppData = filteredAppData?.filter(
       (res) => res.type === APP_DATA_TYPES.CODE,
     ) as List<CodeType>;
+    const liveCode = filteredAppData?.filter(
+      (res) => res.type === APP_DATA_TYPES.LIVE_CODE,
+    ) as List<LiveCodeType>;
     return {
       postAppData: (payload: PostAppDataType) => {
         postAppData({ visibility: visibilityVariant, ...payload });
@@ -101,6 +107,7 @@ export const AppDataProvider: FC<PropsWithChildren<Prop>> = ({
       deleteAppData,
       codeAppData,
       comments,
+      liveCode,
     };
   }, [
     appData.data,

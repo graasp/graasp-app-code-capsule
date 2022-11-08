@@ -4,6 +4,7 @@ export default defineConfig({
   video: true,
 
   e2e: {
+    retries: 2,
     // We've imported your old cypress plugins here.
     // You may want to clean this up later by importing these.
     setupNodeEvents(on, config) {

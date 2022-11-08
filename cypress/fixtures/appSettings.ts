@@ -9,7 +9,7 @@ import {
   GENERAL_SETTINGS_NAME,
   INSTRUCTOR_CODE_VERSION_SETTINGS_NAME,
 } from '../../src/config/appSettingsTypes';
-import { DEFAULT_CODE_VERSION_SETTING } from '../../src/config/codeVersions';
+import { DEFAULT_CODE_VERSION_SETTING } from '../../src/config/codeVersionType';
 import { PYTHON } from '../../src/config/constants';
 import {
   DEFAULT_APP_MODE_SETTING,

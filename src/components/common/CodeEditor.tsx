@@ -16,7 +16,7 @@ import {
   CodeEditorSubmitTarget,
   INSTRUCTOR_CODE_VERSION_SETTINGS_NAME,
 } from '../../config/appSettingsTypes';
-import { DEFAULT_CODE_VERSION_SETTING } from '../../config/codeVersions';
+import { DEFAULT_CODE_VERSION_SETTING } from '../../config/codeVersionType';
 import { SMALL_BORDER_RADIUS } from '../../config/layout';
 import { programmingLanguageSelect } from '../../config/programmingLanguages';
 import { MUTATION_KEYS, hooks, useMutation } from '../../config/queryClient';

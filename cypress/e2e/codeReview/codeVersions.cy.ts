@@ -73,7 +73,7 @@ describe('Code Versions', () => {
 
     // open dropdown
     cy.get(buildDataCy(TOOLBAR_USER_SELECT_CYPRESS)).click();
-    cy.get(`ul > li[data-value="${MEMBERS.BOB.id}"]`).click();
+    cy.get(`ul > li[data-value="${MEMBERS.ANNA.id}"]`).click();
     cy.get(`${buildDataCy(TOOLBAR_VERSION_SELECT_CYPRESS)} > input`).should(
       'have.value',
       MOCK_CODE_VERSIONS[0].id,

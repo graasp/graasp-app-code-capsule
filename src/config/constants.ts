@@ -5,6 +5,7 @@ export const NB_COL_TABLE_VIEW_TABLE = 4;
 
 // reset timeout in ms for settings dialog
 export const CLOSE_SETTINGS_TIMEOUT = 500;
+export const FOCUS_TIMEOUT = 100;
 
 // commit message truncation length
 export const DEFAULT_TRUNCATION_COMMIT_MESSAGE_LENGTH = 15;

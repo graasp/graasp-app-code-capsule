@@ -5,10 +5,16 @@ import {
   REPLY_SAVE_BUTTON_CY,
   REPL_CONTAINER_CY,
   REPL_EDITOR_ID_CY,
+  REPL_INPUT_DIALOG_PROMPT_TEXT_CY,
+  REPL_INPUT_DIALOG_TEXTFIELD_CY,
   REPL_OUTPUT_CONSOLE_CY,
   REPL_STATUS_INDICATOR_CY,
   buildDataCy,
 } from '../../../src/config/selectors';
+import {
+  MOCK_CODE_APP_DATA_BOB_PY,
+  MOCK_CODE_APP_DATA_OLD_BOB_PY,
+} from '../../fixtures/appData';
 import {
   CODE_EXECUTION_MODE_SETTING,
   FOOTER_CODE_MESSAGE,
@@ -44,27 +50,28 @@ describe('Display Code Execution', () => {
   });
 
   it('Ask for input', () => {
+    const prompt = 'What is your age?';
     // wait until the editor is ready
     cy.waitForReplReady();
     // type some student code into the editor
     cy.typeInEditor(
-      `age = input('What is your age?')\nprint('You are {}'.format(age))`,
+      `age = input('${prompt}')\nprint('You are {}'.format(age))`,
       REPL_EDITOR_ID_CY,
     );
     // execute code
     cy.runRepl();
 
-    // check that the text is displayed
-    cy.get(buildDataCy(REPL_OUTPUT_CONSOLE_CY), {
+    // check that the prompt is displayed
+    cy.get(buildDataCy(REPL_INPUT_DIALOG_PROMPT_TEXT_CY), {
       timeout: REPL_TIMEOUT,
-    }).should('contain.text', 'What is your age?');
+    }).should('contain.text', prompt);
     cy.get(buildDataCy(REPL_STATUS_INDICATOR_CY)).should(
       'have.text',
       PyodideStatus.WAIT_INPUT,
     );
 
     // enter a response in the output console
-    cy.get(buildDataCy(REPL_OUTPUT_CONSOLE_CY)).type('43{enter}');
+    cy.get(buildDataCy(REPL_INPUT_DIALOG_TEXTFIELD_CY)).type('43{enter}');
     cy.get(buildDataCy(REPL_OUTPUT_CONSOLE_CY)).should(
       'contain.text',
       'You are 43',
@@ -107,42 +114,42 @@ describe('Initial Code value', () => {
   });
 
   // todo: un-comment when the instructor version is fixed
-  // describe('Most recent CodeVersion', () => {
-  //   const latestCodeVersion = `print('I am the most recent')`;
-  //   const oldCodeVersion = `print('I am old')`;
-  //   beforeEach(() => {
-  //     cy.setUpApi({
-  //       database: {
-  //         appSettings: [CODE_EXECUTION_MODE_SETTING],
-  //         appData: [
-  //           {
-  //             ...MOCK_CODE_APP_DATA_BOB_PY,
-  //             data: {
-  //               ...MOCK_CODE_APP_DATA_BOB_PY.data,
-  //               code: latestCodeVersion,
-  //             },
-  //           },
+  describe('Most recent CodeVersion', () => {
+    const latestCodeVersion = `print('I am the most recent')`;
+    const oldCodeVersion = `print('I am old')`;
+    beforeEach(() => {
+      cy.setUpApi({
+        database: {
+          appSettings: [CODE_EXECUTION_MODE_SETTING],
+          appData: [
+            {
+              ...MOCK_CODE_APP_DATA_BOB_PY,
+              data: {
+                ...MOCK_CODE_APP_DATA_BOB_PY.data,
+                code: latestCodeVersion,
+              },
+            },
 
-  //           {
-  //             ...MOCK_CODE_APP_DATA_OLD_BOB_PY,
-  //             data: {
-  //               ...MOCK_CODE_APP_DATA_OLD_BOB_PY.data,
-  //               code: oldCodeVersion,
-  //             },
-  //           },
-  //         ],
-  //       },
-  //       appContext: {
-  //         context: Context.PLAYER,
-  //         permission: PermissionLevel.Write,
-  //       },
-  //     });
-  //     cy.visit('/');
-  //   });
+            {
+              ...MOCK_CODE_APP_DATA_OLD_BOB_PY,
+              data: {
+                ...MOCK_CODE_APP_DATA_OLD_BOB_PY.data,
+                code: oldCodeVersion,
+              },
+            },
+          ],
+        },
+        appContext: {
+          context: Context.PLAYER,
+          permission: PermissionLevel.Write,
+        },
+      });
+      cy.visit('/');
+    });
 
-  //   it('Use latest code version', () => {
-  //     cy.waitForReplReady();
-  //     cy.get(`#${REPL_EDITOR_ID_CY}`).should('contain', latestCodeVersion);
-  //   });
-  // });
+    it('Use latest code version', () => {
+      cy.waitForReplReady();
+      cy.get(`#${REPL_EDITOR_ID_CY}`).should('contain', latestCodeVersion);
+    });
+  });
 });
