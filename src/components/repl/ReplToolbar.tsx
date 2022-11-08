@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { PyodideStatus } from '@graasp/pyodide';
 
 import { PlayArrow, Save, Square } from '@mui/icons-material';
-import { Stack } from '@mui/material';
+import { Stack, Typography } from '@mui/material';
 
 import {
   IconDefinition,
@@ -34,6 +34,7 @@ type Props = {
   onClearOutput: () => void;
   onSaveCode: () => void;
   status: PyodideStatus;
+  savedStatus: boolean;
 };
 
 const ReplToolbar: FC<Props> = ({
@@ -42,6 +43,7 @@ const ReplToolbar: FC<Props> = ({
   onClearOutput,
   onSaveCode,
   status,
+  savedStatus,
 }) => {
   const { t } = useTranslation();
   const isLoading = [
@@ -63,12 +65,18 @@ const ReplToolbar: FC<Props> = ({
         width="50%"
       >
         <ReplStatusIndicator status={status} />
-        <Stack direction="row" spacing={1}>
+        <Stack direction="row" spacing={1} alignItems="center">
+          {!savedStatus && (
+            <Typography variant="caption">
+              {t('Unsaved modifications')}
+            </Typography>
+          )}
           <MiniButton
             dataCy={REPLY_SAVE_BUTTON_CY}
             icon={<Save />}
             onClick={onSaveCode}
-            text={t('Save')}
+            disabled={savedStatus}
+            text={savedStatus ? t('Saved') : t('Save')}
           />
           <MiniButton
             dataCy={REPL_RUN_CODE_BUTTON_CY}

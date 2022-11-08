@@ -1,13 +1,8 @@
 import React, { FC, ReactElement, useEffect, useState } from 'react';
 
-import { Stack } from '@mui/material';
-
 import { APP_MODE_SETTINGS_NAME, AppMode } from '../../config/appSettingsTypes';
 import { AppView } from '../../config/layout';
-import {
-  CODE_EDITOR_CONTAINER_CYPRESS,
-  CODE_EXECUTION_CONTAINER_CYPRESS,
-} from '../../config/selectors';
+import { CODE_EDITOR_CONTAINER_CYPRESS } from '../../config/selectors';
 import { DEFAULT_APP_MODE_SETTING } from '../../config/settings';
 import { AppModeSettingsKeys } from '../../interfaces/settings';
 import CodeReview from '../codeReview/CodeReview';

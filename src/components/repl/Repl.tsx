@@ -65,7 +65,7 @@ const Repl: FC<Props> = ({ seedValue }) => {
 
   // todo: get value from app data for the user
   const [value, setValue] = useState(currentCode);
-
+  const savedStatus = value === currentCode;
   const {
     [CODE_EXECUTION_SETTINGS_NAME]:
       codeExecSettings = DEFAULT_CODE_EXECUTION_SETTINGS,
@@ -78,57 +78,61 @@ const Repl: FC<Props> = ({ seedValue }) => {
   );
 
   // register worker on mount
-  useEffect(() => {
-    const workerInstance = new PyWorker(
-      'https://spaenleh.github.io/graasp-pyodide/fullWorker.min.js',
-    );
-
-    workerInstance.onOutput = (newOutput: string, append = false) => {
-      setOutput((prevOutput) =>
-        append ? `${prevOutput}${newOutput}` : newOutput,
+  useEffect(
+    () => {
+      const workerInstance = new PyWorker(
+        'https://spaenleh.github.io/graasp-pyodide/fullWorker.min.js',
       );
-    };
 
-    workerInstance.onInput = (newPrompt: string) => {
-      setIsWaitingForInput(true);
-      setPrompt(newPrompt);
-    };
+      workerInstance.onOutput = (newOutput: string, append = false) => {
+        setOutput((prevOutput) =>
+          append ? `${prevOutput}${newOutput}` : newOutput,
+        );
+      };
 
-    // todo: improve type of function to be able to remove the ts error
-    // @ts-ignore
-    workerInstance.onError = (newError: { data: string }) => {
-      setError(newError.data);
+      workerInstance.onInput = (newPrompt: string) => {
+        setIsWaitingForInput(true);
+        setPrompt(newPrompt);
+      };
+
+      // todo: improve type of function to be able to remove the ts error
+      // @ts-ignore
+      workerInstance.onError = (newError: { data: string }) => {
+        setError(newError.data);
+        postAction({
+          type: APP_ACTIONS_TYPES.PYODIDE_ERROR,
+          data: { error: newError },
+        });
+      };
+
+      workerInstance.onTerminated = () => {
+        setIsExecuting(false);
+        setReplStatus(PyodideStatus.READY);
+      };
+
+      workerInstance.onFigure = (figureData) => {
+        setFigures((prevFigures) => [...prevFigures, figureData]);
+        postAction({
+          type: APP_ACTIONS_TYPES.NEW_FIGURE,
+          data: { figure: figureData },
+        });
+      };
+
+      workerInstance.onStatusUpdate = (status: PyodideStatus) => {
+        setReplStatus(status);
+      };
+
+      // preload worker instance
+      workerInstance.preload();
+
+      setWorker(workerInstance);
       postAction({
-        type: APP_ACTIONS_TYPES.PYODIDE_ERROR,
-        data: { error: newError },
+        type: APP_ACTIONS_TYPES.INITIALIZE_EXECUTION,
       });
-    };
-
-    workerInstance.onTerminated = () => {
-      setIsExecuting(false);
-      setReplStatus(PyodideStatus.READY);
-    };
-
-    workerInstance.onFigure = (figureData) => {
-      setFigures((prevFigures) => [...prevFigures, figureData]);
-      postAction({
-        type: APP_ACTIONS_TYPES.NEW_FIGURE,
-        data: { figure: figureData },
-      });
-    };
-
-    workerInstance.onStatusUpdate = (status: PyodideStatus) => {
-      setReplStatus(status);
-    };
-
-    // preload worker instance
-    workerInstance.preload();
-
-    setWorker(workerInstance);
-    postAction({
-      type: APP_ACTIONS_TYPES.INITIALIZE_EXECUTION,
-    });
-  }, []);
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [],
+  );
 
   const onClickRunCode = (): void => {
     // to run the code:
@@ -213,10 +217,16 @@ const Repl: FC<Props> = ({ seedValue }) => {
   };
 
   const handleEditorKeyDown = (event: KeyboardEvent<HTMLDivElement>): void => {
+    // run code using CTRL + ENTER
     if (event.ctrlKey && event.key === 'Enter') {
       event.preventDefault();
       (document.activeElement as HTMLDivElement)?.blur();
       onClickRunCode();
+    }
+
+    if (event.ctrlKey && event.key === 's') {
+      event.preventDefault();
+      onClickSaveCode();
     }
   };
 
@@ -230,6 +240,7 @@ const Repl: FC<Props> = ({ seedValue }) => {
       p={2}
     >
       <ReplToolbar
+        savedStatus={savedStatus}
         onRunCode={onClickRunCode}
         onStopCode={onClickStopCode}
         onClearOutput={onClickClearOutput}
