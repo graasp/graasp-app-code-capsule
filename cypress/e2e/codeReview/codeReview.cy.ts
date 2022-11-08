@@ -232,13 +232,11 @@ describe('Code Review Tools', () => {
     );
   });
 
-  it('should edit code', () => {
+  it.skip('should edit code', () => {
     const newCode = '#testing new code';
     // open editing
     cy.openCodeEditor();
 
-    // enter new code (need to clear two times because otherwise it does not clear everything
-    cy.wait(waitingDelay);
     cy.typeInEditor(newCode);
 
     // enter a commit message
