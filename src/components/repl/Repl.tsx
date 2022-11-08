@@ -10,8 +10,10 @@ import {
   experimental_sx as sx,
 } from '@mui/material';
 
+import { APP_ACTIONS_TYPES } from '../../config/appActionsTypes';
 import { APP_DATA_TYPES } from '../../config/appDataTypes';
 import { CODE_EXECUTION_SETTINGS_NAME } from '../../config/appSettingsTypes';
+import { MUTATION_KEYS, useMutation } from '../../config/queryClient';
 import { REPL_CONTAINER_CY, REPL_EDITOR_ID_CY } from '../../config/selectors';
 import { DEFAULT_CODE_EXECUTION_SETTINGS } from '../../config/settings';
 import { CodeVersionType } from '../../interfaces/codeVersions';
@@ -46,6 +48,12 @@ const Repl: FC<Props> = ({ seedValue }) => {
   const [prompt, setPrompt] = useState<string>('');
   const [error, setError] = useState<string | null>(null);
   const [figures, setFigures] = useState<string[]>([]);
+
+  const { mutate: postAction } = useMutation<
+    unknown,
+    unknown,
+    { type: string; data?: { [key: string]: unknown } }
+  >(MUTATION_KEYS.POST_APP_ACTION);
 
   const { liveCode, postAppData } = useAppDataContext();
   // sort app data by the latest to the oldest
@@ -90,6 +98,10 @@ const Repl: FC<Props> = ({ seedValue }) => {
     // @ts-ignore
     workerInstance.onError = (newError: { data: string }) => {
       setError(newError.data);
+      postAction({
+        type: APP_ACTIONS_TYPES.PYODIDE_ERROR,
+        data: { error: newError },
+      });
     };
 
     workerInstance.onTerminated = () => {
@@ -99,6 +111,10 @@ const Repl: FC<Props> = ({ seedValue }) => {
 
     workerInstance.onFigure = (figureData) => {
       setFigures((prevFigures) => [...prevFigures, figureData]);
+      postAction({
+        type: APP_ACTIONS_TYPES.NEW_FIGURE,
+        data: { figure: figureData },
+      });
     };
 
     workerInstance.onStatusUpdate = (status: PyodideStatus) => {
@@ -109,6 +125,9 @@ const Repl: FC<Props> = ({ seedValue }) => {
     workerInstance.preload();
 
     setWorker(workerInstance);
+    postAction({
+      type: APP_ACTIONS_TYPES.INITIALIZE_EXECUTION,
+    });
   }, []);
 
   const onClickRunCode = (): void => {
@@ -126,6 +145,8 @@ const Repl: FC<Props> = ({ seedValue }) => {
         worker.clearOutput();
         setOutput('');
         worker.run(fullCode);
+        // post that code was run
+        postAction({ type: APP_ACTIONS_TYPES.RUN_CODE, data: { code: value } });
       }
     }
   };
@@ -136,6 +157,8 @@ const Repl: FC<Props> = ({ seedValue }) => {
     setOutput('');
     setFigures([]);
     worker?.clearOutput();
+    // post that the console was cleared
+    postAction({ type: APP_ACTIONS_TYPES.CLEAR_OUTPUT });
   };
 
   const onClickStopCode = (): void => {
@@ -143,10 +166,18 @@ const Repl: FC<Props> = ({ seedValue }) => {
       worker.cancelInput();
       worker.stop();
       setIsWaitingForInput(false);
+      postAction({
+        type: APP_ACTIONS_TYPES.STOP_EXECUTION_DURING_PROMPT,
+        data: { prompt },
+      });
     }
     if (isExecuting && worker) {
       worker.stop();
       setIsExecuting(false);
+      postAction({
+        type: APP_ACTIONS_TYPES.STOP_EXECUTION,
+        data: { code: value },
+      });
     }
   };
 
@@ -154,19 +185,31 @@ const Repl: FC<Props> = ({ seedValue }) => {
     if (worker) {
       worker.submitInput(userInput);
       setIsWaitingForInput(false);
+      postAction({
+        type: APP_ACTIONS_TYPES.SUBMITTED_INPUT,
+        data: { input: userInput },
+      });
     }
   };
 
-  const onClickCancel = (): void => {
+  const onClickCancel = (userInput: string): void => {
     if (worker) {
       worker.cancelInput();
       setIsWaitingForInput(false);
+      postAction({
+        type: APP_ACTIONS_TYPES.CANCEL_PROMPT,
+        data: { input: userInput },
+      });
     }
   };
 
   const onClickSaveCode = (): void => {
     // creates a new app data each time the user saves
     postAppData({ data: { code: value }, type: APP_DATA_TYPES.LIVE_CODE });
+    postAction({
+      type: APP_ACTIONS_TYPES.SAVE_CODE,
+      data: { code: value },
+    });
   };
 
   const handleEditorKeyDown = (event: KeyboardEvent<HTMLDivElement>): void => {

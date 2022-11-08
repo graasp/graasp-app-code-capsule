@@ -23,7 +23,7 @@ type Props = {
   prompt: string;
   isWaitingForInput: boolean;
   onValidate: (input: string) => void;
-  onCancel: () => void;
+  onCancel: (input: string) => void;
 };
 
 const NoobInput: FC<Props> = ({
@@ -53,7 +53,7 @@ const NoobInput: FC<Props> = ({
   };
 
   const handleCancelInput = (): void => {
-    onCancel();
+    onCancel(userInput);
     resetUserInput();
   };
 
