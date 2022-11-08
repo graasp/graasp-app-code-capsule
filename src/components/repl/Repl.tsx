@@ -53,7 +53,7 @@ const Repl: FC<Props> = ({ seedValue }) => {
   const { mutate: postAction } = useMutation<
     unknown,
     unknown,
-    { type: string; data?: { [key: string]: unknown } }
+    { type: string; data: { [key: string]: unknown } }
   >(MUTATION_KEYS.POST_APP_ACTION);
 
   const { liveCode, postAppData } = useAppDataContext();
@@ -127,6 +127,7 @@ const Repl: FC<Props> = ({ seedValue }) => {
       setWorker(workerInstance);
       postAction({
         type: APP_ACTIONS_TYPES.INITIALIZE_EXECUTION,
+        data: {},
       });
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -161,7 +162,7 @@ const Repl: FC<Props> = ({ seedValue }) => {
     setFigures([]);
     worker?.clearOutput();
     // post that the console was cleared
-    postAction({ type: APP_ACTIONS_TYPES.CLEAR_OUTPUT });
+    postAction({ type: APP_ACTIONS_TYPES.CLEAR_OUTPUT, data: {} });
   };
 
   const onClickStopCode = (): void => {
