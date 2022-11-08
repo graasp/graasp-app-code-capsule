@@ -12,6 +12,11 @@ jobs:
         with:
           node-version: '16'
 
+      - name: Yarn Install and Cache
+        uses: graasp/graasp-deploy/.github/actions/yarn-install-and-cache@v1
+        with:
+          cypress: true
+
       - name: cypress run
         uses: cypress-io/github-action@v4
         env:
@@ -21,6 +26,7 @@ jobs:
           REACT_APP_MOCK_API: true
           NODE_ENV: test
         with:
+          install: false
           build: yarn build
           config: baseUrl=http://localhost:3000
           start: yarn start:ci
