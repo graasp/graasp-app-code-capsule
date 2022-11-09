@@ -26,6 +26,7 @@ const ReplStatusIndicator: FC<Props> = ({ status }) => {
       break;
     case PyodideStatus.LOADING_PYODIDE:
     case PyodideStatus.LOADING_MODULE:
+    case PyodideStatus.PRE_LOADING_MODULE:
     case PyodideStatus.INSTALLING:
     case PyodideStatus.RUNNING:
       style = {
@@ -34,8 +35,9 @@ const ReplStatusIndicator: FC<Props> = ({ status }) => {
       };
       Icon = HourglassEmpty;
       break;
-    case PyodideStatus.ERROR:
+    case PyodideStatus.PRE_LOADING_MODULE_ERROR:
     case PyodideStatus.TIMEOUT:
+    case PyodideStatus.ERROR:
       style = {
         borderColor: 'error.main',
         color: 'error.main',

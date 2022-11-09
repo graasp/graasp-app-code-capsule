@@ -83,6 +83,8 @@ const Repl: FC<Props> = ({ seedValue }) => {
         'https://spaenleh.github.io/graasp-pyodide/fullWorker.min.js',
       );
 
+      workerInstance.preLoadedPackages = ['scikit-learn'];
+
       workerInstance.onOutput = (newOutput: string, append = false) => {
         setOutput((prevOutput) =>
           append ? `${prevOutput}${newOutput}` : newOutput,
