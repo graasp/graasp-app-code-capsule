@@ -36,6 +36,7 @@ export const DEFAULT_SHOW_HEADER_SETTING = false;
 export const DEFAULT_SHOW_TOOLBAR_SETTING = true;
 export const DEFAULT_SHOW_VERSION_NAVIGATION_SETTING = false;
 export const DEFAULT_SHOW_EDIT_BUTTON_SETTING = false;
+export const DEFAULT_SHOW_RUN_BUTTON_SETTING = false;
 export const DEFAULT_SHOW_VISIBILITY_BUTTON_SETTING = true;
 export const DEFAULT_ALLOW_COMMENTS_SETTING = true;
 export const DEFAULT_ALLOW_REPLIES_SETTING = true;
@@ -54,6 +55,7 @@ export const DEFAULT_GENERAL_SETTINGS: GeneralSettings = {
   [GeneralSettingsKeys.ShowVersionNavigation]:
     DEFAULT_SHOW_VERSION_NAVIGATION_SETTING,
   [GeneralSettingsKeys.ShowEditButton]: DEFAULT_SHOW_EDIT_BUTTON_SETTING,
+  [GeneralSettingsKeys.ShowRunButton]: DEFAULT_SHOW_RUN_BUTTON_SETTING,
   [GeneralSettingsKeys.ShowVisibilityButton]:
     DEFAULT_SHOW_VISIBILITY_BUTTON_SETTING,
   [GeneralSettingsKeys.AllowComments]: DEFAULT_ALLOW_COMMENTS_SETTING,

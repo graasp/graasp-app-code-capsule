@@ -10,6 +10,7 @@ import {
   REVIEW_MODES_SELECT_CYPRESS,
   SHOW_EDIT_BUTTON_SWITCH_CYPRESS,
   SHOW_HEADER_SWITCH_CYPRESS,
+  SHOW_RUN_BUTTON_SWITCH_CYPRESS,
   SHOW_TOOLBAR_SWITCH_CYPRESS,
   SHOW_VERSION_NAVIGATION_SWITCH_CYPRESS,
   SHOW_VISIBILITY_SWITCH_CYPRESS,
@@ -57,6 +58,13 @@ const DisplaySettings: FC<Props> = ({ localSettings, changeSetting }) => {
         value={localSettings[GeneralSettingsKeys.ShowEditButton]}
         label={t('Show Code Edit Button')}
         dataCy={SHOW_EDIT_BUTTON_SWITCH_CYPRESS}
+        changeSetting={changeSetting}
+      />
+      <SettingsSwitch
+        settingKey={GeneralSettingsKeys.ShowRunButton}
+        value={localSettings[GeneralSettingsKeys.ShowRunButton]}
+        label={t('Show Code Run Button')}
+        dataCy={SHOW_RUN_BUTTON_SWITCH_CYPRESS}
         changeSetting={changeSetting}
       />
       <SettingsSwitch

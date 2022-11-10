@@ -48,6 +48,7 @@ export const SHOW_TOOLBAR_SWITCH_CYPRESS = 'show_toolbar_switch';
 export const SHOW_VERSION_NAVIGATION_SWITCH_CYPRESS =
   'show_version_navigation_switch';
 export const SHOW_EDIT_BUTTON_SWITCH_CYPRESS = 'show_edit_button_switch';
+export const SHOW_RUN_BUTTON_SWITCH_CYPRESS = 'show_run_button_switch';
 export const SHOW_VISIBILITY_SWITCH_CYPRESS = 'show_visibility_switch';
 export const ALLOW_COMMENTS_SWITCH_CYPRESS = 'allow_comments_switch';
 export const ALLOW_REPLIES_SWITCH_CYPRESS = 'allow_replies_switch';

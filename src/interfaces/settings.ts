@@ -6,6 +6,7 @@ export enum GeneralSettingsKeys {
   ShowToolbar = 'showToolbar',
   ShowVersionNavigation = 'showVersionNavigation',
   ShowEditButton = 'showEditButton',
+  ShowRunButton = 'showRunButton',
   ShowVisibilityButton = 'showVisibilityButton',
   AllowComments = 'allowComments',
   AllowReplies = 'allowReplies',
@@ -38,6 +39,7 @@ export type GeneralSettings = {
   [GeneralSettingsKeys.ShowToolbar]: boolean;
   [GeneralSettingsKeys.ShowVersionNavigation]: boolean;
   [GeneralSettingsKeys.ShowEditButton]: boolean;
+  [GeneralSettingsKeys.ShowRunButton]: boolean;
   [GeneralSettingsKeys.ShowVisibilityButton]: boolean;
   [GeneralSettingsKeys.AllowComments]: boolean;
   [GeneralSettingsKeys.AllowReplies]: boolean;

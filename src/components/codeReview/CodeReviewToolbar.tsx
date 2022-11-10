@@ -92,6 +92,7 @@ const CodeReviewToolbar: FC<Props> = ({ setView }) => {
   } = useCodeVersionContext();
   const showToolbar = settings[GeneralSettingsKeys.ShowToolbar];
   const showEditButton = settings[GeneralSettingsKeys.ShowEditButton];
+  const showRunButton = settings[GeneralSettingsKeys.ShowRunButton];
   const showVisibilityToggle =
     settings[GeneralSettingsKeys.ShowVisibilityButton];
   const showCommitInfo = settings[GeneralSettingsKeys.ShowVersionNavigation];
@@ -262,7 +263,7 @@ const CodeReviewToolbar: FC<Props> = ({ setView }) => {
         <Stack direction="row" spacing={1}>
           {showCommitInfo && infoButton}
           {showEditButton && editButton}
-          {isExecutable && executeCodeButton}
+          {showRunButton && isExecutable && executeCodeButton}
           {showVisibilityToggle && toggleVisibilityButton}
         </Stack>
       </StyledStack>
