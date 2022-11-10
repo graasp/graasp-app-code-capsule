@@ -4,3 +4,8 @@ export enum Fields {
   Description = 'Description',
   Created = 'Created',
 }
+
+export enum CodeContexts {
+  Instructor,
+  Student,
+}

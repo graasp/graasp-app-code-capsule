@@ -23,7 +23,7 @@ import { COMMENT_CONTAINER_CYPRESS } from '../../config/selectors';
 import { DEFAULT_GENERAL_SETTINGS } from '../../config/settings';
 import { CommentType } from '../../interfaces/comment';
 import { ReportedCommentType } from '../../interfaces/reportedComment';
-import { SETTINGS_KEYS } from '../../interfaces/settings';
+import { GeneralSettingsKeys } from '../../interfaces/settings';
 import { getFormattedTime } from '../../utils/datetime';
 import { useMembersContext } from '../context/MembersContext';
 import { useSettings } from '../context/SettingsContext';
@@ -53,7 +53,8 @@ const Comment: FC<Props> = ({ comment }) => {
     ReportedCommentType
   >(MUTATION_KEYS.POST_APP_DATA);
 
-  const allowCommentReporting = settings[SETTINGS_KEYS.ALLOW_COMMENT_REPORTING];
+  const allowCommentReporting =
+    settings[GeneralSettingsKeys.AllowCommentsReporting];
   const [menuAnchorEl, setMenuAnchorEl] = useState<null | HTMLElement>(null);
   const [openActionsMenu, setOpenActionsMenu] = useState(false);
   const [openFlagDialog, setOpenFlagDialog] = useState(false);

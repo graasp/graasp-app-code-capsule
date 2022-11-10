@@ -112,6 +112,7 @@
     "Input requested": "Input requested",
     "Submit": "Submit",
     "Unsaved modifications": "Unsaved modifications",
-    "APP_VERSION": "version v{{ version }}"
+    "APP_VERSION": "version v{{ version }}",
+    "Choose the App Mode": "Choose the App Mode"
   }
 }

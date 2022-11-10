@@ -10,7 +10,7 @@ import {
   buildDataCy,
 } from '../../../src/config/selectors';
 import { DEFAULT_GENERAL_SETTINGS } from '../../../src/config/settings';
-import { SETTINGS_KEYS } from '../../../src/interfaces/settings';
+import { GeneralSettingsKeys } from '../../../src/interfaces/settings';
 import {
   MOCK_COMMIT_DESCRIPTION,
   MOCK_COMMIT_MESSAGE,
@@ -32,7 +32,7 @@ describe('Code Editing', () => {
             ...MOCK_GENERAL_SETTINGS,
             data: {
               ...DEFAULT_GENERAL_SETTINGS,
-              [SETTINGS_KEYS.SHOW_EDIT_BUTTON]: true,
+              [GeneralSettingsKeys.ShowEditButton]: true,
             },
           },
           MOCK_CODE_SETTINGS,

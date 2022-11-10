@@ -108,6 +108,9 @@ export const APP_MODE_EXECUTE_BUTTON_CY = 'app_mode_execute';
 export const APP_MODE_REVIEW_BUTTON_CY = 'app_mode_review';
 export const APP_MODE_COLLABORATE_BUTTON_CY = 'app_mode_collaborate';
 
+export const SETTING_APP_MODE_SELECT_FORM_LABEL_CY =
+  'setting_app_mode_select_label';
+export const SETTING_APP_MODE_SELECT_NAME_CY = 'setting_app_mode_select_label';
 export const SETTING_MAIN_CODE_EDITOR_CY = 'setting_main_code_editor';
 export const SETTING_HEADER_CODE_EDITOR_CY = 'setting_header_code_editor';
 export const SETTING_FOOTER_CODE_EDITOR_CY = 'setting_footer_code_editor';

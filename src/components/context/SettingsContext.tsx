@@ -6,17 +6,20 @@ import {
   APP_MODE_SETTINGS_NAME,
   CODE_EXECUTION_SETTINGS_NAME,
   GENERAL_SETTINGS_NAME,
+  INSTRUCTOR_CODE_VERSION_SETTINGS_NAME,
 } from '../../config/appSettingsTypes';
 import { MUTATION_KEYS, hooks, useMutation } from '../../config/queryClient';
 import {
-  DEFAULT_APP_MODE_SETTING,
+  DEFAULT_APP_MODE_SETTINGS,
   DEFAULT_CODE_EXECUTION_SETTINGS,
   DEFAULT_GENERAL_SETTINGS,
+  DEFAULT_INSTRUCTOR_CODE_VERSION_SETTINGS,
 } from '../../config/settings';
 import {
   AppModeSetting,
   CodeExecutionSettings,
   GeneralSettings,
+  InstructorCodeVersionSettings,
 } from '../../interfaces/settings';
 import Loader from '../common/Loader';
 
@@ -24,6 +27,7 @@ import Loader from '../common/Loader';
 interface AllSettingsType {
   [GENERAL_SETTINGS_NAME]?: GeneralSettings;
   [CODE_EXECUTION_SETTINGS_NAME]?: CodeExecutionSettings;
+  [INSTRUCTOR_CODE_VERSION_SETTINGS_NAME]?: InstructorCodeVersionSettings;
   [APP_MODE_SETTINGS_NAME]?: AppModeSetting;
 }
 
@@ -31,13 +35,16 @@ interface AllSettingsType {
 const defaultSettingsValues: AllSettingsType = {
   [GENERAL_SETTINGS_NAME]: DEFAULT_GENERAL_SETTINGS,
   [CODE_EXECUTION_SETTINGS_NAME]: DEFAULT_CODE_EXECUTION_SETTINGS,
-  [APP_MODE_SETTINGS_NAME]: DEFAULT_APP_MODE_SETTING,
+  [INSTRUCTOR_CODE_VERSION_SETTINGS_NAME]:
+    DEFAULT_INSTRUCTOR_CODE_VERSION_SETTINGS,
+  [APP_MODE_SETTINGS_NAME]: DEFAULT_APP_MODE_SETTINGS,
 };
 
 // list of the settings names
 const ALL_SETTING_NAMES = [
   GENERAL_SETTINGS_NAME,
   CODE_EXECUTION_SETTINGS_NAME,
+  INSTRUCTOR_CODE_VERSION_SETTINGS_NAME,
   APP_MODE_SETTINGS_NAME,
 ] as const;
 

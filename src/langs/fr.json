@@ -111,6 +111,7 @@
     "Input requested": "Saisie demandée",
     "Submit": "Soumettre",
     "Unsaved modifications": "Modification non enregistrées",
-    "APP_VERSION": "version v{{ version }}"
+    "APP_VERSION": "version v{{ version }}",
+    "Choose the App Mode": "Choisissez le mode de l'app"
   }
 }

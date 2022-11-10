@@ -9,7 +9,7 @@ import {
   GENERAL_SETTINGS_NAME,
   INSTRUCTOR_CODE_VERSION_SETTINGS_NAME,
 } from '../../src/config/appSettingsTypes';
-import { DEFAULT_CODE_VERSION_SETTING } from '../../src/config/codeVersionType';
+import { DEFAULT_INSTRUCTOR_CODE_VERSION_SETTING } from '../../src/config/codeVersionType';
 import { PYTHON } from '../../src/config/constants';
 import {
   DEFAULT_APP_MODE_SETTING,
@@ -113,7 +113,7 @@ export const MOCK_CODE_SETTINGS: AppSetting & { data: CodeVersionType } = {
   id: v4(),
   name: INSTRUCTOR_CODE_VERSION_SETTINGS_NAME,
   data: {
-    ...DEFAULT_CODE_VERSION_SETTING,
+    ...DEFAULT_INSTRUCTOR_CODE_VERSION_SETTING,
     commitMessage: MOCK_COMMIT_MESSAGE,
     commitDescription: MOCK_COMMIT_DESCRIPTION,
     code: MOCK_CODE_SAMPLE,

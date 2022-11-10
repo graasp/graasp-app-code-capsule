@@ -19,7 +19,7 @@ import {
 } from '../../config/selectors';
 import { DEFAULT_GENERAL_SETTINGS } from '../../config/settings';
 import { CommentType } from '../../interfaces/comment';
-import { SETTINGS_KEYS } from '../../interfaces/settings';
+import { GeneralSettingsKeys } from '../../interfaces/settings';
 import { buildCodeRowKey } from '../../utils/utils';
 import CommentEditor from '../common/CommentEditor';
 import CommentThread from '../common/CommentThread';
@@ -91,8 +91,8 @@ const CodeReviewBody: FC<Props> = () => {
   const { lineHiddenState } = useVisibilityContext();
   const { [GENERAL_SETTINGS_NAME]: settings = DEFAULT_GENERAL_SETTINGS } =
     useSettings();
-  const allowComments = settings[SETTINGS_KEYS.ALLOW_COMMENTS];
-  const reviewMode = settings[SETTINGS_KEYS.REVIEW_MODE];
+  const allowComments = settings[GeneralSettingsKeys.AllowComments];
+  const reviewMode = settings[GeneralSettingsKeys.ReviewMode];
   const { postAppData, comments } = useAppDataContext();
 
   const versionComments = comments?.filter((c) => c.data.codeId === codeId);

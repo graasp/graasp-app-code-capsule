@@ -1,22 +1,30 @@
 import { AppMode } from '../config/appSettingsTypes';
 
 // general settings keys
-export enum SETTINGS_KEYS {
-  SHOW_HEADER = 'showHeader',
-  SHOW_TOOLBAR = 'showToolbar',
-  SHOW_VERSION_NAVIGATION = 'showVersionNavigation',
-  SHOW_EDIT_BUTTON = 'showEditButton',
-  SHOW_VISIBILITY_BUTTON = 'showVisibilityButton',
-  ALLOW_COMMENTS = 'allowComments',
-  ALLOW_REPLIES = 'allowReplies',
-  ALLOW_COMMENT_REPORTING = 'allowCommentReporting',
-  REVIEW_MODE = 'reviewMode',
+export enum GeneralSettingsKeys {
+  ShowHeader = 'showHeader',
+  ShowToolbar = 'showToolbar',
+  ShowVersionNavigation = 'showVersionNavigation',
+  ShowEditButton = 'showEditButton',
+  ShowVisibilityButton = 'showVisibilityButton',
+  AllowComments = 'allowComments',
+  AllowReplies = 'allowReplies',
+  AllowCommentsReporting = 'allowCommentReporting',
+  ReviewMode = 'reviewMode',
+}
+
+// Code Execution settings keys
+export enum InstructorCodeSettingsKeys {
+  Code = 'code',
+  Language = 'language',
+  CommitMessage = 'commitMessage',
+  CommitDescription = 'commitDescription',
 }
 
 // Code Execution settings keys
 export enum CodeExecutionSettingsKeys {
-  HeaderCode = 'header_code',
-  FooterCode = 'footer_code',
+  HeaderCode = 'headerCode',
+  FooterCode = 'footerCode',
 }
 
 // App Mode Setting keys
@@ -26,29 +34,25 @@ export enum AppModeSettingsKeys {
 
 // type of general settings
 export type GeneralSettings = {
-  [SETTINGS_KEYS.SHOW_HEADER]: boolean;
-  [SETTINGS_KEYS.SHOW_TOOLBAR]: boolean;
-  [SETTINGS_KEYS.SHOW_VERSION_NAVIGATION]: boolean;
-  [SETTINGS_KEYS.SHOW_EDIT_BUTTON]: boolean;
-  [SETTINGS_KEYS.SHOW_VISIBILITY_BUTTON]: boolean;
-  [SETTINGS_KEYS.ALLOW_COMMENTS]: boolean;
-  [SETTINGS_KEYS.ALLOW_REPLIES]: boolean;
-  [SETTINGS_KEYS.ALLOW_COMMENT_REPORTING]: boolean;
-  [SETTINGS_KEYS.REVIEW_MODE]: string;
+  [GeneralSettingsKeys.ShowHeader]: boolean;
+  [GeneralSettingsKeys.ShowToolbar]: boolean;
+  [GeneralSettingsKeys.ShowVersionNavigation]: boolean;
+  [GeneralSettingsKeys.ShowEditButton]: boolean;
+  [GeneralSettingsKeys.ShowVisibilityButton]: boolean;
+  [GeneralSettingsKeys.AllowComments]: boolean;
+  [GeneralSettingsKeys.AllowReplies]: boolean;
+  [GeneralSettingsKeys.AllowCommentsReporting]: boolean;
+  [GeneralSettingsKeys.ReviewMode]: string;
 
   // used to allow access using settings[settingKey] syntax
   [key: string]: unknown;
 };
 
-export type CodeVersionSettings = {
-  [SETTINGS_KEYS.SHOW_HEADER]: boolean;
-  [SETTINGS_KEYS.SHOW_TOOLBAR]: boolean;
-  [SETTINGS_KEYS.SHOW_VERSION_NAVIGATION]: boolean;
-  [SETTINGS_KEYS.SHOW_EDIT_BUTTON]: boolean;
-  [SETTINGS_KEYS.SHOW_VISIBILITY_BUTTON]: boolean;
-  [SETTINGS_KEYS.ALLOW_COMMENTS]: boolean;
-  [SETTINGS_KEYS.ALLOW_REPLIES]: boolean;
-  [SETTINGS_KEYS.REVIEW_MODE]: string;
+export type InstructorCodeVersionSettings = {
+  [InstructorCodeSettingsKeys.Code]: string;
+  [InstructorCodeSettingsKeys.Language]: string;
+  [InstructorCodeSettingsKeys.CommitMessage]: string;
+  [InstructorCodeSettingsKeys.CommitDescription]: string;
 
   // used to allow access using settings[settingKey] syntax
   [key: string]: unknown;

@@ -16,7 +16,6 @@ import {
   CodeEditorSubmitTarget,
   INSTRUCTOR_CODE_VERSION_SETTINGS_NAME,
 } from '../../config/appSettingsTypes';
-import { DEFAULT_CODE_VERSION_SETTING } from '../../config/codeVersionType';
 import { SMALL_BORDER_RADIUS } from '../../config/layout';
 import { programmingLanguageSelect } from '../../config/programmingLanguages';
 import { MUTATION_KEYS, hooks, useMutation } from '../../config/queryClient';
@@ -31,6 +30,7 @@ import {
 import {
   DEFAULT_COMMIT_DESCRIPTION_SETTING,
   DEFAULT_COMMIT_MESSAGE_SETTING,
+  DEFAULT_INSTRUCTOR_CODE_VERSION_SETTINGS,
 } from '../../config/settings';
 import { CodeType, CodeVersionType } from '../../interfaces/codeVersions';
 import { useCodeVersionContext } from '../context/CodeVersionContext';
@@ -62,7 +62,7 @@ const CodeEditor: FC<Props> = ({
     language: seedLanguage,
     commitMessage: seedCommitMessage,
     commitDescription: seedCommitDescription,
-  } = seedValue || DEFAULT_CODE_VERSION_SETTING;
+  } = seedValue || DEFAULT_INSTRUCTOR_CODE_VERSION_SETTINGS;
   const [language, setLanguage] = useState(seedLanguage);
   const [code, setCode] = useState(seedCode);
   const [commitMessage, setCommitMessage] = useState(seedCommitMessage);
@@ -100,7 +100,7 @@ const CodeEditor: FC<Props> = ({
           commitMessage: commitMessageSetting,
           commitDescription: commitDescriptionSetting,
         } = (codeVersionSettings?.data as CodeVersionType) ||
-        DEFAULT_CODE_VERSION_SETTING;
+        DEFAULT_INSTRUCTOR_CODE_VERSION_SETTINGS;
         setCode(codeSetting);
         setLanguage(languageSetting);
         setCommitMessage(commitMessageSetting);
@@ -109,7 +109,7 @@ const CodeEditor: FC<Props> = ({
       case CodeEditorSubmitTarget.Code:
         // eslint-disable-next-line no-case-declarations
         const { code: newSeedCode, language: newSeedLanguage } =
-          seedValue || DEFAULT_CODE_VERSION_SETTING;
+          seedValue || DEFAULT_INSTRUCTOR_CODE_VERSION_SETTINGS;
         setCode(newSeedCode);
         setLanguage(newSeedLanguage);
         setCommitMessage(DEFAULT_COMMIT_MESSAGE_SETTING);

@@ -12,7 +12,7 @@ import {
   buildDataCy,
 } from '../../../src/config/selectors';
 import { DEFAULT_GENERAL_SETTINGS } from '../../../src/config/settings';
-import { SETTINGS_KEYS } from '../../../src/interfaces/settings';
+import { GeneralSettingsKeys } from '../../../src/interfaces/settings';
 import { MOCK_CODE_VERSIONS } from '../../fixtures/appData';
 import {
   CODE_REVIEW_MODE_SETTING,
@@ -33,8 +33,8 @@ describe('Code Versions', () => {
             ...MOCK_GENERAL_SETTINGS,
             data: {
               ...DEFAULT_GENERAL_SETTINGS,
-              [SETTINGS_KEYS.REVIEW_MODE]: REVIEW_MODE_COLLABORATIVE,
-              [SETTINGS_KEYS.SHOW_VERSION_NAVIGATION]: true,
+              [GeneralSettingsKeys.ReviewMode]: REVIEW_MODE_COLLABORATIVE,
+              [GeneralSettingsKeys.ShowVersionNavigation]: true,
             },
           },
         ],

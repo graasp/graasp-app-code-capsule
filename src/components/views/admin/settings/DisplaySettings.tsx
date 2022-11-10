@@ -16,7 +16,7 @@ import {
 } from '../../../../config/selectors';
 import {
   GeneralSettings,
-  SETTINGS_KEYS,
+  GeneralSettingsKeys,
 } from '../../../../interfaces/settings';
 import SettingsSelect from '../../../common/settings/SettingsSelect';
 import SettingsSwitch from '../../../common/settings/SettingsSwitch';
@@ -32,36 +32,36 @@ const DisplaySettings: FC<Props> = ({ localSettings, changeSetting }) => {
     <Stack>
       <Typography variant="subtitle2">{t('App Customization')}</Typography>
       <SettingsSwitch
-        settingKey={SETTINGS_KEYS.SHOW_HEADER}
-        value={localSettings[SETTINGS_KEYS.SHOW_HEADER]}
+        settingKey={GeneralSettingsKeys.ShowHeader}
+        value={localSettings[GeneralSettingsKeys.ShowHeader]}
         label={t('Show Header to Students')}
         dataCy={SHOW_HEADER_SWITCH_CYPRESS}
         changeSetting={changeSetting}
       />
       <SettingsSwitch
-        settingKey={SETTINGS_KEYS.SHOW_TOOLBAR}
-        value={localSettings[SETTINGS_KEYS.SHOW_TOOLBAR]}
+        settingKey={GeneralSettingsKeys.ShowToolbar}
+        value={localSettings[GeneralSettingsKeys.ShowToolbar]}
         label={t('Show Toolbar to Students')}
         dataCy={SHOW_TOOLBAR_SWITCH_CYPRESS}
         changeSetting={changeSetting}
       />
       <SettingsSwitch
-        settingKey={SETTINGS_KEYS.SHOW_VERSION_NAVIGATION}
-        value={localSettings[SETTINGS_KEYS.SHOW_VERSION_NAVIGATION]}
+        settingKey={GeneralSettingsKeys.ShowVersionNavigation}
+        value={localSettings[GeneralSettingsKeys.ShowVersionNavigation]}
         label={t('Show Version Navigation')}
         dataCy={SHOW_VERSION_NAVIGATION_SWITCH_CYPRESS}
         changeSetting={changeSetting}
       />
       <SettingsSwitch
-        settingKey={SETTINGS_KEYS.SHOW_EDIT_BUTTON}
-        value={localSettings[SETTINGS_KEYS.SHOW_EDIT_BUTTON]}
+        settingKey={GeneralSettingsKeys.ShowEditButton}
+        value={localSettings[GeneralSettingsKeys.ShowEditButton]}
         label={t('Show Code Edit Button')}
         dataCy={SHOW_EDIT_BUTTON_SWITCH_CYPRESS}
         changeSetting={changeSetting}
       />
       <SettingsSwitch
-        settingKey={SETTINGS_KEYS.SHOW_VISIBILITY_BUTTON}
-        value={localSettings[SETTINGS_KEYS.SHOW_VISIBILITY_BUTTON]}
+        settingKey={GeneralSettingsKeys.ShowVisibilityButton}
+        value={localSettings[GeneralSettingsKeys.ShowVisibilityButton]}
         label={t('Show Visibility Toggle')}
         dataCy={SHOW_VISIBILITY_SWITCH_CYPRESS}
         changeSetting={changeSetting}
@@ -73,23 +73,23 @@ const DisplaySettings: FC<Props> = ({ localSettings, changeSetting }) => {
       </Typography>
 
       <SettingsSwitch
-        settingKey={SETTINGS_KEYS.ALLOW_COMMENTS}
-        value={localSettings[SETTINGS_KEYS.ALLOW_COMMENTS]}
+        settingKey={GeneralSettingsKeys.AllowComments}
+        value={localSettings[GeneralSettingsKeys.AllowComments]}
         label={t('Allow Comments')}
         dataCy={ALLOW_COMMENTS_SWITCH_CYPRESS}
         changeSetting={changeSetting}
       />
       <SettingsSwitch
-        settingKey={SETTINGS_KEYS.ALLOW_REPLIES}
-        value={localSettings[SETTINGS_KEYS.ALLOW_REPLIES]}
+        settingKey={GeneralSettingsKeys.AllowReplies}
+        value={localSettings[GeneralSettingsKeys.AllowReplies]}
         label={t('Allow Replies')}
         dataCy={ALLOW_REPLIES_SWITCH_CYPRESS}
         changeSetting={changeSetting}
       />
       <SettingsSelect
         dataCy={REVIEW_MODES_SELECT_CYPRESS}
-        settingsKey={SETTINGS_KEYS.REVIEW_MODE}
-        value={localSettings[SETTINGS_KEYS.REVIEW_MODE]}
+        settingsKey={GeneralSettingsKeys.ReviewMode}
+        value={localSettings[GeneralSettingsKeys.ReviewMode]}
         label={t('Define Review Mode')}
         values={REVIEW_MODES.map(({ label, value }) => ({
           label: t(label),

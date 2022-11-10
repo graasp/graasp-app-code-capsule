@@ -14,7 +14,7 @@ import { DEFAULT_GENERAL_SETTINGS } from '../../config/settings';
 import { CodeType } from '../../interfaces/codeVersions';
 import { CommentType, VisibilityVariants } from '../../interfaces/comment';
 import { LiveCodeType } from '../../interfaces/liveCode';
-import { SETTINGS_KEYS } from '../../interfaces/settings';
+import { GeneralSettingsKeys } from '../../interfaces/settings';
 import Loader from '../common/Loader';
 import { useSettings } from './SettingsContext';
 
@@ -67,7 +67,7 @@ export const AppDataProvider: FC<PropsWithChildren<Prop>> = ({
     useSettings();
   // set the default visibility following the review mode
   const visibilityVariant =
-    settings[SETTINGS_KEYS.REVIEW_MODE] === REVIEW_MODE_INDIVIDUAL
+    settings[GeneralSettingsKeys.ReviewMode] === REVIEW_MODE_INDIVIDUAL
       ? VISIBILITY_MEMBER
       : VISIBILITY_ITEM;
   const { mutate: postAppData } = useMutation<

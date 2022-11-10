@@ -37,7 +37,7 @@ import {
   DEFAULT_LINE_HIDDEN_STATE,
 } from '../../config/settings';
 import { CodeVersionSelectType } from '../../interfaces/codeVersions';
-import { SETTINGS_KEYS } from '../../interfaces/settings';
+import { GeneralSettingsKeys } from '../../interfaces/settings';
 import { NO_DATE_PLACEHOLDER, getFormattedTime } from '../../utils/datetime';
 import CommitInfo from '../common/CommitInfo';
 import { useCodeVersionContext } from '../context/CodeVersionContext';
@@ -90,10 +90,11 @@ const CodeReviewToolbar: FC<Props> = ({ setView }) => {
     codeId,
     codeVersionResource,
   } = useCodeVersionContext();
-  const showToolbar = settings[SETTINGS_KEYS.SHOW_TOOLBAR];
-  const showEditButton = settings[SETTINGS_KEYS.SHOW_EDIT_BUTTON];
-  const showVisibilityToggle = settings[SETTINGS_KEYS.SHOW_VISIBILITY_BUTTON];
-  const showCommitInfo = settings[SETTINGS_KEYS.SHOW_VERSION_NAVIGATION];
+  const showToolbar = settings[GeneralSettingsKeys.ShowToolbar];
+  const showEditButton = settings[GeneralSettingsKeys.ShowEditButton];
+  const showVisibilityToggle =
+    settings[GeneralSettingsKeys.ShowVisibilityButton];
+  const showCommitInfo = settings[GeneralSettingsKeys.ShowVersionNavigation];
   const isExecutable = SUPPORTED_EXECUTABLE_LANGUAGES.includes(
     codeVersion.language,
   );

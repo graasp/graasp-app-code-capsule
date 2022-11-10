@@ -9,13 +9,13 @@ import React, {
 } from 'react';
 
 import { INSTRUCTOR_CODE_VERSION_SETTINGS_NAME } from '../../config/appSettingsTypes';
-import { DEFAULT_CODE_VERSION_SETTING } from '../../config/codeVersionType';
 import {
   ANONYMOUS_USER,
   INSTRUCTOR_CODE_ID,
   INSTRUCTOR_CODE_NAME,
 } from '../../config/constants';
 import { hooks } from '../../config/queryClient';
+import { DEFAULT_INSTRUCTOR_CODE_VERSION_SETTINGS } from '../../config/settings';
 import {
   CodeVersionSelectType,
   CodeVersionType,
@@ -36,7 +36,7 @@ type CodeVersionContextType = {
 
 const defaultCodeVersion = {
   id: INSTRUCTOR_CODE_ID,
-  data: DEFAULT_CODE_VERSION_SETTING,
+  data: DEFAULT_INSTRUCTOR_CODE_VERSION_SETTINGS,
   creator: INSTRUCTOR_CODE_NAME,
   updatedAt: '',
 };
@@ -77,7 +77,7 @@ export const CodeVersionProvider: FC<PropsWithChildren<Prop>> = ({
     const instructorCodeVersion: CodeVersionSelectType = {
       ...defaultCodeVersion,
       data: (instructorCodeVersionSetting?.data ||
-        DEFAULT_CODE_VERSION_SETTING) as CodeVersionType,
+        DEFAULT_INSTRUCTOR_CODE_VERSION_SETTINGS) as CodeVersionType,
       updatedAt:
         instructorCodeVersionSetting?.updatedAt || defaultCodeVersion.updatedAt,
     };

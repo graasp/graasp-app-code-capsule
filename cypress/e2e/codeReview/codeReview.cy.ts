@@ -30,7 +30,7 @@ import {
 } from '../../../src/config/selectors';
 import { DEFAULT_GENERAL_SETTINGS } from '../../../src/config/settings';
 import { Fields } from '../../../src/interfaces/commitInfo';
-import { SETTINGS_KEYS } from '../../../src/interfaces/settings';
+import { GeneralSettingsKeys } from '../../../src/interfaces/settings';
 import {
   MOCK_COMMIT_MESSAGE,
   SINGLE_LINE_MOCK_COMMENTS,
@@ -186,8 +186,8 @@ describe('Code Review Tools', () => {
             ...MOCK_GENERAL_SETTINGS,
             data: {
               ...DEFAULT_GENERAL_SETTINGS,
-              [SETTINGS_KEYS.SHOW_EDIT_BUTTON]: true,
-              [SETTINGS_KEYS.SHOW_VERSION_NAVIGATION]: true,
+              [GeneralSettingsKeys.ShowEditButton]: true,
+              [GeneralSettingsKeys.ShowVersionNavigation]: true,
             },
           },
           MOCK_CODE_SETTINGS,
