@@ -29,7 +29,7 @@ import {
   buildDataCy,
 } from '../../../src/config/selectors';
 import { DEFAULT_GENERAL_SETTINGS } from '../../../src/config/settings';
-import { Fields } from '../../../src/interfaces/commitInfo';
+import { Fields } from '../../../src/interfaces/enums';
 import { GeneralSettingsKeys } from '../../../src/interfaces/settings';
 import {
   MOCK_COMMIT_MESSAGE,
@@ -232,7 +232,7 @@ describe('Code Review Tools', () => {
     );
   });
 
-  it.skip('should edit code', () => {
+  it.only('should edit code', () => {
     const newCode = '#testing new code';
     // open editing
     cy.openCodeEditor();
