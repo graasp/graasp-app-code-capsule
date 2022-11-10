@@ -398,15 +398,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/parser@npm:7.13.0":
-  version: 7.13.0
-  resolution: "@babel/parser@npm:7.13.0"
-  bin:
-    parser: ./bin/babel-parser.js
-  checksum: fc89eab7443edae4bfd553104d1fa22d70ba97906ce5f9abd0859e0011bed601135343b78ee5b3b9d7fd3644a50a080d7fb3b580a0bb30a02f187a871c6ec6b6
-  languageName: node
-  linkType: hard
-
 "@babel/parser@npm:7.18.9":
   version: 7.18.9
   resolution: "@babel/parser@npm:7.18.9"
@@ -1511,7 +1502,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/template@npm:^7.16.7, @babel/template@npm:^7.18.10, @babel/template@npm:^7.3.3, @babel/template@npm:^7.4.4":
+"@babel/template@npm:^7.16.7, @babel/template@npm:^7.18.10, @babel/template@npm:^7.3.3":
   version: 7.18.10
   resolution: "@babel/template@npm:7.18.10"
   dependencies:
@@ -2171,28 +2162,6 @@ __metadata:
     babel-loader: ^8.0.2
     webpack: ^4 || ^5
   checksum: db2313f874d37e2164b3569c510fd8d0588912c90c807e0544c6fc1ce3707355fa38afde4a8384452ee04e8a3592aa523a569db491684717212eb80c0fca73bf
-  languageName: node
-  linkType: hard
-
-"@cypress/webpack-preprocessor@npm:^5.15.5":
-  version: 5.15.5
-  resolution: "@cypress/webpack-preprocessor@npm:5.15.5"
-  dependencies:
-    "@babel/parser": 7.13.0
-    bluebird: 3.7.1
-    debug: ^4.3.2
-    fs-extra: ^10.1.0
-    loader-utils: ^2.0.0
-    lodash: ^4.17.20
-    md5: 2.3.0
-    source-map: ^0.6.1
-    webpack-virtual-modules: ^0.4.4
-  peerDependencies:
-    "@babel/core": ^7.0.1
-    "@babel/preset-env": ^7.0.0
-    babel-loader: ^8.0.2
-    webpack: ^4 || ^5
-  checksum: 7d09e96a35b3e672ddf4b34a23f72f7e10083760617c42ef5fcb3b4291b208fe20522f7b7c6efda079e92a05e0d28cedeea55fed66908049d1289b427f47d88b
   languageName: node
   linkType: hard
 
@@ -5745,18 +5714,6 @@ __metadata:
   peerDependencies:
     "@babel/core": ^7.0.0-0
   checksum: ab0355efbad17d29492503230387679dfb780b63b25408990d2e4cf421012dae61d6199ddc309f4d2409ce4e9d3002d187702700dd8f4f8770ebbba651ed066c
-  languageName: node
-  linkType: hard
-
-"babel-plugin-transform-import-meta@npm:^2.2.0":
-  version: 2.2.0
-  resolution: "babel-plugin-transform-import-meta@npm:2.2.0"
-  dependencies:
-    "@babel/template": ^7.4.4
-    tslib: ^2.4.0
-  peerDependencies:
-    "@babel/core": ^7.10.0
-  checksum: 305b0750f957e4df3ce08e0b24359dc55fb789c96477e944d113d259a8292e7bb8d665944e04b5a690c82a8dc23f54b711a85917d80988dffe1e046e1db940ee
   languageName: node
   linkType: hard
 
@@ -9847,7 +9804,6 @@ __metadata:
     "@commitlint/config-conventional": 17.1.0
     "@cypress/code-coverage": 3.10.0
     "@cypress/instrument-cra": 1.4.0
-    "@cypress/webpack-preprocessor": ^5.15.5
     "@emotion/react": 11.10.5
     "@emotion/styled": 11.10.5
     "@fortawesome/fontawesome-svg-core": 6.2.0
@@ -9876,7 +9832,6 @@ __metadata:
     "@typescript-eslint/eslint-plugin": 5.41.0
     "@typescript-eslint/parser": 5.41.0
     "@uiw/react-codemirror": 4.12.4
-    babel-plugin-transform-import-meta: ^2.2.0
     concurrently: 7.5.0
     cypress: 10.11.0
     date-fns: 2.29.3
@@ -9918,7 +9873,6 @@ __metadata:
     typescript: 4.8.4
     uuid: 9.0.0
     wait-on: 6.0.1
-    webpack: 5
   languageName: unknown
   linkType: soft
 
@@ -18807,7 +18761,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"webpack@npm:5, webpack@npm:^5.64.4":
+"webpack@npm:^5.64.4":
   version: 5.75.0
   resolution: "webpack@npm:5.75.0"
   dependencies:

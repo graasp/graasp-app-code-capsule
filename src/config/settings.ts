@@ -17,7 +17,7 @@ import { AppView } from './layout';
 
 export const MOCK_API = REACT_APP_MOCK_API === 'true';
 export const DEFAULT_APP_MODE = AppMode.Execute;
-export const DEFAULT_APP_VIEW = AppView;
+export const DEFAULT_APP_VIEW = AppView.CodeExecution;
 
 export const DEFAULT_CONTEXT = Context.BUILDER;
 export const DEFAULT_PERMISSION = PermissionLevel.Read;

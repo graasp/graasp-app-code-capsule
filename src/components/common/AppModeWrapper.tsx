@@ -1,9 +1,12 @@
-import React, { FC, ReactElement, useEffect, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 
 import { APP_MODE_SETTINGS_NAME, AppMode } from '../../config/appSettingsTypes';
 import { AppView } from '../../config/layout';
 import { CODE_EDITOR_CONTAINER_CYPRESS } from '../../config/selectors';
-import { DEFAULT_APP_MODE_SETTINGS } from '../../config/settings';
+import {
+  DEFAULT_APP_MODE_SETTINGS,
+  DEFAULT_APP_VIEW,
+} from '../../config/settings';
 import { AppModeSettingsKeys } from '../../interfaces/settings';
 import CodeReview from '../codeReview/CodeReview';
 import { useCodeVersionContext } from '../context/CodeVersionContext';
@@ -31,36 +34,34 @@ const AppModeWrapper: FC<Props> = () => {
         setView(AppView.CodeEditor);
         break;
       case AppMode.Review:
-      default:
         setView(AppView.CodeReview);
+        break;
+      default:
+        setView(DEFAULT_APP_VIEW);
     }
   }, [appModeSetting]);
 
-  const getContent = (): ReactElement => {
-    switch (view) {
-      case AppView.CodeEditor:
-        return (
-          <CodeReviewContainer data-cy={CODE_EDITOR_CONTAINER_CYPRESS}>
-            <CodeEditor
-              onClose={() => setView(AppView.CodeReview)}
-              seedValue={codeVersion}
-            />
-          </CodeReviewContainer>
-        );
-      case AppView.CodeExecution:
-        return (
-          <Repl
-            seedValue={codeVersion}
+  switch (view) {
+    case AppView.CodeEditor:
+      return (
+        <CodeReviewContainer data-cy={CODE_EDITOR_CONTAINER_CYPRESS}>
+          <CodeEditor
             onClose={() => setView(AppView.CodeReview)}
+            seedValue={codeVersion}
           />
-        );
-      case AppView.CodeReview:
-      default:
-        return <CodeReview setView={setView} />;
-    }
-  };
-
-  return getContent();
+        </CodeReviewContainer>
+      );
+    case AppView.CodeExecution:
+      return (
+        <Repl
+          seedValue={codeVersion}
+          onClose={() => setView(AppView.CodeReview)}
+        />
+      );
+    case AppView.CodeReview:
+    default:
+      return <CodeReview setView={setView} />;
+  }
 };
 
 export default AppModeWrapper;

@@ -62,7 +62,7 @@
     "Allow students to see other students' code": "Autoriser les étudiants à voir le code d'autres étudiants",
     "Edit": "Éditer",
     "Commit Info": "Informations sur le commit",
-    "Run": "Exécuter le code",
+    "Run": "Exécuter",
     "Author": "Auteur",
     "Message": "Message",
     "Description": "Description",
@@ -110,7 +110,7 @@
     "Code to review": "Code à review",
     "Input requested": "Saisie demandée",
     "Submit": "Soumettre",
-    "Unsaved modifications": "Modification non enregistrées",
+    "Unsaved changes": "Changements non sauvés",
     "APP_VERSION": "version v{{ version }}",
     "Choose the App Mode": "Choisissez le mode de l'app"
   }
