@@ -1,4 +1,3 @@
-import { PyodideStatus } from '@graasp/pyodide';
 import { Context, PermissionLevel } from '@graasp/sdk';
 
 import {
@@ -67,7 +66,7 @@ describe('Display Code Execution', () => {
     }).should('contain.text', prompt);
     cy.get(buildDataCy(REPL_STATUS_INDICATOR_CY)).should(
       'have.text',
-      PyodideStatus.WAIT_INPUT,
+      'Waiting on input',
     );
 
     // enter a response in the output console
