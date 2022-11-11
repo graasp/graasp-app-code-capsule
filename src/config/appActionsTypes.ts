@@ -8,6 +8,5 @@ export enum APP_ACTIONS_TYPES {
   SUBMITTED_INPUT = 'submitted_input',
   CANCEL_PROMPT = 'cancel_prompt',
   INITIALIZE_EXECUTION = 'initialize_execution',
-  PYODIDE_ERROR = 'pyodide_error',
   NEW_FIGURE = 'new_figure',
 }

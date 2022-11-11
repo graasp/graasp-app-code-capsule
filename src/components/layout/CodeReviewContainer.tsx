@@ -6,7 +6,7 @@ const CodeReviewContainer = styled('div')(({ theme }) => ({
   margin: 'auto',
   fontSize: '1rem',
   padding: theme.spacing(2),
-  maxWidth: '600px',
+  maxWidth: '1200px',
   width: '80vw',
   borderRadius: SMALL_BORDER_RADIUS,
   wordWrap: 'break-word',

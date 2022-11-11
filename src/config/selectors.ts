@@ -128,6 +128,8 @@ export const REPL_INPUT_DIALOG_SUBMIT_BUTTON_CY = 'repl_input_submit_button';
 export const REPL_INPUT_DIALOG_PROMPT_TEXT_CY = 'repl_input_prompt_text';
 export const REPL_INPUT_DIALOG_TEXTFIELD_CY = 'repl_input_textfield';
 
+export const DOWNLOAD_ACTIONS_BUTTON_CY = 'download_actions_button';
+
 export const buildDataCy = (selector: string): string =>
   `[data-cy=${selector}]`;
 export const buildTableRowCypress = (selector: string): string =>

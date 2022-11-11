@@ -2504,7 +2504,7 @@ __metadata:
 
 "@graasp/apps-query-client@github:graasp/graasp-apps-query-client":
   version: 0.3.0
-  resolution: "@graasp/apps-query-client@https://github.com/graasp/graasp-apps-query-client.git#commit=e39bac74481e1959ccf4f0b82457de0a9bd5080b"
+  resolution: "@graasp/apps-query-client@https://github.com/graasp/graasp-apps-query-client.git#commit=7cfe3921e501590830897070ad42c14b5c5d4100"
   dependencies:
     "@graasp/sdk": "github:graasp/graasp-sdk"
     axios: 0.27.2
@@ -2518,7 +2518,7 @@ __metadata:
     uuid: 8.3.2
   peerDependencies:
     react: ^17.0.0 || ^18.0.0
-  checksum: 0c79208f87e373c9e33542ab96fb6cca802f431f62b36f4aa21282507e895d04ac475c0444471f50e1691957e0ce3398fb62582b63095054c95428caf3444b9e
+  checksum: ff89a19d9b2f252d49deed23cd9f3279609da9c2aafc0b166302c666dee982d9c5e05cbaa3bc5e8dff68e382f569079bc251da6551110c9a6a9ecdb644fb3a47
   languageName: node
   linkType: hard
 
@@ -3981,6 +3981,13 @@ __metadata:
     "@types/qs": "*"
     "@types/serve-static": "*"
   checksum: 15c1af46d02de834e4a225eccaa9d85c0370fdbb3ed4e1bc2d323d24872309961542b993ae236335aeb3e278630224a6ea002078d39e651d78a3b0356b1eaa79
+  languageName: node
+  linkType: hard
+
+"@types/file-saver@npm:^2.0.5":
+  version: 2.0.5
+  resolution: "@types/file-saver@npm:2.0.5"
+  checksum: a31d6ee2abf99598647139f8f35b37b6e1bacf6c7ddf05c66651b9b0e6e53381aa0e8ed13f37faa6e496e0eb1da87c97e6c70fd589d5b83b0c95c57cb64ce92a
   languageName: node
   linkType: hard
 
@@ -7337,9 +7344,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cypress@npm:10.11.0":
-  version: 10.11.0
-  resolution: "cypress@npm:10.11.0"
+"cypress@npm:11.0.1":
+  version: 11.0.1
+  resolution: "cypress@npm:11.0.1"
   dependencies:
     "@cypress/request": ^2.88.10
     "@cypress/xvfb": ^1.2.4
@@ -7385,7 +7392,7 @@ __metadata:
     yauzl: ^2.10.0
   bin:
     cypress: bin/cypress
-  checksum: 938cc6a20f7eeace5c8e850d234904ee1651cbb36d94666fe600cf17ce964e73d4f7d8d944aab677491702a57364e6aceeb4fe8bcbd96147ff5e2b575a956fb2
+  checksum: 417763449c0688d45506eb492431c87d9fbc3ce6e0690c386533b2319081cf9c41672ce6f35c056fccf2aa045bf9592c46349d3d508908d188f65c4f43069c54
   languageName: node
   linkType: hard
 
@@ -9087,6 +9094,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"file-saver@npm:^2.0.5":
+  version: 2.0.5
+  resolution: "file-saver@npm:2.0.5"
+  checksum: c62d96e5cebc58b4bdf3ae8a60d5cf9607ad82f75f798c33a4ee63435ac2203002584d5256a2a780eda7feb5e19dc3b6351c2212e58b3f529e63d265a7cc79f7
+  languageName: node
+  linkType: hard
+
 "filelist@npm:^1.0.1":
   version: 1.0.4
   resolution: "filelist@npm:1.0.4"
@@ -9820,6 +9834,7 @@ __metadata:
     "@sentry/react": 7.17.1
     "@sentry/tracing": 7.17.1
     "@trivago/prettier-plugin-sort-imports": 3.4.0
+    "@types/file-saver": ^2.0.5
     "@types/i18n": 0.13.5
     "@types/lodash.countby": 4.6.7
     "@types/lodash.isequal": 4.5.6
@@ -9833,7 +9848,7 @@ __metadata:
     "@typescript-eslint/parser": 5.41.0
     "@uiw/react-codemirror": 4.12.4
     concurrently: 7.5.0
-    cypress: 10.11.0
+    cypress: 11.0.1
     date-fns: 2.29.3
     env-cmd: 10.1.0
     eslint: 8.26.0
@@ -9847,6 +9862,7 @@ __metadata:
     eslint-plugin-prettier: 4.2.1
     eslint-plugin-react: ^7.21.1
     eslint-plugin-react-hooks: 4.6.0
+    file-saver: ^2.0.5
     husky: 8.0.1
     i18next: 22.0.3
     immutable: 4.1.0

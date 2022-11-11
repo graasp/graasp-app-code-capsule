@@ -8,6 +8,7 @@ import {
   CODE_REVIEW_CONTAINER_CYPRESS,
   CUSTOM_DIALOG_CONTENT_CY,
   CUSTOM_DIALOG_TITLE_CYPRESS,
+  DOWNLOAD_ACTIONS_BUTTON_CY,
   ORPHAN_BUTTON_CYPRESS,
   PLAYER_VIEW_CYPRESS,
   TABLE_NO_COMMENTS_CYPRESS,
@@ -26,6 +27,7 @@ import {
 } from '../../../src/config/selectors';
 import { CommentType } from '../../../src/interfaces/comment';
 import { getOrphans } from '../../../src/utils/comments';
+import { MOCK_APP_ACTIONS } from '../../fixtures/appActions';
 import {
   MOCK_ORPHAN_COMMENT,
   MULTILINE_MOCK_COMMENTS,
@@ -58,6 +60,26 @@ describe('Builder as Admin', () => {
       cy.get(buildDataCy(TABLE_VIEW_TABLE_CYPRESS)).should('be.visible');
       // check that the 'No comments' row is present
       cy.get(buildDataCy(TABLE_NO_COMMENTS_CYPRESS)).should('be.visible');
+    });
+  });
+
+  describe('Download App Actions', () => {
+    beforeEach(() => {
+      cy.setUpApi({
+        database: { appActions: MOCK_APP_ACTIONS },
+        appContext,
+      });
+      // got to app
+      cy.visit('/');
+      // open the Table View tab
+      cy.get(buildDataCy(TAB_TABLE_VIEW_CYPRESS)).should('be.visible').click();
+    });
+
+    it.only('should download AppActions', () => {
+      // check that the table view pane is visible
+      cy.get(buildDataCy(DOWNLOAD_ACTIONS_BUTTON_CY))
+        .should('be.visible')
+        .click();
     });
   });
 

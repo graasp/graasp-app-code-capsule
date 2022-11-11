@@ -19,7 +19,7 @@ import {
 export const mockContext: LocalContext = {
   apiHost: REACT_APP_API_HOST,
   permission: 'admin',
-  context: 'player',
+  context: 'builder',
   itemId: '1234-1234-123456-8123-123456',
   memberId: 'mock-member-id',
 };

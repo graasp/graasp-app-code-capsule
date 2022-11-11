@@ -100,10 +100,6 @@ const Repl: FC<Props> = ({ seedValue }) => {
       // @ts-ignore
       workerInstance.onError = (newError: { data: string }) => {
         setError(newError.data);
-        postAction({
-          type: APP_ACTIONS_TYPES.PYODIDE_ERROR,
-          data: { error: newError },
-        });
       };
 
       workerInstance.onTerminated = () => {
