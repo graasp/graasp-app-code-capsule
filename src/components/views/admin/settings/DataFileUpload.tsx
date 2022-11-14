@@ -1,7 +1,11 @@
 import { FC, useContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { TokenContext, useLocalContext } from '@graasp/apps-query-client';
+import {
+  AppSetting,
+  TokenContext,
+  useLocalContext,
+} from '@graasp/apps-query-client';
 
 import { Box, List, Stack, TextField } from '@mui/material';
 
@@ -46,14 +50,16 @@ const DataFileUpload: FC = () => {
   const onComplete = (res: UploadResult): void => {
     const result = res.successful;
     if (result) {
-      // tell queryclient that the file was uploaded
+      // eslint-disable-next-line no-console
+      console.log(result);
+      // tell query-client that the file was uploaded
       onFileUploadComplete();
       const fileInfos: {
         name: string;
-        responseBody?: { [key: string]: unknown };
+        responseBody?: AppSetting;
       }[] = result.map(({ name, response }) => ({
         name,
-        responseBody: response?.body,
+        responseBody: response?.body[0] as AppSetting,
       }));
       // eslint-disable-next-line no-console
       console.log('file infos', fileInfos);
@@ -64,7 +70,7 @@ const DataFileUpload: FC = () => {
           ...dataFileListSetting[DataFileListSettingsKeys.Files],
           // map new files to an object
           ...fileInfos.map((f) => ({
-            appSettingId: f.responseBody?.id as string,
+            appSettingId: f.responseBody?.id,
             settingName: dataFileSettingName(f.name),
             virtualPath: f.name,
           })),
