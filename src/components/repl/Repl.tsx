@@ -132,6 +132,19 @@ const Repl: FC<Props> = ({ seedValue }) => {
     [],
   );
 
+  // send settings files to pyodide
+  useEffect(() => {
+    if (worker) {
+      console.log('putting file');
+      worker.putFile('data/test.txt', 'hello World from data');
+    } else {
+      console.error('worker is not initialized yet');
+    }
+  }, [
+    worker,
+    // fileSettings
+  ]);
+
   const onClickRunCode = (): void => {
     // to run the code:
     // - previous run must be done

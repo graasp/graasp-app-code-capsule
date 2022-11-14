@@ -18,7 +18,7 @@ import {
 } from '../../src/config/settings';
 import { CodeVersionType } from '../../src/interfaces/codeVersions';
 import {
-  AppModeSetting,
+  AppModeSettings,
   CodeExecutionSettings,
 } from '../../src/interfaces/settings';
 import { MEMBERS } from './members';
@@ -74,7 +74,7 @@ export const MOCK_CODE_EXECUTION_SETTINGS: AppSetting & {
   },
 };
 
-export const MOCK_APP_MODE_SETTING: AppSetting & { data: AppModeSetting } = {
+export const MOCK_APP_MODE_SETTING: AppSetting & { data: AppModeSettings } = {
   ...EMPTY_SETTING,
   id: v4(),
   name: APP_MODE_SETTINGS_NAME,
@@ -82,7 +82,7 @@ export const MOCK_APP_MODE_SETTING: AppSetting & { data: AppModeSetting } = {
 };
 
 export const CODE_EXECUTION_MODE_SETTING: AppSetting & {
-  data: AppModeSetting;
+  data: AppModeSettings;
 } = {
   ...MOCK_APP_MODE_SETTING,
   data: {
@@ -91,7 +91,7 @@ export const CODE_EXECUTION_MODE_SETTING: AppSetting & {
 };
 
 export const CODE_REVIEW_MODE_SETTING: AppSetting & {
-  data: AppModeSetting;
+  data: AppModeSettings;
 } = {
   ...MOCK_APP_MODE_SETTING,
   data: {
@@ -100,7 +100,7 @@ export const CODE_REVIEW_MODE_SETTING: AppSetting & {
 };
 
 export const CODE_COLLABORATE_MODE_SETTING: AppSetting & {
-  data: AppModeSetting;
+  data: AppModeSettings;
 } = {
   ...MOCK_APP_MODE_SETTING,
   data: {
@@ -147,3 +147,25 @@ export const MOCK_APP_SETTINGS: AppSetting[] = [
     updatedAt: new Date().toISOString(),
   },
 ];
+
+// todo: update this
+export const MOCK_FILE_SETTING = {
+  id: '78363930-b86d-46fe-b5f9-61333b195bdd',
+  name: 'background',
+  itemId: 'd6ed724f-d57d-4841-b892-6fb4b4b6d4dd',
+  data: {
+    name: 'background',
+    type: 's3File',
+    extra: {
+      s3File: {
+        name: 'background',
+        path: 'apps/5b43/3311/c94a-1668414819160',
+        size: 104279,
+        mimetype: 'image/png',
+      },
+    },
+  },
+  creator: 'b78afd8f-8376-46c4-9135-cf59aabe1828',
+  createdAt: '2022-11-14T08:33:39.160Z',
+  updatedAt: '2022-11-14T08:33:39.160Z',
+};

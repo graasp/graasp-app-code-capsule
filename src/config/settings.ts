@@ -1,10 +1,12 @@
 import { Context, PermissionLevel } from '@graasp/sdk';
 
 import {
-  AppModeSetting,
+  AppModeSettings,
   AppModeSettingsKeys,
   CodeExecutionSettings,
   CodeExecutionSettingsKeys,
+  DataFileListSettings,
+  DataFileListSettingsKeys,
   GeneralSettings,
   GeneralSettingsKeys,
   InstructorCodeSettingsKeys,
@@ -81,6 +83,11 @@ export const DEFAULT_CODE_EXECUTION_SETTINGS: CodeExecutionSettings = {
 };
 
 // app mode setting
-export const DEFAULT_APP_MODE_SETTINGS: AppModeSetting = {
+export const DEFAULT_APP_MODE_SETTINGS: AppModeSettings = {
   [AppModeSettingsKeys.Mode]: DEFAULT_APP_MODE,
+};
+
+// app mode setting
+export const DEFAULT_DATA_FILE_LIST_SETTINGS: DataFileListSettings = {
+  [DataFileListSettingsKeys.Files]: [],
 };

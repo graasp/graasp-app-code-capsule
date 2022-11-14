@@ -19,7 +19,7 @@ import {
 export const mockContext: LocalContext = {
   apiHost: REACT_APP_API_HOST,
   permission: 'admin',
-  context: 'builder',
+  context: 'player',
   itemId: '1234-1234-123456-8123-123456',
   memberId: 'mock-member-id',
 };
@@ -139,7 +139,7 @@ And some text to **finish** _off_`,
     {
       id: v4(),
       name: APP_MODE_SETTINGS_NAME,
-      data: { ...DEFAULT_APP_MODE_SETTINGS, mode: AppMode.Review },
+      data: { ...DEFAULT_APP_MODE_SETTINGS, mode: AppMode.Execute },
       itemId: appContext.itemId || '',
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),

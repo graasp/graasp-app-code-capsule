@@ -1,4 +1,4 @@
-import { AppMode } from '../config/appSettingsTypes';
+import { AppMode, DataFile } from '../config/appSettingsTypes';
 
 // general settings keys
 export enum GeneralSettingsKeys {
@@ -31,6 +31,11 @@ export enum CodeExecutionSettingsKeys {
 // App Mode Setting keys
 export enum AppModeSettingsKeys {
   Mode = 'mode',
+}
+
+// App Mode Setting keys
+export enum DataFileListSettingsKeys {
+  Files = 'files',
 }
 
 // type of general settings
@@ -68,8 +73,15 @@ export type CodeExecutionSettings = {
   [key: string]: unknown;
 };
 
-export type AppModeSetting = {
+export type AppModeSettings = {
   [AppModeSettingsKeys.Mode]: AppMode;
+
+  // used to allow access using settings[settingKey] syntax
+  [key: string]: unknown;
+};
+
+export type DataFileListSettings = {
+  [DataFileListSettingsKeys.Files]: DataFile[];
 
   // used to allow access using settings[settingKey] syntax
   [key: string]: unknown;

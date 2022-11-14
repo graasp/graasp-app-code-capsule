@@ -43,6 +43,7 @@ import {
 import SubmitButtons from '../../../common/settings/SubmitButtons';
 import { useSettings } from '../../../context/SettingsContext';
 import CodeEditor from '../../../repl/CodeEditor';
+import DataFileUpload from './DataFileUpload';
 
 const SettingsView: FC = () => {
   const { t } = useTranslation();
@@ -159,6 +160,8 @@ const SettingsView: FC = () => {
               )
             }
           />
+          <DataFileUpload />
+
           <SubmitButtons
             onCancel={() => setLocalCodeExecSettings(codeExecSettings)}
             onSave={() =>
