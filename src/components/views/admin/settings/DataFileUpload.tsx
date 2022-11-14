@@ -31,32 +31,45 @@ const DataFileUpload: FC = () => {
     dataFileSettings,
     saveSettings,
   } = useSettings();
-  const { mutate: onFileUploadComplete } = useMutation<
-    unknown,
-    unknown,
-    { id: string; data: unknown[] }
-  >(MUTATION_KEYS.APP_SETTING_FILE_UPLOAD);
+  const { mutate: onFileUploadComplete } = useMutation(
+    MUTATION_KEYS.APP_SETTING_FILE_UPLOAD,
+  );
+
+  const handleFileDelete = (appSettingIdToDelete: string): void => {
+    saveSettings(DATA_FILE_LIST_SETTINGS_NAME, {
+      [DataFileListSettingsKeys.Files]: dataFileListSetting[
+        DataFileListSettingsKeys.Files
+      ].filter(({ appSettingId }) => appSettingId !== appSettingIdToDelete),
+    });
+  };
 
   const onComplete = (res: UploadResult): void => {
-    // todo: understand this
-    const dataBool = res.successful
-      ?.map(({ response }) => response?.body?.[0])
-      .filter(Boolean);
-    onFileUploadComplete({
-      id: itemId,
-      data: dataBool,
-    });
-    const fileName = res.successful?.map(({ name }) => name)?.[0];
-    // todo: update setting listing dataFileSetting names
-    saveSettings(DATA_FILE_LIST_SETTINGS_NAME, {
-      [DataFileListSettingsKeys.Files]: [
-        ...dataFileListSetting[DataFileListSettingsKeys.Files],
-        {
-          settingName: dataFileSettingName(fileName),
-          virtualPath: fileName,
-        },
-      ],
-    });
+    const result = res.successful;
+    if (result) {
+      // tell queryclient that the file was uploaded
+      onFileUploadComplete();
+      const fileInfos: {
+        name: string;
+        responseBody?: { [key: string]: unknown };
+      }[] = result.map(({ name, response }) => ({
+        name,
+        responseBody: response?.body,
+      }));
+      console.log('file infos', fileInfos);
+
+      // todo: update setting listing dataFileSetting names
+      saveSettings(DATA_FILE_LIST_SETTINGS_NAME, {
+        [DataFileListSettingsKeys.Files]: [
+          ...dataFileListSetting[DataFileListSettingsKeys.Files],
+          // map new files to an object
+          ...fileInfos.map((f) => ({
+            appSettingId: f.responseBody?.id as string,
+            settingName: dataFileSettingName(f.name),
+            virtualPath: f.name,
+          })),
+        ],
+      });
+    }
   };
 
   // hook to instantiate Uppy
@@ -96,6 +109,7 @@ const DataFileUpload: FC = () => {
                     appSetting={appSetting}
                     settingName={settingName}
                     virtualPath={virtualPath}
+                    onDelete={handleFileDelete}
                   />
                 );
               },

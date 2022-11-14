@@ -20,9 +20,15 @@ type Props = {
   appSetting: AppSetting;
   settingName: string;
   virtualPath: string;
+  onDelete: (appSettingIdToDelete: string) => void;
 };
 
-const FileList: FC<Props> = ({ appSetting, settingName, virtualPath }) => {
+const FileList: FC<Props> = ({
+  appSetting,
+  settingName,
+  virtualPath,
+  onDelete,
+}) => {
   const {
     data: fileSettings,
     isLoading,
@@ -48,7 +54,10 @@ const FileList: FC<Props> = ({ appSetting, settingName, virtualPath }) => {
         <IconButton
           edge="end"
           aria-label="delete"
-          onClick={() => deleteAppSettingFile({ id: appSetting.id })}
+          onClick={() => {
+            deleteAppSettingFile({ id: appSetting.id });
+            onDelete(appSetting.id);
+          }}
         >
           <Close />
         </IconButton>
