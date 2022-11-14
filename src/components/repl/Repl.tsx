@@ -12,12 +12,21 @@ import {
 
 import { APP_ACTIONS_TYPES } from '../../config/appActionsTypes';
 import { APP_DATA_TYPES } from '../../config/appDataTypes';
-import { CODE_EXECUTION_SETTINGS_NAME } from '../../config/appSettingsTypes';
+import {
+  CODE_EXECUTION_SETTINGS_NAME,
+  DATA_FILE_LIST_SETTINGS_NAME,
+} from '../../config/appSettingsTypes';
 import { MUTATION_KEYS, useMutation } from '../../config/queryClient';
 import { REPL_CONTAINER_CY, REPL_EDITOR_ID_CY } from '../../config/selectors';
-import { DEFAULT_CODE_EXECUTION_SETTINGS } from '../../config/settings';
+import {
+  DEFAULT_CODE_EXECUTION_SETTINGS,
+  DEFAULT_DATA_FILE_LIST_SETTINGS,
+} from '../../config/settings';
 import { CodeVersionType } from '../../interfaces/codeVersions';
-import { CodeExecutionSettingsKeys } from '../../interfaces/settings';
+import {
+  CodeExecutionSettingsKeys,
+  DataFileListSettingsKeys,
+} from '../../interfaces/settings';
 import { sortAppDataFromNewest } from '../../utils/utils';
 import { useAppDataContext } from '../context/AppDataContext';
 import { useSettings } from '../context/SettingsContext';
@@ -68,6 +77,9 @@ const Repl: FC<Props> = ({ seedValue }) => {
   const {
     [CODE_EXECUTION_SETTINGS_NAME]:
       codeExecSettings = DEFAULT_CODE_EXECUTION_SETTINGS,
+    [DATA_FILE_LIST_SETTINGS_NAME]:
+      dataFileListSetting = DEFAULT_DATA_FILE_LIST_SETTINGS,
+    dataFileSettings,
   } = useSettings();
 
   const [isExecuting, setIsExecuting] = useState(false);
@@ -133,19 +145,29 @@ const Repl: FC<Props> = ({ seedValue }) => {
   );
 
   // send settings files to pyodide
-  useEffect(() => {
-    if (worker) {
-      // eslint-disable-next-line no-console
-      console.log('putting file');
-      worker.putFile('data/test.txt', 'hello World from data');
-    } else {
-      // eslint-disable-next-line no-console
-      console.error('worker is not initialized yet');
-    }
-  }, [
-    worker,
-    // fileSettings
-  ]);
+  useEffect(
+    () => {
+      if (worker) {
+        // eslint-disable-next-line no-console
+        console.log('putting file');
+        dataFileSettings.forEach((f) => {
+          const fileAttributes = dataFileListSetting[
+            DataFileListSettingsKeys.Files
+          ].find((file) => file.appSettingId === f.id);
+          if (fileAttributes) {
+            // eslint-disable-next-line no-console
+            console.log(fileAttributes);
+            worker.putFile(fileAttributes.virtualPath, JSON.stringify(f.data));
+          }
+        });
+      } else {
+        // eslint-disable-next-line no-console
+        console.error('worker is not initialized yet');
+      }
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [worker, dataFileSettings],
+  );
 
   const onClickRunCode = (): void => {
     // to run the code:

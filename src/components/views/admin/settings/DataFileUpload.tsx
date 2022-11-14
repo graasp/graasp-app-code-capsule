@@ -55,6 +55,7 @@ const DataFileUpload: FC = () => {
         name,
         responseBody: response?.body,
       }));
+      // eslint-disable-next-line no-console
       console.log('file infos', fileInfos);
 
       // todo: update setting listing dataFileSetting names
