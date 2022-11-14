@@ -16,7 +16,7 @@ import {
   CODE_EXECUTION_SETTINGS_NAME,
   DATA_FILE_LIST_SETTINGS_NAME,
 } from '../../config/appSettingsTypes';
-import { MUTATION_KEYS, useMutation } from '../../config/queryClient';
+import { MUTATION_KEYS, hooks, useMutation } from '../../config/queryClient';
 import { REPL_CONTAINER_CY, REPL_EDITOR_ID_CY } from '../../config/selectors';
 import {
   DEFAULT_CODE_EXECUTION_SETTINGS,
@@ -155,6 +155,14 @@ const Repl: FC<Props> = ({ seedValue }) => {
             DataFileListSettingsKeys.Files
           ].find((file) => file.appSettingId === f.id);
           if (fileAttributes) {
+            // todo: https://github.com/graasp/graasp-apps-query-client/blob/7cfe3921e501590830897070ad42c14b5c5d4100/src/hooks/appSetting.ts#L44
+            // const {
+            //   data: fileURL,
+            //   isLoading,
+            //   isSuccess,
+            // } = hooks.useAppSettingFile({
+            //   appSettingId: fileAttributes.appSettingId,
+            // });
             // eslint-disable-next-line no-console
             console.log(fileAttributes);
             worker.putFile(fileAttributes.virtualPath, JSON.stringify(f.data));

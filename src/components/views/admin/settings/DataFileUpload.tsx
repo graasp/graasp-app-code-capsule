@@ -56,11 +56,13 @@ const DataFileUpload: FC = () => {
       onFileUploadComplete();
       const fileInfos: {
         name: string;
-        responseBody?: AppSetting;
-      }[] = result.map(({ name, response }) => ({
-        name,
-        responseBody: response?.body[0] as AppSetting,
-      }));
+        responseBody: AppSetting;
+      }[] = result
+        .filter(({ response }) => response)
+        .map(({ name, response }) => ({
+          name,
+          responseBody: response?.body[0] as AppSetting,
+        }));
       // eslint-disable-next-line no-console
       console.log('file infos', fileInfos);
 
@@ -70,7 +72,7 @@ const DataFileUpload: FC = () => {
           ...dataFileListSetting[DataFileListSettingsKeys.Files],
           // map new files to an object
           ...fileInfos.map((f) => ({
-            appSettingId: f.responseBody?.id,
+            appSettingId: f.responseBody.id,
             settingName: dataFileSettingName(f.name),
             virtualPath: f.name,
           })),
