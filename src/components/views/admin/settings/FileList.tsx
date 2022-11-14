@@ -39,6 +39,7 @@ const FileList: FC<Props> = ({ appSetting, settingName, virtualPath }) => {
     return <p>Loading</p>;
   }
 
+  // eslint-disable-next-line no-console
   console.log(fileSettings);
 
   return (

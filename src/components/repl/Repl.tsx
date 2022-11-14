@@ -135,9 +135,11 @@ const Repl: FC<Props> = ({ seedValue }) => {
   // send settings files to pyodide
   useEffect(() => {
     if (worker) {
+      // eslint-disable-next-line no-console
       console.log('putting file');
       worker.putFile('data/test.txt', 'hello World from data');
     } else {
+      // eslint-disable-next-line no-console
       console.error('worker is not initialized yet');
     }
   }, [

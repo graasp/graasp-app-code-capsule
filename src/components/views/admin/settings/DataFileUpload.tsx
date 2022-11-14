@@ -80,10 +80,12 @@ const DataFileUpload: FC = () => {
           <List dense>
             {dataFileListSetting[DataFileListSettingsKeys.Files].map(
               ({ settingName, virtualPath }) => {
+                // eslint-disable-next-line no-console
                 console.log(dataFileSettings.toJS());
                 const appSetting = dataFileSettings.find(
                   (s) => s.name === settingName,
                 );
+                // eslint-disable-next-line no-console
                 console.log(settingName);
                 if (!appSetting) {
                   return <p key={settingName}>Waiting for settings</p>;
