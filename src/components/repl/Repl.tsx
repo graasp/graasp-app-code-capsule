@@ -80,7 +80,6 @@ const Repl: FC<Props> = ({ seedValue }) => {
   const latestCode = sortedCodeVersions.get(0)?.data?.code;
   const currentCode = latestCode || (seedValue ? seedValue.code : '');
 
-  // todo: get value from app data for the user
   const [value, setValue] = useState(currentCode);
   const savedStatus = value === currentCode;
   const {
@@ -189,8 +188,6 @@ const Repl: FC<Props> = ({ seedValue }) => {
             });
             const fileText = await fileBlob.text();
             const filePath = fileAttributes.virtualPath;
-            // eslint-disable-next-line no-console
-            console.log(`loading ${filePath}`);
             return { filePath, fileText };
           }
           return null;
@@ -199,8 +196,6 @@ const Repl: FC<Props> = ({ seedValue }) => {
           filePath: string;
           fileText: string;
         }[];
-        // eslint-disable-next-line no-console
-        console.log(result);
         setDataFiles(result);
         setDataFilesReady(true);
       }
@@ -213,7 +208,7 @@ const Repl: FC<Props> = ({ seedValue }) => {
     () => {
       if (worker && dataFilesReady && reloadDataFiles) {
         // eslint-disable-next-line no-console
-        console.log('loading files into worker');
+        console.log('loading data files into worker filesystem');
         dataFiles.forEach((f) => worker.putFile(f.filePath, f.fileText));
         setReloadDataFiles(false);
       }
@@ -244,9 +239,9 @@ const Repl: FC<Props> = ({ seedValue }) => {
   };
 
   const onClickClearOutput = (): void => {
-    // todo: make sure that the files are reloaded
     worker?.stop();
     worker?.create();
+    // reload files in worker filesystem
     setReloadDataFiles(true);
     setOutput('');
     setFigures([]);

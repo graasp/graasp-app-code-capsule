@@ -30,11 +30,8 @@ const FileList: FC<Props> = ({
   onDelete,
 }) => {
   // todo: add a way to set a virtual path
-  const {
-    data: fileSettings,
-    isLoading,
-    isSuccess,
-  } = hooks.useAppSettingFile({
+  // todo: use the file content when showing a preview
+  const { isLoading, isSuccess } = hooks.useAppSettingFile({
     appSettingId: appSetting.id,
   });
   const { mutate: deleteAppSettingFile } = useMutation<
@@ -46,9 +43,6 @@ const FileList: FC<Props> = ({
     return <p>Loading</p>;
   }
 
-  // eslint-disable-next-line no-console
-  console.log(fileSettings);
-
   return (
     <ListItem
       secondaryAction={
@@ -57,6 +51,7 @@ const FileList: FC<Props> = ({
             edge="end"
             aria-label="edit"
             onClick={() => {
+              // todo: implement
               // eslint-disable-next-line no-console
               console.log('want to edit');
             }}

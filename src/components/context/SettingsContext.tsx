@@ -100,9 +100,6 @@ export const SettingsProvider: FC<Prop> = ({ children }) => {
   ): void => {
     if (appSettingsList) {
       const previousSetting = appSettingsList.find((s) => s.name === name);
-      // eslint-disable-next-line no-console
-      console.log('previous setting is: ', previousSetting);
-
       // setting does not exist
       if (!previousSetting) {
         postSettings.mutate({

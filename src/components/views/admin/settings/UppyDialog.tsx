@@ -43,47 +43,40 @@ const UppyDialog: FC<Props> = ({ open, onFinish, onClose }) => {
     { id: string; data: unknown }
   >(MUTATION_KEYS.APP_SETTING_FILE_UPLOAD);
 
-  const onComplete = useCallback(
-    (res: UploadResult): void => {
-      const result = res.successful;
-      if (result) {
-        const fileInfos: {
-          name: string;
-          responseBody: AppSetting;
-        }[] = result
-          .filter(({ response }) => response)
-          .map(({ name, response }) => ({
-            name,
-            responseBody: response?.body[0] as AppSetting,
-          }));
+  const onComplete = (res: UploadResult): void => {
+    const result = res.successful;
+    if (result) {
+      const fileInfos: {
+        name: string;
+        responseBody: AppSetting;
+      }[] = result
+        .filter(({ response }) => response)
+        .map(({ name, response }) => ({
+          name,
+          responseBody: response?.body[0] as AppSetting,
+        }));
 
-        // tell query-client that the file was uploaded
-        onFileUploadComplete({
-          id: itemId,
-          data: result
-            .map(({ response }) => response?.body?.[0])
-            .filter(Boolean),
-        });
+      // tell query-client that the file was uploaded
+      onFileUploadComplete({
+        id: itemId,
+        data: result.map(({ response }) => response?.body?.[0]).filter(Boolean),
+      });
 
-        const fileData = [
-          // map new files to an object
-          ...fileInfos.map((f) => ({
-            appSettingId: f.responseBody.id,
-            fileName: f.name,
-            virtualPath: f.name,
-          })),
-        ];
-        onFinish(fileData);
-      }
-    },
-    [itemId, onFileUploadComplete, onFinish],
-  );
+      const fileData = [
+        // map new files to an object
+        ...fileInfos.map((f) => ({
+          appSettingId: f.responseBody.id,
+          fileName: f.name,
+          virtualPath: f.name,
+        })),
+      ];
+      onFinish(fileData);
+    }
+  };
   // hook to instantiate Uppy
-  const uppy = useUppy(() => {
-    // eslint-disable-next-line no-console
-    console.log('iam re-run');
-    return createUppy({ apiHost, itemId, token, standalone, onComplete, t });
-  });
+  const uppy = useUppy(() =>
+    createUppy({ apiHost, itemId, token, standalone, onComplete, t }),
+  );
 
   return (
     <Dialog open={open} fullWidth onClose={onClose}>
