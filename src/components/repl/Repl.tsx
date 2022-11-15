@@ -63,7 +63,7 @@ const Repl: FC<Props> = ({ seedValue }) => {
     { filePath: string; fileText: string }[]
   >([]);
   const [dataFilesReady, setDataFilesReady] = useState(false);
-  const [reloadDataFiles, setReloadDataFiles] = useState(false);
+  const [reloadDataFiles, setReloadDataFiles] = useState(true);
   const context = useLocalContext();
   const token = useContext(TokenContext);
   const apiHost = context?.get('apiHost');
