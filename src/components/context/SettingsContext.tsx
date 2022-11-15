@@ -114,8 +114,7 @@ export const SettingsProvider: FC<Prop> = ({ children }) => {
         });
       }
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [appSettings],
+    [appSettings.data, patchSettings, postSettings],
   );
 
   const contextValue = useMemo(() => {
@@ -132,6 +131,8 @@ export const SettingsProvider: FC<Prop> = ({ children }) => {
       appSettings.data?.filter((s) =>
         s.name.startsWith(DATA_FILE_SETTINGS_NAME),
       ) || List<AppSetting>();
+    // eslint-disable-next-line no-console
+    console.log('re-running in useMemo() ');
 
     return {
       ...allSettings,
