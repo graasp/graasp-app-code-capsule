@@ -74,6 +74,7 @@ const UppyDialog: FC<Props> = ({ open, onFinish }) => {
   );
   // hook to instantiate Uppy
   const uppy = useUppy(() => {
+    // eslint-disable-next-line no-console
     console.log('iam re-run');
     return createUppy({ apiHost, itemId, token, standalone, onComplete, t });
   });
