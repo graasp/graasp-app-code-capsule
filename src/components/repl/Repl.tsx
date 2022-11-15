@@ -194,25 +194,18 @@ const Repl: FC<Props> = ({ seedValue }) => {
     }
   }, [dataFileListSetting, dataFileSettings, apiHost, token]);
 
-  // send settings files to pyodide
-  const loadDataFiles = (): void => {
-    if (worker && dataFilesReady && reloadDataFiles) {
-      dataFiles.forEach((f) => worker.putFile(f.filePath, f.fileText));
-      setReloadDataFiles(false);
-    }
-  };
-
-  // loadDatafiles when worker is not null
+  // load data files when worker is set or reload is requested
   useEffect(
     () => {
-      if (worker) {
+      if (worker && dataFilesReady && reloadDataFiles) {
         // eslint-disable-next-line no-console
-        console.log('reloading files in worker');
-        loadDataFiles();
+        console.log('loading files into worker');
+        dataFiles.forEach((f) => worker.putFile(f.filePath, f.fileText));
+        setReloadDataFiles(false);
       }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [worker],
+    [worker, dataFilesReady, reloadDataFiles],
   );
 
   const onClickRunCode = (): void => {
