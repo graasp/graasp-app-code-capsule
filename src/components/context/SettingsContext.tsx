@@ -111,7 +111,10 @@ export const SettingsProvider: FC<Prop> = ({ children }) => {
         newValue: AllSettingsDataType,
       ) => {
         const previousSetting = appSettings.data?.find((s) => s.name === name);
-        // generalSettings do not exist
+        // eslint-disable-next-line no-console
+        console.log('previous setting is: ', previousSetting);
+
+        // setting does not exist
         if (!previousSetting) {
           postSettings.mutate({
             data: newValue,
