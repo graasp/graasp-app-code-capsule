@@ -42,7 +42,7 @@ export const createUppy = ({
       endpoint: `${apiHost}/${buildUploadAppSettingFilesRoute(itemId)}`,
       withCredentials: true,
       formData: true,
-      allowedMetaFields: ['name', 'filePath'],
+      // allowedMetaFields: ['name', 'filePath'],
       headers: {
         authorization: `Bearer ${token}`,
       },
@@ -52,8 +52,6 @@ export const createUppy = ({
     showSuccessToast(t('File added'));
     uppyInstance.setFileMeta(file.id, {
       size: file.size,
-      name: dataFileSettingName(file.name),
-      filePath: file.name,
     });
   });
 
