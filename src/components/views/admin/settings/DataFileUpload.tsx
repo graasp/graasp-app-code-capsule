@@ -1,7 +1,8 @@
 import { FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { Box, Button, List, Stack } from '@mui/material';
+import { Add } from '@mui/icons-material';
+import { Box, Button, List, Stack, Typography } from '@mui/material';
 
 import {
   DATA_FILE_LIST_SETTINGS_NAME,
@@ -23,9 +24,8 @@ const DataFileUpload: FC = () => {
     saveSettings,
   } = useSettings();
 
+  const filesMetaData = dataFileListSetting[DataFileListSettingsKeys.Files];
   const handleFileDelete = (appSettingIdToDelete: string): void => {
-    const filesMetaData = dataFileListSetting[DataFileListSettingsKeys.Files];
-
     saveSettings(DATA_FILE_LIST_SETTINGS_NAME, {
       [DataFileListSettingsKeys.Files]: filesMetaData.filter(
         ({ appSettingId }) => appSettingId !== appSettingIdToDelete,
@@ -33,26 +33,23 @@ const DataFileUpload: FC = () => {
     });
   };
 
-  const handleFileUpload = (fileMetaData: DataFile[]): void => {
+  const handleFileUpload = (newFileMetaData: DataFile[]): void => {
     saveSettings(DATA_FILE_LIST_SETTINGS_NAME, {
-      [DataFileListSettingsKeys.Files]: [
-        ...dataFileListSetting[DataFileListSettingsKeys.Files],
-        ...fileMetaData,
-      ],
+      [DataFileListSettingsKeys.Files]: [...filesMetaData, ...newFileMetaData],
     });
     // close modal
     setAddNewFilesOpen(false);
   };
 
   return (
-    <Stack direction="row" spacing={2}>
-      <Button onClick={() => setAddNewFilesOpen(true)}>
+    <Stack direction="column" spacing={1}>
+      <Button startIcon={<Add />} onClick={() => setAddNewFilesOpen(true)}>
         {t('Upload Data Files')}
       </Button>
       <Box flex={1} borderColor="info.main" borderRadius={2} border={1}>
-        <List dense>
-          {dataFileListSetting[DataFileListSettingsKeys.Files].map(
-            ({ appSettingId, fileName, virtualPath }) => {
+        {filesMetaData.length ? (
+          <List dense>
+            {filesMetaData.map(({ appSettingId, fileName, virtualPath }) => {
               const appSetting = dataFileSettings.find(
                 (s) => s.id === appSettingId,
               );
@@ -68,12 +65,18 @@ const DataFileUpload: FC = () => {
                   onDelete={handleFileDelete}
                 />
               );
-            },
-          )}
-        </List>
+            })}
+          </List>
+        ) : (
+          <Typography m={1}>{t('No files')}</Typography>
+        )}
       </Box>
       {addNewFilesOpen && (
-        <UppyDialog open={addNewFilesOpen} onFinish={handleFileUpload} />
+        <UppyDialog
+          open={addNewFilesOpen}
+          onFinish={handleFileUpload}
+          onClose={() => setAddNewFilesOpen(false)}
+        />
       )}
     </Stack>
   );

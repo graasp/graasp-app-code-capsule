@@ -7,7 +7,12 @@ import {
   useLocalContext,
 } from '@graasp/apps-query-client';
 
-import { Dialog, DialogContent, DialogTitle } from '@mui/material';
+import {
+  Dialog,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+} from '@mui/material';
 
 import { UploadResult } from '@uppy/core';
 import '@uppy/core/dist/style.css';
@@ -16,14 +21,15 @@ import { DragDrop, useUppy } from '@uppy/react';
 
 import { DataFile } from '../../../../config/appSettingsTypes';
 import { MUTATION_KEYS, useMutation } from '../../../../config/queryClient';
-import { createUppy } from '../../../../utils/uppy';
+import { SUPPORTED_FORMATS, createUppy } from '../../../../utils/uppy';
 
 type Props = {
   open: boolean;
   onFinish: (data: DataFile[]) => void;
+  onClose: () => void;
 };
 
-const UppyDialog: FC<Props> = ({ open, onFinish }) => {
+const UppyDialog: FC<Props> = ({ open, onFinish, onClose }) => {
   const { t } = useTranslation();
   const context = useLocalContext();
   const apiHost = context?.get('apiHost');
@@ -80,10 +86,13 @@ const UppyDialog: FC<Props> = ({ open, onFinish }) => {
   });
 
   return (
-    <Dialog open={open} maxWidth="lg">
+    <Dialog open={open} fullWidth onClose={onClose}>
       <DialogTitle>{t('Upload Data Files')}</DialogTitle>
       <DialogContent>
-        <DragDrop height="200px" uppy={uppy} />
+        <DialogContentText>
+          {t('Supported formats', { formats: SUPPORTED_FORMATS.join(', ') })}
+        </DialogContentText>
+        <DragDrop height="200px" width="100%" uppy={uppy} />
       </DialogContent>
     </Dialog>
   );
