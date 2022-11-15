@@ -1,6 +1,13 @@
 import { List } from 'immutable';
 
-import { FC, ReactElement, createContext, useContext, useMemo } from 'react';
+import {
+  FC,
+  ReactElement,
+  createContext,
+  useCallback,
+  useContext,
+  useMemo,
+} from 'react';
 
 import { AppSetting } from '@graasp/apps-query-client';
 
@@ -88,6 +95,29 @@ export const SettingsProvider: FC<Prop> = ({ children }) => {
   );
   const appSettings = hooks.useAppSettings();
 
+  const saveSettings = useCallback(
+    (name: AllSettingsNameType, newValue: AllSettingsDataType): void => {
+      const previousSetting = appSettings.data?.find((s) => s.name === name);
+      // eslint-disable-next-line no-console
+      console.log('previous setting is: ', previousSetting);
+
+      // setting does not exist
+      if (!previousSetting) {
+        postSettings.mutate({
+          data: newValue,
+          name,
+        });
+      } else {
+        patchSettings.mutate({
+          id: previousSetting.id,
+          data: newValue,
+        });
+      }
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [appSettings],
+  );
+
   const contextValue = useMemo(() => {
     const allSettings: AllSettingsType = ALL_SETTING_NAMES.reduce(
       <T extends AllSettingsNameType>(acc: AllSettingsType, key: T) => {
@@ -106,29 +136,9 @@ export const SettingsProvider: FC<Prop> = ({ children }) => {
     return {
       ...allSettings,
       dataFileSettings,
-      saveSettings: (
-        name: AllSettingsNameType,
-        newValue: AllSettingsDataType,
-      ) => {
-        const previousSetting = appSettings.data?.find((s) => s.name === name);
-        // eslint-disable-next-line no-console
-        console.log('previous setting is: ', previousSetting);
-
-        // setting does not exist
-        if (!previousSetting) {
-          postSettings.mutate({
-            data: newValue,
-            name,
-          });
-        } else {
-          patchSettings.mutate({
-            id: previousSetting.id,
-            data: newValue,
-          });
-        }
-      },
+      saveSettings,
     };
-  }, [appSettings.data, patchSettings, postSettings]);
+  }, [appSettings.data, saveSettings]);
 
   if (appSettings.isLoading) {
     return <Loader />;

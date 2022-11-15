@@ -55,7 +55,7 @@ const FileList: FC<Props> = ({
         <>
           <IconButton
             edge="end"
-            aria-label="delete"
+            aria-label="edit"
             onClick={() => {
               // eslint-disable-next-line no-console
               console.log('want to edit');
