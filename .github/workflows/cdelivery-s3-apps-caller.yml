@@ -27,5 +27,5 @@ jobs:
       aws-s3-bucket-name: ${{ secrets.AWS_S3_BUCKET_NAME_APPS_STAGE }}
       cloudfront-distribution-id: ${{ secrets.CLOUDFRONT_DISTRIBUTION_APPS_STAGE }}
       app-id: ${{ secrets.APP_ID }}
-      graasp-domain: ${{ secrets.STAGE_GRAASP_DOMAIN }}
+      graasp-domain: ${{ secrets.REACT_APP_DOMAIN_STAGE }}
       sentry-dsn: ${{ secrets.SENTRY_DSN }}

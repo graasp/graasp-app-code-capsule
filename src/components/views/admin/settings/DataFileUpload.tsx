@@ -43,13 +43,6 @@ const DataFileUpload: FC = () => {
   const onComplete = (res: UploadResult): void => {
     const result = res.successful;
     if (result) {
-      // eslint-disable-next-line no-console
-      console.log(result);
-      // tell query-client that the file was uploaded
-      onFileUploadComplete({
-        id: itemId,
-        data: result.map(({ response }) => response?.body?.[0]).filter(Boolean),
-      });
       const fileInfos: {
         name: string;
         responseBody: AppSetting;
@@ -62,7 +55,6 @@ const DataFileUpload: FC = () => {
       // eslint-disable-next-line no-console
       console.log('file infos', fileInfos);
 
-      // todo: update setting listing dataFileSetting names
       saveSettings(DATA_FILE_LIST_SETTINGS_NAME, {
         [DataFileListSettingsKeys.Files]: [
           ...dataFileListSetting[DataFileListSettingsKeys.Files],
@@ -73,6 +65,12 @@ const DataFileUpload: FC = () => {
             virtualPath: f.name,
           })),
         ],
+      });
+
+      // tell query-client that the file was uploaded
+      onFileUploadComplete({
+        id: itemId,
+        data: result.map(({ response }) => response?.body?.[0]).filter(Boolean),
       });
     }
   };

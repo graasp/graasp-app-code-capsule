@@ -1,13 +1,6 @@
 import { List } from 'immutable';
 
-import {
-  FC,
-  ReactElement,
-  createContext,
-  useCallback,
-  useContext,
-  useMemo,
-} from 'react';
+import { FC, ReactElement, createContext, useContext } from 'react';
 
 import { AppSetting } from '@graasp/apps-query-client';
 
@@ -95,34 +88,42 @@ export const SettingsProvider: FC<Prop> = ({ children }) => {
   const patchSettings = useMutation<unknown, unknown, Partial<AppSetting>>(
     MUTATION_KEYS.PATCH_APP_SETTING,
   );
-  const { data: appSettingsList, isLoading } = hooks.useAppSettings();
+  const {
+    data: appSettingsList,
+    isLoading,
+    isSuccess,
+  } = hooks.useAppSettings();
 
-  const saveSettings = useCallback(
-    (name: AllSettingsNameType, newValue: AllSettingsDataType): void => {
-      if (appSettingsList) {
-        const previousSetting = appSettingsList.find((s) => s.name === name);
-        // eslint-disable-next-line no-console
-        console.log('previous setting is: ', previousSetting);
-
-        // setting does not exist
-        if (!previousSetting) {
-          postSettings.mutate({
-            data: newValue,
-            name,
-          });
-        } else {
-          patchSettings.mutate({
-            id: previousSetting.id,
-            data: newValue,
-          });
-        }
-      }
-    },
-    [appSettingsList, patchSettings, postSettings],
-  );
-
-  const contextValue = useMemo(() => {
+  const saveSettings = (
+    name: AllSettingsNameType,
+    newValue: AllSettingsDataType,
+  ): void => {
     if (appSettingsList) {
+      const previousSetting = appSettingsList.find((s) => s.name === name);
+      // eslint-disable-next-line no-console
+      console.log('previous setting is: ', previousSetting);
+
+      // setting does not exist
+      if (!previousSetting) {
+        postSettings.mutate({
+          data: newValue,
+          name,
+        });
+      } else {
+        patchSettings.mutate({
+          id: previousSetting.id,
+          data: newValue,
+        });
+      }
+    }
+  };
+
+  if (isLoading) {
+    return <Loader />;
+  }
+
+  const getContextValue = (): SettingsContextType => {
+    if (isSuccess) {
       const allSettings: AllSettingsType = ALL_SETTING_NAMES.reduce(
         <T extends AllSettingsNameType>(acc: AllSettingsType, key: T) => {
           const setting = appSettingsList.find((s) => s.name === key);
@@ -136,8 +137,6 @@ export const SettingsProvider: FC<Prop> = ({ children }) => {
         appSettingsList.filter((s) =>
           s.name.startsWith(DATA_FILE_SETTINGS_NAME),
         ) || List<AppSetting>();
-      // eslint-disable-next-line no-console
-      console.log('re-running in useMemo() ');
 
       return {
         ...allSettings,
@@ -146,11 +145,9 @@ export const SettingsProvider: FC<Prop> = ({ children }) => {
       };
     }
     return defaultContextValue;
-  }, [appSettingsList, saveSettings]);
+  };
 
-  if (isLoading) {
-    return <Loader />;
-  }
+  const contextValue = getContextValue();
 
   return (
     <SettingsContext.Provider value={contextValue}>
