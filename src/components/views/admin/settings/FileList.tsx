@@ -2,7 +2,7 @@ import { FC } from 'react';
 
 import { AppSetting } from '@graasp/apps-query-client';
 
-import { Close, Folder } from '@mui/icons-material';
+import { Close, Edit, TextSnippet as FileIcon } from '@mui/icons-material';
 import {
   IconButton,
   ListItem,
@@ -52,20 +52,32 @@ const FileList: FC<Props> = ({
   return (
     <ListItem
       secondaryAction={
-        <IconButton
-          edge="end"
-          aria-label="delete"
-          onClick={() => {
-            deleteAppSettingFile({ id: appSetting.id });
-            onDelete(appSetting.id);
-          }}
-        >
-          <Close />
-        </IconButton>
+        <>
+          <IconButton
+            edge="end"
+            aria-label="delete"
+            onClick={() => {
+              // eslint-disable-next-line no-console
+              console.log('want to edit');
+            }}
+          >
+            <Edit />
+          </IconButton>
+          <IconButton
+            edge="end"
+            aria-label="delete"
+            onClick={() => {
+              deleteAppSettingFile({ id: appSetting.id });
+              onDelete(appSetting.id);
+            }}
+          >
+            <Close />
+          </IconButton>
+        </>
       }
     >
       <ListItemIcon>
-        <Folder />
+        <FileIcon />
       </ListItemIcon>
       <ListItemText primary={fileName} secondary={virtualPath} />
     </ListItem>

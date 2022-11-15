@@ -88,16 +88,19 @@ const DataFileUpload: FC = () => {
       ),
     });
     // tell uppy that we removed this file -> so we can re-upload it
-
     const uppyFiles = { ...uppy.getState().files };
-    const newFiles = Object.fromEntries(
-      Object.entries(uppyFiles).filter(
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        ([key, value]) => value.name !== fileToDelete?.fileName,
-      ),
-    );
-
-    uppy.setState({ files: newFiles });
+    const removedFile = Object.entries(uppyFiles).find(
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      ([key, value]) => value.name === fileToDelete?.fileName,
+    )?.[0];
+    if (removedFile) {
+      // eslint-disable-next-line no-console
+      console.log(removedFile);
+      uppy.removeFile(removedFile, 'removed-by-user');
+    } else {
+      // eslint-disable-next-line no-console
+      console.log('failed to locate removed file in uppy files');
+    }
   };
 
   return (
