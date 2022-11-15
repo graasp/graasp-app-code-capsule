@@ -59,6 +59,11 @@ const Repl: FC<Props> = ({ seedValue }) => {
   const [prompt, setPrompt] = useState<string>('');
   const [error, setError] = useState<string | null>(null);
   const [figures, setFigures] = useState<string[]>([]);
+  const [dataFiles, setDataFiles] = useState<
+    { filePath: string; fileText: string }[]
+  >([]);
+  const [dataFilesReady, setDataFilesReady] = useState(false);
+  const [reloadDataFiles, setReloadDataFiles] = useState(false);
   const context = useLocalContext();
   const token = useContext(TokenContext);
   const apiHost = context?.get('apiHost');
@@ -148,43 +153,66 @@ const Repl: FC<Props> = ({ seedValue }) => {
     [],
   );
 
+  // load files when settings are loaded
+  useEffect(() => {
+    if (
+      dataFileListSetting[DataFileListSettingsKeys.Files].length &&
+      !dataFileSettings.isEmpty() &&
+      apiHost &&
+      token
+    ) {
+      dataFileSettings.forEach((f) => {
+        const appSettingId = f.id;
+        // eslint-disable-next-line no-console
+        console.log(`loading data file (id: ${appSettingId})`);
+        // find file attributes in the data list setting
+        const fileAttributes = dataFileListSetting[
+          DataFileListSettingsKeys.Files
+        ].find((file) => file.appSettingId === appSettingId);
+        // if file attributes were found, load file content
+        if (fileAttributes) {
+          // todo: add caching
+          Api.getAppSettingFileContent({
+            id: appSettingId,
+            apiHost,
+            token,
+          })
+            .then((fileBlob) => fileBlob.text())
+            .then((fileText) => {
+              const filePath = fileAttributes.virtualPath;
+
+              // eslint-disable-next-line no-console
+              console.log(`loading ${filePath}`);
+              setDataFiles((prevState) => [
+                ...prevState,
+                { filePath, fileText },
+              ]);
+            });
+        }
+      });
+      setDataFilesReady(true);
+    }
+  }, [dataFileListSetting, dataFileSettings, apiHost, token]);
+
   // send settings files to pyodide
+  const loadDataFiles = (): void => {
+    if (worker && dataFilesReady && reloadDataFiles) {
+      dataFiles.forEach((f) => worker.putFile(f.filePath, f.fileText));
+      setReloadDataFiles(false);
+    }
+  };
+
+  // loadDatafiles when worker is not null
   useEffect(
     () => {
       if (worker) {
         // eslint-disable-next-line no-console
-        console.log('putting file');
-        dataFileSettings.forEach((f) => {
-          const appSettingId = f.id;
-          const fileAttributes = dataFileListSetting[
-            DataFileListSettingsKeys.Files
-          ].find((file) => file.appSettingId === appSettingId);
-          if (fileAttributes) {
-            // todo: https://github.com/graasp/graasp-apps-query-client/blob/7cfe3921e501590830897070ad42c14b5c5d4100/src/hooks/appSetting.ts#L44
-            Api.getAppSettingFileContent({
-              id: appSettingId,
-              apiHost,
-              token,
-            })
-              .then((fileBlob) => {
-                // eslint-disable-next-line no-console
-                console.log('file blob', fileBlob);
-                return fileBlob.text();
-              })
-              .then((fileText) => {
-                // eslint-disable-next-line no-console
-                console.log('file text', fileText);
-                worker.putFile(fileAttributes.virtualPath, fileText);
-              });
-          }
-        });
-      } else {
-        // eslint-disable-next-line no-console
-        console.error('worker is not initialized yet');
+        console.log('reloading files in worker');
+        loadDataFiles();
       }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [worker, dataFileSettings],
+    [worker],
   );
 
   const onClickRunCode = (): void => {
@@ -209,8 +237,10 @@ const Repl: FC<Props> = ({ seedValue }) => {
   };
 
   const onClickClearOutput = (): void => {
+    // todo: make sure that the files are reloaded
     worker?.stop();
     worker?.create();
+    setReloadDataFiles(true);
     setOutput('');
     setFigures([]);
     worker?.clearOutput();
