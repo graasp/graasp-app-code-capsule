@@ -1,4 +1,4 @@
-import { FC, useContext } from 'react';
+import { FC, useContext, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import {
@@ -39,6 +39,11 @@ const DataFileUpload: FC = () => {
     unknown,
     { id: string; data: unknown }
   >(MUTATION_KEYS.APP_SETTING_FILE_UPLOAD);
+
+  useEffect(() => {
+    // eslint-disable-next-line no-console
+    console.log('refreshed');
+  }, [dataFileListSetting, dataFileSettings, saveSettings]);
 
   const onComplete = (res: UploadResult): void => {
     const result = res.successful;
