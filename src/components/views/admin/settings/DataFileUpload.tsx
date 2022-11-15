@@ -17,7 +17,7 @@ import { DATA_FILE_LIST_SETTINGS_NAME } from '../../../../config/appSettingsType
 import { MUTATION_KEYS, useMutation } from '../../../../config/queryClient';
 import { DEFAULT_DATA_FILE_LIST_SETTINGS } from '../../../../config/settings';
 import { DataFileListSettingsKeys } from '../../../../interfaces/settings';
-import { createUppy, dataFileSettingName } from '../../../../utils/uppy';
+import { createUppy } from '../../../../utils/uppy';
 import { useSettings } from '../../../context/SettingsContext';
 import FileList from './FileList';
 
@@ -92,7 +92,8 @@ const DataFileUpload: FC = () => {
     const uppyFiles = { ...uppy.getState().files };
     const newFiles = Object.fromEntries(
       Object.entries(uppyFiles).filter(
-        ([_, value]) => value.name !== fileToDelete?.fileName,
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        ([key, value]) => value.name !== fileToDelete?.fileName,
       ),
     );
 
