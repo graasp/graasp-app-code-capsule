@@ -80,7 +80,7 @@ const DataFileUpload: FC = () => {
       });
     }
   };
-
+  // todo: reset uppy to allow
   // hook to instantiate Uppy
   const uppy = useUppy(() =>
     createUppy({ apiHost, itemId, token, standalone, onComplete, t }),
@@ -102,13 +102,9 @@ const DataFileUpload: FC = () => {
           <List dense>
             {dataFileListSetting[DataFileListSettingsKeys.Files].map(
               ({ settingName, virtualPath }) => {
-                // eslint-disable-next-line no-console
-                console.log(dataFileSettings.toJS());
                 const appSetting = dataFileSettings.find(
                   (s) => s.name === settingName,
                 );
-                // eslint-disable-next-line no-console
-                console.log(settingName);
                 if (!appSetting) {
                   return <p key={settingName}>Waiting for settings</p>;
                 }
