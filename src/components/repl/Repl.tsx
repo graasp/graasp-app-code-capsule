@@ -165,9 +165,17 @@ const Repl: FC<Props> = ({ seedValue }) => {
               id: appSettingId,
               apiHost,
               token,
-            }).then((fileBlob) =>
-              worker.putFile(fileAttributes.virtualPath, fileBlob),
-            );
+            })
+              .then((fileBlob) => {
+                // eslint-disable-next-line no-console
+                console.log('file blob', fileBlob);
+                return fileBlob.text();
+              })
+              .then((fileText) => {
+                // eslint-disable-next-line no-console
+                console.log('file text', fileText);
+                worker.putFile(fileAttributes.virtualPath, fileText);
+              });
           }
         });
       } else {
