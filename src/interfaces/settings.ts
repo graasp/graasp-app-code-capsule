@@ -26,6 +26,7 @@ export enum InstructorCodeSettingsKeys {
 export enum CodeExecutionSettingsKeys {
   HeaderCode = 'headerCode',
   FooterCode = 'footerCode',
+  PreLoadedLibraries = 'preLoadedLibs',
 }
 
 // App Mode Setting keys
@@ -68,6 +69,7 @@ export type InstructorCodeVersionSettings = {
 export type CodeExecutionSettings = {
   [CodeExecutionSettingsKeys.HeaderCode]: string;
   [CodeExecutionSettingsKeys.FooterCode]: string;
+  [CodeExecutionSettingsKeys.PreLoadedLibraries]: string;
 
   // used to allow access using settings[settingKey] syntax
   [key: string]: unknown;

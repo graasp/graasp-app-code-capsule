@@ -80,6 +80,7 @@ export const DEFAULT_INSTRUCTOR_CODE_VERSION_SETTINGS: InstructorCodeVersionSett
 export const DEFAULT_CODE_EXECUTION_SETTINGS: CodeExecutionSettings = {
   [CodeExecutionSettingsKeys.HeaderCode]: '',
   [CodeExecutionSettingsKeys.FooterCode]: '',
+  [CodeExecutionSettingsKeys.PreLoadedLibraries]: '',
 };
 
 // app mode setting

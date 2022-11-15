@@ -25,6 +25,7 @@ const DataFileUpload: FC = () => {
   } = useSettings();
 
   const filesMetaData = dataFileListSetting[DataFileListSettingsKeys.Files];
+
   const handleFileDelete = (appSettingIdToDelete: string): void => {
     saveSettings(DATA_FILE_LIST_SETTINGS_NAME, {
       [DataFileListSettingsKeys.Files]: filesMetaData.filter(

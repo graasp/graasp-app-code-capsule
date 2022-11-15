@@ -100,57 +100,62 @@ const Repl: FC<Props> = ({ seedValue }) => {
   // register worker on mount
   useEffect(
     () => {
-      const workerInstance = new PyWorker(
-        'https://spaenleh.github.io/graasp-pyodide/fullWorker.min.js',
-      );
-
-      workerInstance.preLoadedPackages = ['scikit-learn'];
-
-      workerInstance.onOutput = (newOutput: string, append = false) => {
-        setOutput((prevOutput) =>
-          append ? `${prevOutput}${newOutput}` : newOutput,
+      if (codeExecSettings) {
+        const workerInstance = new PyWorker(
+          'https://spaenleh.github.io/graasp-pyodide/fullWorker.min.js',
         );
-      };
 
-      workerInstance.onInput = (newPrompt: string) => {
-        setIsWaitingForInput(true);
-        setPrompt(newPrompt);
-      };
+        workerInstance.preLoadedPackages =
+          codeExecSettings[CodeExecutionSettingsKeys.PreLoadedLibraries].split(
+            ' ',
+          );
 
-      // todo: improve type of function to be able to remove the ts error
-      // @ts-ignore
-      workerInstance.onError = (newError: { data: string }) => {
-        setError(newError.data);
-      };
+        workerInstance.onOutput = (newOutput: string, append = false) => {
+          setOutput((prevOutput) =>
+            append ? `${prevOutput}${newOutput}` : newOutput,
+          );
+        };
 
-      workerInstance.onTerminated = () => {
-        setIsExecuting(false);
-        setReplStatus(PyodideStatus.READY);
-      };
+        workerInstance.onInput = (newPrompt: string) => {
+          setIsWaitingForInput(true);
+          setPrompt(newPrompt);
+        };
 
-      workerInstance.onFigure = (figureData) => {
-        setFigures((prevFigures) => [...prevFigures, figureData]);
+        // todo: improve type of function to be able to remove the ts error
+        // @ts-ignore
+        workerInstance.onError = (newError: { data: string }) => {
+          setError(newError.data);
+        };
+
+        workerInstance.onTerminated = () => {
+          setIsExecuting(false);
+          setReplStatus(PyodideStatus.READY);
+        };
+
+        workerInstance.onFigure = (figureData) => {
+          setFigures((prevFigures) => [...prevFigures, figureData]);
+          postAction({
+            type: APP_ACTIONS_TYPES.NEW_FIGURE,
+            data: { figure: figureData },
+          });
+        };
+
+        workerInstance.onStatusUpdate = (status: PyodideStatus) => {
+          setReplStatus(status);
+        };
+
+        // preload worker instance
+        workerInstance.preload();
+
+        setWorker(workerInstance);
         postAction({
-          type: APP_ACTIONS_TYPES.NEW_FIGURE,
-          data: { figure: figureData },
+          type: APP_ACTIONS_TYPES.INITIALIZE_EXECUTION,
+          data: {},
         });
-      };
-
-      workerInstance.onStatusUpdate = (status: PyodideStatus) => {
-        setReplStatus(status);
-      };
-
-      // preload worker instance
-      workerInstance.preload();
-
-      setWorker(workerInstance);
-      postAction({
-        type: APP_ACTIONS_TYPES.INITIALIZE_EXECUTION,
-        data: {},
-      });
+      }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [],
+    [codeExecSettings],
   );
 
   // load files when settings are loaded

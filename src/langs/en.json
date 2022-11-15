@@ -123,6 +123,7 @@
     "Data files": "Data files",
     "Upload Data Files": "Upload Data Files",
     "No files": "No files",
-    "Supported formats": "Supported formats: {{formats}}"
+    "Supported formats": "Supported formats: {{formats}}",
+    "Pre-loaded libraries": "Pre-loaded libraries"
   }
 }

@@ -45,6 +45,7 @@ import SubmitButtons from '../../../common/settings/SubmitButtons';
 import { useSettings } from '../../../context/SettingsContext';
 import CodeEditor from '../../../repl/CodeEditor';
 import DataFileUpload from './DataFileUpload';
+import PreLoadedLibrariesInput from './PreLoadedLibrariesInput';
 
 const SettingsView: FC = () => {
   const { t } = useTranslation();
@@ -164,6 +165,22 @@ const SettingsView: FC = () => {
               setValue={(value: string) =>
                 changeCodeExecutionSetting(
                   CodeExecutionSettingsKeys.FooterCode,
+                  value,
+                )
+              }
+            />
+          </Box>
+          <Box>
+            <FormLabel>{t('Pre-loaded libraries')}</FormLabel>
+            <PreLoadedLibrariesInput
+              value={
+                localCodeExecSettings[
+                  CodeExecutionSettingsKeys.PreLoadedLibraries
+                ]
+              }
+              setValue={(value: string) =>
+                changeCodeExecutionSetting(
+                  CodeExecutionSettingsKeys.PreLoadedLibraries,
                   value,
                 )
               }

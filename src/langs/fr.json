@@ -119,8 +119,9 @@
     "File added": "Fichier ajouté",
     "Upload complete": "Téléchargement terminé",
     "This is just a preview. No files can be uploaded.": "Ce n'est qu'un aperçu. Aucun fichier n'a été téléchargé.",
-    "Data files": "Data files",
+    "Data files": "Fichiers de données",
     "Upload Data Files": "Télécharger des fichiers de données",
-    "No files": "Pas de fichiers"
+    "No files": "Pas de fichiers",
+    "Pre-loaded libraries": "Libraries pré-chargées"
   }
 }
