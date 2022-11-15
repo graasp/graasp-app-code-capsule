@@ -72,7 +72,9 @@ const DataFileUpload: FC = () => {
           )}
         </List>
       </Box>
-      <UppyDialog open={addNewFilesOpen} onFinish={handleFileUpload} />
+      {addNewFilesOpen && (
+        <UppyDialog open={addNewFilesOpen} onFinish={handleFileUpload} />
+      )}
     </Stack>
   );
 };
