@@ -148,10 +148,7 @@ export const SettingsProvider: FC<Prop> = ({ children }) => {
   };
 
   const contextValue = getContextValue();
-  console.log(
-    'dataFile list setting is',
-    appSettingsList?.find((s) => s.name === DATA_FILE_LIST_SETTINGS_NAME),
-  );
+
   return (
     <SettingsContext.Provider value={contextValue}>
       {children}
