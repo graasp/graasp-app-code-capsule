@@ -1,5 +1,6 @@
-import { FC, KeyboardEvent, useEffect, useState } from 'react';
+import { FC, KeyboardEvent, useContext, useEffect, useState } from 'react';
 
+import { Api, TokenContext, useLocalContext } from '@graasp/apps-query-client';
 import { PyWorker, PyodideStatus } from '@graasp/pyodide';
 
 import {
@@ -16,7 +17,7 @@ import {
   CODE_EXECUTION_SETTINGS_NAME,
   DATA_FILE_LIST_SETTINGS_NAME,
 } from '../../config/appSettingsTypes';
-import { MUTATION_KEYS, hooks, useMutation } from '../../config/queryClient';
+import { MUTATION_KEYS, useMutation } from '../../config/queryClient';
 import { REPL_CONTAINER_CY, REPL_EDITOR_ID_CY } from '../../config/selectors';
 import {
   DEFAULT_CODE_EXECUTION_SETTINGS,
@@ -58,6 +59,9 @@ const Repl: FC<Props> = ({ seedValue }) => {
   const [prompt, setPrompt] = useState<string>('');
   const [error, setError] = useState<string | null>(null);
   const [figures, setFigures] = useState<string[]>([]);
+  const context = useLocalContext();
+  const token = useContext(TokenContext);
+  const apiHost = context?.get('apiHost');
 
   const { mutate: postAction } = useMutation<
     unknown,
@@ -151,21 +155,19 @@ const Repl: FC<Props> = ({ seedValue }) => {
         // eslint-disable-next-line no-console
         console.log('putting file');
         dataFileSettings.forEach((f) => {
+          const appSettingId = f.id;
           const fileAttributes = dataFileListSetting[
             DataFileListSettingsKeys.Files
-          ].find((file) => file.appSettingId === f.id);
+          ].find((file) => file.appSettingId === appSettingId);
           if (fileAttributes) {
             // todo: https://github.com/graasp/graasp-apps-query-client/blob/7cfe3921e501590830897070ad42c14b5c5d4100/src/hooks/appSetting.ts#L44
-            // const {
-            //   data: fileURL,
-            //   isLoading,
-            //   isSuccess,
-            // } = hooks.useAppSettingFile({
-            //   appSettingId: fileAttributes.appSettingId,
-            // });
-            // eslint-disable-next-line no-console
-            console.log(fileAttributes);
-            worker.putFile(fileAttributes.virtualPath, JSON.stringify(f.data));
+            Api.getAppSettingFileContent({
+              id: appSettingId,
+              apiHost,
+              token,
+            }).then((fileBlob) =>
+              worker.putFile(fileAttributes.virtualPath, fileBlob),
+            );
           }
         });
       } else {
