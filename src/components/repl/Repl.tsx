@@ -104,11 +104,15 @@ const Repl: FC<Props> = ({ seedValue }) => {
         const workerInstance = new PyWorker(
           'https://spaenleh.github.io/graasp-pyodide/fullWorker.min.js',
         );
-
-        workerInstance.preLoadedPackages =
-          codeExecSettings[CodeExecutionSettingsKeys.PreLoadedLibraries].split(
-            ' ',
-          );
+        const preLoadedPackages = codeExecSettings[
+          CodeExecutionSettingsKeys.PreLoadedLibraries
+        ]
+          .split(' ')
+          // remove empty strings
+          .filter(Boolean);
+        if (preLoadedPackages) {
+          workerInstance.preLoadedPackages = preLoadedPackages;
+        }
 
         workerInstance.onOutput = (newOutput: string, append = false) => {
           setOutput((prevOutput) =>
