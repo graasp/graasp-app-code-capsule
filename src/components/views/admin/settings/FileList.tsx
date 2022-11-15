@@ -18,17 +18,18 @@ import {
 
 type Props = {
   appSetting: AppSetting;
-  settingName: string;
+  fileName: string;
   virtualPath: string;
   onDelete: (appSettingIdToDelete: string) => void;
 };
 
 const FileList: FC<Props> = ({
   appSetting,
-  settingName,
+  fileName,
   virtualPath,
   onDelete,
 }) => {
+  // todo: add a way to set a virtual path
   const {
     data: fileSettings,
     isLoading,
@@ -66,7 +67,7 @@ const FileList: FC<Props> = ({
       <ListItemIcon>
         <Folder />
       </ListItemIcon>
-      <ListItemText primary={settingName} secondary={virtualPath} />
+      <ListItemText primary={fileName} secondary={virtualPath} />
     </ListItem>
   );
 };

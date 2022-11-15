@@ -4,6 +4,7 @@ import { FC, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import {
+  Box,
   FormControl,
   FormControlLabel,
   FormLabel,
@@ -137,31 +138,41 @@ const SettingsView: FC = () => {
         </RadioGroup>
       </FormControl>
       {appModeLocalSetting[AppModeSettingsKeys.Mode] === AppMode.Execute && (
-        <Stack>
-          <FormLabel>{t('Header code')}</FormLabel>
-          <CodeEditor
-            id={SETTING_HEADER_CODE_EDITOR_CY}
-            value={localCodeExecSettings[CodeExecutionSettingsKeys.HeaderCode]}
-            setValue={(value: string) =>
-              changeCodeExecutionSetting(
-                CodeExecutionSettingsKeys.HeaderCode,
-                value,
-              )
-            }
-          />
-          <FormLabel>{t('Footer code')}</FormLabel>
-          <CodeEditor
-            id={SETTING_FOOTER_CODE_EDITOR_CY}
-            value={localCodeExecSettings[CodeExecutionSettingsKeys.FooterCode]}
-            setValue={(value: string) =>
-              changeCodeExecutionSetting(
-                CodeExecutionSettingsKeys.FooterCode,
-                value,
-              )
-            }
-          />
-          <DataFileUpload />
-
+        <Stack spacing={1}>
+          <Box>
+            <FormLabel>{t('Header code')}</FormLabel>
+            <CodeEditor
+              id={SETTING_HEADER_CODE_EDITOR_CY}
+              value={
+                localCodeExecSettings[CodeExecutionSettingsKeys.HeaderCode]
+              }
+              setValue={(value: string) =>
+                changeCodeExecutionSetting(
+                  CodeExecutionSettingsKeys.HeaderCode,
+                  value,
+                )
+              }
+            />
+          </Box>
+          <Box>
+            <FormLabel>{t('Footer code')}</FormLabel>
+            <CodeEditor
+              id={SETTING_FOOTER_CODE_EDITOR_CY}
+              value={
+                localCodeExecSettings[CodeExecutionSettingsKeys.FooterCode]
+              }
+              setValue={(value: string) =>
+                changeCodeExecutionSetting(
+                  CodeExecutionSettingsKeys.FooterCode,
+                  value,
+                )
+              }
+            />
+          </Box>
+          <Box>
+            <FormLabel>{t('Data files')}</FormLabel>
+            <DataFileUpload />
+          </Box>
           <SubmitButtons
             onCancel={() => setLocalCodeExecSettings(codeExecSettings)}
             onSave={() =>

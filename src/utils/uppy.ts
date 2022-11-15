@@ -11,7 +11,6 @@ import { showErrorToast, showSuccessToast } from './toast';
 
 const { buildUploadAppSettingFilesRoute } = API_ROUTES;
 
-export const MAX_NUM_FILES = 1;
 export const dataFileSettingName = (fileName: string): string =>
   `${DATA_FILE_SETTINGS_NAME}-${fileName}`;
 
@@ -32,7 +31,6 @@ export const createUppy = ({
 }): Uppy => {
   const uppyInstance = new Uppy({
     restrictions: {
-      maxNumberOfFiles: MAX_NUM_FILES,
       maxFileSize: MAX_FILE_SIZE,
       allowedFileTypes: ['.txt', '.json', '.csv', '.tsv'],
     },

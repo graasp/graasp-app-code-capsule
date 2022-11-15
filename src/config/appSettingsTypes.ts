@@ -22,6 +22,6 @@ export enum AppMode {
 
 export type DataFile = {
   appSettingId: string;
-  settingName: string;
+  fileName: string;
   virtualPath: string;
 };

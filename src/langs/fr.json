@@ -118,6 +118,7 @@
     "Choose the App Mode": "Choisissez le mode de l'app",
     "File added": "Fichier ajouté",
     "Upload complete": "Téléchargement terminé",
-    "This is just a preview. No files can be uploaded.": "Ce n'est qu'un aperçu. Aucun fichier n'a été téléchargé."
+    "This is just a preview. No files can be uploaded.": "Ce n'est qu'un aperçu. Aucun fichier n'a été téléchargé.",
+    "Data files": "Data files"
   }
 }
