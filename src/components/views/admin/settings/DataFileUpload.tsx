@@ -34,9 +34,11 @@ const DataFileUpload: FC = () => {
     dataFileSettings,
     saveSettings,
   } = useSettings();
-  const { mutate: onFileUploadComplete } = useMutation(
-    MUTATION_KEYS.APP_SETTING_FILE_UPLOAD,
-  );
+  const { mutate: onFileUploadComplete } = useMutation<
+    unknown,
+    unknown,
+    { id: string; data: unknown }
+  >(MUTATION_KEYS.APP_SETTING_FILE_UPLOAD);
 
   const onComplete = (res: UploadResult): void => {
     const result = res.successful;
@@ -44,7 +46,10 @@ const DataFileUpload: FC = () => {
       // eslint-disable-next-line no-console
       console.log(result);
       // tell query-client that the file was uploaded
-      onFileUploadComplete();
+      onFileUploadComplete({
+        id: itemId,
+        data: result.map(({ response }) => response?.body?.[0]).filter(Boolean),
+      });
       const fileInfos: {
         name: string;
         responseBody: AppSetting;

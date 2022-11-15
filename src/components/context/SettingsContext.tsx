@@ -76,11 +76,13 @@ export type SettingsContextType = AllSettingsType & {
   ) => void;
 };
 
-const SettingsContext = createContext<SettingsContextType>({
+const defaultContextValue = {
   ...defaultSettingsValues,
-  dataFileSettings: List(),
+  dataFileSettings: List<AppSetting>(),
   saveSettings: () => null,
-});
+};
+
+const SettingsContext = createContext<SettingsContextType>(defaultContextValue);
 
 type Prop = {
   children: ReactElement | ReactElement[];
@@ -93,55 +95,60 @@ export const SettingsProvider: FC<Prop> = ({ children }) => {
   const patchSettings = useMutation<unknown, unknown, Partial<AppSetting>>(
     MUTATION_KEYS.PATCH_APP_SETTING,
   );
-  const appSettings = hooks.useAppSettings();
+  const { data: appSettingsList, isLoading } = hooks.useAppSettings();
 
   const saveSettings = useCallback(
     (name: AllSettingsNameType, newValue: AllSettingsDataType): void => {
-      const previousSetting = appSettings.data?.find((s) => s.name === name);
-      // eslint-disable-next-line no-console
-      console.log('previous setting is: ', previousSetting);
+      if (appSettingsList) {
+        const previousSetting = appSettingsList.find((s) => s.name === name);
+        // eslint-disable-next-line no-console
+        console.log('previous setting is: ', previousSetting);
 
-      // setting does not exist
-      if (!previousSetting) {
-        postSettings.mutate({
-          data: newValue,
-          name,
-        });
-      } else {
-        patchSettings.mutate({
-          id: previousSetting.id,
-          data: newValue,
-        });
+        // setting does not exist
+        if (!previousSetting) {
+          postSettings.mutate({
+            data: newValue,
+            name,
+          });
+        } else {
+          patchSettings.mutate({
+            id: previousSetting.id,
+            data: newValue,
+          });
+        }
       }
     },
-    [appSettings.data, patchSettings, postSettings],
+    [appSettingsList, patchSettings, postSettings],
   );
 
   const contextValue = useMemo(() => {
-    const allSettings: AllSettingsType = ALL_SETTING_NAMES.reduce(
-      <T extends AllSettingsNameType>(acc: AllSettingsType, key: T) => {
-        const setting = appSettings.data?.find((s) => s.name === key);
-        const settingData = setting?.data;
-        acc[key] = settingData as AllSettingsType[T];
-        return acc;
-      },
-      {},
-    );
-    const dataFileSettings =
-      appSettings.data?.filter((s) =>
-        s.name.startsWith(DATA_FILE_SETTINGS_NAME),
-      ) || List<AppSetting>();
-    // eslint-disable-next-line no-console
-    console.log('re-running in useMemo() ');
+    if (appSettingsList) {
+      const allSettings: AllSettingsType = ALL_SETTING_NAMES.reduce(
+        <T extends AllSettingsNameType>(acc: AllSettingsType, key: T) => {
+          const setting = appSettingsList.find((s) => s.name === key);
+          const settingData = setting?.data;
+          acc[key] = settingData as AllSettingsType[T];
+          return acc;
+        },
+        {},
+      );
+      const dataFileSettings =
+        appSettingsList.filter((s) =>
+          s.name.startsWith(DATA_FILE_SETTINGS_NAME),
+        ) || List<AppSetting>();
+      // eslint-disable-next-line no-console
+      console.log('re-running in useMemo() ');
 
-    return {
-      ...allSettings,
-      dataFileSettings,
-      saveSettings,
-    };
-  }, [appSettings.data, saveSettings]);
+      return {
+        ...allSettings,
+        dataFileSettings,
+        saveSettings,
+      };
+    }
+    return defaultContextValue;
+  }, [appSettingsList, saveSettings]);
 
-  if (appSettings.isLoading) {
+  if (isLoading) {
     return <Loader />;
   }
 
