@@ -155,43 +155,48 @@ const Repl: FC<Props> = ({ seedValue }) => {
 
   // load files when settings are loaded
   useEffect(() => {
-    if (
-      dataFileListSetting[DataFileListSettingsKeys.Files].length &&
-      !dataFileSettings.isEmpty() &&
-      apiHost &&
-      token
-    ) {
-      dataFileSettings.forEach((f) => {
-        const appSettingId = f.id;
-        // eslint-disable-next-line no-console
-        console.log(`loading data file (id: ${appSettingId})`);
-        // find file attributes in the data list setting
-        const fileAttributes = dataFileListSetting[
-          DataFileListSettingsKeys.Files
-        ].find((file) => file.appSettingId === appSettingId);
-        // if file attributes were found, load file content
-        if (fileAttributes) {
-          // todo: add caching
-          Api.getAppSettingFileContent({
-            id: appSettingId,
-            apiHost,
-            token,
-          })
-            .then((fileBlob) => fileBlob.text())
-            .then((fileText) => {
-              const filePath = fileAttributes.virtualPath;
-
-              // eslint-disable-next-line no-console
-              console.log(`loading ${filePath}`);
-              setDataFiles((prevState) => [
-                ...prevState,
-                { filePath, fileText },
-              ]);
+    const callback = async (): Promise<void> => {
+      if (
+        dataFileListSetting[DataFileListSettingsKeys.Files].length &&
+        !dataFileSettings.isEmpty() &&
+        apiHost &&
+        token
+      ) {
+        const myPromises = dataFileSettings.map(async (f) => {
+          const appSettingId = f.id;
+          // eslint-disable-next-line no-console
+          console.log(`loading data file (id: ${appSettingId})`);
+          // find file attributes in the data list setting
+          const fileAttributes = dataFileListSetting[
+            DataFileListSettingsKeys.Files
+          ].find((file) => file.appSettingId === appSettingId);
+          // if file attributes were found, load file content
+          if (fileAttributes) {
+            // todo: add caching
+            const fileBlob = await Api.getAppSettingFileContent({
+              id: appSettingId,
+              apiHost,
+              token,
             });
-        }
-      });
-      setDataFilesReady(true);
-    }
+            const fileText = await fileBlob.text();
+            const filePath = fileAttributes.virtualPath;
+            // eslint-disable-next-line no-console
+            console.log(`loading ${filePath}`);
+            return { filePath, fileText };
+          }
+          return null;
+        });
+        const result = (await Promise.all(myPromises)).filter(Boolean) as {
+          filePath: string;
+          fileText: string;
+        }[];
+        // eslint-disable-next-line no-console
+        console.log(result);
+        setDataFiles(result);
+        setDataFilesReady(true);
+      }
+    };
+    callback();
   }, [dataFileListSetting, dataFileSettings, apiHost, token]);
 
   // load data files when worker is set or reload is requested
