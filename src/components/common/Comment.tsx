@@ -1,7 +1,7 @@
-import React, { FC, ReactElement, useContext, useRef, useState } from 'react';
+import React, { FC, ReactElement, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { Context } from '@graasp/apps-query-client';
+import { useLocalContext } from '@graasp/apps-query-client';
 
 import { MoreVert } from '@mui/icons-material';
 import {
@@ -15,13 +15,15 @@ import {
 } from '@mui/material';
 
 import { APP_DATA_TYPES } from '../../config/appDataTypes';
+import { GENERAL_SETTINGS_NAME } from '../../config/appSettingsTypes';
 import { ANONYMOUS_USER } from '../../config/constants';
 import { BIG_BORDER_RADIUS } from '../../config/layout';
 import { MUTATION_KEYS, useMutation } from '../../config/queryClient';
 import { COMMENT_CONTAINER_CYPRESS } from '../../config/selectors';
+import { DEFAULT_GENERAL_SETTINGS } from '../../config/settings';
 import { CommentType } from '../../interfaces/comment';
 import { ReportedCommentType } from '../../interfaces/reportedComment';
-import { SETTINGS_KEYS } from '../../interfaces/settings';
+import { GeneralSettingsKeys } from '../../interfaces/settings';
 import { getFormattedTime } from '../../utils/datetime';
 import { useMembersContext } from '../context/MembersContext';
 import { useSettings } from '../context/SettingsContext';
@@ -41,8 +43,9 @@ type Props = {
 const Comment: FC<Props> = ({ comment }) => {
   const { t, i18n } = useTranslation();
   const members = useMembersContext();
-  const { settings } = useSettings();
-  const currentMember = useContext(Context).get('memberId');
+  const { [GENERAL_SETTINGS_NAME]: settings = DEFAULT_GENERAL_SETTINGS } =
+    useSettings();
+  const currentMember = useLocalContext().get('memberId');
   const { mutate: postAppData } = useMutation<
     ReportedCommentType,
     unknown,
@@ -50,7 +53,8 @@ const Comment: FC<Props> = ({ comment }) => {
     ReportedCommentType
   >(MUTATION_KEYS.POST_APP_DATA);
 
-  const allowCommentReporting = settings[SETTINGS_KEYS.ALLOW_COMMENT_REPORTING];
+  const allowCommentReporting =
+    settings[GeneralSettingsKeys.AllowCommentsReporting];
   const [menuAnchorEl, setMenuAnchorEl] = useState<null | HTMLElement>(null);
   const [openActionsMenu, setOpenActionsMenu] = useState(false);
   const [openFlagDialog, setOpenFlagDialog] = useState(false);

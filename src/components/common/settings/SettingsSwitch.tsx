@@ -1,26 +1,26 @@
-import React, { FC } from 'react';
+import { FC } from 'react';
 
 import { FormControlLabel, Switch } from '@mui/material';
 
-import { useSettings } from '../../context/SettingsContext';
-
 type Props = {
   settingKey: string;
+  value: boolean;
   label: string;
   labelPlacement?: 'end' | 'start' | 'top' | 'bottom';
   disabled?: boolean;
   dataCy?: string;
+  changeSetting: (settingKey: string, switchState: boolean) => void;
 };
 
 const SettingsSwitch: FC<Props> = ({
   settingKey,
+  value,
   label,
   labelPlacement = 'end',
   disabled = false,
   dataCy,
+  changeSetting,
 }) => {
-  const { settings, changeSetting } = useSettings();
-  const value = settings[settingKey] as boolean;
   const switchControl = (
     <Switch
       color="primary"

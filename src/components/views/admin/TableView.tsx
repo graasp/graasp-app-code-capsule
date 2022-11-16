@@ -31,13 +31,14 @@ import {
   tableRowUserCypress,
 } from '../../../config/selectors';
 import { getOrphans } from '../../../utils/comments';
-import CodeReviewWrapper from '../../common/CodeReviewWrapper';
+import CodeReview from '../../codeReview/CodeReview';
 import {
   AppDataProvider,
   useAppDataContext,
 } from '../../context/AppDataContext';
 import { useMembersContext } from '../../context/MembersContext';
 import CustomDialog from '../../layout/CustomDialog';
+import DownloadActions from './DownloadActions';
 import OrphanComments from './OrphanComments';
 
 const DEFAULT_CURRENT_USER = {
@@ -115,7 +116,7 @@ const TableView: FC = () => {
   const renderDialogContent = (): ReactElement => (
     <>
       <AppDataProvider currentUserId={currentUser.id}>
-        <CodeReviewWrapper />
+        <CodeReview />
       </AppDataProvider>
       <IconButton
         data-cy={TABLE_VIEW_REVIEW_DIALOG_CLOSE_BUTTON_CYPRESS}
@@ -129,6 +130,7 @@ const TableView: FC = () => {
 
   return (
     <>
+      <DownloadActions />
       <OrphanComments comments={comments} />
       <TableContainer data-cy={TABLE_VIEW_TABLE_CYPRESS}>
         <Table aria-label="student table">

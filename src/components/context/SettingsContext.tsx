@@ -1,38 +1,81 @@
-import isEqual from 'lodash.isequal';
+import { List } from 'immutable';
 
-import React, {
-  FC,
-  ReactElement,
-  createContext,
-  useContext,
-  useEffect,
-  useMemo,
-  useState,
-} from 'react';
+import { FC, ReactElement, createContext, useContext } from 'react';
 
 import { AppSetting } from '@graasp/apps-query-client';
 
-import { GENERAL_SETTINGS_KEY } from '../../config/appSettingsTypes';
+import {
+  APP_MODE_SETTINGS_NAME,
+  CODE_EXECUTION_SETTINGS_NAME,
+  DATA_FILE_LIST_SETTINGS_NAME,
+  DATA_FILE_SETTINGS_NAME,
+  GENERAL_SETTINGS_NAME,
+  INSTRUCTOR_CODE_VERSION_SETTINGS_NAME,
+} from '../../config/appSettingsTypes';
 import { MUTATION_KEYS, hooks, useMutation } from '../../config/queryClient';
-import { DEFAULT_GENERAL_SETTINGS } from '../../config/settings';
-import { GeneralSettings } from '../../interfaces/settings';
+import {
+  DEFAULT_APP_MODE_SETTINGS,
+  DEFAULT_CODE_EXECUTION_SETTINGS,
+  DEFAULT_DATA_FILE_LIST_SETTINGS,
+  DEFAULT_GENERAL_SETTINGS,
+  DEFAULT_INSTRUCTOR_CODE_VERSION_SETTINGS,
+} from '../../config/settings';
+import {
+  AppModeSettings,
+  CodeExecutionSettings,
+  DataFileListSettings,
+  GeneralSettings,
+  InstructorCodeVersionSettings,
+} from '../../interfaces/settings';
 import Loader from '../common/Loader';
 
-export type SettingsContextType = {
-  settings: GeneralSettings;
-  changeSetting: (name: string, value: unknown) => void;
-  saveSettings: () => void;
-  resetSettings: () => void;
-  unsavedChanges: boolean;
+// mapping between Setting names and their data type
+interface AllSettingsType {
+  [GENERAL_SETTINGS_NAME]?: GeneralSettings;
+  [CODE_EXECUTION_SETTINGS_NAME]?: CodeExecutionSettings;
+  [INSTRUCTOR_CODE_VERSION_SETTINGS_NAME]?: InstructorCodeVersionSettings;
+  [APP_MODE_SETTINGS_NAME]?: AppModeSettings;
+  [DATA_FILE_LIST_SETTINGS_NAME]?: DataFileListSettings;
+}
+
+// default values for the data property of settings by name
+const defaultSettingsValues: AllSettingsType = {
+  [GENERAL_SETTINGS_NAME]: DEFAULT_GENERAL_SETTINGS,
+  [CODE_EXECUTION_SETTINGS_NAME]: DEFAULT_CODE_EXECUTION_SETTINGS,
+  [INSTRUCTOR_CODE_VERSION_SETTINGS_NAME]:
+    DEFAULT_INSTRUCTOR_CODE_VERSION_SETTINGS,
+  [APP_MODE_SETTINGS_NAME]: DEFAULT_APP_MODE_SETTINGS,
+  [DATA_FILE_LIST_SETTINGS_NAME]: DEFAULT_DATA_FILE_LIST_SETTINGS,
 };
 
-const SettingsContext = createContext<SettingsContextType>({
-  settings: DEFAULT_GENERAL_SETTINGS,
-  changeSetting: () => null,
+// list of the settings names
+const ALL_SETTING_NAMES = [
+  GENERAL_SETTINGS_NAME,
+  CODE_EXECUTION_SETTINGS_NAME,
+  INSTRUCTOR_CODE_VERSION_SETTINGS_NAME,
+  APP_MODE_SETTINGS_NAME,
+  DATA_FILE_LIST_SETTINGS_NAME,
+] as const;
+
+// automatically generated types
+type AllSettingsNameType = typeof ALL_SETTING_NAMES[number];
+type AllSettingsDataType = AllSettingsType[keyof AllSettingsType];
+
+export type SettingsContextType = AllSettingsType & {
+  dataFileSettings: List<AppSetting>;
+  saveSettings: (
+    name: AllSettingsNameType,
+    newValue: AllSettingsDataType,
+  ) => void;
+};
+
+const defaultContextValue = {
+  ...defaultSettingsValues,
+  dataFileSettings: List<AppSetting>(),
   saveSettings: () => null,
-  resetSettings: () => null,
-  unsavedChanges: false,
-});
+};
+
+const SettingsContext = createContext<SettingsContextType>(defaultContextValue);
 
 type Prop = {
   children: ReactElement | ReactElement[];
@@ -45,62 +88,63 @@ export const SettingsProvider: FC<Prop> = ({ children }) => {
   const patchSettings = useMutation<unknown, unknown, Partial<AppSetting>>(
     MUTATION_KEYS.PATCH_APP_SETTING,
   );
-  const appSettings = hooks.useAppSettings();
-  const [settings, setSettings] = useState(DEFAULT_GENERAL_SETTINGS);
+  const {
+    data: appSettingsList,
+    isLoading,
+    isSuccess,
+  } = hooks.useAppSettings();
 
-  useEffect(
-    () => {
-      if (appSettings.data) {
-        const generalAppSettings = appSettings.data?.find(
-          (setting) => setting.name === GENERAL_SETTINGS_KEY,
-        )?.data as GeneralSettings;
-        if (generalAppSettings && !isEqual(settings, generalAppSettings)) {
-          setSettings(generalAppSettings);
-        }
-      }
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [appSettings.data],
-  );
-
-  const contextValue = useMemo(() => {
-    const generalSettings = appSettings.data?.find(
-      (s) => s.name === GENERAL_SETTINGS_KEY,
-    );
-    return {
-      settings,
-      changeSetting: (key: string, value: unknown): void => {
-        setSettings({
-          ...settings,
-          [key]: value,
+  const saveSettings = (
+    name: AllSettingsNameType,
+    newValue: AllSettingsDataType,
+  ): void => {
+    if (appSettingsList) {
+      const previousSetting = appSettingsList.find((s) => s.name === name);
+      // setting does not exist
+      if (!previousSetting) {
+        postSettings.mutate({
+          data: newValue,
+          name,
         });
-      },
-      saveSettings: () => {
-        // generalSettings do not exist
-        if (!generalSettings) {
-          postSettings.mutate({
-            data: settings,
-            name: GENERAL_SETTINGS_KEY,
-          });
-        } else {
-          patchSettings.mutate({
-            id: generalSettings.id,
-            data: settings,
-          });
-        }
-      },
-      resetSettings: () =>
-        setSettings(
-          (generalSettings?.data as GeneralSettings) ??
-            DEFAULT_GENERAL_SETTINGS,
-        ),
-      unsavedChanges: !isEqual(generalSettings?.data, settings),
-    };
-  }, [appSettings.data, patchSettings, postSettings, settings]);
+      } else {
+        patchSettings.mutate({
+          id: previousSetting.id,
+          data: newValue,
+        });
+      }
+    }
+  };
 
-  if (appSettings.isLoading) {
+  if (isLoading) {
     return <Loader />;
   }
+
+  const getContextValue = (): SettingsContextType => {
+    if (isSuccess) {
+      const allSettings: AllSettingsType = ALL_SETTING_NAMES.reduce(
+        <T extends AllSettingsNameType>(acc: AllSettingsType, key: T) => {
+          const setting = appSettingsList.find((s) => s.name === key);
+          const settingData = setting?.data;
+          acc[key] = settingData as AllSettingsType[T];
+          return acc;
+        },
+        {},
+      );
+      const dataFileSettings =
+        appSettingsList.filter((s) =>
+          s.name.startsWith(DATA_FILE_SETTINGS_NAME),
+        ) || List<AppSetting>();
+
+      return {
+        ...allSettings,
+        dataFileSettings,
+        saveSettings,
+      };
+    }
+    return defaultContextValue;
+  };
+
+  const contextValue = getContextValue();
 
   return (
     <SettingsContext.Provider value={contextValue}>

@@ -11,6 +11,8 @@ export const DEFAULT_TRUNCATION_COMMIT_MESSAGE_LENGTH = 15;
 
 export const MAX_INITIALS_AVATAR = 2;
 
+export const DEFAULT_REPL_INPUT_VALUE = '';
+
 export const ANONYMOUS_USER = 'Anonymous';
 export const INSTRUCTOR_CODE_NAME = 'Default';
 

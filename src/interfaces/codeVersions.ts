@@ -1,4 +1,4 @@
-import { AppData, AppSetting } from '@graasp/apps-query-client';
+import { AppData } from '@graasp/apps-query-client';
 
 import { APP_DATA_TYPES } from '../config/appDataTypes';
 
@@ -22,6 +22,4 @@ export interface CodeAppData {
 }
 
 // stripped out version of a code Resource but without the AppData properties like id, creator ...
-export type CodeType =
-  | (AppData & CodeAppData)
-  | ({ data: CodeVersionType } & AppSetting);
+export type CodeType = { data: CodeVersionType } & AppData;

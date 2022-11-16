@@ -1,23 +1,35 @@
 import React, { FC, ReactElement, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { Code, TableChart } from '@mui/icons-material';
+import { Code, Settings, TableChart } from '@mui/icons-material';
 import { TabContext, TabList, TabPanel } from '@mui/lab';
-import { Tab } from '@mui/material';
+import { Tab, Typography, styled } from '@mui/material';
 
+import { REACT_APP_VERSION } from '../../../config/env';
 import {
   PRESET_VIEW_PANE_CYPRESS,
+  SETTINGS_VIEW_PANE_CYPRESS,
   TABLE_VIEW_PANE_CYPRESS,
   TAB_PRESET_VIEW_CYPRESS,
+  TAB_SETTINGS_VIEW_CYPRESS,
   TAB_TABLE_VIEW_CYPRESS,
 } from '../../../config/selectors';
-import PresetView from '../../common/CodeReviewWrapper';
+import { AppModeProvider } from '../../context/AppModeContext';
 import { CodeVersionProvider } from '../../context/CodeVersionContext';
+import PresetView from './PresetView';
 import SettingsFab from './SettingsFab';
 import TableView from './TableView';
+import SettingsView from './settings/SettingsView';
+
+const VersionIndicator = styled(Typography)(({ theme }) => ({
+  position: 'absolute',
+  bottom: theme.spacing(0),
+  left: theme.spacing(1),
+}));
 
 enum Tabs {
   TABLE_VIEW = 'TABLE_VIEW',
+  SETTINGS_VIEW = 'SETTINGS_VIEW',
   PRESET_VIEW = 'PRESET_VIEW',
 }
 
@@ -41,6 +53,13 @@ const AdminView: FC = () => {
           iconPosition="start"
         />
         <Tab
+          data-cy={TAB_SETTINGS_VIEW_CYPRESS}
+          value={Tabs.SETTINGS_VIEW}
+          label={t('Settings View')}
+          icon={<Settings />}
+          iconPosition="start"
+        />
+        <Tab
           data-cy={TAB_PRESET_VIEW_CYPRESS}
           value={Tabs.PRESET_VIEW}
           label={t('Preset View')}
@@ -50,6 +69,11 @@ const AdminView: FC = () => {
       </TabList>
       <TabPanel value={Tabs.TABLE_VIEW} data-cy={TABLE_VIEW_PANE_CYPRESS}>
         <TableView />
+      </TabPanel>
+      <TabPanel value={Tabs.SETTINGS_VIEW} data-cy={SETTINGS_VIEW_PANE_CYPRESS}>
+        <AppModeProvider>
+          <SettingsView />
+        </AppModeProvider>
       </TabPanel>
       <TabPanel value={Tabs.PRESET_VIEW} data-cy={PRESET_VIEW_PANE_CYPRESS}>
         <PresetView />
@@ -61,6 +85,9 @@ const AdminView: FC = () => {
     <CodeVersionProvider>
       {renderTable()}
       <SettingsFab />
+      <VersionIndicator variant="caption">
+        {t('APP_VERSION', { version: REACT_APP_VERSION })}
+      </VersionIndicator>
     </CodeVersionProvider>
   );
 };

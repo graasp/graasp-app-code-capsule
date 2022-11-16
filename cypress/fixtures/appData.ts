@@ -3,14 +3,11 @@ import { v4 as uuid } from 'uuid';
 import { AppData } from '@graasp/apps-query-client';
 
 import { APP_DATA_TYPES } from '../../src/config/appDataTypes';
-import { GENERAL_SETTINGS_KEY } from '../../src/config/appSettingsTypes';
 import { INSTRUCTOR_CODE_ID, PYTHON } from '../../src/config/constants';
-import { DEFAULT_GENERAL_SETTINGS } from '../../src/config/settings';
 import { CodeType } from '../../src/interfaces/codeVersions';
-import { MOCK_CODE_SAMPLE } from './appSettings';
+import { LiveCodeType } from '../../src/interfaces/liveCode';
 import { CURRENT_MEMBER, MEMBERS } from './members';
-
-export const MOCK_SERVER_ITEM = { id: '1234567890' };
+import { MOCK_SERVER_ITEM } from './mockItem';
 
 export const MOCK_SERVER_API_HOST = 'http://localhost:3636';
 
@@ -168,40 +165,36 @@ export const generateSingleLineCommentThread = (
     .map((t) => generateSingleLineThread(t.lineIndex, t.threadLength))
     .reduce((acc: AppData[], arr) => acc.concat(arr), []);
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const MOCK_APP_SETTINGS = [
-  {
-    id: uuid(),
-    name: GENERAL_SETTINGS_KEY,
-    data: {
-      ...DEFAULT_GENERAL_SETTINGS,
-      code: MOCK_CODE_SAMPLE,
-    },
-    itemId: MOCK_SERVER_ITEM.id,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
-  },
-];
-
 export const MOCK_COMMIT_MESSAGE = 'My commit message';
 export const MOCK_COMMIT_DESCRIPTION = 'Full description\nOn multiple lines';
 
-export const MOCK_CODE_VERSIONS: CodeType[] = [
-  {
-    id: uuid(),
-    itemId: MOCK_SERVER_ITEM.id,
-    type: APP_DATA_TYPES.CODE,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
-    creator: MEMBERS.BOB.id,
-    memberId: MEMBERS.BOB.id,
-    data: {
-      code: 'sample code from bob',
-      language: PYTHON,
-      commitMessage: 'Bob 1',
-      commitDescription: 'Long Bob 1',
-    },
+export const MOCK_CODE_APP_DATA_BOB_PY: LiveCodeType = {
+  id: uuid(),
+  itemId: MOCK_SERVER_ITEM.id,
+  type: APP_DATA_TYPES.LIVE_CODE,
+  createdAt: new Date().toISOString(),
+  updatedAt: new Date().toISOString(),
+  creator: MEMBERS.BOB.id,
+  memberId: MEMBERS.BOB.id,
+  data: {
+    code: 'sample code from bob',
   },
+};
+
+export const MOCK_CODE_APP_DATA_OLD_BOB_PY: LiveCodeType = {
+  id: uuid(),
+  itemId: MOCK_SERVER_ITEM.id,
+  type: APP_DATA_TYPES.LIVE_CODE,
+  createdAt: new Date('2020-06-02').toISOString(),
+  updatedAt: new Date('2020-06-02').toISOString(),
+  creator: MEMBERS.BOB.id,
+  memberId: MEMBERS.BOB.id,
+  data: {
+    code: 'sample code from bob 2',
+  },
+};
+
+export const MOCK_CODE_VERSIONS: CodeType[] = [
   {
     id: uuid(),
     itemId: MOCK_SERVER_ITEM.id,
@@ -217,21 +210,7 @@ export const MOCK_CODE_VERSIONS: CodeType[] = [
       commitDescription: 'Long Anna 1',
     },
   },
-  {
-    id: uuid(),
-    itemId: MOCK_SERVER_ITEM.id,
-    type: APP_DATA_TYPES.CODE,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
-    creator: MEMBERS.BOB.id,
-    memberId: MEMBERS.BOB.id,
-    data: {
-      code: 'sample code from bob 2',
-      language: PYTHON,
-      commitMessage: 'Bob 2',
-      commitDescription: 'Long Bob 2',
-    },
-  },
+
   {
     id: uuid(),
     itemId: MOCK_SERVER_ITEM.id,

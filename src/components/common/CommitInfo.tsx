@@ -6,7 +6,7 @@ import { FormLabel, Stack, Typography, styled } from '@mui/material';
 import { ANONYMOUS_USER, INSTRUCTOR_CODE_ID } from '../../config/constants';
 import { buildCommitFieldDataCy } from '../../config/selectors';
 import { CodeVersionSelectType } from '../../interfaces/codeVersions';
-import { Fields } from '../../interfaces/commitInfo';
+import { Fields } from '../../interfaces/enums';
 import { getFormattedTime } from '../../utils/datetime';
 import { useMembersContext } from '../context/MembersContext';
 

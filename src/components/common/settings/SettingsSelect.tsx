@@ -1,28 +1,31 @@
 import { FC } from 'react';
 
-import { useSettings } from '../../context/SettingsContext';
 import CustomSelect from '../../layout/CustomSelect';
 
 type Prop = {
   settingsKey: string;
+  value: string;
   label: string;
   values: { value: string; label: string }[];
   dataCy?: string;
+  changeSetting: (settingsKey: string, newSetting: string) => void;
 };
 
-const SettingsSelect: FC<Prop> = ({ settingsKey, label, values, dataCy }) => {
-  const { settings, changeSetting } = useSettings();
-  const value = settings[settingsKey] as string;
-
-  return (
-    <CustomSelect
-      dataCy={dataCy}
-      label={label}
-      value={value}
-      values={values}
-      onChange={(newSetting: string) => changeSetting(settingsKey, newSetting)}
-    />
-  );
-};
+const SettingsSelect: FC<Prop> = ({
+  settingsKey,
+  value,
+  label,
+  values,
+  dataCy,
+  changeSetting,
+}) => (
+  <CustomSelect
+    dataCy={dataCy}
+    label={label}
+    value={value}
+    values={values}
+    onChange={(newSetting: string) => changeSetting(settingsKey, newSetting)}
+  />
+);
 
 export default SettingsSelect;

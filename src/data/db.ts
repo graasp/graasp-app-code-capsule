@@ -3,9 +3,18 @@ import { v4 } from 'uuid';
 import type { Database, LocalContext, Member } from '@graasp/apps-query-client';
 
 import { APP_DATA_TYPES } from '../config/appDataTypes';
-import { GENERAL_SETTINGS_KEY } from '../config/appSettingsTypes';
+import {
+  APP_MODE_SETTINGS_NAME,
+  AppMode,
+  GENERAL_SETTINGS_NAME,
+  INSTRUCTOR_CODE_VERSION_SETTINGS_NAME,
+} from '../config/appSettingsTypes';
 import { REACT_APP_API_HOST } from '../config/env';
-import { DEFAULT_GENERAL_SETTINGS } from '../config/settings';
+import {
+  DEFAULT_APP_MODE_SETTINGS,
+  DEFAULT_GENERAL_SETTINGS,
+  DEFAULT_INSTRUCTOR_CODE_VERSION_SETTINGS,
+} from '../config/settings';
 
 export const mockContext: LocalContext = {
   apiHost: REACT_APP_API_HOST,
@@ -38,7 +47,7 @@ print(f'Your age is {age}')
 # ask another question
 print('wait a bit')
 ''' and here starts a
-multiline comment 
+multiline comment
 that continues here also
 '''
 for i in range(10000):
@@ -129,8 +138,29 @@ And some text to **finish** _off_`,
   appSettings: [
     {
       id: v4(),
-      name: GENERAL_SETTINGS_KEY,
-      data: { ...DEFAULT_GENERAL_SETTINGS, code: mockPythonCode },
+      name: APP_MODE_SETTINGS_NAME,
+      data: { ...DEFAULT_APP_MODE_SETTINGS, mode: AppMode.Execute },
+      itemId: appContext.itemId || '',
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+      creator: mockMembers[0].id,
+    },
+    {
+      id: v4(),
+      name: INSTRUCTOR_CODE_VERSION_SETTINGS_NAME,
+      data: {
+        ...DEFAULT_INSTRUCTOR_CODE_VERSION_SETTINGS,
+        code: mockPythonCode,
+      },
+      itemId: appContext.itemId || '',
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+      creator: mockMembers[0].id,
+    },
+    {
+      id: v4(),
+      name: GENERAL_SETTINGS_NAME,
+      data: { ...DEFAULT_GENERAL_SETTINGS, showEditButton: true },
       itemId: appContext.itemId || '',
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),

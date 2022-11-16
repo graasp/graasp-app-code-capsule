@@ -1,11 +1,13 @@
 export const GRAASP_LOGO_CYPRESS = 'graasp_logo';
 export const TABLE_VIEW_TABLE_CYPRESS = 'table_view_table';
 export const TABLE_VIEW_PANE_CYPRESS = 'table_view_pane';
+export const SETTINGS_VIEW_PANE_CYPRESS = 'settings_view_pane';
 export const PRESET_VIEW_PANE_CYPRESS = 'preset_view_pane_';
 export const PLAYER_VIEW_CYPRESS = 'player_view';
-export const ANALYZER_VIEW_CYPRESS = 'analyzer_view';
+export const ANALYTICS_VIEW_CY = 'analytics_view';
 export const TAB_PRESET_VIEW_CYPRESS = 'tab_preset_view';
 export const TAB_TABLE_VIEW_CYPRESS = 'tab_table_view';
+export const TAB_SETTINGS_VIEW_CYPRESS = 'tab_settings_view';
 export const TABLE_ROW_USERS_CYPRESS = 'table_row_users';
 export const TABLE_VIEW_BODY_USERS_CYPRESS = 'table_view_body_users';
 export const TABLE_VIEW_OPEN_REVIEW_BUTTON_CYPRESS =
@@ -23,6 +25,7 @@ export const TABLE_VIEW_REVIEW_DIALOG_CLOSE_BUTTON_CYPRESS =
   'table_view_review_dialog_close_button';
 
 export const CUSTOM_DIALOG_TITLE_CYPRESS = 'custom_dialog_title';
+export const CUSTOM_DIALOG_CONTENT_CY = 'custom_dialog_content';
 
 export const NUMBER_OF_COMMENTS_CYPRESS = 'number_of_comments';
 export const TABLE_NO_COMMENTS_CYPRESS = 'table_no_comments';
@@ -45,6 +48,7 @@ export const SHOW_TOOLBAR_SWITCH_CYPRESS = 'show_toolbar_switch';
 export const SHOW_VERSION_NAVIGATION_SWITCH_CYPRESS =
   'show_version_navigation_switch';
 export const SHOW_EDIT_BUTTON_SWITCH_CYPRESS = 'show_edit_button_switch';
+export const SHOW_RUN_BUTTON_SWITCH_CYPRESS = 'show_run_button_switch';
 export const SHOW_VISIBILITY_SWITCH_CYPRESS = 'show_visibility_switch';
 export const ALLOW_COMMENTS_SWITCH_CYPRESS = 'allow_comments_switch';
 export const ALLOW_REPLIES_SWITCH_CYPRESS = 'allow_replies_switch';
@@ -83,6 +87,7 @@ export const COMMENT_CONTAINER_CYPRESS = 'comment_container';
 export const COMMENT_THREAD_CONTAINER_CYPRESS = 'comment_thread_container';
 export const ORPHAN_BUTTON_CYPRESS = 'orphan_button';
 export const CODE_EXECUTION_CONTAINER_CYPRESS = 'code_execution_container';
+export const CODE_EDITOR_ID_CY = 'code_editor';
 export const CODE_EDITOR_CONTAINER_CYPRESS = 'code_editor_container';
 export const CODE_EDITOR_LANGUAGE_SELECT_CYPRESS =
   'code_editor_language_select';
@@ -97,11 +102,38 @@ export const COMMIT_INFO_FIELD_CYPRESS = 'commit_info_field';
 export const buildCommitFieldDataCy = (fieldName: string): string =>
   `${COMMIT_INFO_FIELD_CYPRESS}-${fieldName}`;
 
+export const REPL_CONTAINER_CY = 'repl_container';
+export const REPL_EDITOR_ID_CY = 'repl_editor';
+
+export const APP_MODE_EXECUTE_BUTTON_CY = 'app_mode_execute';
+export const APP_MODE_REVIEW_BUTTON_CY = 'app_mode_review';
+export const APP_MODE_COLLABORATE_BUTTON_CY = 'app_mode_collaborate';
+
+export const SETTING_APP_MODE_SELECT_FORM_LABEL_CY =
+  'setting_app_mode_select_label';
+export const SETTING_APP_MODE_SELECT_NAME_CY = 'setting_app_mode_select_label';
+export const SETTING_MAIN_CODE_EDITOR_CY = 'setting_main_code_editor';
+export const SETTING_HEADER_CODE_EDITOR_CY = 'setting_header_code_editor';
+export const SETTING_FOOTER_CODE_EDITOR_CY = 'setting_footer_code_editor';
+
+export const REPL_RUN_CODE_BUTTON_CY = 'repl_run_code_button';
+export const REPL_OUTPUT_CONSOLE_CY = 'repl_output_console_area';
+export const REPL_STATUS_INDICATOR_CY = 'repl_status_indicator';
+export const REPLY_SAVE_BUTTON_CY = 'repl_save_button';
+export const REPLY_STOP_BUTTON_CY = 'repl_stop_button';
+export const REPLY_CLEAR_BUTTON_CY = 'repl_clear_button';
+export const REPL_INPUT_DIALOG_BUTTON_CONTAINER_CY = 'repl_input_container';
+export const REPL_INPUT_DIALOG_CANCEL_BUTTON_CY = 'repl_input_cancel_button';
+export const REPL_INPUT_DIALOG_SUBMIT_BUTTON_CY = 'repl_input_submit_button';
+export const REPL_INPUT_DIALOG_PROMPT_TEXT_CY = 'repl_input_prompt_text';
+export const REPL_INPUT_DIALOG_TEXTFIELD_CY = 'repl_input_textfield';
+
+export const DOWNLOAD_ACTIONS_BUTTON_CY = 'download_actions_button';
+
 export const buildDataCy = (selector: string): string =>
   `[data-cy=${selector}]`;
 export const buildTableRowCypress = (selector: string): string =>
   `[data-cy=${selector}]`;
 export const buildCommitFieldCypress = (selector: string): string =>
   `[data-cy=${selector}]`;
-
-export const CODE_EDITOR_CYPRESS = '.monaco-editor textarea:first';
+export const settingKeyDataCy = (key: string): string => `setting-${key}`;

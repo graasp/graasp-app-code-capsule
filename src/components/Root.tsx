@@ -3,7 +3,7 @@ import { I18nextProvider } from 'react-i18next';
 
 import { withContext, withToken } from '@graasp/apps-query-client';
 
-import { ThemeProvider, createTheme, styled } from '@mui/material';
+import { CssBaseline, ThemeProvider, createTheme, styled } from '@mui/material';
 import { grey, orange, pink } from '@mui/material/colors';
 import { StyledEngineProvider } from '@mui/material/styles';
 
@@ -86,6 +86,7 @@ const Root: FC = () => {
       {/* Used to define the order of injected properties between JSS and emotion */}
       <StyledEngineProvider injectFirst>
         <ThemeProvider theme={theme}>
+          <CssBaseline enableColorScheme />
           <I18nextProvider i18n={i18nConfig}>
             <QueryClientProvider client={queryClient}>
               <AppWithContextAndToken />

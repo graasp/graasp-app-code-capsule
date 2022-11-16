@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 
-import CodeReviewWrapper from '../../common/CodeReviewWrapper';
+import AppModeWrapper from '../../common/AppModeWrapper';
 
-const PresetView: FC = () => <CodeReviewWrapper />;
+const PresetView: FC = () => <AppModeWrapper />;
 
 export default PresetView;
