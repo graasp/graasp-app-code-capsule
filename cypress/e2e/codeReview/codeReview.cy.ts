@@ -186,6 +186,7 @@ describe('Code Review Tools', () => {
             ...MOCK_GENERAL_SETTINGS,
             data: {
               ...DEFAULT_GENERAL_SETTINGS,
+              [GeneralSettingsKeys.ShowRunButton]: true,
               [GeneralSettingsKeys.ShowEditButton]: true,
               [GeneralSettingsKeys.ShowVersionNavigation]: true,
             },
