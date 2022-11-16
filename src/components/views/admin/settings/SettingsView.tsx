@@ -3,30 +3,40 @@ import isEqual from 'lodash.isequal';
 import { FC, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import { Visibility } from '@mui/icons-material';
 import {
   Box,
+  Button,
+  Dialog,
+  DialogContent,
   FormControl,
   FormControlLabel,
   FormLabel,
   Radio,
   RadioGroup,
   Stack,
+  TextField,
 } from '@mui/material';
 
 import {
   APP_MODE_SETTINGS_NAME,
   AppMode,
   CODE_EXECUTION_SETTINGS_NAME,
-  EXECUTION_MODE_SETTINGS_KEY,
+  DIFF_VIEW_SETTINGS_NAME,
   INSTRUCTOR_CODE_VERSION_SETTINGS_NAME,
-  REVIEW_MODE_SETTINGS_KEY,
 } from '../../../../config/appSettingsTypes';
 import {
   APP_MODE_COLLABORATE_BUTTON_CY,
   APP_MODE_EXECUTE_BUTTON_CY,
+  APP_MODE_EXPLAIN_BUTTON_CY,
   APP_MODE_REVIEW_BUTTON_CY,
+  EXECUTION_MODE_SETTINGS_KEY,
+  EXPLAIN_MODE_SETTINGS_KEY,
+  REVIEW_MODE_SETTINGS_KEY,
   SETTING_APP_MODE_SELECT_FORM_LABEL_CY,
   SETTING_APP_MODE_SELECT_NAME_CY,
+  SETTING_DIFF_VIEW_NEW_CODE_CY,
+  SETTING_DIFF_VIEW_OLD_CODE_CY,
   SETTING_FOOTER_CODE_EDITOR_CY,
   SETTING_HEADER_CODE_EDITOR_CY,
   SETTING_MAIN_CODE_EDITOR_CY,
@@ -34,15 +44,18 @@ import {
 import {
   DEFAULT_APP_MODE_SETTINGS,
   DEFAULT_CODE_EXECUTION_SETTINGS,
+  DEFAULT_DIFF_VIEW_SETTINGS,
   DEFAULT_INSTRUCTOR_CODE_VERSION_SETTINGS,
 } from '../../../../config/settings';
 import {
   AppModeSettingsKeys,
   CodeExecutionSettingsKeys,
+  DiffViewSettingsKeys,
   InstructorCodeSettingsKeys,
 } from '../../../../interfaces/settings';
 import SubmitButtons from '../../../common/settings/SubmitButtons';
 import { useSettings } from '../../../context/SettingsContext';
+import DiffView from '../../../diffView/DiffView';
 import CodeEditor from '../../../repl/CodeEditor';
 import DataFileUpload from './DataFileUpload';
 import PreLoadedLibrariesInput from './PreLoadedLibrariesInput';
@@ -55,17 +68,23 @@ const SettingsView: FC = () => {
     [APP_MODE_SETTINGS_NAME]: appModeSetting = DEFAULT_APP_MODE_SETTINGS,
     [INSTRUCTOR_CODE_VERSION_SETTINGS_NAME]:
       instructorCodeVersionSetting = DEFAULT_INSTRUCTOR_CODE_VERSION_SETTINGS,
+    [DIFF_VIEW_SETTINGS_NAME]: diffViewSetting = DEFAULT_DIFF_VIEW_SETTINGS,
     saveSettings,
   } = useSettings();
+
   const [localCodeExecSettings, setLocalCodeExecSettings] =
     useState(codeExecSettings);
-
   const [
     instructorCodeVersionLocalSetting,
     setInstructorCodeVersionLocalSetting,
   ] = useState(instructorCodeVersionSetting);
+  const [diffViewLocalSetting, setDiffViewLocalSetting] =
+    useState(diffViewSetting);
   const [appModeLocalSetting, setAppModeLocalSetting] =
     useState(appModeSetting);
+
+  // modal variables
+  const [openDiffPreview, setOpenDiffPreview] = useState(false);
 
   // update codeExecLocalSettings when setting changes
   useEffect(
@@ -79,6 +98,9 @@ const SettingsView: FC = () => {
     [instructorCodeVersionSetting],
   );
 
+  // update diffViewLocalSetting value when setting changes
+  useEffect(() => setDiffViewLocalSetting(diffViewSetting), [diffViewSetting]);
+
   // update appMode value when setting changes
   useEffect(() => setAppModeLocalSetting(appModeSetting), [appModeSetting]);
 
@@ -89,6 +111,10 @@ const SettingsView: FC = () => {
   const unsavedInstructorCodeVersionChanges = !isEqual(
     instructorCodeVersionLocalSetting,
     instructorCodeVersionSetting,
+  );
+  const unsavedDiffViewChanges = !isEqual(
+    diffViewLocalSetting,
+    diffViewSetting,
   );
 
   const changeCodeExecutionSetting = (
@@ -129,6 +155,12 @@ const SettingsView: FC = () => {
             value={AppMode.Review}
             control={<Radio />}
             label={AppMode.Review}
+          />
+          <FormControlLabel
+            data-cy={APP_MODE_EXPLAIN_BUTTON_CY}
+            value={AppMode.Explain}
+            control={<Radio />}
+            label={AppMode.Explain}
           />
           <FormControlLabel
             data-cy={APP_MODE_COLLABORATE_BUTTON_CY}
@@ -227,6 +259,81 @@ const SettingsView: FC = () => {
             }
             settingKey={REVIEW_MODE_SETTINGS_KEY}
             unsavedChanges={unsavedInstructorCodeVersionChanges}
+          />
+        </Stack>
+      )}
+      {appModeLocalSetting[AppModeSettingsKeys.Mode] === AppMode.Explain && (
+        <Stack>
+          <FormLabel>{t('Line Offset')}</FormLabel>
+          <Box>
+            <TextField
+              type="number"
+              inputProps={{ min: 0 }}
+              value={diffViewLocalSetting[DiffViewSettingsKeys.LinesOffset]}
+              onChange={({ target }) =>
+                setDiffViewLocalSetting((prevSetting) => ({
+                  ...prevSetting,
+                  [DiffViewSettingsKeys.LinesOffset]: parseInt(
+                    target.value,
+                    10,
+                  ),
+                }))
+              }
+            />
+          </Box>
+          <Stack direction="row" spacing={1}>
+            <Stack flex={1}>
+              <FormLabel>{t('Old Code')}</FormLabel>
+              <CodeEditor
+                id={SETTING_DIFF_VIEW_OLD_CODE_CY}
+                value={diffViewLocalSetting[DiffViewSettingsKeys.OldCode]}
+                setValue={(newValue) =>
+                  setDiffViewLocalSetting((prevSetting) => ({
+                    ...prevSetting,
+                    [DiffViewSettingsKeys.OldCode]: newValue,
+                  }))
+                }
+              />
+            </Stack>
+            <Stack flex={1}>
+              <FormLabel>{t('New Code')}</FormLabel>
+              <CodeEditor
+                id={SETTING_DIFF_VIEW_NEW_CODE_CY}
+                value={diffViewLocalSetting[DiffViewSettingsKeys.NewCode]}
+                setValue={(newValue) =>
+                  setDiffViewLocalSetting((prevSetting) => ({
+                    ...prevSetting,
+                    [DiffViewSettingsKeys.NewCode]: newValue,
+                  }))
+                }
+              />
+            </Stack>
+          </Stack>
+          <Dialog
+            maxWidth="xl"
+            fullWidth
+            open={openDiffPreview}
+            onClose={() => setOpenDiffPreview(false)}
+          >
+            <DialogContent>
+              <DiffView />
+            </DialogContent>
+          </Dialog>
+          <Button
+            startIcon={<Visibility />}
+            disabled={unsavedDiffViewChanges}
+            onClick={() => setOpenDiffPreview(true)}
+          >
+            {t('Preview')}
+          </Button>
+
+          <SubmitButtons
+            onCancel={() => setDiffViewLocalSetting(diffViewSetting)}
+            onSave={() =>
+              saveSettings(DIFF_VIEW_SETTINGS_NAME, diffViewLocalSetting)
+            }
+            settingKey={EXPLAIN_MODE_SETTINGS_KEY}
+            unsavedChanges={unsavedDiffViewChanges}
           />
         </Stack>
       )}

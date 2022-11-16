@@ -115,7 +115,7 @@
     "Input requested": "Input requested",
     "Submit": "Submit",
     "Unsaved modifications": "Unsaved modifications",
-    "APP_VERSION": "version v{{ version }}",
+    "APP_VERSION": "version {{ version }}",
     "Choose the App Mode": "Choose the App Mode",
     "File added": "File added",
     "Upload complete": "Upload complete",
@@ -124,6 +124,9 @@
     "Upload Data Files": "Upload Data Files",
     "No files": "No files",
     "Supported formats": "Supported formats: {{formats}}",
-    "Pre-loaded libraries": "Pre-loaded libraries"
+    "Pre-loaded libraries": "Pre-loaded libraries",
+    "Old Code": "Old Code",
+    "New Code": "New Code",
+    "Line Offset": "Line Offset"
   }
 }
