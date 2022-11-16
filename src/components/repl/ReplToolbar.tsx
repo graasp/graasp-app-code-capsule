@@ -76,6 +76,7 @@ const ReplToolbar: FC<Props> = ({
             icon={<Save />}
             onClick={onSaveCode}
             disabled={savedStatus}
+            tooltip={t('Save Code')}
             text={savedStatus ? t('Saved') : t('Save')}
           />
           <MiniButton
@@ -85,6 +86,7 @@ const ReplToolbar: FC<Props> = ({
             icon={<PlayArrow />}
             onClick={onRunCode}
             text={t('Run')}
+            tooltip={t('Run Code')}
           />
         </Stack>
       </Stack>
@@ -101,6 +103,7 @@ const ReplToolbar: FC<Props> = ({
           icon={<Square />}
           onClick={onStopCode}
           text={t('Stop')}
+          tooltip={t('Stop Execution')}
         />
         <MiniButton
           dataCy={REPLY_CLEAR_BUTTON_CY}
@@ -114,6 +117,7 @@ const ReplToolbar: FC<Props> = ({
             />
           }
           onClick={onClearOutput}
+          tooltip={t('Clear outputs and figures')}
           text={t('Clear')}
         />
       </Stack>

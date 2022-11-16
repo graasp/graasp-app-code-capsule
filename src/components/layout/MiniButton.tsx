@@ -6,6 +6,7 @@ import {
   ButtonProps,
   CircularProgress,
   IconButton,
+  Tooltip,
   useMediaQuery,
   useTheme,
 } from '@mui/material';
@@ -15,6 +16,7 @@ type Props = {
   dataCy?: string;
   text: string;
   icon: ReactElement;
+  tooltip: string;
   disabled?: boolean;
   isLoading?: boolean;
   color?: ButtonProps['color'];
@@ -26,6 +28,7 @@ const MiniButton: FC<Props> = ({
   dataCy,
   text,
   icon,
+  tooltip,
   disabled = false,
   isLoading = false,
   color = 'primary',
@@ -52,30 +55,38 @@ const MiniButton: FC<Props> = ({
       );
     }
     return (
-      <Button
-        data-cy={dataCy}
-        id={id}
-        disabled={disabled}
-        color={color}
-        variant="outlined"
-        startIcon={icon}
-        onClick={onClick}
-      >
-        {text}
-      </Button>
+      <Tooltip title={tooltip}>
+        <span>
+          <Button
+            data-cy={dataCy}
+            id={id}
+            disabled={disabled}
+            color={color}
+            variant="outlined"
+            startIcon={icon}
+            onClick={onClick}
+          >
+            {text}
+          </Button>
+        </span>
+      </Tooltip>
     );
   }
 
   return (
-    <IconButton
-      color={color}
-      disabled={disabled || isLoading}
-      data-cy={dataCy}
-      id={id}
-      onClick={onClick}
-    >
-      {isLoading ? <CircularProgress size={24} /> : icon}
-    </IconButton>
+    <Tooltip title={tooltip}>
+      <span>
+        <IconButton
+          color={color}
+          disabled={disabled || isLoading}
+          data-cy={dataCy}
+          id={id}
+          onClick={onClick}
+        >
+          {isLoading ? <CircularProgress size={24} /> : icon}
+        </IconButton>
+      </span>
+    </Tooltip>
   );
 };
 export default MiniButton;
