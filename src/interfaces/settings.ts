@@ -39,6 +39,13 @@ export enum DataFileListSettingsKeys {
   Files = 'files',
 }
 
+// Diff View Setting keys
+export enum DiffViewSettingsKeys {
+  OldCode = 'oldCode',
+  NewCode = 'newCode',
+  LinesOffset = 'linesOffset',
+}
+
 // type of general settings
 export type GeneralSettings = {
   [GeneralSettingsKeys.ShowHeader]: boolean;
@@ -84,6 +91,15 @@ export type AppModeSettings = {
 
 export type DataFileListSettings = {
   [DataFileListSettingsKeys.Files]: DataFile[];
+
+  // used to allow access using settings[settingKey] syntax
+  [key: string]: unknown;
+};
+
+export type DiffViewSettings = {
+  [DiffViewSettingsKeys.OldCode]: string;
+  [DiffViewSettingsKeys.NewCode]: string;
+  [DiffViewSettingsKeys.LinesOffset]: number;
 
   // used to allow access using settings[settingKey] syntax
   [key: string]: unknown;

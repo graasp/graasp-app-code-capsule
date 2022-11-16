@@ -7,6 +7,8 @@ import {
   CodeExecutionSettingsKeys,
   DataFileListSettings,
   DataFileListSettingsKeys,
+  DiffViewSettings,
+  DiffViewSettingsKeys,
   GeneralSettings,
   GeneralSettingsKeys,
   InstructorCodeSettingsKeys,
@@ -91,4 +93,11 @@ export const DEFAULT_APP_MODE_SETTINGS: AppModeSettings = {
 // app mode setting
 export const DEFAULT_DATA_FILE_LIST_SETTINGS: DataFileListSettings = {
   [DataFileListSettingsKeys.Files]: [],
+};
+
+// diff view setting
+export const DEFAULT_DIFF_VIEW_SETTINGS: DiffViewSettings = {
+  [DiffViewSettingsKeys.OldCode]: '',
+  [DiffViewSettingsKeys.NewCode]: '',
+  [DiffViewSettingsKeys.LinesOffset]: 0,
 };

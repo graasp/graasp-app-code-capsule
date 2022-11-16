@@ -6,6 +6,7 @@ import {
   APP_MODE_SETTINGS_NAME,
   AppMode,
   CODE_EXECUTION_SETTINGS_NAME,
+  DIFF_VIEW_SETTINGS_NAME,
   GENERAL_SETTINGS_NAME,
   INSTRUCTOR_CODE_VERSION_SETTINGS_NAME,
 } from '../../src/config/appSettingsTypes';
@@ -13,6 +14,7 @@ import { PYTHON } from '../../src/config/constants';
 import {
   DEFAULT_APP_MODE_SETTINGS,
   DEFAULT_CODE_EXECUTION_SETTINGS,
+  DEFAULT_DIFF_VIEW_SETTINGS,
   DEFAULT_GENERAL_SETTINGS,
   DEFAULT_INSTRUCTOR_CODE_VERSION_SETTINGS,
 } from '../../src/config/settings';
@@ -20,6 +22,7 @@ import { CodeVersionType } from '../../src/interfaces/codeVersions';
 import {
   AppModeSettings,
   CodeExecutionSettings,
+  DiffViewSettings,
 } from '../../src/interfaces/settings';
 import { MEMBERS } from './members';
 import { MOCK_SERVER_ITEM } from './mockItem';
@@ -43,6 +46,12 @@ print('Done!')
 const MOCK_COMMIT_MESSAGE = 'This is a mock commit message';
 const MOCK_COMMIT_DESCRIPTION =
   'This is a mock commit Description\nOn multiple lines';
+
+export const MOCK_DIFF_OLD_CODE =
+  'if not value is None:\n    print("not none")';
+
+export const MOCK_DIFF_NEW_CODE =
+  'if value is not None:\n    print("not none")';
 
 export const EMPTY_SETTING: AppSetting = {
   id: v4(),
@@ -108,6 +117,15 @@ export const CODE_COLLABORATE_MODE_SETTING: AppSetting & {
   },
 };
 
+export const CODE_EXPLAIN_MODE_SETTING: AppSetting & {
+  data: AppModeSettings;
+} = {
+  ...MOCK_APP_MODE_SETTING,
+  data: {
+    mode: AppMode.Explain,
+  },
+};
+
 export const MOCK_CODE_SETTINGS: AppSetting & { data: CodeVersionType } = {
   ...EMPTY_SETTING,
   id: v4(),
@@ -119,6 +137,18 @@ export const MOCK_CODE_SETTINGS: AppSetting & { data: CodeVersionType } = {
     code: MOCK_CODE_SAMPLE,
   },
 };
+
+export const MOCK_DIFF_VIEW_SETTINGS: AppSetting & { data: DiffViewSettings } =
+  {
+    ...EMPTY_SETTING,
+    id: v4(),
+    name: DIFF_VIEW_SETTINGS_NAME,
+    data: {
+      ...DEFAULT_DIFF_VIEW_SETTINGS,
+      oldCode: MOCK_DIFF_OLD_CODE,
+      newCode: MOCK_DIFF_NEW_CODE,
+    },
+  };
 
 export const MOCK_EXECUTABLE_PYTHON_CODE_SETTINGS: AppSetting & {
   data: CodeVersionType;

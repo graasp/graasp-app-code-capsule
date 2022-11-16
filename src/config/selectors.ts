@@ -130,6 +130,9 @@ export const REPL_INPUT_DIALOG_TEXTFIELD_CY = 'repl_input_textfield';
 
 export const DOWNLOAD_ACTIONS_BUTTON_CY = 'download_actions_button';
 
+export const DIFF_VIEW_CONTAINER_CY = 'diff_view_container';
+export const DIFF_VIEW_COMPONENT_CY = 'diff_view_component';
+
 export const buildDataCy = (selector: string): string =>
   `[data-cy=${selector}]`;
 export const buildTableRowCypress = (selector: string): string =>

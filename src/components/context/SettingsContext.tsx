@@ -9,6 +9,7 @@ import {
   CODE_EXECUTION_SETTINGS_NAME,
   DATA_FILE_LIST_SETTINGS_NAME,
   DATA_FILE_SETTINGS_NAME,
+  DIFF_VIEW_SETTINGS_NAME,
   GENERAL_SETTINGS_NAME,
   INSTRUCTOR_CODE_VERSION_SETTINGS_NAME,
 } from '../../config/appSettingsTypes';
@@ -17,6 +18,7 @@ import {
   DEFAULT_APP_MODE_SETTINGS,
   DEFAULT_CODE_EXECUTION_SETTINGS,
   DEFAULT_DATA_FILE_LIST_SETTINGS,
+  DEFAULT_DIFF_VIEW_SETTINGS,
   DEFAULT_GENERAL_SETTINGS,
   DEFAULT_INSTRUCTOR_CODE_VERSION_SETTINGS,
 } from '../../config/settings';
@@ -24,6 +26,7 @@ import {
   AppModeSettings,
   CodeExecutionSettings,
   DataFileListSettings,
+  DiffViewSettings,
   GeneralSettings,
   InstructorCodeVersionSettings,
 } from '../../interfaces/settings';
@@ -36,6 +39,7 @@ interface AllSettingsType {
   [INSTRUCTOR_CODE_VERSION_SETTINGS_NAME]?: InstructorCodeVersionSettings;
   [APP_MODE_SETTINGS_NAME]?: AppModeSettings;
   [DATA_FILE_LIST_SETTINGS_NAME]?: DataFileListSettings;
+  [DIFF_VIEW_SETTINGS_NAME]?: DiffViewSettings;
 }
 
 // default values for the data property of settings by name
@@ -46,6 +50,7 @@ const defaultSettingsValues: AllSettingsType = {
     DEFAULT_INSTRUCTOR_CODE_VERSION_SETTINGS,
   [APP_MODE_SETTINGS_NAME]: DEFAULT_APP_MODE_SETTINGS,
   [DATA_FILE_LIST_SETTINGS_NAME]: DEFAULT_DATA_FILE_LIST_SETTINGS,
+  [DIFF_VIEW_SETTINGS_NAME]: DEFAULT_DIFF_VIEW_SETTINGS,
 };
 
 // list of the settings names
@@ -55,6 +60,7 @@ const ALL_SETTING_NAMES = [
   INSTRUCTOR_CODE_VERSION_SETTINGS_NAME,
   APP_MODE_SETTINGS_NAME,
   DATA_FILE_LIST_SETTINGS_NAME,
+  DIFF_VIEW_SETTINGS_NAME,
 ] as const;
 
 // automatically generated types

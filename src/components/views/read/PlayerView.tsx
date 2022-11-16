@@ -8,7 +8,7 @@ import { CodeVersionProvider } from '../../context/CodeVersionContext';
 import { SettingsProvider } from '../../context/SettingsContext';
 
 const Div = styled('div')({
-  height: '100vh',
+  // height: '100vh',
 });
 
 const PlayerView: FC = () => (
