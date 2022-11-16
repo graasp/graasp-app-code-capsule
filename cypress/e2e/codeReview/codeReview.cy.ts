@@ -232,7 +232,7 @@ describe('Code Review Tools', () => {
     );
   });
 
-  it.only('should edit code', () => {
+  it.skip('should edit code', () => {
     const newCode = '#testing new code';
     // open editing
     cy.openCodeEditor();
