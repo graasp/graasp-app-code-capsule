@@ -16,6 +16,7 @@ import {
   RadioGroup,
   Stack,
   TextField,
+  Tooltip,
 } from '@mui/material';
 
 import {
@@ -233,7 +234,7 @@ const SettingsView: FC = () => {
         </Stack>
       )}
       {appModeLocalSetting[AppModeSettingsKeys.Mode] === AppMode.Review && (
-        <Stack>
+        <Stack spacing={1}>
           <FormLabel>{t('Code to review')}</FormLabel>
           <CodeEditor
             id={SETTING_MAIN_CODE_EDITOR_CY}
@@ -263,9 +264,13 @@ const SettingsView: FC = () => {
         </Stack>
       )}
       {appModeLocalSetting[AppModeSettingsKeys.Mode] === AppMode.Explain && (
-        <Stack>
+        <Stack spacing={1}>
           <FormLabel>{t('Line Offset')}</FormLabel>
-          <Box>
+          <Stack
+            direction="row"
+            justifyContent="space-between"
+            alignItems="end"
+          >
             <TextField
               type="number"
               inputProps={{ min: 0 }}
@@ -280,7 +285,26 @@ const SettingsView: FC = () => {
                 }))
               }
             />
-          </Box>
+            <Box>
+              <Tooltip
+                title={
+                  unsavedDiffViewChanges
+                    ? t('Save Setting to Preview')
+                    : t('Show Preview')
+                }
+              >
+                <span>
+                  <Button
+                    startIcon={<Visibility />}
+                    disabled={unsavedDiffViewChanges}
+                    onClick={() => setOpenDiffPreview(true)}
+                  >
+                    {t('Preview')}
+                  </Button>
+                </span>
+              </Tooltip>
+            </Box>
+          </Stack>
           <Stack direction="row" spacing={1}>
             <Stack flex={1}>
               <FormLabel>{t('Old Code')}</FormLabel>
@@ -319,13 +343,6 @@ const SettingsView: FC = () => {
               <DiffView />
             </DialogContent>
           </Dialog>
-          <Button
-            startIcon={<Visibility />}
-            disabled={unsavedDiffViewChanges}
-            onClick={() => setOpenDiffPreview(true)}
-          >
-            {t('Preview')}
-          </Button>
 
           <SubmitButtons
             onCancel={() => setDiffViewLocalSetting(diffViewSetting)}
