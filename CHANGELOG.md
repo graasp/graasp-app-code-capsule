@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.1.0](https://github.com/graasp/graasp-app-code-capsule/compare/v1.0.0...v1.1.0) (2022-11-17)
+
+
+### Features
+
+* diff view ([#35](https://github.com/graasp/graasp-app-code-capsule/issues/35)) ([93b2762](https://github.com/graasp/graasp-app-code-capsule/commit/93b2762eeafcd2fd496df48537d37b914c3edf96))
+
+
+### Bug Fixes
+
+* add tooltips to repl buttons ([#34](https://github.com/graasp/graasp-app-code-capsule/issues/34)) ([8d94650](https://github.com/graasp/graasp-app-code-capsule/commit/8d94650854034e3f89f69458c651e14779c95d85))
+* constants and translations ([8d94650](https://github.com/graasp/graasp-app-code-capsule/commit/8d94650854034e3f89f69458c651e14779c95d85))
+* french translation ([8d94650](https://github.com/graasp/graasp-app-code-capsule/commit/8d94650854034e3f89f69458c651e14779c95d85))
+
 ## [1.0.0](https://github.com/graasp/graasp-app-code-capsule/compare/v0.1.0...v1.0.0) (2022-11-16)
 
 
