@@ -1,4 +1,5 @@
 export const GRAASP_LOGO_HEADER_HEIGHT = 40;
+export const BUTTON_LOADER_SIZE = 24;
 
 // Admin view constants
 export const NB_COL_TABLE_VIEW_TABLE = 4;

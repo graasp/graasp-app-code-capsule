@@ -124,9 +124,9 @@
     "Upload Data Files": "Upload Data Files",
     "No files": "No files",
     "Supported formats": "Supported formats: {{formats}}",
-    "Pre-loaded libraries": "Pre-loaded libraries",
+    "Pre-loaded libraries": "Preloaded Libraries",
     "Stop Execution": "Stop Execution",
-    "Clear outputs and figures": "Clear outputs and figures",
+    "Clear outputs and figures": "Clear Outputs and Figures",
     "Run Code": "Run Code",
     "Save Code": "Save Code"
   }

@@ -11,6 +11,8 @@ import {
   useTheme,
 } from '@mui/material';
 
+import { BUTTON_LOADER_SIZE } from '../../config/constants';
+
 type Props = {
   id?: string;
   dataCy?: string;
@@ -83,7 +85,7 @@ const MiniButton: FC<Props> = ({
           id={id}
           onClick={onClick}
         >
-          {isLoading ? <CircularProgress size={24} /> : icon}
+          {isLoading ? <CircularProgress size={BUTTON_LOADER_SIZE} /> : icon}
         </IconButton>
       </span>
     </Tooltip>
