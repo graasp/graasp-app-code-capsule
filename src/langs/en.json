@@ -124,11 +124,15 @@
     "Upload Data Files": "Upload Data Files",
     "No files": "No files",
     "Supported formats": "Supported formats: {{formats}}",
-    "Pre-loaded libraries": "Pre-loaded libraries",
     "Old Code": "Old Code",
     "New Code": "New Code",
     "Line Offset": "Line Offset",
     "Save Setting to Preview": "Save Setting to Preview",
     "Show Preview": "Show Preview"
+    "Pre-loaded libraries": "Preloaded Libraries",
+    "Stop Execution": "Stop Execution",
+    "Clear outputs and figures": "Clear Outputs and Figures",
+    "Run Code": "Run Code",
+    "Save Code": "Save Code"
   }
 }
