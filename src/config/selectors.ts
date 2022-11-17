@@ -108,6 +108,7 @@ export const REPL_EDITOR_ID_CY = 'repl_editor';
 export const APP_MODE_EXECUTE_BUTTON_CY = 'app_mode_execute';
 export const APP_MODE_REVIEW_BUTTON_CY = 'app_mode_review';
 export const APP_MODE_COLLABORATE_BUTTON_CY = 'app_mode_collaborate';
+export const APP_MODE_EXPLAIN_BUTTON_CY = 'app_mode_explain';
 
 export const SETTING_APP_MODE_SELECT_FORM_LABEL_CY =
   'setting_app_mode_select_label';
@@ -130,6 +131,12 @@ export const REPL_INPUT_DIALOG_TEXTFIELD_CY = 'repl_input_textfield';
 
 export const DOWNLOAD_ACTIONS_BUTTON_CY = 'download_actions_button';
 
+export const DIFF_VIEW_CONTAINER_CY = 'diff_view_container';
+export const DIFF_VIEW_COMPONENT_CY = 'diff_view_component';
+
+export const SETTING_DIFF_VIEW_OLD_CODE_CY = 'setting_diff_view_old_code';
+export const SETTING_DIFF_VIEW_NEW_CODE_CY = 'setting_diff_view_new_code';
+
 export const buildDataCy = (selector: string): string =>
   `[data-cy=${selector}]`;
 export const buildTableRowCypress = (selector: string): string =>
@@ -137,3 +144,8 @@ export const buildTableRowCypress = (selector: string): string =>
 export const buildCommitFieldCypress = (selector: string): string =>
   `[data-cy=${selector}]`;
 export const settingKeyDataCy = (key: string): string => `setting-${key}`;
+
+// keys for save buttons and tests
+export const EXECUTION_MODE_SETTINGS_KEY = 'EXECUTION_MODE_SETTINGS_KEY';
+export const REVIEW_MODE_SETTINGS_KEY = 'REVIEW_MODE_SETTINGS_KEY';
+export const EXPLAIN_MODE_SETTINGS_KEY = 'EXPLAIN_MODE_SETTINGS_KEY';
