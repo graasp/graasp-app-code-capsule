@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.1.1](https://github.com/graasp/graasp-app-code-capsule/compare/v1.1.0...v1.1.1) (2022-11-17)
+
+
+### Bug Fixes
+
+* missing comma in translations ([c4ae577](https://github.com/graasp/graasp-app-code-capsule/commit/c4ae5776750d8abf35d92b8186e65b924c5d2da6))
+
 ## [1.1.0](https://github.com/graasp/graasp-app-code-capsule/compare/v1.0.0...v1.1.0) (2022-11-17)
 
 
