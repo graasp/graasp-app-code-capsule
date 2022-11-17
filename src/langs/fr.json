@@ -122,6 +122,10 @@
     "Data files": "Fichiers de données",
     "Upload Data Files": "Télécharger des fichiers de données",
     "No files": "Pas de fichiers",
-    "Pre-loaded libraries": "Libraries pré-chargées"
+    "Pre-loaded libraries": "Librairies pré-chargées",
+    "Stop Execution": "Arrêter l'exécution",
+    "Clear outputs and figures": "Effacer les sorties et les figures",
+    "Run Code": "Exécuter le code",
+    "Save Code": "Enregistrer le code"
   }
 }
