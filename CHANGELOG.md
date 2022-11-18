@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.2.0](https://github.com/graasp/graasp-app-code-capsule/compare/v1.1.1...v1.2.0) (2022-11-18)
+
+
+### Features
+
+* add actions in review ([23353be](https://github.com/graasp/graasp-app-code-capsule/commit/23353be67fb5ef5a26e7d14647040b7f1ac758e9))
+* add auto-resize ([df23b28](https://github.com/graasp/graasp-app-code-capsule/commit/df23b28863dfb2a72d8e38583a64e21580e7baf9))
+* use old mechanism ([2d235ae](https://github.com/graasp/graasp-app-code-capsule/commit/2d235aec3a6811471173895aa379ba352382ceea))
+
+
+### Bug Fixes
+
+* editor setting width ([59befe4](https://github.com/graasp/graasp-app-code-capsule/commit/59befe4eb0b36d9a555c1c04377bb0e7a9161480))
+* remove margins ([0a4ee9b](https://github.com/graasp/graasp-app-code-capsule/commit/0a4ee9bceda62cf5b9f539d8c2c69464533b759b))
+
 ## [1.1.1](https://github.com/graasp/graasp-app-code-capsule/compare/v1.1.0...v1.1.1) (2022-11-17)
 
 
