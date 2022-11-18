@@ -29,6 +29,12 @@
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
     <title>Code Capsule App</title>
+    <script>
+      document.domain = '%REACT_APP_GRAASP_DOMAIN%';
+      if (window.frameElement) {
+        window.frameElement.style['min-height'] = '70vh';
+      }
+    </script>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>

@@ -9,4 +9,11 @@ export enum APP_ACTIONS_TYPES {
   CANCEL_PROMPT = 'cancel_prompt',
   INITIALIZE_EXECUTION = 'initialize_execution',
   NEW_FIGURE = 'new_figure',
+
+  // Review actions
+  CREATE_COMMENT = 'create_comment',
+  EDIT_COMMENT = 'edit_comment',
+  REPORT_COMMENT = 'report_comment',
+  DELETE_COMMENT = 'delete_comment',
+  RESPOND_COMMENT = 'respond_comment',
 }
