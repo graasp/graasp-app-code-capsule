@@ -56,12 +56,7 @@ const DiffView: FC = () => {
   );
 
   return (
-    <Stack
-      data-cy={DIFF_VIEW_CONTAINER_CY}
-      direction="column"
-      // m={2}
-      ref={rootRef}
-    >
+    <Stack data-cy={DIFF_VIEW_CONTAINER_CY} direction="column" ref={rootRef}>
       <ReactDiffViewer
         linesOffset={diffViewSettings[DiffViewSettingsKeys.LinesOffset]}
         oldValue={diffViewSettings[DiffViewSettingsKeys.OldCode]}
