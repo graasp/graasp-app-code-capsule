@@ -2576,9 +2576,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/apps-query-client@github:graasp/graasp-apps-query-client":
+"@graasp/apps-query-client@github:graasp/graasp-apps-query-client#v0":
   version: 0.4.0
-  resolution: "@graasp/apps-query-client@https://github.com/graasp/graasp-apps-query-client.git#commit=df10a3ff253eb9f79fb64c9515226d778af18ded"
+  resolution: "@graasp/apps-query-client@https://github.com/graasp/graasp-apps-query-client.git#commit=317499ec48d1bf10d81f31cab197dd816499ade2"
   dependencies:
     "@graasp/sdk": "github:graasp/graasp-sdk"
     axios: 0.27.2
@@ -2622,9 +2622,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/ui@github:graasp/graasp-ui#v0.4.0":
+"@graasp/ui@github:graasp/graasp-ui#v0":
   version: 0.4.0
-  resolution: "@graasp/ui@https://github.com/graasp/graasp-ui.git#commit=dea454d93ab4605a77265e184e98c4be3a4718a4"
+  resolution: "@graasp/ui@https://github.com/graasp/graasp-ui.git#commit=26278c9f512e18c01673e3efd4be135bc04b2cb9"
   dependencies:
     "@graasp/sdk": "github:graasp/graasp-sdk.git"
     clsx: 1.1.1
@@ -10238,10 +10238,10 @@ __metadata:
     "@fortawesome/free-regular-svg-icons": 6.2.0
     "@fortawesome/free-solid-svg-icons": 6.2.0
     "@fortawesome/react-fontawesome": latest
-    "@graasp/apps-query-client": "github:graasp/graasp-apps-query-client"
+    "@graasp/apps-query-client": "github:graasp/graasp-apps-query-client#v0"
     "@graasp/pyodide": "github:spaenleh/graasp-pyodide"
     "@graasp/sdk": "github:graasp/graasp-sdk"
-    "@graasp/ui": "github:graasp/graasp-ui#v0.4.0"
+    "@graasp/ui": "github:graasp/graasp-ui#v0"
     "@mui/icons-material": 5.10.9
     "@mui/lab": 5.0.0-alpha.84
     "@mui/material": 5.10.11
