@@ -59,7 +59,7 @@ const DiffView: FC = () => {
     <Stack
       data-cy={DIFF_VIEW_CONTAINER_CY}
       direction="column"
-      m={2}
+      // m={2}
       ref={rootRef}
     >
       <ReactDiffViewer
