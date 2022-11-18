@@ -4,6 +4,8 @@ import { useTranslation } from 'react-i18next';
 import { Delete, Edit, Flag } from '@mui/icons-material';
 import { ListItemIcon, ListItemText, Menu, MenuItem } from '@mui/material';
 
+import { APP_ACTIONS_TYPES } from '../../config/appActionsTypes';
+import { MUTATION_KEYS, useMutation } from '../../config/queryClient';
 import { useAppDataContext } from '../context/AppDataContext';
 import { useCommentContext } from '../context/CommentContext';
 import { useReviewContext } from '../context/ReviewContext';
@@ -31,6 +33,11 @@ const CommentActions: FC<Props> = ({
   const comment = useCommentContext();
   const { editComment } = useReviewContext();
   const { deleteAppData } = useAppDataContext();
+  const { mutate: postAction } = useMutation<
+    unknown,
+    unknown,
+    { data: unknown; type: string }
+  >(MUTATION_KEYS.POST_APP_ACTION);
 
   return (
     <Menu
@@ -52,6 +59,10 @@ const CommentActions: FC<Props> = ({
         <MenuItem
           onClick={() => {
             editComment(comment.id);
+            postAction({
+              data: { comment },
+              type: APP_ACTIONS_TYPES.EDIT_COMMENT,
+            });
             onClose();
           }}
         >
@@ -65,6 +76,10 @@ const CommentActions: FC<Props> = ({
         <MenuItem
           onClick={() => {
             deleteAppData({ id: comment.id });
+            postAction({
+              data: { comment },
+              type: APP_ACTIONS_TYPES.DELETE_COMMENT,
+            });
             onClose();
           }}
         >
@@ -78,6 +93,10 @@ const CommentActions: FC<Props> = ({
         <MenuItem
           onClick={() => {
             onClickFlag?.();
+            postAction({
+              data: { comment },
+              type: APP_ACTIONS_TYPES.REPORT_COMMENT,
+            });
             onClose();
           }}
         >

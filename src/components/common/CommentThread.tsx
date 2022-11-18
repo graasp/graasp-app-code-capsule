@@ -5,8 +5,10 @@ import { useTranslation } from 'react-i18next';
 
 import { TextField, styled } from '@mui/material';
 
+import { APP_ACTIONS_TYPES } from '../../config/appActionsTypes';
 import { APP_DATA_TYPES } from '../../config/appDataTypes';
 import { BIG_BORDER_RADIUS } from '../../config/layout';
+import { MUTATION_KEYS, useMutation } from '../../config/queryClient';
 import { COMMENT_THREAD_CONTAINER_CYPRESS } from '../../config/selectors';
 import { CommentType } from '../../interfaces/comment';
 import { buildThread } from '../../utils/comments';
@@ -51,6 +53,11 @@ const CommentThread: FC<Props> = ({ children, hiddenState }) => {
     closeEditingComment,
   } = useReviewContext();
   const { patchAppData, postAppData } = useAppDataContext();
+  const { mutate: postAction } = useMutation<
+    unknown,
+    unknown,
+    { data: unknown; type: string }
+  >(MUTATION_KEYS.POST_APP_ACTION);
 
   const isEdited = (id: string): boolean => id === currentEditedCommentId;
   const isReplied = (id: string): boolean => id === currentRepliedCommentId;
@@ -108,13 +115,18 @@ const CommentThread: FC<Props> = ({ children, hiddenState }) => {
                 <CommentEditor
                   onCancel={closeComment}
                   onSend={(content) => {
+                    const data = {
+                      ...c.data,
+                      parent: c.id,
+                      content,
+                    };
                     postAppData({
-                      data: {
-                        ...c.data,
-                        parent: c.id,
-                        content,
-                      },
+                      data,
                       type: APP_DATA_TYPES.COMMENT,
+                    });
+                    postAction({
+                      data,
+                      type: APP_ACTIONS_TYPES.RESPOND_COMMENT,
                     });
                     closeComment();
                   }}

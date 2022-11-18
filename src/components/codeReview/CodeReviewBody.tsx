@@ -7,10 +7,12 @@ import React, { FC, Fragment } from 'react';
 import { Add } from '@mui/icons-material';
 import { IconButton, styled } from '@mui/material';
 
+import { APP_ACTIONS_TYPES } from '../../config/appActionsTypes';
 import { APP_DATA_TYPES, APP_DATA_VISIBILITY } from '../../config/appDataTypes';
 import { GENERAL_SETTINGS_NAME } from '../../config/appSettingsTypes';
 import { REVIEW_MODE_INDIVIDUAL } from '../../config/constants';
 import { SMALL_BORDER_RADIUS } from '../../config/layout';
+import { MUTATION_KEYS, useMutation } from '../../config/queryClient';
 import {
   CODE_REVIEW_ADD_BUTTON_CYPRESS,
   CODE_REVIEW_LINE_CONTENT_CYPRESS,
@@ -94,6 +96,11 @@ const CodeReviewBody: FC<Props> = () => {
   const allowComments = settings[GeneralSettingsKeys.AllowComments];
   const reviewMode = settings[GeneralSettingsKeys.ReviewMode];
   const { postAppData, comments } = useAppDataContext();
+  const { mutate: postAction } = useMutation<
+    unknown,
+    unknown,
+    { data: unknown; type: string }
+  >(MUTATION_KEYS.POST_APP_ACTION);
 
   const versionComments = comments?.filter((c) => c.data.codeId === codeId);
 
@@ -174,24 +181,29 @@ const CodeReviewBody: FC<Props> = () => {
                 <CommentEditor
                   onCancel={closeComment}
                   onSend={(text) => {
+                    const data = {
+                      content: text,
+                      line: i,
+                      // codeId corresponding to current code version
+                      codeId,
+                      // comment on top level has no parent
+                      parent: null,
+                      ...(multilineRange?.start &&
+                        multilineRange?.end && {
+                          multiline: multilineRange,
+                        }),
+                    };
                     postAppData({
-                      data: {
-                        content: text,
-                        line: i,
-                        // codeId corresponding to current code version
-                        codeId,
-                        // comment on top level has no parent
-                        parent: null,
-                        ...(multilineRange?.start &&
-                          multilineRange?.end && {
-                            multiline: multilineRange,
-                          }),
-                      },
+                      data,
                       type: APP_DATA_TYPES.COMMENT,
                       visibility:
                         reviewMode === REVIEW_MODE_INDIVIDUAL
                           ? APP_DATA_VISIBILITY.MEMBER
                           : APP_DATA_VISIBILITY.ITEM,
+                    });
+                    postAction({
+                      data,
+                      type: APP_ACTIONS_TYPES.CREATE_COMMENT,
                     });
                     closeComment();
                   }}
