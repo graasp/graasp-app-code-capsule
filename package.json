@@ -19,7 +19,7 @@
     "@fortawesome/free-regular-svg-icons": "6.2.0",
     "@fortawesome/free-solid-svg-icons": "6.2.0",
     "@fortawesome/react-fontawesome": "latest",
-    "@graasp/apps-query-client": "github:graasp/graasp-apps-query-client",
+    "@graasp/apps-query-client": "github:graasp/graasp-apps-query-client#61-auto-resize",
     "@graasp/pyodide": "github:spaenleh/graasp-pyodide",
     "@graasp/sdk": "github:graasp/graasp-sdk",
     "@graasp/ui": "github:graasp/graasp-ui#v0.3.0",
