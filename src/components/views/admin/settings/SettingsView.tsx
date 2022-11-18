@@ -306,7 +306,7 @@ const SettingsView: FC = () => {
             </Box>
           </Stack>
           <Stack direction="row" spacing={1}>
-            <Stack flex={1}>
+            <Stack flex={1} width="50%">
               <FormLabel>{t('Old Code')}</FormLabel>
               <CodeEditor
                 id={SETTING_DIFF_VIEW_OLD_CODE_CY}
@@ -319,7 +319,7 @@ const SettingsView: FC = () => {
                 }
               />
             </Stack>
-            <Stack flex={1}>
+            <Stack flex={1} width="50%">
               <FormLabel>{t('New Code')}</FormLabel>
               <CodeEditor
                 id={SETTING_DIFF_VIEW_NEW_CODE_CY}
