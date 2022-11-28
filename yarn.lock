@@ -2634,7 +2634,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/sdk@github:graasp/graasp-sdk, @graasp/sdk@github:graasp/graasp-sdk.git":
+"@graasp/sdk@github:graasp/graasp-sdk":
   version: 0.1.0
   resolution: "@graasp/sdk@https://github.com/graasp/graasp-sdk.git#commit=55a43441b82e4601a67c56e34648851f96a25408"
   dependencies:
@@ -2651,11 +2651,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/ui@github:graasp/graasp-ui#v0.4.1":
+"@graasp/ui@npm:0.4.1":
   version: 0.4.1
-  resolution: "@graasp/ui@https://github.com/graasp/graasp-ui.git#commit=b149f001be54097916816f622bb8dfdf3f3a9cfb"
+  resolution: "@graasp/ui@npm:0.4.1"
   dependencies:
-    "@graasp/sdk": "github:graasp/graasp-sdk.git"
+    "@graasp/sdk": "github:graasp/graasp-sdk"
     clsx: 1.1.1
     http-status-codes: 2.2.0
     immutable: 4.1.0
@@ -2686,7 +2686,7 @@ __metadata:
       optional: true
     ag-grid-react:
       optional: true
-  checksum: 008c718e85fe0b296bbc9bbb7a625687f9df09a1a47bfe8bbbc026df2fac34ee2ce17a63decd81cea07eebe62b51885380e817c9cc05a8d2f099ce92429a4de1
+  checksum: de06a91b5febe13cf9aa4142242b6e44ec203706230eb8aff32bedec97b72070d7b34c03b0450080112169dc590be1cea3d48c731a232e7cc58121e61aba7909
   languageName: node
   linkType: hard
 
@@ -10364,7 +10364,7 @@ __metadata:
     "@graasp/apps-query-client": "github:graasp/graasp-apps-query-client#v0"
     "@graasp/pyodide": "github:spaenleh/graasp-pyodide"
     "@graasp/sdk": "github:graasp/graasp-sdk"
-    "@graasp/ui": "github:graasp/graasp-ui#v0.4.1"
+    "@graasp/ui": 0.4.1
     "@mui/icons-material": 5.10.14
     "@mui/lab": 5.0.0-alpha.84
     "@mui/material": 5.10.14
