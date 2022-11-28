@@ -22,7 +22,7 @@
     "@graasp/apps-query-client": "github:graasp/graasp-apps-query-client#v0",
     "@graasp/pyodide": "github:spaenleh/graasp-pyodide",
     "@graasp/sdk": "github:graasp/graasp-sdk",
-    "@graasp/ui": "github:graasp/graasp-ui",
+    "@graasp/ui": "0.4.1",
     "@mui/icons-material": "5.10.14",
     "@mui/lab": "5.0.0-alpha.84",
     "@mui/material": "5.10.14",
@@ -148,5 +148,5 @@
   "resolutions": {
     "@codemirror/state": "6.1.0"
   },
-  "packageManager": "yarn@3.2.4"
+  "packageManager": "yarn@3.3.0"
 }
