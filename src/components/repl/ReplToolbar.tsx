@@ -1,9 +1,15 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { PyodideStatus } from '@graasp/pyodide';
 
-import { PlayArrow, Save, Square } from '@mui/icons-material';
+import {
+  Fullscreen,
+  FullscreenExit,
+  PlayArrow,
+  Save,
+  Square,
+} from '@mui/icons-material';
 import { Stack, Typography } from '@mui/material';
 
 import {
@@ -16,10 +22,11 @@ import { fas } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import {
-  REPLY_CLEAR_BUTTON_CY,
-  REPLY_SAVE_BUTTON_CY,
-  REPLY_STOP_BUTTON_CY,
+  REPL_CLEAR_BUTTON_CY,
+  REPL_FULL_SCREEN_BUTTON_CY,
   REPL_RUN_CODE_BUTTON_CY,
+  REPL_SAVE_BUTTON_CY,
+  REPL_STOP_BUTTON_CY,
 } from '../../config/selectors';
 import MiniButton from '../layout/MiniButton';
 import ReplStatusIndicator from './ReplStatusIndicator';
@@ -55,6 +62,25 @@ const ReplToolbar: FC<Props> = ({
   const isRunning = [PyodideStatus.RUNNING, PyodideStatus.WAIT_INPUT].includes(
     status,
   );
+  const [isFullScreen, setIsFullScreen] = useState(false);
+
+  const onClickFullScreen = (): void => {
+    const bodyElem = document.body;
+    if (!document.fullscreenElement) {
+      bodyElem
+        .requestFullscreen()
+        .then(() => setIsFullScreen(true))
+        .catch((err) => {
+          // eslint-disable-next-line no-console
+          console.log(
+            `Error attempting to enable fullscreen mode: ${err.message} (${err.name})`,
+          );
+        });
+    } else {
+      document.exitFullscreen();
+      setIsFullScreen(false);
+    }
+  };
 
   return (
     <Stack direction="row" spacing={1}>
@@ -72,7 +98,7 @@ const ReplToolbar: FC<Props> = ({
             </Typography>
           )}
           <MiniButton
-            dataCy={REPLY_SAVE_BUTTON_CY}
+            dataCy={REPL_SAVE_BUTTON_CY}
             icon={<Save />}
             onClick={onSaveCode}
             disabled={savedStatus}
@@ -97,7 +123,7 @@ const ReplToolbar: FC<Props> = ({
         width="50%"
       >
         <MiniButton
-          dataCy={REPLY_STOP_BUTTON_CY}
+          dataCy={REPL_STOP_BUTTON_CY}
           color="error"
           disabled={!isRunning}
           icon={<Square />}
@@ -105,21 +131,31 @@ const ReplToolbar: FC<Props> = ({
           text={t('Stop')}
           tooltip={t('Stop Execution')}
         />
-        <MiniButton
-          dataCy={REPLY_CLEAR_BUTTON_CY}
-          color="error"
-          icon={
-            <FontAwesomeIcon
-              icon={broomIconDefinition}
-              color="error"
-              width="24px"
-              height="24px"
-            />
-          }
-          onClick={onClearOutput}
-          tooltip={t('Clear outputs and figures')}
-          text={t('Clear')}
-        />
+        <Stack direction="row" spacing={1} alignItems="center">
+          <MiniButton
+            dataCy={REPL_FULL_SCREEN_BUTTON_CY}
+            color="primary"
+            icon={isFullScreen ? <FullscreenExit /> : <Fullscreen />}
+            onClick={onClickFullScreen}
+            tooltip={t('Toggle Fullscreen')}
+            text={t('Fullscreen')}
+          />
+          <MiniButton
+            dataCy={REPL_CLEAR_BUTTON_CY}
+            color="error"
+            icon={
+              <FontAwesomeIcon
+                icon={broomIconDefinition}
+                color="error"
+                width="24px"
+                height="24px"
+              />
+            }
+            onClick={onClearOutput}
+            tooltip={t('Clear outputs and figures')}
+            text={t('Clear')}
+          />
+        </Stack>
       </Stack>
     </Stack>
   );

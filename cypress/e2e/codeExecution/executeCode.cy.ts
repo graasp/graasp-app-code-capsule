@@ -1,12 +1,12 @@
 import { Context, PermissionLevel } from '@graasp/sdk';
 
 import {
-  REPLY_SAVE_BUTTON_CY,
   REPL_CONTAINER_CY,
   REPL_EDITOR_ID_CY,
   REPL_INPUT_DIALOG_PROMPT_TEXT_CY,
   REPL_INPUT_DIALOG_TEXTFIELD_CY,
   REPL_OUTPUT_CONSOLE_CY,
+  REPL_SAVE_BUTTON_CY,
   REPL_STATUS_INDICATOR_CY,
   buildDataCy,
 } from '../../../src/config/selectors';
@@ -80,7 +80,7 @@ describe('Display Code Execution', () => {
   it('Saves Code into appData', () => {
     cy.waitForReplReady();
     cy.typeInEditor('# Save to App Data', REPL_EDITOR_ID_CY);
-    cy.get(buildDataCy(REPLY_SAVE_BUTTON_CY)).should('be.visible').click();
+    cy.get(buildDataCy(REPL_SAVE_BUTTON_CY)).should('be.visible').click();
   });
 });
 
