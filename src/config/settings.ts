@@ -3,6 +3,8 @@ import { Context, PermissionLevel } from '@graasp/sdk';
 import {
   AppModeSettings,
   AppModeSettingsKeys,
+  ChatbotPromptSettings,
+  ChatbotPromptSettingsKeys,
   CodeExecutionSettings,
   CodeExecutionSettingsKeys,
   DataFileListSettings,
@@ -100,4 +102,11 @@ export const DEFAULT_DIFF_VIEW_SETTINGS: DiffViewSettings = {
   [DiffViewSettingsKeys.OldCode]: '',
   [DiffViewSettingsKeys.NewCode]: '',
   [DiffViewSettingsKeys.LinesOffset]: 0,
+};
+
+// chatbot prompt setting
+export const DEFAULT_CHATBOT_PROMPT_SETTINGS: ChatbotPromptSettings = {
+  [ChatbotPromptSettingsKeys.InitialPrompt]: '',
+  [ChatbotPromptSettingsKeys.ChatbotPrompt]: '',
+  [ChatbotPromptSettingsKeys.LineNumber]: 0,
 };

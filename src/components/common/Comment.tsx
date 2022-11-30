@@ -16,15 +16,16 @@ import {
 
 import { APP_DATA_TYPES } from '../../config/appDataTypes';
 import { GENERAL_SETTINGS_NAME } from '../../config/appSettingsTypes';
-import { ANONYMOUS_USER } from '../../config/constants';
+import { ANONYMOUS_USER, DEFAULT_BOT_USERNAME } from '../../config/constants';
 import { BIG_BORDER_RADIUS } from '../../config/layout';
 import { MUTATION_KEYS, useMutation } from '../../config/queryClient';
-import { COMMENT_CONTAINER_CYPRESS } from '../../config/selectors';
+import { buildCommentContainerDataCy } from '../../config/selectors';
 import { DEFAULT_GENERAL_SETTINGS } from '../../config/settings';
 import { CommentType } from '../../interfaces/comment';
 import { ReportedCommentType } from '../../interfaces/reportedComment';
 import { GeneralSettingsKeys } from '../../interfaces/settings';
 import { getFormattedTime } from '../../utils/datetime';
+import ChatbotAvatar from '../chatbot/ChatbotAvatar';
 import { useMembersContext } from '../context/MembersContext';
 import { useSettings } from '../context/SettingsContext';
 import CustomAvatar from '../layout/CustomAvatar';
@@ -62,6 +63,8 @@ const Comment: FC<Props> = ({ comment }) => {
 
   const member = members.find((u) => u.id === comment.memberId);
   const userName = member?.name || ANONYMOUS_USER;
+
+  const isBot = comment.type === APP_DATA_TYPES.BOT_COMMENT;
 
   const isEditable = (): boolean => currentMember === comment.creator;
   const isDeletable = (): boolean => isEditable();
@@ -107,14 +110,14 @@ const Comment: FC<Props> = ({ comment }) => {
   );
   return (
     <CustomCard
-      data-cy={COMMENT_CONTAINER_CYPRESS}
+      data-cy={buildCommentContainerDataCy(comment.id)}
       elevation={0}
       ref={commentRef}
     >
       <CardHeader
-        title={userName}
+        title={isBot ? DEFAULT_BOT_USERNAME : userName}
         subheader={getFormattedTime(comment.updatedAt, i18n.language)}
-        avatar={<CustomAvatar member={member} />}
+        avatar={isBot ? <ChatbotAvatar /> : <CustomAvatar member={member} />}
         action={renderCommentActions()}
       />
       <CardContent sx={{ p: 2, py: 0, '&:last-child': { pb: 0 } }}>

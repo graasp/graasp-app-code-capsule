@@ -2,7 +2,12 @@ import Immutable, { List } from 'immutable';
 
 import React, { FC, PropsWithChildren, createContext, useMemo } from 'react';
 
-import { APP_DATA_TYPES } from '../../config/appDataTypes';
+import { AppData } from '@graasp/apps-query-client';
+
+import {
+  APP_DATA_TYPES,
+  COMMENT_APP_DATA_TYPES,
+} from '../../config/appDataTypes';
 import { GENERAL_SETTINGS_NAME } from '../../config/appSettingsTypes';
 import {
   REVIEW_MODE_INDIVIDUAL,
@@ -35,6 +40,7 @@ type DeleteAppDataType = {
 
 export type AppDataContextType = {
   postAppData: (payload: PostAppDataType) => void;
+  postAppDataAsync: (payload: PostAppDataType) => Promise<AppData> | undefined;
   patchAppData: (payload: PatchAppDataType) => void;
   deleteAppData: (payload: DeleteAppDataType) => void;
   codeAppData: Immutable.List<CodeType>;
@@ -44,6 +50,7 @@ export type AppDataContextType = {
 
 const defaultContextValue = {
   postAppData: () => null,
+  postAppDataAsync: () => undefined,
   patchAppData: () => null,
   deleteAppData: () => null,
   codeAppData: Immutable.List<CodeType>(),
@@ -70,8 +77,8 @@ export const AppDataProvider: FC<PropsWithChildren<Prop>> = ({
     settings[GeneralSettingsKeys.ReviewMode] === REVIEW_MODE_INDIVIDUAL
       ? VISIBILITY_MEMBER
       : VISIBILITY_ITEM;
-  const { mutate: postAppData } = useMutation<
-    unknown,
+  const { mutate: postAppData, mutateAsync: postAppDataAsync } = useMutation<
+    AppData,
     unknown,
     PostAppDataType
   >(MUTATION_KEYS.POST_APP_DATA);
@@ -90,8 +97,8 @@ export const AppDataProvider: FC<PropsWithChildren<Prop>> = ({
     const filteredAppData = currentUserId
       ? appData.data?.filter((res) => res.creator === currentUserId)
       : appData.data;
-    const comments = filteredAppData?.filter(
-      (res) => res.type === APP_DATA_TYPES.COMMENT,
+    const comments = filteredAppData?.filter((res) =>
+      COMMENT_APP_DATA_TYPES.includes(res.type),
     ) as List<CommentType>;
     const codeAppData = filteredAppData?.filter(
       (res) => res.type === APP_DATA_TYPES.CODE,
@@ -99,10 +106,12 @@ export const AppDataProvider: FC<PropsWithChildren<Prop>> = ({
     const liveCode = filteredAppData?.filter(
       (res) => res.type === APP_DATA_TYPES.LIVE_CODE,
     ) as List<LiveCodeType>;
+
     return {
-      postAppData: (payload: PostAppDataType) => {
-        postAppData({ visibility: visibilityVariant, ...payload });
-      },
+      postAppData: (payload: PostAppDataType) =>
+        postAppData({ visibility: visibilityVariant, ...payload }),
+      postAppDataAsync: (payload: PostAppDataType): Promise<AppData> =>
+        postAppDataAsync({ visibility: visibilityVariant, ...payload }),
       patchAppData,
       deleteAppData,
       codeAppData,
@@ -115,6 +124,7 @@ export const AppDataProvider: FC<PropsWithChildren<Prop>> = ({
     deleteAppData,
     patchAppData,
     postAppData,
+    postAppDataAsync,
     visibilityVariant,
   ]);
 

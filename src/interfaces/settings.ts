@@ -46,6 +46,13 @@ export enum DiffViewSettingsKeys {
   LinesOffset = 'linesOffset',
 }
 
+// Chatbot Prompt Setting keys
+export enum ChatbotPromptSettingsKeys {
+  InitialPrompt = 'initialPrompt',
+  ChatbotPrompt = 'chatbotPrompt',
+  LineNumber = 'lineNumber',
+}
+
 // type of general settings
 export type GeneralSettings = {
   [GeneralSettingsKeys.ShowHeader]: boolean;
@@ -100,6 +107,15 @@ export type DiffViewSettings = {
   [DiffViewSettingsKeys.OldCode]: string;
   [DiffViewSettingsKeys.NewCode]: string;
   [DiffViewSettingsKeys.LinesOffset]: number;
+
+  // used to allow access using settings[settingKey] syntax
+  [key: string]: unknown;
+};
+
+export type ChatbotPromptSettings = {
+  [ChatbotPromptSettingsKeys.InitialPrompt]: string;
+  [ChatbotPromptSettingsKeys.ChatbotPrompt]: string;
+  [ChatbotPromptSettingsKeys.LineNumber]: number;
 
   // used to allow access using settings[settingKey] syntax
   [key: string]: unknown;

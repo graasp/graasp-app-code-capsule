@@ -62,6 +62,10 @@ export const CODE_REVIEW_LINE_CYPRESS = 'code_review_line';
 export const CODE_REVIEW_LINE_CONTENT_CYPRESS = 'code_review_line_content';
 export const buildAddButtonDataCy = (index: number): string =>
   `${CODE_REVIEW_ADD_BUTTON_CYPRESS}-${index}`;
+
+export const CODE_REVIEW_CHATBOT_PROMPT_COMMENT_CY =
+  'code_review_chatbot_prompt_comment';
+
 export const COMMENT_EDITOR_CYPRESS = 'comment_editor';
 export const COMMENT_EDITOR_CANCEL_BUTTON_CYPRESS =
   'comment_editor_cancel_button';
@@ -84,6 +88,10 @@ export const TOOLBAR_EDIT_CODE_BUTTON_CYPRESS = 'toolbar_edit_code_button';
 export const TOOLBAR_VISIBILITY_BUTTON_CYPRESS = 'toolbar_visibility_button';
 export const TOOLBAR_RUN_CODE_BUTTON_CYPRESS = 'toolbar_run_code_button';
 export const COMMENT_CONTAINER_CYPRESS = 'comment_container';
+export const buildCommentContainerDataCy = (id: string): string =>
+  `${COMMENT_CONTAINER_CYPRESS}-${id}`;
+export const COMMENT_RESPONSE_BOX_CY = 'comment-response-box';
+
 export const COMMENT_THREAD_CONTAINER_CYPRESS = 'comment_thread_container';
 export const ORPHAN_BUTTON_CYPRESS = 'orphan_button';
 export const CODE_EXECUTION_CONTAINER_CYPRESS = 'code_execution_container';

@@ -23,6 +23,7 @@ import { DEFAULT_GENERAL_SETTINGS } from '../../config/settings';
 import { CommentType } from '../../interfaces/comment';
 import { GeneralSettingsKeys } from '../../interfaces/settings';
 import { buildCodeRowKey } from '../../utils/utils';
+import ChatbotPrompts from '../chatbot/ChatbotPrompts';
 import CommentEditor from '../common/CommentEditor';
 import CommentThread from '../common/CommentThread';
 import { useAppDataContext } from '../context/AppDataContext';
@@ -209,6 +210,7 @@ const CodeReviewBody: FC<Props> = () => {
                   }}
                 />
               )}
+              <ChatbotPrompts line={i} />
               <CommentThread hiddenState={lineHiddenState[i]}>
                 {groupedComments.get(i)?.toList() as List<CommentType>}
               </CommentThread>

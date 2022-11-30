@@ -15,7 +15,7 @@ export interface CommentAppData {
       end: number;
     };
   };
-  type: APP_DATA_TYPES.COMMENT;
+  type: APP_DATA_TYPES.COMMENT | APP_DATA_TYPES.BOT_COMMENT;
   visibility?: VisibilityVariants;
 }
 export type CommentType = AppData & CommentAppData;
