@@ -22,7 +22,7 @@ import TableView from './TableView';
 import SettingsView from './settings/SettingsView';
 
 const VersionIndicator = styled(Typography)(({ theme }) => ({
-  position: 'absolute',
+  position: 'fixed',
   bottom: theme.spacing(0),
   left: theme.spacing(1),
 }));
