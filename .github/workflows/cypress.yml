@@ -1,5 +1,10 @@
 name: cypress tests
-on: [push]
+
+on:
+  push:
+    branches-ignore:
+      - 'release-please-**'
+
 jobs:
   cypress-run:
     runs-on: ubuntu-latest
