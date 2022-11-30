@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.3.0](https://github.com/graasp/graasp-app-code-capsule/compare/v1.2.0...v1.3.0) (2022-11-30)
+
+
+### Features
+
+* remove old resizing mechanism ([#49](https://github.com/graasp/graasp-app-code-capsule/issues/49)) ([4da22be](https://github.com/graasp/graasp-app-code-capsule/commit/4da22be675a196d0db3bd8d5e9d14a7cf65abfdd))
+
+
+### Bug Fixes
+
+* ignore cypress tests workflow on changelog updates ([acec4b3](https://github.com/graasp/graasp-app-code-capsule/commit/acec4b31fb6da7f9fa86ee2ab101dcff0bb7c568))
+
 ## [1.2.0](https://github.com/graasp/graasp-app-code-capsule/compare/v1.1.1...v1.2.0) (2022-11-18)
 
 
