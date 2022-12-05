@@ -1,3 +1,5 @@
+import { AppSetting } from '@graasp/apps-query-client';
+
 import { AppMode, DataFile } from '../config/appSettingsTypes';
 
 // general settings keys
@@ -119,4 +121,7 @@ export type ChatbotPromptSettings = {
 
   // used to allow access using settings[settingKey] syntax
   [key: string]: unknown;
+};
+export type ChatbotPromptAppSettings = AppSetting & {
+  data: ChatbotPromptSettings;
 };

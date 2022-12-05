@@ -88,9 +88,14 @@ export const TOOLBAR_EDIT_CODE_BUTTON_CYPRESS = 'toolbar_edit_code_button';
 export const TOOLBAR_VISIBILITY_BUTTON_CYPRESS = 'toolbar_visibility_button';
 export const TOOLBAR_RUN_CODE_BUTTON_CYPRESS = 'toolbar_run_code_button';
 export const COMMENT_CONTAINER_CYPRESS = 'comment_container';
+export const CHATBOT_PROMPT_CONTAINER_CY = 'chatbot_prompt_container';
+export const COMMENT_RESPONSE_BOX_CY = 'comment-response-box';
 export const buildCommentContainerDataCy = (id: string): string =>
   `${COMMENT_CONTAINER_CYPRESS}-${id}`;
-export const COMMENT_RESPONSE_BOX_CY = 'comment-response-box';
+export const buildChatbotPromptContainerDataCy = (id: string): string =>
+  `${CHATBOT_PROMPT_CONTAINER_CY}-${id}`;
+export const buildCommentResponseBoxDataCy = (id: string): string =>
+  `${COMMENT_RESPONSE_BOX_CY}-${id}`;
 
 export const COMMENT_THREAD_CONTAINER_CYPRESS = 'comment_thread_container';
 export const ORPHAN_BUTTON_CYPRESS = 'orphan_button';
