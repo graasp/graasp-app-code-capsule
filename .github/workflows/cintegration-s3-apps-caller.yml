@@ -20,11 +20,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Code Capsule App
-        uses: graasp/graasp-deploy/.github/actions/deploy-dev-s3-apps@9c75188b07bc94399c9a9bad0fdf6638dc2eea55
+        uses: graasp/graasp-deploy/.github/actions/deploy-dev-s3-apps@0b772b8fad0d3d1c3970a6f449d3304f1afd0dfe
         with:
           build-folder: 'build'
           version: 'latest'
-        secrets:
+        inputs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID_DEV }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_DEV }}
           aws-region: ${{ secrets.APPS_AWS_REGION }}
