@@ -75,7 +75,7 @@ describe('Builder as Admin', () => {
       cy.get(buildDataCy(TAB_TABLE_VIEW_CYPRESS)).should('be.visible').click();
     });
 
-    it.only('should download AppActions', () => {
+    it('should download AppActions', () => {
       // check that the table view pane is visible
       cy.get(buildDataCy(DOWNLOAD_ACTIONS_BUTTON_CY))
         .should('be.visible')

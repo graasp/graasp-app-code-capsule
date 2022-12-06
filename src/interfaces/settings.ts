@@ -1,3 +1,5 @@
+import { AppSetting } from '@graasp/apps-query-client';
+
 import { AppMode, DataFile } from '../config/appSettingsTypes';
 
 // general settings keys
@@ -12,6 +14,7 @@ export enum GeneralSettingsKeys {
   AllowReplies = 'allowReplies',
   AllowCommentsReporting = 'allowCommentReporting',
   ReviewMode = 'reviewMode',
+  MaxCommentLength = 'maxCommentLength',
 }
 
 // Code Execution settings keys
@@ -46,6 +49,13 @@ export enum DiffViewSettingsKeys {
   LinesOffset = 'linesOffset',
 }
 
+// Chatbot Prompt Setting keys
+export enum ChatbotPromptSettingsKeys {
+  InitialPrompt = 'initialPrompt',
+  ChatbotPrompt = 'chatbotPrompt',
+  LineNumber = 'lineNumber',
+}
+
 // type of general settings
 export type GeneralSettings = {
   [GeneralSettingsKeys.ShowHeader]: boolean;
@@ -58,6 +68,7 @@ export type GeneralSettings = {
   [GeneralSettingsKeys.AllowReplies]: boolean;
   [GeneralSettingsKeys.AllowCommentsReporting]: boolean;
   [GeneralSettingsKeys.ReviewMode]: string;
+  [GeneralSettingsKeys.MaxCommentLength]: number;
 
   // used to allow access using settings[settingKey] syntax
   [key: string]: unknown;
@@ -103,4 +114,16 @@ export type DiffViewSettings = {
 
   // used to allow access using settings[settingKey] syntax
   [key: string]: unknown;
+};
+
+export type ChatbotPromptSettings = {
+  [ChatbotPromptSettingsKeys.InitialPrompt]: string;
+  [ChatbotPromptSettingsKeys.ChatbotPrompt]: string;
+  [ChatbotPromptSettingsKeys.LineNumber]: number;
+
+  // used to allow access using settings[settingKey] syntax
+  [key: string]: unknown;
+};
+export type ChatbotPromptAppSettings = AppSetting & {
+  data: ChatbotPromptSettings;
 };

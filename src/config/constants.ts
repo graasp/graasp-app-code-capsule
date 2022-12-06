@@ -41,3 +41,13 @@ export const REVIEW_MODES = [
     value: REVIEW_MODE_COLLABORATIVE,
   },
 ] as const;
+
+export const { REACT_APP_OPEN_AI_API_URL: OPEN_AI_API_URL = 'invalidURL' } =
+  process.env;
+
+export const DEFAULT_BOT_USERNAME = 'OpenAI Bot';
+
+// maximum number of messages allowed in a chatbot thread
+export const MAX_CHATBOT_THREAD_LENGTH = 5 * 2;
+
+export const DEFAULT_CHATBOT_PROMPT_APP_DATA = { chatbotPromptSettingId: '' };

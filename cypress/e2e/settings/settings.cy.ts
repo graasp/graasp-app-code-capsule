@@ -8,22 +8,32 @@ import {
   ALLOW_COMMENTS_SWITCH_CYPRESS,
   ALLOW_REPLIES_SWITCH_CYPRESS,
   APP_MODE_EXECUTE_BUTTON_CY,
+  APP_MODE_REVIEW_BUTTON_CY,
   CODE_EDITOR_CANCEL_BUTTON_CYPRESS,
   CODE_EDITOR_COMMIT_DESCRIPTION_CYPRESS,
   CODE_EDITOR_COMMIT_MESSAGE_CYPRESS,
   CODE_EDITOR_LANGUAGE_SELECT_CYPRESS,
   CODE_EDITOR_SUBMIT_BUTTON_CYPRESS,
   CODE_SETTINGS_FAB_CYPRESS,
+  CUSTOM_DIALOG_CONTENT_CY,
   DISPLAY_SETTINGS_FAB_CYPRESS,
   REVIEW_MODES_SELECT_CYPRESS,
   SETTINGS_CODE_DIALOG_WINDOW_CYPRESS,
   SETTINGS_DIALOG_CANCEL_BUTTON_CYPRESS,
   SETTINGS_DIALOG_SAVE_BUTTON_CYPRESS,
   SETTINGS_DISPLAY_DIALOG_WINDOW_CYPRESS,
+  SETTING_ADD_CHATBOT_PROMPT_CY,
+  SETTING_CHATBOT_PROMPT_CODE_EDITOR_CY,
+  SETTING_CHATBOT_PROMPT_LINE_NUMBER_CY,
   SETTING_FOOTER_CODE_EDITOR_CY,
   SETTING_HEADER_CODE_EDITOR_CY,
+  SETTING_INITIAL_PROMPT_CODE_EDITOR_CY,
+  SETTING_MAIN_CODE_EDITOR_CY,
+  SETTING_MAX_COMMENT_LENGTH,
+  SETTING_NEW_CHATBOT_PROMPT_KEY,
   TAB_SETTINGS_VIEW_CYPRESS,
   buildDataCy,
+  settingKeyDataCy,
 } from '../../../src/config/selectors';
 import {
   DEFAULT_PROGRAMMING_LANGUAGE_SETTING,
@@ -42,7 +52,7 @@ describe('Settings', () => {
     cy.visit('/');
   });
 
-  it.only('Change Settings in tab', () => {
+  it('Change code execution settings in tab', () => {
     // open the settings tab
     cy.openTab(TAB_SETTINGS_VIEW_CYPRESS);
 
@@ -66,7 +76,46 @@ describe('Settings', () => {
     );
   });
 
-  it('Open Code settings', () => {
+  it('Change code review settings in tab', () => {
+    // open the settings tab
+    cy.openTab(TAB_SETTINGS_VIEW_CYPRESS);
+
+    // choose a mode
+    cy.get(buildDataCy(APP_MODE_REVIEW_BUTTON_CY)).should('be.visible').click();
+
+    cy.get(`#${SETTING_MAIN_CODE_EDITOR_CY}`).should('be.visible');
+    // set the main code to review
+    cy.typeInEditor(
+      `print('hello world')\n# this is the end of the main code`,
+      SETTING_MAIN_CODE_EDITOR_CY,
+    );
+
+    // add a chatbot prompt
+    cy.get(buildDataCy(SETTING_ADD_CHATBOT_PROMPT_CY)).click();
+
+    cy.get(buildDataCy(CUSTOM_DIALOG_CONTENT_CY)).should('be.visible');
+
+    cy.typeInEditor(
+      'Initial prompt hello chatbot',
+      SETTING_INITIAL_PROMPT_CODE_EDITOR_CY,
+    );
+
+    cy.typeInEditor(
+      'Hello i  am a friendly chatbot, ask me anything',
+      SETTING_CHATBOT_PROMPT_CODE_EDITOR_CY,
+    );
+    cy.get(buildDataCy(SETTING_CHATBOT_PROMPT_LINE_NUMBER_CY)).type(
+      '{selectAll}{del}4',
+    );
+
+    cy.get(
+      `#${settingKeyDataCy(SETTING_NEW_CHATBOT_PROMPT_KEY)} > ${buildDataCy(
+        SETTINGS_DIALOG_SAVE_BUTTON_CYPRESS,
+      )}`,
+    ).click();
+  });
+
+  it.skip('Open Code settings', () => {
     // click on the code settings FAB
     cy.get(buildDataCy(CODE_SETTINGS_FAB_CYPRESS))
       .should('be.visible')
@@ -157,6 +206,9 @@ describe('Settings', () => {
       .should('be.visible')
       .click()
       .click();
+
+    // change the max length of comments
+    cy.get(`#${SETTING_MAX_COMMENT_LENGTH}`).should('be.visible').type('340');
 
     cy.get('@saveButton').click();
     cy.get(buildDataCy(SETTINGS_DISPLAY_DIALOG_WINDOW_CYPRESS)).should(

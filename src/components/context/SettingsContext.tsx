@@ -6,6 +6,7 @@ import { AppSetting } from '@graasp/apps-query-client';
 
 import {
   APP_MODE_SETTINGS_NAME,
+  CHATBOT_PROMPT_SETTINGS_NAME,
   CODE_EXECUTION_SETTINGS_NAME,
   DATA_FILE_LIST_SETTINGS_NAME,
   DATA_FILE_SETTINGS_NAME,
@@ -24,6 +25,7 @@ import {
 } from '../../config/settings';
 import {
   AppModeSettings,
+  ChatbotPromptAppSettings,
   CodeExecutionSettings,
   DataFileListSettings,
   DiffViewSettings,
@@ -69,6 +71,7 @@ type AllSettingsDataType = AllSettingsType[keyof AllSettingsType];
 
 export type SettingsContextType = AllSettingsType & {
   dataFileSettings: List<AppSetting>;
+  chatbotPrompts: List<ChatbotPromptAppSettings>;
   saveSettings: (
     name: AllSettingsNameType,
     newValue: AllSettingsDataType,
@@ -78,6 +81,7 @@ export type SettingsContextType = AllSettingsType & {
 const defaultContextValue = {
   ...defaultSettingsValues,
   dataFileSettings: List<AppSetting>(),
+  chatbotPrompts: List<ChatbotPromptAppSettings>(),
   saveSettings: () => null,
 };
 
@@ -136,14 +140,22 @@ export const SettingsProvider: FC<Prop> = ({ children }) => {
         },
         {},
       );
+
       const dataFileSettings =
         appSettingsList.filter((s) =>
           s.name.startsWith(DATA_FILE_SETTINGS_NAME),
         ) || List<AppSetting>();
 
+      const chatbotPrompts =
+        (appSettingsList.filter(
+          (s) => s.name === CHATBOT_PROMPT_SETTINGS_NAME,
+        ) as List<ChatbotPromptAppSettings>) ||
+        List<ChatbotPromptAppSettings>();
+
       return {
         ...allSettings,
         dataFileSettings,
+        chatbotPrompts,
         saveSettings,
       };
     }

@@ -5,6 +5,7 @@ import { AppSetting } from '@graasp/apps-query-client';
 import {
   APP_MODE_SETTINGS_NAME,
   AppMode,
+  CHATBOT_PROMPT_SETTINGS_NAME,
   CODE_EXECUTION_SETTINGS_NAME,
   DIFF_VIEW_SETTINGS_NAME,
   GENERAL_SETTINGS_NAME,
@@ -13,6 +14,7 @@ import {
 import { PYTHON } from '../../src/config/constants';
 import {
   DEFAULT_APP_MODE_SETTINGS,
+  DEFAULT_CHATBOT_PROMPT_SETTINGS,
   DEFAULT_CODE_EXECUTION_SETTINGS,
   DEFAULT_DIFF_VIEW_SETTINGS,
   DEFAULT_GENERAL_SETTINGS,
@@ -21,6 +23,7 @@ import {
 import { CodeVersionType } from '../../src/interfaces/codeVersions';
 import {
   AppModeSettings,
+  ChatbotPromptSettings,
   CodeExecutionSettings,
   DiffViewSettings,
 } from '../../src/interfaces/settings';
@@ -149,6 +152,21 @@ export const MOCK_DIFF_VIEW_SETTINGS: AppSetting & { data: DiffViewSettings } =
       newCode: MOCK_DIFF_NEW_CODE,
     },
   };
+
+export const MOCK_CHATBOT_PROMPT_SETTINGS_INPUT: AppSetting & {
+  data: ChatbotPromptSettings;
+} = {
+  ...EMPTY_SETTING,
+  id: v4(),
+  name: CHATBOT_PROMPT_SETTINGS_NAME,
+  data: {
+    ...DEFAULT_CHATBOT_PROMPT_SETTINGS,
+    initialPrompt:
+      'My initial prompt is here - I am a bot that can have an initial prompt',
+    chatbotPrompt: 'Biip boop hello i am a chatbot',
+    lineNumber: 1,
+  },
+};
 
 export const MOCK_EXECUTABLE_PYTHON_CODE_SETTINGS: AppSetting & {
   data: CodeVersionType;

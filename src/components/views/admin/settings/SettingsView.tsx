@@ -24,7 +24,6 @@ import {
   AppMode,
   CODE_EXECUTION_SETTINGS_NAME,
   DIFF_VIEW_SETTINGS_NAME,
-  INSTRUCTOR_CODE_VERSION_SETTINGS_NAME,
 } from '../../../../config/appSettingsTypes';
 import {
   APP_MODE_COLLABORATE_BUTTON_CY,
@@ -33,31 +32,28 @@ import {
   APP_MODE_REVIEW_BUTTON_CY,
   EXECUTION_MODE_SETTINGS_KEY,
   EXPLAIN_MODE_SETTINGS_KEY,
-  REVIEW_MODE_SETTINGS_KEY,
   SETTING_APP_MODE_SELECT_FORM_LABEL_CY,
   SETTING_APP_MODE_SELECT_NAME_CY,
   SETTING_DIFF_VIEW_NEW_CODE_CY,
   SETTING_DIFF_VIEW_OLD_CODE_CY,
   SETTING_FOOTER_CODE_EDITOR_CY,
   SETTING_HEADER_CODE_EDITOR_CY,
-  SETTING_MAIN_CODE_EDITOR_CY,
 } from '../../../../config/selectors';
 import {
   DEFAULT_APP_MODE_SETTINGS,
   DEFAULT_CODE_EXECUTION_SETTINGS,
   DEFAULT_DIFF_VIEW_SETTINGS,
-  DEFAULT_INSTRUCTOR_CODE_VERSION_SETTINGS,
 } from '../../../../config/settings';
 import {
   AppModeSettingsKeys,
   CodeExecutionSettingsKeys,
   DiffViewSettingsKeys,
-  InstructorCodeSettingsKeys,
 } from '../../../../interfaces/settings';
 import SubmitButtons from '../../../common/settings/SubmitButtons';
 import { useSettings } from '../../../context/SettingsContext';
 import DiffView from '../../../diffView/DiffView';
 import CodeEditor from '../../../repl/CodeEditor';
+import CodeReviewSettings from './CodeReviewSettings';
 import DataFileUpload from './DataFileUpload';
 import PreLoadedLibrariesInput from './PreLoadedLibrariesInput';
 
@@ -67,18 +63,14 @@ const SettingsView: FC = () => {
     [CODE_EXECUTION_SETTINGS_NAME]:
       codeExecSettings = DEFAULT_CODE_EXECUTION_SETTINGS,
     [APP_MODE_SETTINGS_NAME]: appModeSetting = DEFAULT_APP_MODE_SETTINGS,
-    [INSTRUCTOR_CODE_VERSION_SETTINGS_NAME]:
-      instructorCodeVersionSetting = DEFAULT_INSTRUCTOR_CODE_VERSION_SETTINGS,
+
     [DIFF_VIEW_SETTINGS_NAME]: diffViewSetting = DEFAULT_DIFF_VIEW_SETTINGS,
     saveSettings,
   } = useSettings();
 
   const [localCodeExecSettings, setLocalCodeExecSettings] =
     useState(codeExecSettings);
-  const [
-    instructorCodeVersionLocalSetting,
-    setInstructorCodeVersionLocalSetting,
-  ] = useState(instructorCodeVersionSetting);
+
   const [diffViewLocalSetting, setDiffViewLocalSetting] =
     useState(diffViewSetting);
   const [appModeLocalSetting, setAppModeLocalSetting] =
@@ -93,12 +85,6 @@ const SettingsView: FC = () => {
     [codeExecSettings],
   );
 
-  // update instructorCodeVersionLocalSetting value when setting changes
-  useEffect(
-    () => setInstructorCodeVersionLocalSetting(instructorCodeVersionSetting),
-    [instructorCodeVersionSetting],
-  );
-
   // update diffViewLocalSetting value when setting changes
   useEffect(() => setDiffViewLocalSetting(diffViewSetting), [diffViewSetting]);
 
@@ -109,10 +95,7 @@ const SettingsView: FC = () => {
     localCodeExecSettings,
     codeExecSettings,
   );
-  const unsavedInstructorCodeVersionChanges = !isEqual(
-    instructorCodeVersionLocalSetting,
-    instructorCodeVersionSetting,
-  );
+
   const unsavedDiffViewChanges = !isEqual(
     diffViewLocalSetting,
     diffViewSetting,
@@ -234,34 +217,7 @@ const SettingsView: FC = () => {
         </Stack>
       )}
       {appModeLocalSetting[AppModeSettingsKeys.Mode] === AppMode.Review && (
-        <Stack spacing={1}>
-          <FormLabel>{t('Code to review')}</FormLabel>
-          <CodeEditor
-            id={SETTING_MAIN_CODE_EDITOR_CY}
-            value={
-              instructorCodeVersionLocalSetting[InstructorCodeSettingsKeys.Code]
-            }
-            setValue={(newValue) =>
-              setInstructorCodeVersionLocalSetting((prevSetting) => ({
-                ...prevSetting,
-                [InstructorCodeSettingsKeys.Code]: newValue,
-              }))
-            }
-          />
-          <SubmitButtons
-            onCancel={() =>
-              setInstructorCodeVersionLocalSetting(instructorCodeVersionSetting)
-            }
-            onSave={() =>
-              saveSettings(
-                INSTRUCTOR_CODE_VERSION_SETTINGS_NAME,
-                instructorCodeVersionLocalSetting,
-              )
-            }
-            settingKey={REVIEW_MODE_SETTINGS_KEY}
-            unsavedChanges={unsavedInstructorCodeVersionChanges}
-          />
-        </Stack>
+        <CodeReviewSettings />
       )}
       {appModeLocalSetting[AppModeSettingsKeys.Mode] === AppMode.Explain && (
         <Stack spacing={1}>

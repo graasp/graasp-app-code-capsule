@@ -28,6 +28,7 @@ module.exports = (on, config) => {
       REACT_APP_GRAASP_APP_ID: process.env.REACT_APP_GRAASP_APP_ID,
       REACT_APP_VERSION: process.env.REACT_APP_VERSION,
       REACT_APP_GOOGLE_ANALYTICS_ID: process.env.REACT_APP_GOOGLE_ANALYTICS_ID,
+      REACT_APP_OPEN_AI_API_URL: process.env.REACT_APP_OPEN_AI_API_URL,
     },
   };
   require('@cypress/code-coverage/task')(on, newConfig);

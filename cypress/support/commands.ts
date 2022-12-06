@@ -10,6 +10,7 @@ import { MOCK_SERVER_API_HOST } from '../fixtures/appData';
 import { REPL_TIMEOUT, SLOW_TYPING_IN_EDITOR } from '../fixtures/constants';
 import { CURRENT_MEMBER, MEMBERS } from '../fixtures/members';
 import { MOCK_SERVER_ITEM } from '../fixtures/mockItem';
+import { mockOpenAIAPI } from './mockServer';
 
 // ***********************************************
 // This example commands.js shows you how to
@@ -58,6 +59,9 @@ Cypress.Commands.add(
         ...appContext,
       };
     });
+
+    // setup mocks
+    mockOpenAIAPI();
   },
 );
 

@@ -25,6 +25,7 @@ export const TABLE_VIEW_REVIEW_DIALOG_CLOSE_BUTTON_CYPRESS =
   'table_view_review_dialog_close_button';
 
 export const CUSTOM_DIALOG_TITLE_CYPRESS = 'custom_dialog_title';
+export const CUSTOM_DIALOG_ACTIONS_CYPRESS = 'custom_dialog_actions';
 export const CUSTOM_DIALOG_CONTENT_CY = 'custom_dialog_content';
 
 export const NUMBER_OF_COMMENTS_CYPRESS = 'number_of_comments';
@@ -62,6 +63,10 @@ export const CODE_REVIEW_LINE_CYPRESS = 'code_review_line';
 export const CODE_REVIEW_LINE_CONTENT_CYPRESS = 'code_review_line_content';
 export const buildAddButtonDataCy = (index: number): string =>
   `${CODE_REVIEW_ADD_BUTTON_CYPRESS}-${index}`;
+
+export const CODE_REVIEW_CHATBOT_PROMPT_COMMENT_CY =
+  'code_review_chatbot_prompt_comment';
+
 export const COMMENT_EDITOR_CYPRESS = 'comment_editor';
 export const COMMENT_EDITOR_CANCEL_BUTTON_CYPRESS =
   'comment_editor_cancel_button';
@@ -76,6 +81,8 @@ export const COMMENT_EDITOR_QUOTE_BUTTON_CYPRESS =
 export const COMMENT_EDITOR_LINE_INFO_TEXT_CYPRESS =
   'comment_editor_line_info_text';
 export const COMMENT_EDITOR_TEXTAREA_CYPRESS = 'comment_editor_textarea';
+export const COMMENT_EDITOR_TEXTAREA_HELPER_TEXT_CY =
+  'comment_editor_textarea_helper_text';
 export const CODE_REVIEW_TOOLBAR_CYPRESS = 'comment_review_toolbar';
 export const TOOLBAR_USER_SELECT_CYPRESS = 'toolbar_user_select';
 export const TOOLBAR_VERSION_SELECT_CYPRESS = 'toolbar_version_select';
@@ -84,6 +91,15 @@ export const TOOLBAR_EDIT_CODE_BUTTON_CYPRESS = 'toolbar_edit_code_button';
 export const TOOLBAR_VISIBILITY_BUTTON_CYPRESS = 'toolbar_visibility_button';
 export const TOOLBAR_RUN_CODE_BUTTON_CYPRESS = 'toolbar_run_code_button';
 export const COMMENT_CONTAINER_CYPRESS = 'comment_container';
+export const CHATBOT_PROMPT_CONTAINER_CY = 'chatbot_prompt_container';
+export const COMMENT_RESPONSE_BOX_CY = 'comment-response-box';
+export const buildCommentContainerDataCy = (id: string): string =>
+  `${COMMENT_CONTAINER_CYPRESS}-${id}`;
+export const buildChatbotPromptContainerDataCy = (id: string): string =>
+  `${CHATBOT_PROMPT_CONTAINER_CY}-${id}`;
+export const buildCommentResponseBoxDataCy = (id: string): string =>
+  `${COMMENT_RESPONSE_BOX_CY}-${id}`;
+
 export const COMMENT_THREAD_CONTAINER_CYPRESS = 'comment_thread_container';
 export const ORPHAN_BUTTON_CYPRESS = 'orphan_button';
 export const CODE_EXECUTION_CONTAINER_CYPRESS = 'code_execution_container';
@@ -116,6 +132,14 @@ export const SETTING_APP_MODE_SELECT_NAME_CY = 'setting_app_mode_select_label';
 export const SETTING_MAIN_CODE_EDITOR_CY = 'setting_main_code_editor';
 export const SETTING_HEADER_CODE_EDITOR_CY = 'setting_header_code_editor';
 export const SETTING_FOOTER_CODE_EDITOR_CY = 'setting_footer_code_editor';
+export const SETTING_CHATBOT_PROMPT_CODE_EDITOR_CY =
+  'setting_chatbot_prompt_code_editor';
+export const SETTING_INITIAL_PROMPT_CODE_EDITOR_CY =
+  'setting_initial_prompt_code_editor';
+export const SETTING_CHATBOT_PROMPT_LINE_NUMBER_CY =
+  'setting_chatbot_prompt_line_number';
+export const SETTING_MAX_COMMENT_LENGTH = 'setting_max_comment_length';
+export const SETTING_ADD_CHATBOT_PROMPT_CY = 'setting_add_chatbot_prompt';
 
 export const REPL_RUN_CODE_BUTTON_CY = 'repl_run_code_button';
 export const REPL_OUTPUT_CONSOLE_CY = 'repl_output_console_area';
@@ -149,3 +173,4 @@ export const settingKeyDataCy = (key: string): string => `setting-${key}`;
 export const EXECUTION_MODE_SETTINGS_KEY = 'EXECUTION_MODE_SETTINGS_KEY';
 export const REVIEW_MODE_SETTINGS_KEY = 'REVIEW_MODE_SETTINGS_KEY';
 export const EXPLAIN_MODE_SETTINGS_KEY = 'EXPLAIN_MODE_SETTINGS_KEY';
+export const SETTING_NEW_CHATBOT_PROMPT_KEY = 'NEW_CHATBOT_PROMPT_KEY';

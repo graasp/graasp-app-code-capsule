@@ -14,8 +14,9 @@ export interface CommentAppData {
       start: number;
       end: number;
     };
+    chatbotPromptSettingId?: string;
   };
-  type: APP_DATA_TYPES.COMMENT;
+  type: APP_DATA_TYPES.COMMENT | APP_DATA_TYPES.BOT_COMMENT;
   visibility?: VisibilityVariants;
 }
 export type CommentType = AppData & CommentAppData;

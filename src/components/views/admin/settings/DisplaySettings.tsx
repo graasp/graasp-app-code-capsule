@@ -1,13 +1,14 @@
 import { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { Divider, Stack, Typography } from '@mui/material';
+import { Divider, Stack, TextField, Typography } from '@mui/material';
 
 import { REVIEW_MODES } from '../../../../config/constants';
 import {
   ALLOW_COMMENTS_SWITCH_CYPRESS,
   ALLOW_REPLIES_SWITCH_CYPRESS,
   REVIEW_MODES_SELECT_CYPRESS,
+  SETTING_MAX_COMMENT_LENGTH,
   SHOW_EDIT_BUTTON_SWITCH_CYPRESS,
   SHOW_HEADER_SWITCH_CYPRESS,
   SHOW_RUN_BUTTON_SWITCH_CYPRESS,
@@ -105,6 +106,10 @@ const DisplaySettings: FC<Props> = ({ localSettings, changeSetting }) => {
         }))}
         changeSetting={changeSetting}
       />
+
+      <Divider sx={{ mt: 1 }} />
+      <Typography variant="subtitle2">{t('Maximum comment length')}</Typography>
+      <TextField id={SETTING_MAX_COMMENT_LENGTH} type="number" />
     </Stack>
   );
 };

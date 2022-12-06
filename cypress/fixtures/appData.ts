@@ -6,6 +6,7 @@ import { APP_DATA_TYPES } from '../../src/config/appDataTypes';
 import { INSTRUCTOR_CODE_ID, PYTHON } from '../../src/config/constants';
 import { CodeType } from '../../src/interfaces/codeVersions';
 import { LiveCodeType } from '../../src/interfaces/liveCode';
+import { MOCK_CHATBOT_PROMPT_SETTINGS_INPUT } from './appSettings';
 import { CURRENT_MEMBER, MEMBERS } from './members';
 import { MOCK_SERVER_ITEM } from './mockItem';
 
@@ -225,5 +226,59 @@ export const MOCK_CODE_VERSIONS: CodeType[] = [
       commitMessage: 'Anna 2',
       commitDescription: 'Long Anna 2',
     },
+  },
+];
+
+export const DEFAULT_OPEN_AI_RESPONSE = 'Biip boop i am a bot';
+
+const threadIds = Array.from({ length: 5 }, () => uuid());
+
+export const CHATBOT_THREAD_MOCK_COMMENTS: AppData[] = [
+  // chatbot thread
+  {
+    id: threadIds[0],
+    data: {
+      line: 1,
+      codeId: INSTRUCTOR_CODE_ID,
+      content: MOCK_CHATBOT_PROMPT_SETTINGS_INPUT.data.chatbotPrompt,
+      parent: null,
+      chatbotPromptSettingId: MOCK_CHATBOT_PROMPT_SETTINGS_INPUT.id,
+    },
+    memberId: CURRENT_MEMBER.id,
+    creator: CURRENT_MEMBER.id,
+    itemId: MOCK_SERVER_ITEM.id,
+    createdAt: new Date('2020-01-01').toISOString(),
+    updatedAt: new Date('2020-01-01').toISOString(),
+    type: APP_DATA_TYPES.BOT_COMMENT,
+  },
+  {
+    id: threadIds[1],
+    data: {
+      line: 1,
+      codeId: INSTRUCTOR_CODE_ID,
+      content: 'User response to chatbot prompt',
+      parent: threadIds[0],
+    },
+    memberId: CURRENT_MEMBER.id,
+    creator: CURRENT_MEMBER.id,
+    itemId: MOCK_SERVER_ITEM.id,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+    type: APP_DATA_TYPES.COMMENT,
+  },
+  {
+    id: threadIds[2],
+    data: {
+      line: 1,
+      codeId: INSTRUCTOR_CODE_ID,
+      content: 'Bipbooop',
+      parent: threadIds[1],
+    },
+    memberId: CURRENT_MEMBER.id,
+    creator: CURRENT_MEMBER.id,
+    itemId: MOCK_SERVER_ITEM.id,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+    type: APP_DATA_TYPES.BOT_COMMENT,
   },
 ];

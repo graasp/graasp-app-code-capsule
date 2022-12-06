@@ -11,7 +11,7 @@ This repository hosts the code for a Graasp app that lets users write code revie
 
 Create a `.env.development` file with the following content:
 
-```
+```bash
 PORT=3005
 CYPRESS_BASE_URL=http://localhost:3005
 
@@ -20,13 +20,15 @@ REACT_APP_MOCK_API=true
 REACT_APP_API_HOST=http://localhost:3636
 
 REACT_APP_VERSION=$npm_package_version
+
+REACT_APP_OPEN_AI_API_URL=<url of the api>
 ```
 
 ## Running the tests (automatic run on commit with husky)
 
 Create a `.env.test` file with the following content:
 
-```
+```bash
 PORT=3333
 CYPRESS_BASE_URL=http://localhost:3333
 CYPRESS_INSTRUMENT_PRODUCTION=true
@@ -34,6 +36,8 @@ CYPRESS_INSTRUMENT_PRODUCTION=true
 REACT_APP_GRAASP_APP_ID=1234-1234
 REACT_APP_MOCK_API=true
 REACT_APP_API_HOST=http://localhost:3636
+
+REACT_APP_OPEN_AI_API_URL=<url of the api>
 
 BROWSER=none
 ```

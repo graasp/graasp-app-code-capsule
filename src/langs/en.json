@@ -133,6 +133,16 @@
     "Stop Execution": "Stop Execution",
     "Clear outputs and figures": "Clear Outputs and Figures",
     "Run Code": "Run Code",
-    "Save Code": "Save Code"
+    "Save Code": "Save Code",
+    "just now": "just now",
+    "Maximum comment length": "Maximum comment length",
+    "COMMENT_TEXT_TOO_LONG": "The comment text can not be longer than {{max_length}} characters",
+    "Add new Chatbot Prompt": "Add new Chatbot Prompt",
+    "Edit Chatbot Prompt": "Edit Chatbot Prompt",
+    "Chatbot Prompts": "Chatbot Prompts",
+    "No Chatbot Prompts": "No Chatbot Prompts",
+    "Initial Prompt": "Initial Prompt",
+    "Chatbot Prompt": "Chatbot Prompt",
+    "Line Number (first line is 0)": "Line Number (first line is 0)"
   }
 }

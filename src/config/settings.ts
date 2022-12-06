@@ -3,6 +3,8 @@ import { Context, PermissionLevel } from '@graasp/sdk';
 import {
   AppModeSettings,
   AppModeSettingsKeys,
+  ChatbotPromptSettings,
+  ChatbotPromptSettingsKeys,
   CodeExecutionSettings,
   CodeExecutionSettingsKeys,
   DataFileListSettings,
@@ -49,6 +51,7 @@ export const DEFAULT_PROGRAMMING_LANGUAGE_SETTING = PYTHON;
 export const DEFAULT_CODE_SETTING = '';
 export const DEFAULT_COMMIT_MESSAGE_SETTING = '';
 export const DEFAULT_COMMIT_DESCRIPTION_SETTING = '';
+export const DEFAULT_MAX_COMMENT_LENGTH_SETTING = 300;
 
 export const DEFAULT_REVIEW_MODE_SETTING = REVIEW_MODE_INDIVIDUAL;
 
@@ -66,6 +69,7 @@ export const DEFAULT_GENERAL_SETTINGS: GeneralSettings = {
   [GeneralSettingsKeys.AllowReplies]: DEFAULT_ALLOW_REPLIES_SETTING,
   [GeneralSettingsKeys.AllowCommentsReporting]: DEFAULT_ALLOW_COMMENT_REPORTING,
   [GeneralSettingsKeys.ReviewMode]: DEFAULT_REVIEW_MODE_SETTING,
+  [GeneralSettingsKeys.MaxCommentLength]: DEFAULT_MAX_COMMENT_LENGTH_SETTING,
 };
 
 // default Instructor Code Version settings
@@ -100,4 +104,11 @@ export const DEFAULT_DIFF_VIEW_SETTINGS: DiffViewSettings = {
   [DiffViewSettingsKeys.OldCode]: '',
   [DiffViewSettingsKeys.NewCode]: '',
   [DiffViewSettingsKeys.LinesOffset]: 0,
+};
+
+// chatbot prompt setting
+export const DEFAULT_CHATBOT_PROMPT_SETTINGS: ChatbotPromptSettings = {
+  [ChatbotPromptSettingsKeys.InitialPrompt]: '',
+  [ChatbotPromptSettingsKeys.ChatbotPrompt]: '',
+  [ChatbotPromptSettingsKeys.LineNumber]: 0,
 };

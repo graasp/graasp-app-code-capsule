@@ -10,6 +10,7 @@ import {
 } from '@mui/material';
 
 import {
+  CUSTOM_DIALOG_ACTIONS_CYPRESS,
   CUSTOM_DIALOG_CONTENT_CY,
   CUSTOM_DIALOG_TITLE_CYPRESS,
 } from '../../config/selectors';
@@ -80,7 +81,9 @@ const CustomDialog: FC<Props> = ({
     >
       {content}
     </DialogContent>
-    <DialogActions>{actions}</DialogActions>
+    <DialogActions data-cy={CUSTOM_DIALOG_ACTIONS_CYPRESS}>
+      {actions}
+    </DialogActions>
   </Dialog>
 );
 
