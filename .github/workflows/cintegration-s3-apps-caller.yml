@@ -16,7 +16,8 @@ env:
 
 # This workflow is made up of one job that calls the reusable workflow in graasp-deploy
 jobs:
-  graasp-deploy-s3-apps-workflow:
+  deploy-app-to-dev:
+    name: Deploy app to Development
     runs-on: ubuntu-latest
     steps:
       - name: Code Capsule App
