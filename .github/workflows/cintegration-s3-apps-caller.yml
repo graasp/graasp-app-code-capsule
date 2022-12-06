@@ -14,6 +14,8 @@ on:
 # This workflow is made up of one job that calls the reusable workflow in graasp-deploy
 jobs:
   graasp-deploy-s3-apps-workflow:
+    env:
+      REACT_APP_OPEN_AI_API_URL: ${{ secrets.REACT_APP_OPEN_AI_API_URL_DEV }}
     name: Code Capsule App
     uses: graasp/graasp-deploy/.github/workflows/cintegration-s3-apps.yml@v1
     with:
