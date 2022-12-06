@@ -20,6 +20,7 @@ import {
 } from '@mui/icons-material';
 import {
   Box,
+  FormHelperText,
   Stack,
   TextareaAutosize,
   Typography,
@@ -38,7 +39,9 @@ import {
   COMMENT_EDITOR_QUOTE_BUTTON_CYPRESS,
   COMMENT_EDITOR_SAVE_BUTTON_CYPRESS,
   COMMENT_EDITOR_TEXTAREA_CYPRESS,
+  COMMENT_EDITOR_TEXTAREA_HELPER_TEXT_CY,
 } from '../../config/selectors';
+import { DEFAULT_MAX_COMMENT_LENGTH_SETTING } from '../../config/settings';
 import { CommentType } from '../../interfaces/comment';
 import { NO_COMMENT_OPENED, useReviewContext } from '../context/ReviewContext';
 import ToolbarButton from '../layout/ToolbarButton';
@@ -67,12 +70,19 @@ type Props = {
   onCancel: () => void;
   onSend: (comment: string) => void;
   comment?: CommentType;
+  maxTextLength?: number;
 };
 
-const CommentEditor: FC<Props> = ({ onCancel, onSend, comment }) => {
+const CommentEditor: FC<Props> = ({
+  onCancel,
+  onSend,
+  comment,
+  maxTextLength = DEFAULT_MAX_COMMENT_LENGTH_SETTING,
+}) => {
   const { t } = useTranslation();
   const { multilineRange, currentCommentLine } = useReviewContext();
   const [text, setText] = useState(comment?.data.content ?? '');
+  const [textTooLong, setTextTooLong] = useState('');
   const { ref, commandController } = useTextAreaMarkdownEditor({
     commandMap: {
       bold: boldCommand,
@@ -91,6 +101,19 @@ const CommentEditor: FC<Props> = ({ onCancel, onSend, comment }) => {
       ref.current.focus();
     }
   });
+
+  const handleTextChange = ({
+    target: { value },
+  }: {
+    target: { value: string };
+  }): void => {
+    if (value.length < maxTextLength) {
+      setText(value);
+      setTextTooLong('');
+    } else {
+      setTextTooLong(t('COMMENT_TEXT_TOO_LONG', { max_length: maxTextLength }));
+    }
+  };
 
   return (
     <Box sx={{ p: 1 }} data-cy={COMMENT_EDITOR_CYPRESS}>
@@ -144,8 +167,11 @@ const CommentEditor: FC<Props> = ({ onCancel, onSend, comment }) => {
           maxRows={10}
           ref={ref}
           value={text}
-          onChange={(e) => setText(e.target.value)}
+          onChange={handleTextChange}
         />
+        <FormHelperText data-cy={COMMENT_EDITOR_TEXTAREA_HELPER_TEXT_CY} error>
+          {textTooLong || ' '}
+        </FormHelperText>
         <Stack
           data-cy={COMMENT_EDITOR_LINE_INFO_TEXT_CYPRESS}
           direction="row"

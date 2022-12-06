@@ -180,6 +180,7 @@ const CodeReviewBody: FC<Props> = () => {
               </Line>
               {currentCommentLine === i && (
                 <CommentEditor
+                  maxTextLength={settings[GeneralSettingsKeys.MaxCommentLength]}
                   onCancel={closeComment}
                   onSend={(text) => {
                     const data = {

@@ -8,6 +8,7 @@ import {
   ALLOW_COMMENTS_SWITCH_CYPRESS,
   ALLOW_REPLIES_SWITCH_CYPRESS,
   APP_MODE_EXECUTE_BUTTON_CY,
+  APP_MODE_REVIEW_BUTTON_CY,
   CODE_EDITOR_CANCEL_BUTTON_CYPRESS,
   CODE_EDITOR_COMMIT_DESCRIPTION_CYPRESS,
   CODE_EDITOR_COMMIT_MESSAGE_CYPRESS,
@@ -22,6 +23,8 @@ import {
   SETTINGS_DISPLAY_DIALOG_WINDOW_CYPRESS,
   SETTING_FOOTER_CODE_EDITOR_CY,
   SETTING_HEADER_CODE_EDITOR_CY,
+  SETTING_MAIN_CODE_EDITOR_CY,
+  SETTING_MAX_COMMENT_LENGTH,
   TAB_SETTINGS_VIEW_CYPRESS,
   buildDataCy,
 } from '../../../src/config/selectors';
@@ -42,7 +45,7 @@ describe('Settings', () => {
     cy.visit('/');
   });
 
-  it.only('Change Settings in tab', () => {
+  it('Change code execution settings in tab', () => {
     // open the settings tab
     cy.openTab(TAB_SETTINGS_VIEW_CYPRESS);
 
@@ -66,7 +69,22 @@ describe('Settings', () => {
     );
   });
 
-  it('Open Code settings', () => {
+  it('Change code review settings in tab', () => {
+    // open the settings tab
+    cy.openTab(TAB_SETTINGS_VIEW_CYPRESS);
+
+    // choose a mode
+    cy.get(buildDataCy(APP_MODE_REVIEW_BUTTON_CY)).should('be.visible').click();
+
+    cy.get(`#${SETTING_MAIN_CODE_EDITOR_CY}`).should('be.visible');
+    // set the main code to review
+    cy.typeInEditor(
+      `print('hello world')\n# this is the end of the main code`,
+      SETTING_MAIN_CODE_EDITOR_CY,
+    );
+  });
+
+  it.skip('Open Code settings', () => {
     // click on the code settings FAB
     cy.get(buildDataCy(CODE_SETTINGS_FAB_CYPRESS))
       .should('be.visible')
@@ -157,6 +175,9 @@ describe('Settings', () => {
       .should('be.visible')
       .click()
       .click();
+
+    // change the max length of comments
+    cy.get(`#${SETTING_MAX_COMMENT_LENGTH}`).should('be.visible').type('340');
 
     cy.get('@saveButton').click();
     cy.get(buildDataCy(SETTINGS_DISPLAY_DIALOG_WINDOW_CYPRESS)).should(

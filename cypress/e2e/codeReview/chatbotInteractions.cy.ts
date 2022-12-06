@@ -4,7 +4,6 @@ import {
   COMMENT_EDITOR_SAVE_BUTTON_CYPRESS,
   COMMENT_EDITOR_TEXTAREA_CYPRESS,
   COMMENT_RESPONSE_BOX_CY,
-  COMMENT_THREAD_CONTAINER_CYPRESS,
   buildChatbotPromptContainerDataCy,
   buildCommentContainerDataCy,
   buildCommentResponseBoxDataCy,
@@ -35,7 +34,7 @@ describe('OpenAI api chatbot', () => {
       cy.visit('/');
     });
 
-    it.only('show a ghost comment', () => {
+    it('show a ghost comment', () => {
       cy.get(buildDataCy(CODE_REVIEW_CONTAINER_CYPRESS)).should('be.visible');
 
       // check that the bot comment is shown

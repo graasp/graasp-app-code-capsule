@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { CardContent, CardHeader } from '@mui/material';
 
 import { APP_DATA_TYPES } from '../../config/appDataTypes';
+import { GENERAL_SETTINGS_NAME } from '../../config/appSettingsTypes';
 import {
   DEFAULT_BOT_USERNAME,
   INSTRUCTOR_CODE_ID,
@@ -12,8 +13,12 @@ import {
   buildChatbotPromptContainerDataCy,
   buildCommentResponseBoxDataCy,
 } from '../../config/selectors';
+import { DEFAULT_GENERAL_SETTINGS } from '../../config/settings';
 import { UserDataType, useChatbotApi } from '../../hooks/useChatbotApi';
-import { ChatbotPromptSettingsKeys } from '../../interfaces/settings';
+import {
+  ChatbotPromptSettingsKeys,
+  GeneralSettingsKeys,
+} from '../../interfaces/settings';
 import CommentBody from '../common/CommentBody';
 import CommentEditor from '../common/CommentEditor';
 import ResponseBox from '../common/ResponseBox';
@@ -32,7 +37,10 @@ const ChatbotPrompts: FC<Props> = ({ line }) => {
   const { postAppDataAsync, postAppData, comments } = useAppDataContext();
   const [openEditor, setOpenEditor] = useState(false);
   // if a message already exists with the prompt id we should not display this prompt
-  const { chatbotPrompts } = useSettings();
+  const {
+    chatbotPrompts,
+    [GENERAL_SETTINGS_NAME]: generalSettings = DEFAULT_GENERAL_SETTINGS,
+  } = useSettings();
 
   const { callApi } = useChatbotApi(
     (completion: string, data: UserDataType) => {
@@ -114,6 +122,9 @@ const ChatbotPrompts: FC<Props> = ({ line }) => {
 
         {openEditor ? (
           <CommentEditor
+            maxTextLength={
+              generalSettings[GeneralSettingsKeys.MaxCommentLength]
+            }
             onCancel={() => setOpenEditor(false)}
             onSend={handleNewDiscussion}
           />

@@ -14,6 +14,7 @@ import {
   COMMENT_EDITOR_LINE_INFO_TEXT_CYPRESS,
   COMMENT_EDITOR_SAVE_BUTTON_CYPRESS,
   COMMENT_EDITOR_TEXTAREA_CYPRESS,
+  COMMENT_EDITOR_TEXTAREA_HELPER_TEXT_CY,
   COMMENT_THREAD_CONTAINER_CYPRESS,
   COMMIT_INFO_DIALOG_CYPRESS,
   CUSTOM_DIALOG_TITLE_CYPRESS,
@@ -278,5 +279,44 @@ describe('Code Review Tools', () => {
         .should('be.visible')
         .and('contain.text', fieldValues[field]);
     });
+  });
+});
+
+describe('Comment settings', () => {
+  beforeEach(() => {
+    cy.setUpApi({
+      database: {
+        appSettings: [
+          CODE_REVIEW_MODE_SETTING,
+          {
+            ...MOCK_GENERAL_SETTINGS,
+            data: {
+              ...DEFAULT_GENERAL_SETTINGS,
+              [GeneralSettingsKeys.MaxCommentLength]: 20,
+            },
+          },
+          MOCK_CODE_SETTINGS,
+        ],
+      },
+      appContext: {
+        context: Context.PLAYER,
+        permission: PermissionLevel.Read,
+      },
+    });
+    cy.visit('/');
+  });
+
+  it.only('Limit length of comments to 20', () => {
+    // add a new comment online 2
+    cy.get(`[button-cy=${buildAddButtonDataCy(1)}`).click();
+
+    // entter some text in the field
+    cy.get(buildDataCy(COMMENT_EDITOR_TEXTAREA_CYPRESS)).type(
+      '0123456789 012456789',
+    );
+    cy.get(buildDataCy(COMMENT_EDITOR_TEXTAREA_HELPER_TEXT_CY)).should(
+      'contain.text',
+      '20',
+    );
   });
 });

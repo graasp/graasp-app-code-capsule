@@ -134,6 +134,8 @@
     "Clear outputs and figures": "Clear Outputs and Figures",
     "Run Code": "Run Code",
     "Save Code": "Save Code",
-    "just now": "just now"
+    "just now": "just now",
+    "Maximum comment length": "Maximum comment length",
+    "COMMENT_TEXT_TOO_LONG": "The comment text can not be longer than {{max_length}} characters"
   }
 }

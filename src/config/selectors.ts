@@ -80,6 +80,8 @@ export const COMMENT_EDITOR_QUOTE_BUTTON_CYPRESS =
 export const COMMENT_EDITOR_LINE_INFO_TEXT_CYPRESS =
   'comment_editor_line_info_text';
 export const COMMENT_EDITOR_TEXTAREA_CYPRESS = 'comment_editor_textarea';
+export const COMMENT_EDITOR_TEXTAREA_HELPER_TEXT_CY =
+  'comment_editor_textarea_helper_text';
 export const CODE_REVIEW_TOOLBAR_CYPRESS = 'comment_review_toolbar';
 export const TOOLBAR_USER_SELECT_CYPRESS = 'toolbar_user_select';
 export const TOOLBAR_VERSION_SELECT_CYPRESS = 'toolbar_version_select';
@@ -129,6 +131,7 @@ export const SETTING_APP_MODE_SELECT_NAME_CY = 'setting_app_mode_select_label';
 export const SETTING_MAIN_CODE_EDITOR_CY = 'setting_main_code_editor';
 export const SETTING_HEADER_CODE_EDITOR_CY = 'setting_header_code_editor';
 export const SETTING_FOOTER_CODE_EDITOR_CY = 'setting_footer_code_editor';
+export const SETTING_MAX_COMMENT_LENGTH = 'setting_max_comment_length';
 
 export const REPL_RUN_CODE_BUTTON_CY = 'repl_run_code_button';
 export const REPL_OUTPUT_CONSOLE_CY = 'repl_output_console_area';

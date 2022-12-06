@@ -4,14 +4,17 @@ import { FC, Fragment } from 'react';
 
 import { APP_ACTIONS_TYPES } from '../../config/appActionsTypes';
 import { APP_DATA_TYPES } from '../../config/appDataTypes';
+import { GENERAL_SETTINGS_NAME } from '../../config/appSettingsTypes';
 import {
   DEFAULT_CHATBOT_PROMPT_APP_DATA,
   MAX_CHATBOT_THREAD_LENGTH,
 } from '../../config/constants';
 import { MUTATION_KEYS, useMutation } from '../../config/queryClient';
 import { COMMENT_THREAD_CONTAINER_CYPRESS } from '../../config/selectors';
+import { DEFAULT_GENERAL_SETTINGS } from '../../config/settings';
 import { UserDataType, useChatbotApi } from '../../hooks/useChatbotApi';
 import { CommentType } from '../../interfaces/comment';
+import { GeneralSettingsKeys } from '../../interfaces/settings';
 import { buildThread } from '../../utils/comments';
 import { useAppDataContext } from '../context/AppDataContext';
 import { CommentProvider } from '../context/CommentContext';
@@ -42,7 +45,10 @@ const CommentThread: FC<Props> = ({ children, hiddenState }) => {
     unknown,
     { data: unknown; type: string }
   >(MUTATION_KEYS.POST_APP_ACTION);
-  const { chatbotPrompts } = useSettings();
+  const {
+    chatbotPrompts,
+    [GENERAL_SETTINGS_NAME]: generalSettings = DEFAULT_GENERAL_SETTINGS,
+  } = useSettings();
 
   const { isLoading, callApi } = useChatbotApi(
     (completion: string, data: UserDataType) => {
@@ -89,6 +95,9 @@ const CommentThread: FC<Props> = ({ children, hiddenState }) => {
               <CommentProvider value={c}>
                 {isEdited(c.id) ? (
                   <CommentEditor
+                    maxTextLength={
+                      generalSettings[GeneralSettingsKeys.MaxCommentLength]
+                    }
                     onCancel={() => {
                       closeEditingComment();
                     }}

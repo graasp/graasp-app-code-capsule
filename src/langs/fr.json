@@ -132,6 +132,8 @@
     "Clear outputs and figures": "Effacer les sorties et les figures",
     "Run Code": "Exécuter le code",
     "Save Code": "Enregistrer le code",
-    "just now": "à l'instant"
+    "just now": "à l'instant",
+    "Maximum comment length": "Longueur maximum des commentaires",
+    "COMMENT_TEXT_TOO_LONG": "Les commentaires ne peuvent pas dépasser {{max_length}} caractères"
   }
 }
