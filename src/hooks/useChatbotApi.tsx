@@ -27,7 +27,10 @@ export const useChatbotApi = (callback: CallbackType): ReturnType => {
         })
           .then((response) => response.json())
           .then((json) => {
-            callback(json.completion, data);
+            const completion = json.completion
+              .trim()
+              .replace(/^(Chatbot:)/gm, '');
+            callback(completion, data);
             setIsLoading(false);
             setShouldFetch(false);
           });
