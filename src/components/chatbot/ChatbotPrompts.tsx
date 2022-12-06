@@ -89,7 +89,7 @@ const ChatbotPrompts: FC<Props> = ({ line }) => {
         },
         type: APP_DATA_TYPES.COMMENT,
       })?.then((userMessage) => {
-        const fullPrompt = `${currentLinePrompt?.data.initialPrompt}\n\nChatbot: ${chatbotMessage}\n\nÉtudiant: ${newUserComment}`;
+        const fullPrompt = `${currentLinePrompt?.data.initialPrompt}\n\nChatbot: ${chatbotMessage}\n\nÉtudiant: ${newUserComment}\n\n`;
         callApi(fullPrompt, {
           line,
           parent: userMessage.id,

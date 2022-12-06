@@ -165,7 +165,7 @@ const CommentThread: FC<Props> = ({ children, hiddenState }) => {
                                 : `Étudiant: ${msg.data.content}`,
                             )
                             .join('\n\n');
-                          const fullPrompt = `${promptSetting?.data.initialPrompt}\n\n${concatenatedMessages}\n\nÉtudiant: ${content}`;
+                          const fullPrompt = `${promptSetting?.data.initialPrompt}\n\n${concatenatedMessages}\n\nÉtudiant: ${content}\n\n`;
                           callApi(fullPrompt, {
                             ...data,
                             parent: parent.id,
