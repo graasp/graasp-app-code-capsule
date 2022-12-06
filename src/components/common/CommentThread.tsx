@@ -126,9 +126,11 @@ const CommentThread: FC<Props> = ({ children, hiddenState }) => {
                     <ResponseBox commentId={c.id} onClick={addResponse} />
                   )
               }
-              {i + 1 === arr.size && isLoading && (
-                <ResponseContainer>Loading</ResponseContainer>
-              )}
+              {(i + 1 === arr.size && isLoading) ||
+                (i + 1 === arr.size &&
+                  arr.get(i - 1)?.type === APP_DATA_TYPES.BOT_COMMENT && (
+                    <ResponseContainer>Loading</ResponseContainer>
+                  ))}
               {
                 // if input bar was clicked, a comment editor opens to compose a response
                 isReplied(c.id) && (
