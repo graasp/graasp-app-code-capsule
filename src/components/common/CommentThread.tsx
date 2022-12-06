@@ -128,6 +128,7 @@ const CommentThread: FC<Props> = ({ children, hiddenState }) => {
               }
               {(i + 1 === arr.size && isLoading) ||
                 (i + 1 === arr.size &&
+                  i !== 0 &&
                   arr.get(i - 1)?.type === APP_DATA_TYPES.BOT_COMMENT && (
                     <ResponseContainer>Loading</ResponseContainer>
                   ))}
