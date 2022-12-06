@@ -20,7 +20,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Code Capsule App
-        uses: graasp/graasp-deploy/.github/actions/deploy-dev-s3-apps@0b772b8fad0d3d1c3970a6f449d3304f1afd0dfe
+        uses: graasp/graasp-deploy/.github/actions/deploy-dev-s3-apps@2c87bcd09c15bb30bfcc62fad7caff24e79c46fc
         with:
           build-folder: 'build'
           version: 'latest'
