@@ -158,11 +158,11 @@ const CommentThread: FC<Props> = ({ children, hiddenState }) => {
                           const concatenatedMessages = thread
                             .map((msg) =>
                               msg.type === APP_DATA_TYPES.BOT_COMMENT
-                                ? `Chatbot:${msg.data.content}`
-                                : `Student:${msg.data.content}`,
+                                ? `Chatbot: ${msg.data.content}`
+                                : `Étudiant: ${msg.data.content}`,
                             )
                             .join('\n\n');
-                          const fullPrompt = `${promptSetting?.data.initialPrompt}\n\n${concatenatedMessages}\n\nStudent:${content}`;
+                          const fullPrompt = `${promptSetting?.data.initialPrompt}\n\n${concatenatedMessages}\n\nÉtudiant: ${content}`;
                           callApi(fullPrompt, {
                             ...data,
                             parent: parent.id,
