@@ -126,9 +126,12 @@ const CommentThread: FC<Props> = ({ children, hiddenState }) => {
                     <ResponseBox commentId={c.id} onClick={addResponse} />
                   )
               }
-              {i + 1 === arr.size && isLoading && (
-                <ResponseContainer>Loading</ResponseContainer>
-              )}
+              {(i + 1 === arr.size && isLoading) ||
+                (i + 1 === arr.size &&
+                  i !== 0 &&
+                  arr.get(i - 1)?.type === APP_DATA_TYPES.BOT_COMMENT && (
+                    <ResponseContainer>Loading</ResponseContainer>
+                  ))}
               {
                 // if input bar was clicked, a comment editor opens to compose a response
                 isReplied(c.id) && (
@@ -158,11 +161,11 @@ const CommentThread: FC<Props> = ({ children, hiddenState }) => {
                           const concatenatedMessages = thread
                             .map((msg) =>
                               msg.type === APP_DATA_TYPES.BOT_COMMENT
-                                ? `Chatbot:${msg.data.content}`
-                                : `Student:${msg.data.content}`,
+                                ? `Chatbot: ${msg.data.content}`
+                                : `Étudiant: ${msg.data.content}`,
                             )
                             .join('\n\n');
-                          const fullPrompt = `${promptSetting?.data.initialPrompt}\n\n${concatenatedMessages}\n\nStudent:${content}`;
+                          const fullPrompt = `${promptSetting?.data.initialPrompt}\n\n${concatenatedMessages}\n\nÉtudiant: ${content}\n\n`;
                           callApi(fullPrompt, {
                             ...data,
                             parent: parent.id,

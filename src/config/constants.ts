@@ -45,7 +45,7 @@ export const REVIEW_MODES = [
 export const { REACT_APP_OPEN_AI_API_URL: OPEN_AI_API_URL = 'invalidURL' } =
   process.env;
 
-export const DEFAULT_BOT_USERNAME = 'OpenAI Bot';
+export const DEFAULT_BOT_USERNAME = 'Graasp Bot';
 
 // maximum number of messages allowed in a chatbot thread
 export const MAX_CHATBOT_THREAD_LENGTH = 5 * 2;
