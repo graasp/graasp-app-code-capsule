@@ -15,7 +15,6 @@ import {
   CODE_EDITOR_LANGUAGE_SELECT_CYPRESS,
   CODE_EDITOR_SUBMIT_BUTTON_CYPRESS,
   CODE_SETTINGS_FAB_CYPRESS,
-  CUSTOM_DIALOG_ACTIONS_CYPRESS,
   CUSTOM_DIALOG_CONTENT_CY,
   DISPLAY_SETTINGS_FAB_CYPRESS,
   REVIEW_MODES_SELECT_CYPRESS,
@@ -77,7 +76,7 @@ describe('Settings', () => {
     );
   });
 
-  it.only('Change code review settings in tab', () => {
+  it('Change code review settings in tab', () => {
     // open the settings tab
     cy.openTab(TAB_SETTINGS_VIEW_CYPRESS);
 

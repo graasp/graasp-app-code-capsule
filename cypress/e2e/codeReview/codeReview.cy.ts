@@ -306,7 +306,7 @@ describe('Comment settings', () => {
     cy.visit('/');
   });
 
-  it.only('Limit length of comments to 20', () => {
+  it('Limit length of comments to 20', () => {
     // add a new comment online 2
     cy.get(`[button-cy=${buildAddButtonDataCy(1)}`).click();
 
