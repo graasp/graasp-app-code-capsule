@@ -1,13 +1,7 @@
 import { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import {
-  Divider,
-  FormLabel,
-  Stack,
-  TextField,
-  Typography,
-} from '@mui/material';
+import { Divider, Stack, TextField, Typography } from '@mui/material';
 
 import { REVIEW_MODES } from '../../../../config/constants';
 import {
