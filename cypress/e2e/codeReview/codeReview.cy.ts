@@ -170,7 +170,7 @@ describe('Code Review thread comments', () => {
       .should('have.length', 2)
       .each((el, i) => {
         cy.wrap(el)
-          .children(buildDataCy(COMMENT_CONTAINER_CYPRESS))
+          .children(`[data-cy^=${COMMENT_CONTAINER_CYPRESS}]`)
           .should('have.length', threadOptions[i].threadLength);
       });
   });
@@ -219,16 +219,16 @@ describe('Code Review Tools', () => {
     const numberOfThreads = SINGLE_LINE_MOCK_COMMENTS.filter(
       (c) => c.data.parent === null,
     ).length;
-    cy.get(buildDataCy(COMMENT_CONTAINER_CYPRESS)).should(
+    cy.get(`[data-cy^=${COMMENT_CONTAINER_CYPRESS}]`).should(
       'have.length',
       numberOfThreads,
     );
 
     // click the toggle visibility button
     cy.get(buildDataCy(TOOLBAR_VISIBILITY_BUTTON_CYPRESS)).click();
-    cy.get(buildDataCy(COMMENT_CONTAINER_CYPRESS)).should('have.length', 0);
+    cy.get(`[data-cy^=${COMMENT_CONTAINER_CYPRESS}]`).should('have.length', 0);
     cy.get(buildDataCy(TOOLBAR_VISIBILITY_BUTTON_CYPRESS)).click();
-    cy.get(buildDataCy(COMMENT_CONTAINER_CYPRESS)).should(
+    cy.get(`[data-cy^=${COMMENT_CONTAINER_CYPRESS}]`).should(
       'have.length',
       numberOfThreads,
     );
