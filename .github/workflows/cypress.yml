@@ -30,6 +30,7 @@ jobs:
           REACT_APP_GRAASP_APP_ID: id-1234567890
           REACT_APP_MOCK_API: true
           NODE_ENV: test
+          REACT_APP_OPEN_AI_API_URL: http://localhost:1234
         with:
           install: false
           build: yarn build
