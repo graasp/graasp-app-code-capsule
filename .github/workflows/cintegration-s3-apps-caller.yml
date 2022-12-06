@@ -17,17 +17,19 @@ env:
 # This workflow is made up of one job that calls the reusable workflow in graasp-deploy
 jobs:
   graasp-deploy-s3-apps-workflow:
-    name: Code Capsule App
-    uses: graasp/graasp-deploy/.github/workflows/cintegration-s3-apps.yml@v1
-    with:
-      build-folder: 'build'
-      version: 'latest'
-    secrets:
-      aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID_DEV }}
-      aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_DEV }}
-      aws-region: ${{ secrets.APPS_AWS_REGION }}
-      aws-s3-bucket-name: ${{ secrets.AWS_S3_BUCKET_NAME_APPS_DEV }}
-      cloudfront-distribution-id: ${{ secrets.CLOUDFRONT_DISTRIBUTION_APPS_DEV }}
-      app-id: ${{ secrets.APP_ID }}
-      graasp-domain: ${{ secrets.REACT_APP_DOMAIN_DEV }}
-      sentry-dsn: ${{ secrets.SENTRY_DSN }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Code Capsule App
+        uses: graasp/graasp-deploy/.github/actions/deploy-dev-s3-apps@9c75188b07bc94399c9a9bad0fdf6638dc2eea55
+        with:
+          build-folder: 'build'
+          version: 'latest'
+        secrets:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID_DEV }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_DEV }}
+          aws-region: ${{ secrets.APPS_AWS_REGION }}
+          aws-s3-bucket-name: ${{ secrets.AWS_S3_BUCKET_NAME_APPS_DEV }}
+          cloudfront-distribution-id: ${{ secrets.CLOUDFRONT_DISTRIBUTION_APPS_DEV }}
+          app-id: ${{ secrets.APP_ID }}
+          graasp-domain: ${{ secrets.REACT_APP_DOMAIN_DEV }}
+          sentry-dsn: ${{ secrets.SENTRY_DSN }}
