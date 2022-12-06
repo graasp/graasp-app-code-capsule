@@ -31,8 +31,10 @@ import {
   SETTING_INITIAL_PROMPT_CODE_EDITOR_CY,
   SETTING_MAIN_CODE_EDITOR_CY,
   SETTING_MAX_COMMENT_LENGTH,
+  SETTING_NEW_CHATBOT_PROMPT_KEY,
   TAB_SETTINGS_VIEW_CYPRESS,
   buildDataCy,
+  settingKeyDataCy,
 } from '../../../src/config/selectors';
 import {
   DEFAULT_PROGRAMMING_LANGUAGE_SETTING,
@@ -108,7 +110,7 @@ describe('Settings', () => {
     );
 
     cy.get(
-      `${buildDataCy(CUSTOM_DIALOG_ACTIONS_CYPRESS)} > ${buildDataCy(
+      `#${settingKeyDataCy(SETTING_NEW_CHATBOT_PROMPT_KEY)} > ${buildDataCy(
         SETTINGS_DIALOG_SAVE_BUTTON_CYPRESS,
       )}`,
     ).click();
