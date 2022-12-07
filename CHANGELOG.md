@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.4.3](https://github.com/graasp/graasp-app-code-capsule/compare/v1.4.2...v1.4.3) (2022-12-07)
+
+
+### Bug Fixes
+
+* add actions ([cabdc67](https://github.com/graasp/graasp-app-code-capsule/commit/cabdc67675dddbe0afd745ca63bc0a94e8c7c3e7))
+
 ## [1.4.2](https://github.com/graasp/graasp-app-code-capsule/compare/v1.4.1...v1.4.2) (2022-12-07)
 
 
