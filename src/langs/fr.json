@@ -141,6 +141,7 @@
     "No Chatbot Prompts": "Pas de suggestions de chatbots",
     "Initial Prompt": "Suggestions initiales",
     "Chatbot Prompt": "Suggestions Visible",
-    "Line Number (first line is 0)": "Numéro de ligne (première ligne est 0)"
+    "Line Number (first line is 0)": "Numéro de ligne (première ligne est 0)",
+    "Loading": "Chargement"
   }
 }

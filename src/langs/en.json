@@ -143,6 +143,7 @@
     "No Chatbot Prompts": "No Chatbot Prompts",
     "Initial Prompt": "Initial Prompt",
     "Chatbot Prompt": "Chatbot Prompt",
-    "Line Number (first line is 0)": "Line Number (first line is 0)"
+    "Line Number (first line is 0)": "Line Number (first line is 0)",
+    "Loading": "Loading"
   }
 }

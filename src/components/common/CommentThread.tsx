@@ -1,6 +1,9 @@
 import { List } from 'immutable';
 
 import { FC, Fragment } from 'react';
+import { useTranslation } from 'react-i18next';
+
+import { CircularProgress, Stack, Typography } from '@mui/material';
 
 import { APP_ACTIONS_TYPES } from '../../config/appActionsTypes';
 import { APP_DATA_TYPES } from '../../config/appDataTypes';
@@ -18,6 +21,7 @@ import { GeneralSettingsKeys } from '../../interfaces/settings';
 import { buildThread } from '../../utils/comments';
 import { useAppDataContext } from '../context/AppDataContext';
 import { CommentProvider } from '../context/CommentContext';
+import { useLoadingIndicator } from '../context/LoadingIndicatorContext';
 import { useReviewContext } from '../context/ReviewContext';
 import { useSettings } from '../context/SettingsContext';
 import CommentContainer from '../layout/CommentContainer';
@@ -32,6 +36,7 @@ type Props = {
 };
 
 const CommentThread: FC<Props> = ({ children, hiddenState }) => {
+  const { t } = useTranslation();
   const {
     addResponse,
     currentRepliedCommentId,
@@ -39,7 +44,7 @@ const CommentThread: FC<Props> = ({ children, hiddenState }) => {
     closeComment,
     closeEditingComment,
   } = useReviewContext();
-  const { patchAppData, postAppDataAsync, postAppData } = useAppDataContext();
+  const { patchAppData, postAppDataAsync } = useAppDataContext();
   const { mutate: postAction } = useMutation<
     unknown,
     unknown,
@@ -49,14 +54,15 @@ const CommentThread: FC<Props> = ({ children, hiddenState }) => {
     chatbotPrompts,
     [GENERAL_SETTINGS_NAME]: generalSettings = DEFAULT_GENERAL_SETTINGS,
   } = useSettings();
+  const { isLoading, startLoading, stopLoading } = useLoadingIndicator();
 
-  const { isLoading, callApi } = useChatbotApi(
+  const { callApi } = useChatbotApi(
     (completion: string, data: UserDataType) => {
       // post comment from bot
-      postAppData({
+      postAppDataAsync({
         data: { ...data, content: completion },
         type: APP_DATA_TYPES.BOT_COMMENT,
-      });
+      })?.then(() => stopLoading());
     },
   );
 
@@ -120,24 +126,28 @@ const CommentThread: FC<Props> = ({ children, hiddenState }) => {
               {
                 // show input bar to respond to comment
                 i + 1 === arr.size &&
+                  !isLoading &&
                   !isEdited(c.id) &&
                   !isReplied(c.id) &&
                   allowedChatbotResponse(arr, i, c.type) && (
                     <ResponseBox commentId={c.id} onClick={addResponse} />
                   )
               }
-              {(i + 1 === arr.size && isLoading) ||
-                (i + 1 === arr.size &&
-                  i !== 0 &&
-                  arr.get(i - 1)?.type === APP_DATA_TYPES.BOT_COMMENT && (
-                    <ResponseContainer>Loading</ResponseContainer>
-                  ))}
+              {i + 1 === arr.size && isLoading && (
+                <ResponseContainer>
+                  <Stack spacing={2} direction="row" justifyContent="center">
+                    <Typography color="#666">{t('Loading')}</Typography>
+                    <CircularProgress sx={{ color: '#666' }} size="20px" />
+                  </Stack>
+                </ResponseContainer>
+              )}
               {
                 // if input bar was clicked, a comment editor opens to compose a response
                 isReplied(c.id) && (
                   <CommentEditor
                     onCancel={closeComment}
                     onSend={(content) => {
+                      startLoading();
                       const data = {
                         ...c.data,
                         parent: c.id,

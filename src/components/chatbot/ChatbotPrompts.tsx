@@ -23,6 +23,7 @@ import CommentBody from '../common/CommentBody';
 import CommentEditor from '../common/CommentEditor';
 import ResponseBox from '../common/ResponseBox';
 import { useAppDataContext } from '../context/AppDataContext';
+import { useLoadingIndicator } from '../context/LoadingIndicatorContext';
 import { useSettings } from '../context/SettingsContext';
 import CommentContainer from '../layout/CommentContainer';
 import CustomCommentCard from '../layout/CustomCommentCard';
@@ -34,21 +35,22 @@ type Props = {
 
 const ChatbotPrompts: FC<Props> = ({ line }) => {
   const { t } = useTranslation();
-  const { postAppDataAsync, postAppData, comments } = useAppDataContext();
+  const { postAppDataAsync, comments } = useAppDataContext();
   const [openEditor, setOpenEditor] = useState(false);
   // if a message already exists with the prompt id we should not display this prompt
   const {
     chatbotPrompts,
     [GENERAL_SETTINGS_NAME]: generalSettings = DEFAULT_GENERAL_SETTINGS,
   } = useSettings();
+  const { startLoading, stopLoading } = useLoadingIndicator();
 
   const { callApi } = useChatbotApi(
     (completion: string, data: UserDataType) => {
       // post comment from bot
-      postAppData({
+      postAppDataAsync({
         data: { ...data, content: completion },
         type: APP_DATA_TYPES.BOT_COMMENT,
-      });
+      })?.then(() => stopLoading());
     },
   );
 
@@ -68,6 +70,7 @@ const ChatbotPrompts: FC<Props> = ({ line }) => {
 
   const handleNewDiscussion = (newUserComment: string): void => {
     const chatbotMessage = currentLinePrompt?.data.chatbotPrompt;
+    startLoading();
     // post chatbot comment as app data with async call
     postAppDataAsync({
       data: {
