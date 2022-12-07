@@ -59,10 +59,12 @@ const CommentThread: FC<Props> = ({ children, hiddenState }) => {
   const { callApi } = useChatbotApi(
     (completion: string, data: UserDataType) => {
       // post comment from bot
+      const newData = { ...data, content: completion };
       postAppDataAsync({
-        data: { ...data, content: completion },
+        data: newData,
         type: APP_DATA_TYPES.BOT_COMMENT,
       })?.then(() => stopLoading());
+      postAction({ data: newData, type: APP_ACTIONS_TYPES.CREATE_COMMENT });
     },
   );
 
@@ -179,6 +181,10 @@ const CommentThread: FC<Props> = ({ children, hiddenState }) => {
                           callApi(fullPrompt, {
                             ...data,
                             parent: parent.id,
+                          });
+                          postAction({
+                            data: fullPrompt,
+                            type: APP_ACTIONS_TYPES.SEND_PROMPT,
                           });
                         }
                       });

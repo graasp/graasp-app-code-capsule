@@ -3,12 +3,14 @@ import { useTranslation } from 'react-i18next';
 
 import { CardContent, CardHeader } from '@mui/material';
 
+import { APP_ACTIONS_TYPES } from '../../config/appActionsTypes';
 import { APP_DATA_TYPES } from '../../config/appDataTypes';
 import { GENERAL_SETTINGS_NAME } from '../../config/appSettingsTypes';
 import {
   DEFAULT_BOT_USERNAME,
   INSTRUCTOR_CODE_ID,
 } from '../../config/constants';
+import { MUTATION_KEYS, useMutation } from '../../config/queryClient';
 import {
   buildChatbotPromptContainerDataCy,
   buildCommentResponseBoxDataCy,
@@ -37,6 +39,11 @@ const ChatbotPrompts: FC<Props> = ({ line }) => {
   const { t } = useTranslation();
   const { postAppDataAsync, comments } = useAppDataContext();
   const [openEditor, setOpenEditor] = useState(false);
+  const { mutate: postAction } = useMutation<
+    unknown,
+    unknown,
+    { data: unknown; type: string }
+  >(MUTATION_KEYS.POST_APP_ACTION);
   // if a message already exists with the prompt id we should not display this prompt
   const {
     chatbotPrompts,
@@ -46,11 +53,13 @@ const ChatbotPrompts: FC<Props> = ({ line }) => {
 
   const { callApi } = useChatbotApi(
     (completion: string, data: UserDataType) => {
+      const newData = { ...data, content: completion };
       // post comment from bot
       postAppDataAsync({
-        data: { ...data, content: completion },
+        data: newData,
         type: APP_DATA_TYPES.BOT_COMMENT,
       })?.then(() => stopLoading());
+      postAction({ data: newData, type: APP_ACTIONS_TYPES.CREATE_COMMENT });
     },
   );
 
@@ -71,25 +80,27 @@ const ChatbotPrompts: FC<Props> = ({ line }) => {
   const handleNewDiscussion = (newUserComment: string): void => {
     const chatbotMessage = currentLinePrompt?.data.chatbotPrompt;
     startLoading();
+    const newData = {
+      line,
+      parent: null,
+      codeId: INSTRUCTOR_CODE_ID,
+      content: chatbotMessage,
+      chatbotPromptSettingId: currentLinePrompt?.id,
+    };
     // post chatbot comment as app data with async call
     postAppDataAsync({
-      data: {
-        line,
-        parent: null,
-        codeId: INSTRUCTOR_CODE_ID,
-        content: chatbotMessage,
-        chatbotPromptSettingId: currentLinePrompt?.id,
-      },
+      data: newData,
       type: APP_DATA_TYPES.BOT_COMMENT,
     })?.then((botComment) => {
+      const userData = {
+        line,
+        parent: botComment.id,
+        codeId: INSTRUCTOR_CODE_ID,
+        content: newUserComment,
+      };
       // post new user comment as appdata with normal call
       postAppDataAsync({
-        data: {
-          line,
-          parent: botComment.id,
-          codeId: INSTRUCTOR_CODE_ID,
-          content: newUserComment,
-        },
+        data: userData,
         type: APP_DATA_TYPES.COMMENT,
       })?.then((userMessage) => {
         const fullPrompt = `${currentLinePrompt?.data.initialPrompt}\n\nChatbot: ${chatbotMessage}\n\nÉtudiant: ${newUserComment}\n\n`;
@@ -98,8 +109,11 @@ const ChatbotPrompts: FC<Props> = ({ line }) => {
           parent: userMessage.id,
           codeId: INSTRUCTOR_CODE_ID,
         });
+        postAction({ data: fullPrompt, type: APP_ACTIONS_TYPES.SEND_PROMPT });
       });
+      postAction({ data: userData, type: APP_ACTIONS_TYPES.CREATE_COMMENT });
     });
+    postAction({ data: newData, type: APP_ACTIONS_TYPES.CREATE_COMMENT });
 
     // close editor
     setOpenEditor(false);
