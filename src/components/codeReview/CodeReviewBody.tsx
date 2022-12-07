@@ -28,6 +28,7 @@ import CommentEditor from '../common/CommentEditor';
 import CommentThread from '../common/CommentThread';
 import { useAppDataContext } from '../context/AppDataContext';
 import { useCodeVersionContext } from '../context/CodeVersionContext';
+import LoadingIndicatorProvider from '../context/LoadingIndicatorContext';
 import { useReviewContext } from '../context/ReviewContext';
 import { useSettings } from '../context/SettingsContext';
 import { useVisibilityContext } from '../context/VisibilityContext';
@@ -211,10 +212,12 @@ const CodeReviewBody: FC<Props> = () => {
                   }}
                 />
               )}
-              <ChatbotPrompts line={i} />
-              <CommentThread hiddenState={lineHiddenState[i]}>
-                {groupedComments.get(i)?.toList() as List<CommentType>}
-              </CommentThread>
+              <LoadingIndicatorProvider>
+                <ChatbotPrompts line={i} />
+                <CommentThread hiddenState={lineHiddenState[i]}>
+                  {groupedComments.get(i)?.toList() as List<CommentType>}
+                </CommentThread>
+              </LoadingIndicatorProvider>
             </Fragment>
           ))}
         </Code>
