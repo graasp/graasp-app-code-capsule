@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.4.2](https://github.com/graasp/graasp-app-code-capsule/compare/v1.4.1...v1.4.2) (2022-12-07)
+
+
+### Bug Fixes
+
+* loading and up message limit ([#60](https://github.com/graasp/graasp-app-code-capsule/issues/60)) ([a984a40](https://github.com/graasp/graasp-app-code-capsule/commit/a984a402290fd835c493d71ea2d285a35fc5852e))
+
 ## [1.4.1](https://github.com/graasp/graasp-app-code-capsule/compare/v1.4.0...v1.4.1) (2022-12-06)
 
 
