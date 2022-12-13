@@ -25,7 +25,12 @@ export const useChatbotApi = (callback: CallbackType): ReturnType => {
             'Content-type': 'application/json; charset=UTF-8',
           },
         })
-          .then((response) => response.json())
+          .then((response) => {
+            if (response.ok) {
+              return response.json();
+            }
+            return { completion: 'Sorry, an error occured' };
+          })
           .then((json) => {
             const completion = json.completion
               .trim()

@@ -19,7 +19,7 @@ import {
 export const mockContext: LocalContext = {
   apiHost: REACT_APP_API_HOST,
   permission: 'admin',
-  context: 'builder',
+  context: 'player',
   itemId: '1234-1234-123456-8123-123456',
   memberId: 'mock-member-id',
 };
@@ -39,7 +39,21 @@ export const mockMembers: Member[] = [
   },
 ];
 
-const mockPythonCode = `# my sample code in python
+const mockPythonCode = `import matplotlib.pyplot as plt
+import numpy as np
+
+# Data for plotting
+t = np.arange(0.0, 2.0, 0.01)
+s = 1 + np.sin(2 * np.pi * t)
+
+fig, ax = plt.subplots(figsize=(6,5))
+ax.plot(t, s)
+
+ax.set(xlabel='time (s)', ylabel='voltage (mV)',
+       title='About as simple as it gets, folks')
+ax.grid()
+
+# my sample code in python
 
 age = input('What is your age ?')
 print(f'Your age is {age}')
@@ -55,6 +69,7 @@ for i in range(10000):
 
 print('Done!')
 print('See you !')
+
 `;
 
 const commentParent = v4();

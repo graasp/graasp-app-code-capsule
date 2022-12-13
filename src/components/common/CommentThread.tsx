@@ -183,7 +183,7 @@ const CommentThread: FC<Props> = ({ children, hiddenState }) => {
                             parent: parent.id,
                           });
                           postAction({
-                            data: fullPrompt,
+                            data: { prompt: fullPrompt },
                             type: APP_ACTIONS_TYPES.SEND_PROMPT,
                           });
                         }

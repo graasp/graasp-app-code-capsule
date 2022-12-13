@@ -109,7 +109,10 @@ const ChatbotPrompts: FC<Props> = ({ line }) => {
           parent: userMessage.id,
           codeId: INSTRUCTOR_CODE_ID,
         });
-        postAction({ data: fullPrompt, type: APP_ACTIONS_TYPES.SEND_PROMPT });
+        postAction({
+          data: { prompt: fullPrompt },
+          type: APP_ACTIONS_TYPES.SEND_PROMPT,
+        });
       });
       postAction({ data: userData, type: APP_ACTIONS_TYPES.CREATE_COMMENT });
     });
