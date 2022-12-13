@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.5.0](https://github.com/graasp/graasp-app-code-capsule/compare/v1.4.3...v1.5.0) (2022-12-13)
+
+
+### Features
+
+* add fullscreen mode to code execution view ([#53](https://github.com/graasp/graasp-app-code-capsule/issues/53)) ([4ebf0f4](https://github.com/graasp/graasp-app-code-capsule/commit/4ebf0f4c05abc3fd72ad50aea055c3d5fa7e2b47))
+
+
+### Bug Fixes
+
+* action data type and completion missing ([7b55c29](https://github.com/graasp/graasp-app-code-capsule/commit/7b55c29883658c735acdb0345e2622df7011bf35))
+* french translations for fullscreen mode ([4ebf0f4](https://github.com/graasp/graasp-app-code-capsule/commit/4ebf0f4c05abc3fd72ad50aea055c3d5fa7e2b47))
+* position of version tag in admin view ([4ebf0f4](https://github.com/graasp/graasp-app-code-capsule/commit/4ebf0f4c05abc3fd72ad50aea055c3d5fa7e2b47))
+
 ## [1.4.3](https://github.com/graasp/graasp-app-code-capsule/compare/v1.4.2...v1.4.3) (2022-12-07)
 
 
