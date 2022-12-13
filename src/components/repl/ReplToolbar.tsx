@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { PyodideStatus } from '@graasp/pyodide';
@@ -40,8 +40,10 @@ type Props = {
   onStopCode: () => void;
   onClearOutput: () => void;
   onSaveCode: () => void;
+  onFullscreen: () => void;
   status: PyodideStatus;
   savedStatus: boolean;
+  isFullscreen: boolean;
 };
 
 const ReplToolbar: FC<Props> = ({
@@ -49,8 +51,10 @@ const ReplToolbar: FC<Props> = ({
   onStopCode,
   onClearOutput,
   onSaveCode,
+  onFullscreen,
   status,
   savedStatus,
+  isFullscreen,
 }) => {
   const { t } = useTranslation();
   const isLoading = [
@@ -62,25 +66,6 @@ const ReplToolbar: FC<Props> = ({
   const isRunning = [PyodideStatus.RUNNING, PyodideStatus.WAIT_INPUT].includes(
     status,
   );
-  const [isFullScreen, setIsFullScreen] = useState(false);
-
-  const onClickFullScreen = (): void => {
-    const bodyElem = document.body;
-    if (!document.fullscreenElement) {
-      bodyElem
-        .requestFullscreen()
-        .then(() => setIsFullScreen(true))
-        .catch((err) => {
-          // eslint-disable-next-line no-console
-          console.log(
-            `Error attempting to enable fullscreen mode: ${err.message} (${err.name})`,
-          );
-        });
-    } else {
-      document.exitFullscreen();
-      setIsFullScreen(false);
-    }
-  };
 
   return (
     <Stack direction="row" spacing={1}>
@@ -135,8 +120,8 @@ const ReplToolbar: FC<Props> = ({
           <MiniButton
             dataCy={REPL_FULL_SCREEN_BUTTON_CY}
             color="primary"
-            icon={isFullScreen ? <FullscreenExit /> : <Fullscreen />}
-            onClick={onClickFullScreen}
+            icon={isFullscreen ? <FullscreenExit /> : <Fullscreen />}
+            onClick={onFullscreen}
             tooltip={t('Toggle Fullscreen')}
             text={t('Fullscreen')}
           />
