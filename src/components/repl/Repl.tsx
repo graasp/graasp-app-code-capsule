@@ -2,6 +2,7 @@ import { FC, KeyboardEvent, useContext, useEffect, useState } from 'react';
 
 import { Api, TokenContext, useLocalContext } from '@graasp/apps-query-client';
 import { PyWorker, PyodideStatus } from '@graasp/pyodide';
+import { useFullscreen } from '@graasp/ui';
 
 import {
   Alert,
@@ -65,6 +66,7 @@ const Repl: FC<Props> = ({ seedValue }) => {
   const [dataFilesReady, setDataFilesReady] = useState(false);
   const [reloadDataFiles, setReloadDataFiles] = useState(true);
   const context = useLocalContext();
+  const { isFullscreen, toggleFullscreen } = useFullscreen();
   const token = useContext(TokenContext);
   const apiHost = context?.get('apiHost');
 
@@ -319,7 +321,7 @@ const Repl: FC<Props> = ({ seedValue }) => {
     <Stack
       display="flex"
       direction="column"
-      height="100vh"
+      height={isFullscreen ? '100vh' : '600px'}
       data-cy={REPL_CONTAINER_CY}
       spacing={1}
       p={2}
@@ -330,7 +332,9 @@ const Repl: FC<Props> = ({ seedValue }) => {
         onStopCode={onClickStopCode}
         onClearOutput={onClickClearOutput}
         onSaveCode={onClickSaveCode}
+        onFullscreen={toggleFullscreen}
         status={replStatus}
+        isFullscreen={isFullscreen}
       />
       <Stack flex={1} direction="row" spacing={1} overflow="hidden">
         <OutlineWrapper
