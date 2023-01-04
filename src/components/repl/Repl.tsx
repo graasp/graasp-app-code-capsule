@@ -4,13 +4,7 @@ import { Api, TokenContext, useLocalContext } from '@graasp/apps-query-client';
 import { PyWorker, PyodideStatus } from '@graasp/pyodide';
 import { useFullscreen } from '@graasp/ui';
 
-import {
-  Alert,
-  Box,
-  Stack,
-  styled,
-  experimental_sx as sx,
-} from '@mui/material';
+import { Alert, Box, Stack, styled } from '@mui/material';
 
 import { APP_ACTIONS_TYPES } from '../../config/appActionsTypes';
 import { APP_DATA_TYPES } from '../../config/appDataTypes';
@@ -38,8 +32,8 @@ import OutputConsole from './OutputConsole';
 import ReplToolbar from './ReplToolbar';
 import ShowFigures from './ShowFigures';
 
-const OutlineWrapper = styled(Box)(
-  sx({
+const OutlineWrapper = styled(Box)(({ theme }) =>
+  theme.unstable_sx({
     border: 1,
     borderColor: 'info.main',
     borderRadius: 1,
