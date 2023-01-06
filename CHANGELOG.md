@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.5.1](https://github.com/graasp/graasp-app-code-capsule/compare/v1.5.0...v1.5.1) (2023-01-06)
+
+
+### Bug Fixes
+
+* udpate sentry to allow replays and update deps ([#66](https://github.com/graasp/graasp-app-code-capsule/issues/66)) ([c80ee57](https://github.com/graasp/graasp-app-code-capsule/commit/c80ee57b3fd667b54052e8418d825de1419dc77a))
+
 ## [1.5.0](https://github.com/graasp/graasp-app-code-capsule/compare/v1.4.3...v1.5.0) (2022-12-13)
 
 
