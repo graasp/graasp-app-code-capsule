@@ -14,7 +14,7 @@ import buildDatabase, { mockContext, mockMembers } from './data/db';
 import './index.css';
 
 Sentry.init({
-  integrations: [new BrowserTracing()],
+  integrations: [new BrowserTracing(), new Sentry.Replay()],
 
   // Set tracesSampleRate to 1.0 to capture 100%
   // of transactions for performance monitoring.
