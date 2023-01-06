@@ -2636,7 +2636,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/apps-query-client@npm:^0.4.1":
+"@graasp/apps-query-client@npm:0.4.1":
   version: 0.4.1
   resolution: "@graasp/apps-query-client@npm:0.4.1"
   dependencies:
@@ -2699,7 +2699,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/sdk@npm:^0.1.0":
+"@graasp/sdk@npm:0.1.0":
   version: 0.1.0
   resolution: "@graasp/sdk@npm:0.1.0"
   dependencies:
@@ -2716,7 +2716,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/ui@npm:^0.6.0":
+"@graasp/ui@npm:0.6.0":
   version: 0.6.0
   resolution: "@graasp/ui@npm:0.6.0"
   dependencies:
@@ -10397,10 +10397,10 @@ __metadata:
     "@fortawesome/free-regular-svg-icons": 6.2.1
     "@fortawesome/free-solid-svg-icons": 6.2.1
     "@fortawesome/react-fontawesome": 0.2.0
-    "@graasp/apps-query-client": ^0.4.1
+    "@graasp/apps-query-client": 0.4.1
     "@graasp/pyodide": "github:spaenleh/graasp-pyodide"
-    "@graasp/sdk": ^0.1.0
-    "@graasp/ui": ^0.6.0
+    "@graasp/sdk": 0.1.0
+    "@graasp/ui": 0.6.0
     "@mui/icons-material": 5.11.0
     "@mui/lab": 5.0.0-alpha.84
     "@mui/material": 5.11.3
