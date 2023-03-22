@@ -1,6 +1,6 @@
 # Code Capsule App
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-2-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 This repository hosts the code for a Graasp app that lets users write code reviews, edit and annotate code, alone or in collaboration.
@@ -58,7 +58,8 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <table>
   <tbody>
     <tr>
-      <td align="center"><a href="https://github.com/spaenleh"><img src="https://avatars.githubusercontent.com/u/39373170?v=4?s=100" width="100px;" alt="Basile Spaenlehauer"/><br /><sub><b>Basile Spaenlehauer</b></sub></a><br /><a href="https://github.com/graasp/graasp-app-code-capsule/commits?author=spaenleh" title="Code">💻</a> <a href="#ideas-spaenleh" title="Ideas, Planning, & Feedback">🤔</a> <a href="#research-spaenleh" title="Research">🔬</a> <a href="https://github.com/graasp/graasp-app-code-capsule/commits?author=spaenleh" title="Tests">⚠️</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/spaenleh"><img src="https://avatars.githubusercontent.com/u/39373170?v=4?s=100" width="100px;" alt="Basile Spaenlehauer"/><br /><sub><b>Basile Spaenlehauer</b></sub></a><br /><a href="https://github.com/graasp/graasp-app-code-capsule/commits?author=spaenleh" title="Code">💻</a> <a href="#ideas-spaenleh" title="Ideas, Planning, & Feedback">🤔</a> <a href="#research-spaenleh" title="Research">🔬</a> <a href="https://github.com/graasp/graasp-app-code-capsule/commits?author=spaenleh" title="Tests">⚠️</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://juancarlosfarah.com"><img src="https://avatars.githubusercontent.com/u/1707188?v=4?s=100" width="100px;" alt="Juan Carlos Farah"/><br /><sub><b>Juan Carlos Farah</b></sub></a><br /><a href="#userTesting-juancarlosfarah" title="User Testing">📓</a> <a href="https://github.com/graasp/graasp-app-code-capsule/issues?q=author%3Ajuancarlosfarah" title="Bug reports">🐛</a> <a href="#research-juancarlosfarah" title="Research">🔬</a> <a href="#ideas-juancarlosfarah" title="Ideas, Planning, & Feedback">🤔</a></td>
     </tr>
   </tbody>
 </table>
