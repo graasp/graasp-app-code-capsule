@@ -1,7 +1,7 @@
+import { Context, PermissionLevel } from '@graasp/sdk';
+
 import { List } from 'immutable';
 import countBy from 'lodash.countby';
-
-import { Context, PermissionLevel } from '@graasp/sdk';
 
 import { APP_DATA_TYPES } from '../../../src/config/appDataTypes';
 import {

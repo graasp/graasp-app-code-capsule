@@ -1,5 +1,11 @@
 build
 public
 coverage
-src/registerServiceWorker.js
-cypress/integration/examples
+src/serviceWorker.js
+
+node_modules
+.yarn/.cache
+.husky
+.nyc_output
+.yarn
+commitlint.config.js

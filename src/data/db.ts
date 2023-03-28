@@ -1,15 +1,17 @@
+import type { Database, LocalContext, Member } from '@graasp/apps-query-client';
+import { AppDataVisibility } from '@graasp/apps-query-client';
+
 import { v4 } from 'uuid';
 
-import type { Database, LocalContext, Member } from '@graasp/apps-query-client';
+import { APP_DATA_TYPES } from '@/config/appDataTypes';
+import { API_HOST } from '@/config/env';
 
-import { APP_DATA_TYPES } from '../config/appDataTypes';
 import {
   APP_MODE_SETTINGS_NAME,
   AppMode,
   GENERAL_SETTINGS_NAME,
   INSTRUCTOR_CODE_VERSION_SETTINGS_NAME,
 } from '../config/appSettingsTypes';
-import { REACT_APP_API_HOST } from '../config/env';
 import {
   DEFAULT_APP_MODE_SETTINGS,
   DEFAULT_GENERAL_SETTINGS,
@@ -17,7 +19,7 @@ import {
 } from '../config/settings';
 
 export const mockContext: LocalContext = {
-  apiHost: REACT_APP_API_HOST,
+  apiHost: API_HOST,
   permission: 'admin',
   context: 'player',
   itemId: '1234-1234-123456-8123-123456',
@@ -104,6 +106,7 @@ And some text to **finish** _off_`,
       creator: 'mock-member-id-2',
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
+      visibility: AppDataVisibility.MEMBER,
     },
     {
       id: v4(),
@@ -118,6 +121,7 @@ And some text to **finish** _off_`,
       creator: 'mock-member-id',
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
+      visibility: AppDataVisibility.MEMBER,
     },
     {
       id: commentParent,
@@ -132,6 +136,7 @@ And some text to **finish** _off_`,
       creator: 'mock-member-id',
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
+      visibility: AppDataVisibility.MEMBER,
     },
     {
       id: v4(),
@@ -146,6 +151,7 @@ And some text to **finish** _off_`,
       creator: 'mock-member-id-2',
       createdAt: new Date(Date.now() - 1500).toISOString(),
       updatedAt: new Date(Date.now() - 1500).toISOString(),
+      visibility: AppDataVisibility.MEMBER,
     },
   ],
   appActions: [],

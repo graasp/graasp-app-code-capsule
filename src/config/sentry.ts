@@ -1,4 +1,4 @@
-import { REACT_APP_VERSION } from './env';
+import { VERSION } from './env';
 
 type SentryConfigType = {
   dsn: string;
@@ -38,7 +38,7 @@ export const generateSentryConfig = (): SentryConfigType => {
     environment: SENTRY_ENVIRONMENT,
     tracesSampleRate: SENTRY_TRACE_SAMPLE_RATE,
     // release is set only when building for production
-    release: SENTRY_ENVIRONMENT === 'production' ? REACT_APP_VERSION : '',
+    release: SENTRY_ENVIRONMENT === 'production' ? VERSION : '',
 
     replaysSessionSampleRate: SENTRY_REPLAY_SAMPLE_RATE,
     // If the entire session is not sampled, use the below sample rate to sample

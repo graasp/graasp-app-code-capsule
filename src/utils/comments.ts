@@ -1,6 +1,6 @@
-import { List } from 'immutable';
-
 import { AppData, UUID } from '@graasp/apps-query-client';
+
+import { List } from 'immutable';
 
 import { CommentType } from '../interfaces/comment';
 
@@ -82,7 +82,7 @@ const buildThread = (
     nextChild = findChild(comments, parentId);
     if (nextChild) {
       thread = thread.push(nextChild);
-      parentId = nextChild.id;
+      parentId = nextChild?.id;
     }
   } while (nextChild);
 

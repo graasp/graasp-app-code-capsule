@@ -1,10 +1,9 @@
-import { TFunction } from 'i18next';
-
 import { API_ROUTES } from '@graasp/apps-query-client';
 import { MAX_FILE_SIZE } from '@graasp/sdk';
 
 import Uppy, { UploadResult } from '@uppy/core';
 import XHRUpload from '@uppy/xhr-upload';
+import { TFunction } from 'i18next';
 
 import { DATA_FILE_SETTINGS_NAME } from '../config/appSettingsTypes';
 import { showErrorToast, showSuccessToast } from './toast';

@@ -1,6 +1,6 @@
-import { v4 } from 'uuid';
-
 import { AppSetting } from '@graasp/apps-query-client';
+
+import { v4 } from 'uuid';
 
 import {
   APP_MODE_SETTINGS_NAME,

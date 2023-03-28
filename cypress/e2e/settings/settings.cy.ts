@@ -1,9 +1,7 @@
 import { Context, PermissionLevel } from '@graasp/sdk';
 
-import {
-  JAVASCRIPT,
-  REVIEW_MODE_COLLABORATIVE,
-} from '../../../src/config/constants';
+import { REVIEW_MODE_COLLABORATIVE } from '../../../src/config/constants';
+import { JAVASCRIPT } from '../../../src/config/programmingLanguages';
 import {
   ALLOW_COMMENTS_SWITCH_CYPRESS,
   ALLOW_REPLIES_SWITCH_CYPRESS,
@@ -23,6 +21,7 @@ import {
   SETTINGS_DIALOG_SAVE_BUTTON_CYPRESS,
   SETTINGS_DISPLAY_DIALOG_WINDOW_CYPRESS,
   SETTING_ADD_CHATBOT_PROMPT_CY,
+  SETTING_APP_MODE_SELECT_NAME_CY,
   SETTING_CHATBOT_PROMPT_CODE_EDITOR_CY,
   SETTING_CHATBOT_PROMPT_LINE_NUMBER_CY,
   SETTING_FOOTER_CODE_EDITOR_CY,
@@ -57,6 +56,7 @@ describe('Settings', () => {
     cy.openTab(TAB_SETTINGS_VIEW_CYPRESS);
 
     // choose a mode
+    cy.get(buildDataCy(SETTING_APP_MODE_SELECT_NAME_CY)).click();
     cy.get(buildDataCy(APP_MODE_EXECUTE_BUTTON_CY))
       .should('be.visible')
       .click();
@@ -81,6 +81,7 @@ describe('Settings', () => {
     cy.openTab(TAB_SETTINGS_VIEW_CYPRESS);
 
     // choose a mode
+    cy.get(buildDataCy(SETTING_APP_MODE_SELECT_NAME_CY)).click();
     cy.get(buildDataCy(APP_MODE_REVIEW_BUTTON_CY)).should('be.visible').click();
 
     cy.get(`#${SETTING_MAIN_CODE_EDITOR_CY}`).should('be.visible');

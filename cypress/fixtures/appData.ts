@@ -1,6 +1,6 @@
-import { v4 as uuid } from 'uuid';
-
 import { AppData } from '@graasp/apps-query-client';
+
+import { v4 as uuid } from 'uuid';
 
 import { APP_DATA_TYPES } from '../../src/config/appDataTypes';
 import { INSTRUCTOR_CODE_ID, PYTHON } from '../../src/config/constants';

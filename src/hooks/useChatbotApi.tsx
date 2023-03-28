@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { OPEN_AI_API_URL } from '../config/constants';
+import { OPEN_AI_API_URL } from '@/config/env';
 
 export type UserDataType = { [key: string]: unknown };
 type CallbackType = (completion: string, data: UserDataType) => void;
@@ -29,7 +29,7 @@ export const useChatbotApi = (callback: CallbackType): ReturnType => {
             if (response.ok) {
               return response.json();
             }
-            return { completion: 'Sorry, an error occured' };
+            return { completion: 'Sorry, an error occurred' };
           })
           .then((json) => {
             const completion = json.completion

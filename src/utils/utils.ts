@@ -1,6 +1,6 @@
-import { List } from 'immutable';
-
 import { AppData } from '@graasp/apps-query-client';
+
+import { List } from 'immutable';
 
 export const buildCodeRowKey = (
   line: { content: string }[],
