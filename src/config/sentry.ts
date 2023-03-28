@@ -1,4 +1,4 @@
-import { VERSION } from './env';
+import { SENTRY_ENV, VERSION } from './env';
 
 type SentryConfigType = {
   dsn: string;
@@ -19,7 +19,7 @@ export const generateSentryConfig = (): SentryConfigType => {
     case 'production':
       SENTRY_ENVIRONMENT = 'production';
       SENTRY_TRACE_SAMPLE_RATE = 1.0;
-      SENTRY_REPLAY_SAMPLE_RATE = 0.1;
+      SENTRY_REPLAY_SAMPLE_RATE = 0.5;
       break;
     case 'test':
       SENTRY_TRACE_SAMPLE_RATE = 0.0;
@@ -35,7 +35,7 @@ export const generateSentryConfig = (): SentryConfigType => {
   return {
     // dsn is set only when not running inside cypress
     dsn: (!window.Cypress && process.env.REACT_APP_SENTRY_DSN) || '',
-    environment: SENTRY_ENVIRONMENT,
+    environment: SENTRY_ENV || SENTRY_ENVIRONMENT,
     tracesSampleRate: SENTRY_TRACE_SAMPLE_RATE,
     // release is set only when building for production
     release: SENTRY_ENVIRONMENT === 'production' ? VERSION : '',
