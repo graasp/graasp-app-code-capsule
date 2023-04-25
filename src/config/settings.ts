@@ -17,11 +17,10 @@ import {
   InstructorCodeVersionSettings,
 } from '../interfaces/settings';
 import { AppMode } from './appSettingsTypes';
-import { PYTHON, REVIEW_MODE_INDIVIDUAL } from './constants';
-import { REACT_APP_MOCK_API } from './env';
+import { REVIEW_MODE_INDIVIDUAL } from './constants';
 import { AppView } from './layout';
+import { PYTHON } from './programmingLanguages';
 
-export const MOCK_API = REACT_APP_MOCK_API === 'true';
 export const DEFAULT_APP_MODE = AppMode.Execute;
 export const DEFAULT_APP_VIEW = AppView.CodeExecution;
 
@@ -101,6 +100,7 @@ export const DEFAULT_DATA_FILE_LIST_SETTINGS: DataFileListSettings = {
 
 // diff view setting
 export const DEFAULT_DIFF_VIEW_SETTINGS: DiffViewSettings = {
+  [DiffViewSettingsKeys.Language]: DEFAULT_PROGRAMMING_LANGUAGE_SETTING,
   [DiffViewSettingsKeys.OldCode]: '',
   [DiffViewSettingsKeys.NewCode]: '',
   [DiffViewSettingsKeys.LinesOffset]: 0,

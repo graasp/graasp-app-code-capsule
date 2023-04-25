@@ -1,7 +1,7 @@
 import { defineConfig } from 'cypress';
 
 export default defineConfig({
-  video: true,
+  video: false,
 
   e2e: {
     retries: 1,
@@ -10,13 +10,13 @@ export default defineConfig({
     setupNodeEvents(on, config) {
       return require('./cypress/plugins/index')(on, config);
     },
-    baseUrl: `http://localhost:${process.env.PORT || 3000}`,
+    baseUrl: `http://localhost:${process.env.VITE_PORT || 3000}`,
   },
 
   component: {
     devServer: {
-      framework: 'create-react-app',
-      bundler: 'webpack',
+      framework: 'react',
+      bundler: 'vite',
     },
   },
 });

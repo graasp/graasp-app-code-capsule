@@ -113,6 +113,8 @@ export const CODE_EDITOR_COMMIT_DESCRIPTION_CYPRESS =
 export const CODE_EDITOR_SUBMIT_BUTTON_CYPRESS = 'code_editor_submit_button';
 export const CODE_EDITOR_CANCEL_BUTTON_CYPRESS = 'code_editor_cancel_button';
 
+export const DIFF_VIEW_LANGUAGE_SELECT_CYPRESS = 'diffViewProgrammingLanguage';
+
 export const COMMIT_INFO_DIALOG_CYPRESS = 'commit_info_dialog';
 export const COMMIT_INFO_FIELD_CYPRESS = 'commit_info_field';
 export const buildCommitFieldDataCy = (fieldName: string): string =>

@@ -116,9 +116,9 @@
     "Code to review": "Code to review",
     "Input requested": "Input requested",
     "Submit": "Submit",
-    "Unsaved modifications": "Unsaved modifications",
+    "Unsaved content": "Unsaved content",
     "APP_VERSION": "version {{ version }}",
-    "Choose the App Mode": "Choose the App Mode",
+    "App Mode": "App Mode",
     "File added": "File added",
     "Upload complete": "Upload complete",
     "This is just a preview. No files can be uploaded.": "This is just a preview. No files can be uploaded.",
@@ -146,6 +146,11 @@
     "Initial Prompt": "Initial Prompt",
     "Chatbot Prompt": "Chatbot Prompt",
     "Line Number (first line is 0)": "Line Number (first line is 0)",
-    "Loading": "Loading"
+    "Loading": "Loading",
+    "EXECUTION_SUPPORTED_LANGUAGE_NOTICE": "Code execution is currently only supported for the {{language}} language",
+    "APP_MODE_EXECUTE_DESCRIPTION": "Execute code and iterate on code",
+    "APP_MODE_REVIEW_DESCRIPTION": "Review code snippets and interact with bot identities",
+    "APP_MODE_EXPLAIN_DESCRIPTION": "Display a diff view to show differences between code snippets",
+    "APP_MODE_COLLABORATE_DESCRIPTION": "Coming soon !"
   }
 }

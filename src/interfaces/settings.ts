@@ -1,5 +1,7 @@
 import { AppSetting } from '@graasp/apps-query-client';
 
+import { ProgrammingLanguagesType } from '@/config/programmingLanguages';
+
 import { AppMode, DataFile } from '../config/appSettingsTypes';
 
 // general settings keys
@@ -44,6 +46,7 @@ export enum DataFileListSettingsKeys {
 
 // Diff View Setting keys
 export enum DiffViewSettingsKeys {
+  Language = 'language',
   OldCode = 'oldCode',
   NewCode = 'newCode',
   LinesOffset = 'linesOffset',
@@ -76,7 +79,7 @@ export type GeneralSettings = {
 
 export type InstructorCodeVersionSettings = {
   [InstructorCodeSettingsKeys.Code]: string;
-  [InstructorCodeSettingsKeys.Language]: string;
+  [InstructorCodeSettingsKeys.Language]: ProgrammingLanguagesType;
   [InstructorCodeSettingsKeys.CommitMessage]: string;
   [InstructorCodeSettingsKeys.CommitDescription]: string;
 
@@ -108,6 +111,7 @@ export type DataFileListSettings = {
 };
 
 export type DiffViewSettings = {
+  [DiffViewSettingsKeys.Language]: ProgrammingLanguagesType;
   [DiffViewSettingsKeys.OldCode]: string;
   [DiffViewSettingsKeys.NewCode]: string;
   [DiffViewSettingsKeys.LinesOffset]: number;

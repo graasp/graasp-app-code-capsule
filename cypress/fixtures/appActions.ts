@@ -1,6 +1,6 @@
-import { v4 } from 'uuid';
-
 import { AppAction } from '@graasp/apps-query-client';
+
+import { v4 } from 'uuid';
 
 import { APP_ACTIONS_TYPES } from '../../src/config/appActionsTypes';
 import { MEMBERS } from './members';

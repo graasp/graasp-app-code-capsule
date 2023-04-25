@@ -1,10 +1,12 @@
 import { AppData } from '@graasp/apps-query-client';
 
+import { ProgrammingLanguagesType } from '@/config/programmingLanguages';
+
 import { APP_DATA_TYPES } from '../config/appDataTypes';
 
 export type CodeVersionType = {
   code: string;
-  language: string;
+  language: ProgrammingLanguagesType;
   commitMessage: string;
   commitDescription: string;
 };

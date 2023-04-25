@@ -1,6 +1,6 @@
-import i18n from 'i18next';
-
 import { initReactI18next } from 'react-i18next';
+
+import i18n from 'i18next';
 
 import en from '../langs/en.json';
 import fr from '../langs/fr.json';
@@ -14,7 +14,7 @@ export const resources = {
 declare module 'react-i18next' {
   interface CustomTypeOptions {
     defaultNS: typeof defaultNS;
-    resources: typeof resources['en'];
+    resources: (typeof resources)['en'];
   }
 }
 

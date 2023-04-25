@@ -6,7 +6,7 @@ export const mockOpenAIAPI = (): void => {
   cy.intercept(
     {
       method: HttpMethod.POST,
-      url: Cypress.env().REACT_APP_OPEN_AI_API_URL,
+      url: Cypress.env().VITE_OPEN_AI_API_URL,
     },
     (req) =>
       req.reply({

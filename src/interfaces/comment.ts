@@ -2,9 +2,7 @@ import { AppData } from '@graasp/apps-query-client';
 
 import { APP_DATA_TYPES } from '../config/appDataTypes';
 
-export type VisibilityVariants = 'member' | 'item';
-
-export interface CommentAppData {
+export type CommentAppData = {
   data: {
     line: number;
     codeId: string;
@@ -17,6 +15,6 @@ export interface CommentAppData {
     chatbotPromptSettingId?: string;
   };
   type: APP_DATA_TYPES.COMMENT | APP_DATA_TYPES.BOT_COMMENT;
-  visibility?: VisibilityVariants;
-}
+};
+
 export type CommentType = AppData & CommentAppData;

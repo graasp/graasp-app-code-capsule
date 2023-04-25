@@ -19,12 +19,6 @@ export const INSTRUCTOR_CODE_NAME = 'Default';
 
 export const INSTRUCTOR_CODE_ID = 'instructor';
 
-export const JAVASCRIPT = 'javascript';
-export const JAVA = 'java';
-export const PYTHON = 'python';
-export const MATLAB = 'matlab';
-export const JSON_LANG = 'json';
-
 export const REVIEW_MODE_INDIVIDUAL = 'individual';
 export const REVIEW_MODE_COLLABORATIVE = 'collaborative';
 
@@ -41,9 +35,6 @@ export const REVIEW_MODES = [
     value: REVIEW_MODE_COLLABORATIVE,
   },
 ] as const;
-
-export const { REACT_APP_OPEN_AI_API_URL: OPEN_AI_API_URL = 'invalidURL' } =
-  process.env;
 
 export const DEFAULT_BOT_USERNAME = 'Graasp Bot';
 
