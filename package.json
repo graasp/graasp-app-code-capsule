@@ -22,7 +22,7 @@
     "@fortawesome/free-solid-svg-icons": "6.3.0",
     "@fortawesome/react-fontawesome": "0.2.0",
     "@graasp/apps-query-client": "github:graasp/graasp-apps-query-client#77-move-to-vite-for-bundling",
-    "@graasp/pyodide": "github:graasp/graasp-pyodide#1-initial-lib-version",
+    "@graasp/pyodide": "github:graasp/graasp-pyodide",
     "@graasp/sdk": "0.9.3",
     "@graasp/ui": "2.2.0",
     "@mui/icons-material": "5.11.11",
