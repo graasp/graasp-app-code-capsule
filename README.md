@@ -1,6 +1,9 @@
 # Code Capsule App
+
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-2-orange.svg?style=flat-square)](#contributors-)
+
+[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
+
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 This repository hosts the code for a Graasp app that lets users write code reviews, edit and annotate code, alone or in collaboration.
@@ -12,35 +15,37 @@ This repository hosts the code for a Graasp app that lets users write code revie
 Create a `.env.development` file with the following content:
 
 ```bash
-PORT=3005
-CYPRESS_BASE_URL=http://localhost:3005
+VITE_PORT=3005
+VITE_API_HOST=localhost
+VITE_MOCK_API=true
+VITE_GRAASP_APP_ID=45678-677889
+VITE_VERSION=latest
 
-REACT_APP_GRAASP_APP_ID=1234-1234
-REACT_APP_MOCK_API=true
-REACT_APP_API_HOST=http://localhost:3636
-
-REACT_APP_VERSION=$npm_package_version
-
-REACT_APP_OPEN_AI_API_URL=<url of the api>
+VITE_OPEN_AI_API_URL=http://localhost:1234
 ```
+
+Launch the app with `yarn dev`.
 
 ## Running the tests (automatic run on commit with husky)
 
 Create a `.env.test` file with the following content:
 
 ```bash
-PORT=3333
-CYPRESS_BASE_URL=http://localhost:3333
-CYPRESS_INSTRUMENT_PRODUCTION=true
+VITE_PORT=3333
+VITE_API_HOST=localhost
+VITE_MOCK_API=true
+VITE_GRAASP_APP_ID=45678-677889
+VITE_VERSION=latest
 
-REACT_APP_GRAASP_APP_ID=1234-1234
-REACT_APP_MOCK_API=true
-REACT_APP_API_HOST=http://localhost:3636
-
-REACT_APP_OPEN_AI_API_URL=<url of the api>
-
+# dont open browser
 BROWSER=none
+
+VITE_OPEN_AI_API_URL=http://localhost:1234
 ```
+
+Start the tests with `yarn test` for automatic start of the dev server as well as cypress (similar to the CI run).
+Or open 2 terminals and execute `yarn dev` in one and `yarn cypress:open` in the other.
+This will open the Cypress GUI app in which you can run individual tests and interact with the app in it's testing environnement.
 
 ## Documentation
 
@@ -58,8 +63,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <table>
   <tbody>
     <tr>
-      <td align="center" valign="top" width="14.28%"><a href="https://github.com/spaenleh"><img src="https://avatars.githubusercontent.com/u/39373170?v=4?s=100" width="100px;" alt="Basile Spaenlehauer"/><br /><sub><b>Basile Spaenlehauer</b></sub></a><br /><a href="https://github.com/graasp/graasp-app-code-capsule/commits?author=spaenleh" title="Code">💻</a> <a href="#ideas-spaenleh" title="Ideas, Planning, & Feedback">🤔</a> <a href="#research-spaenleh" title="Research">🔬</a> <a href="https://github.com/graasp/graasp-app-code-capsule/commits?author=spaenleh" title="Tests">⚠️</a></td>
-      <td align="center" valign="top" width="14.28%"><a href="https://juancarlosfarah.com"><img src="https://avatars.githubusercontent.com/u/1707188?v=4?s=100" width="100px;" alt="Juan Carlos Farah"/><br /><sub><b>Juan Carlos Farah</b></sub></a><br /><a href="#userTesting-juancarlosfarah" title="User Testing">📓</a> <a href="https://github.com/graasp/graasp-app-code-capsule/issues?q=author%3Ajuancarlosfarah" title="Bug reports">🐛</a> <a href="#research-juancarlosfarah" title="Research">🔬</a> <a href="#ideas-juancarlosfarah" title="Ideas, Planning, & Feedback">🤔</a></td>
+      <td align="center"><a href="https://github.com/spaenleh"><img src="https://avatars.githubusercontent.com/u/39373170?v=4?s=100" width="100px;" alt="Basile Spaenlehauer"/><br /><sub><b>Basile Spaenlehauer</b></sub></a><br /><a href="https://github.com/graasp/graasp-app-code-capsule/commits?author=spaenleh" title="Code">💻</a> <a href="#ideas-spaenleh" title="Ideas, Planning, & Feedback">🤔</a> <a href="#research-spaenleh" title="Research">🔬</a> <a href="https://github.com/graasp/graasp-app-code-capsule/commits?author=spaenleh" title="Tests">⚠️</a></td>
     </tr>
   </tbody>
 </table>
