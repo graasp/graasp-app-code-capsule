@@ -19,7 +19,10 @@ import {
   CODE_REVIEW_LINE_CYPRESS,
   buildAddButtonDataCy,
 } from '../../config/selectors';
-import { DEFAULT_GENERAL_SETTINGS } from '../../config/settings';
+import {
+  DEFAULT_GENERAL_SETTINGS,
+  DEFAULT_SHOW_LINE_NUMBER_SETTING,
+} from '../../config/settings';
 import { CommentType } from '../../interfaces/comment';
 import { GeneralSettingsKeys } from '../../interfaces/settings';
 import { buildCodeRowKey } from '../../utils/utils';
@@ -96,6 +99,10 @@ const CodeReviewBody: FC<Props> = () => {
   const { [GENERAL_SETTINGS_NAME]: settings = DEFAULT_GENERAL_SETTINGS } =
     useSettings();
   const allowComments = settings[GeneralSettingsKeys.AllowComments];
+  // Define and get the value of ShowLineNumber from what the user has set from the App settings.
+  const IsShowLineNumber =
+    settings[GeneralSettingsKeys.ShowLineNumber] ??
+    DEFAULT_SHOW_LINE_NUMBER_SETTING;
   const reviewMode = settings[GeneralSettingsKeys.ReviewMode];
   const { postAppData, comments } = useAppDataContext();
   const { mutate: postAction } = useMutation<
@@ -141,28 +148,39 @@ const CodeReviewBody: FC<Props> = () => {
                 })}
               >
                 <LineNoContainer>
-                  <LineNo>{i + 1}</LineNo>
-                  {allowComments && (
-                    <AddButton
-                      data-cy={CODE_REVIEW_ADD_BUTTON_CYPRESS}
-                      button-cy={buildAddButtonDataCy(i)}
-                      size="medium"
-                      sx={
-                        // add hover style on buttons that are in the selected line range
-                        (multilineRange?.end &&
-                          multilineRange?.start &&
-                          multilineRange?.start <= i &&
-                          multilineRange?.end > i) ||
-                        currentCommentLine === i ||
-                        (multilineRange?.start || 0) === i
-                          ? addButtonHoverStyle
-                          : null
-                      }
-                      onClick={(e) => handleClick(e, i)}
-                    >
-                      <Add fontSize="inherit" color="primary" />
-                    </AddButton>
-                  )}
+                  {
+                    // Control the visibility of lines' numbers, and "add comment" Button conditionally, by checking if we have empty content to review,
+                    // And if it's empty, then don't show anything 'as there is nothing to show to review on the screen',
+                    // And if it's not empty and the user has chosen to whether keep or hide lines' numbers, it will do that by whether including "<LineNo>" tag or not.
+                    line.every(
+                      (token) => token.content.trim().length === 0,
+                    ) ? null : (
+                      <>
+                        {IsShowLineNumber && <LineNo>{i + 1}</LineNo>}
+                        {allowComments && (
+                          <AddButton
+                            data-cy={CODE_REVIEW_ADD_BUTTON_CYPRESS}
+                            button-cy={buildAddButtonDataCy(i)}
+                            size="medium"
+                            sx={
+                              // add hover style on buttons that are in the selected line range
+                              (multilineRange?.end &&
+                                multilineRange?.start &&
+                                multilineRange?.start <= i &&
+                                multilineRange?.end > i) ||
+                              currentCommentLine === i ||
+                              (multilineRange?.start || 0) === i
+                                ? addButtonHoverStyle
+                                : null
+                            }
+                            onClick={(e) => handleClick(e, i)}
+                          >
+                            <Add fontSize="inherit" color="primary" />
+                          </AddButton>
+                        )}
+                      </>
+                    )
+                  }
                 </LineNoContainer>
                 <div data-cy={CODE_REVIEW_LINE_CONTENT_CYPRESS}>
                   {line.map((token, key) => (
@@ -176,7 +194,15 @@ const CodeReviewBody: FC<Props> = () => {
                   ))}
                 </div>
                 {
-                  // todo: show line toggle button
+                  // // todo: show line toggle button
+                  // settings[GeneralSettingsKeys.ShowLineNumber] ? (
+                  //   <div>
+                  //     {/* {line.every((token) => token.content.trim().length === 0)
+                  //       ? 'True'
+                  //       : 'False'} */}
+                  //     {/* {typeof settings[GeneralSettingsKeys.ShowLineNumber]} */}
+                  //   </div>
+                  // ) : null
                 }
               </Line>
               {currentCommentLine === i && (
