@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.5.2](https://github.com/graasp/graasp-app-code-capsule/compare/v1.5.1...v1.5.2) (2023-04-26)
+
+
+### Bug Fixes
+
+* **ci:** rename workflows ([7598423](https://github.com/graasp/graasp-app-code-capsule/commit/7598423c8a60a366c8fb65b31a5046162f6d76a1))
+* make improvements ([#78](https://github.com/graasp/graasp-app-code-capsule/issues/78)) ([14f9e33](https://github.com/graasp/graasp-app-code-capsule/commit/14f9e33ed36a4b9e808f6bacce9f881633922161))
+
+
+### Documentation
+
+* add juancarlosfarah as a contributor for userTesting, bug, and 2 more ([#74](https://github.com/graasp/graasp-app-code-capsule/issues/74)) ([a68318e](https://github.com/graasp/graasp-app-code-capsule/commit/a68318e93cdd4e14f280525d401e2794e8be65f5))
+
 ## [1.5.1](https://github.com/graasp/graasp-app-code-capsule/compare/v1.5.0...v1.5.1) (2023-01-06)
 
 
