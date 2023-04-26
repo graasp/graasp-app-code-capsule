@@ -170,7 +170,6 @@ const CodeEditor: FC<Props> = ({
   const onChangeCommitDescription = (value: string): void => {
     setCommitDescription(value);
   };
-
   return (
     <Stack display="flex" direction="column" spacing={1} maxHeight="100%">
       <CustomSelect
