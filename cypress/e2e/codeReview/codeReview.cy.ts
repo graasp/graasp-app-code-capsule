@@ -190,7 +190,7 @@ describe('Code Review Tools', () => {
               [GeneralSettingsKeys.ShowRunButton]: true,
               [GeneralSettingsKeys.ShowEditButton]: true,
               [GeneralSettingsKeys.ShowVersionNavigation]: true,
-              [GeneralSettingsKeys.ShowLineNumber]: true,
+              [GeneralSettingsKeys.ShowLineNumbers]: true,
             },
           },
           MOCK_CODE_SETTINGS,
