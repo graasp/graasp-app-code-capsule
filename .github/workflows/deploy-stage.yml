@@ -19,7 +19,7 @@ jobs:
       - name: Code Capsule App
         # Replace 'main' with the hash of a commit, so it points to an specific version of the reusable workflow that is used
         # Reference reusable workflow file. Using the commit SHA is the safest for stability and security
-        uses: graasp/graasp-deploy/.github/actions/deploy-stage-s3-apps@7184b0e664d2d9481167ae8788954dad99ab4ef6
+        uses: graasp/graasp-deploy/.github/actions/deploy-stage-s3-apps@f442a1f0ad1d86aeadec9b44d54ed13038cd4fec
         # Replace input build-folder or version if needed
         with:
           build-folder: 'build'
