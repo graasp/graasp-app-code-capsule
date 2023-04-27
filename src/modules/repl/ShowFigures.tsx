@@ -9,7 +9,7 @@ const StyledContainer = styled(Stack)(({ theme }) => ({
   marginBottom: '0px',
   paddingBottom: theme.spacing(2),
   overflowX: 'scroll',
-  height: '400px',
+  height: '200px',
 }));
 
 type Props = {

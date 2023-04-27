@@ -8,7 +8,7 @@ const StyledTextArea = styled('textarea')({
   fontFamily: 'monospace',
   width: '100%',
   resize: 'none',
-  height: 'auto',
+  height: '100%',
   borderWidth: '0px',
   color: 'inherit',
   backgroundColor: 'inherit',
