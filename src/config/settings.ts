@@ -59,7 +59,7 @@ export const DEFAULT_REVIEW_MODE_SETTING = REVIEW_MODE_INDIVIDUAL;
 export const DEFAULT_GENERAL_SETTINGS: GeneralSettings = {
   [GeneralSettingsKeys.ShowHeader]: DEFAULT_SHOW_HEADER_SETTING,
   [GeneralSettingsKeys.ShowToolbar]: DEFAULT_SHOW_TOOLBAR_SETTING,
-  [GeneralSettingsKeys.ShowLineNumber]: DEFAULT_SHOW_LINE_NUMBER_SETTING,
+  [GeneralSettingsKeys.ShowLineNumbers]: DEFAULT_SHOW_LINE_NUMBER_SETTING,
   [GeneralSettingsKeys.ShowVersionNavigation]:
     DEFAULT_SHOW_VERSION_NAVIGATION_SETTING,
   [GeneralSettingsKeys.ShowEditButton]: DEFAULT_SHOW_EDIT_BUTTON_SETTING,

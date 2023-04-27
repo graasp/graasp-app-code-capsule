@@ -54,8 +54,8 @@ const CodeEditor = ({
   // Define and get the value of ShowLineNumber from what the user has set from the App settings.
   const { [GENERAL_SETTINGS_NAME]: settings = DEFAULT_GENERAL_SETTINGS } =
     useSettings();
-  const IsShowLineNumber =
-    settings[GeneralSettingsKeys.ShowLineNumber] ??
+  const showLineNumbers =
+    settings[GeneralSettingsKeys.ShowLineNumbers] ??
     DEFAULT_SHOW_LINE_NUMBER_SETTING;
   const theme = useTheme();
   return (
@@ -72,7 +72,7 @@ const CodeEditor = ({
       }}
       theme={theme.palette.mode}
       // Control the visibility of lines' numbers using "lineNumbers" option from "basicSetup" prop.
-      basicSetup={{ lineNumbers: IsShowLineNumber }}
+      basicSetup={{ lineNumbers: showLineNumbers }}
       extensions={languageSupport.map((k) => SUPPORTED_LANGUAGES[k])}
     />
   );

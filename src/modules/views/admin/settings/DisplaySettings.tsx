@@ -77,8 +77,8 @@ const DisplaySettings: FC<Props> = ({ localSettings, changeSetting }) => {
         changeSetting={changeSetting}
       />
       <SettingsSwitch
-        settingKey={GeneralSettingsKeys.ShowLineNumber}
-        value={localSettings[GeneralSettingsKeys.ShowLineNumber]}
+        settingKey={GeneralSettingsKeys.ShowLineNumbers}
+        value={localSettings[GeneralSettingsKeys.ShowLineNumbers]}
         label={t('Show Line Number')}
         dataCy={SHOW_LINE_NUMBER_SWITCH_CYPRESS}
         changeSetting={changeSetting}
