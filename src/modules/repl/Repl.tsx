@@ -36,7 +36,6 @@ import ShowFigures from './ShowFigures';
 
 const OutlineWrapper = styled(Box)(({ theme }) =>
   theme.unstable_sx({
-    height: 'auto',
     border: 1,
     borderColor: 'info.main',
     borderRadius: 1,
