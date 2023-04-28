@@ -72,7 +72,7 @@ const CodeEditor = ({
       }}
       theme={theme.palette.mode}
       // Control the visibility of lines' numbers using "lineNumbers" option from "basicSetup" prop.
-      basicSetup={{ lineNumbers: showLineNumbers }}
+      basicSetup={{ lineNumbers: showLineNumbers, autocompletion: false }}
       extensions={languageSupport.map((k) => SUPPORTED_LANGUAGES[k])}
     />
   );

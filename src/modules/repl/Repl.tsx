@@ -36,7 +36,6 @@ import ShowFigures from './ShowFigures';
 
 const OutlineWrapper = styled(Box)(({ theme }) =>
   theme.unstable_sx({
-    height: 'auto',
     border: 1,
     borderColor: 'info.main',
     borderRadius: 1,
@@ -317,7 +316,7 @@ const Repl = ({ seedValue }: Props): JSX.Element => {
     <Stack
       display="flex"
       direction="column"
-      height={isFullscreen ? '100vh' : undefined}
+      height={isFullscreen ? '100vh' : '650px'}
       data-cy={REPL_CONTAINER_CY}
       spacing={1}
       p={2}
@@ -337,7 +336,7 @@ const Repl = ({ seedValue }: Props): JSX.Element => {
           flex={1}
           overflow="hidden"
           onKeyDown={handleEditorKeyDown}
-          height="600px"
+          minHeight="350px"
         >
           <CodeEditor
             id={REPL_EDITOR_ID_CY}
@@ -353,7 +352,7 @@ const Repl = ({ seedValue }: Props): JSX.Element => {
           spacing={1}
           overflow="hidden"
         >
-          <OutlineWrapper display="flex" flex={1} p={1} height="600px">
+          <OutlineWrapper display="flex" flex={1} p={1} minHeight="350px">
             <OutputConsole output={output} />
             <NoobInput
               prompt={prompt}

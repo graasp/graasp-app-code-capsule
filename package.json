@@ -24,7 +24,7 @@
     "@graasp/apps-query-client": "github:graasp/graasp-apps-query-client#77-move-to-vite-for-bundling",
     "@graasp/pyodide": "github:graasp/graasp-pyodide",
     "@graasp/sdk": "0.9.3",
-    "@graasp/ui": "2.2.0",
+    "@graasp/ui": "^2.4.2",
     "@mui/icons-material": "5.11.11",
     "@mui/lab": "5.0.0-alpha.84",
     "@mui/material": "5.11.14",
