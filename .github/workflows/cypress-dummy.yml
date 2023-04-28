@@ -1,0 +1,13 @@
+name: Cypress
+
+on:
+  push:
+    branches:
+      - 'release-please-**'
+
+jobs:
+  cypress-run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Do nothing
+        run: echo "No tests required"

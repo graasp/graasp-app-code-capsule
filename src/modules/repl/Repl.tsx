@@ -36,6 +36,7 @@ import ShowFigures from './ShowFigures';
 
 const OutlineWrapper = styled(Box)(({ theme }) =>
   theme.unstable_sx({
+    height: 'auto',
     border: 1,
     borderColor: 'info.main',
     borderRadius: 1,
@@ -363,6 +364,11 @@ const Repl = ({ seedValue }: Props): JSX.Element => {
           </OutlineWrapper>
         </Stack>
         {error && <Alert color="error">{error}</Alert>}
+      </Stack>
+      <Stack direction="row">
+        <OutlineWrapper flex={1}>
+          <ShowFigures figures={figures} />
+        </OutlineWrapper>
       </Stack>
       <Stack direction="row">
         <OutlineWrapper flex={1}>

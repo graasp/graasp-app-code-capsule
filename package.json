@@ -1,6 +1,6 @@
 {
   "name": "graasp-app-code-capsule",
-  "version": "1.5.1",
+  "version": "1.5.2",
   "license": "AGPL-3.0-only",
   "author": "Graasp",
   "contributors": [
@@ -11,7 +11,7 @@
   "dependencies": {
     "@codemirror/lang-cpp": "^6.0.2",
     "@codemirror/lang-java": "6.0.1",
-    "@codemirror/lang-javascript": "6.1.4",
+    "@codemirror/lang-javascript": "6.1.7",
     "@codemirror/lang-json": "^6.0.1",
     "@codemirror/lang-markdown": "^6.1.0",
     "@codemirror/lang-python": "6.1.2",
@@ -36,7 +36,7 @@
     "@types/node": "17.0.45",
     "@types/react": "18.0.28",
     "@types/react-dom": "18.0.11",
-    "@uiw/react-codemirror": "4.19.9",
+    "@uiw/react-codemirror": "4.19.16",
     "@uppy/core": "^3.1.1",
     "@uppy/dashboard": "^3.3.1",
     "@uppy/drag-drop": "^3.0.1",
@@ -149,7 +149,7 @@
     ]
   },
   "resolutions": {
-    "@codemirror/state": "6.1.0"
+    "@codemirror/state": "6.2.0"
   },
   "packageManager": "yarn@3.5.0"
 }
