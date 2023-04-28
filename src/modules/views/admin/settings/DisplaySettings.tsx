@@ -11,7 +11,7 @@ import {
   SETTING_MAX_COMMENT_LENGTH,
   SHOW_EDIT_BUTTON_SWITCH_CYPRESS,
   SHOW_HEADER_SWITCH_CYPRESS,
-  SHOW_LINE_NUMBER_SWITCH_CYPRESS,
+  SHOW_LINE_NUMBERS_SWITCH_CYPRESS,
   SHOW_RUN_BUTTON_SWITCH_CYPRESS,
   SHOW_TOOLBAR_SWITCH_CYPRESS,
   SHOW_VERSION_NAVIGATION_SWITCH_CYPRESS,
@@ -79,8 +79,8 @@ const DisplaySettings: FC<Props> = ({ localSettings, changeSetting }) => {
       <SettingsSwitch
         settingKey={GeneralSettingsKeys.ShowLineNumbers}
         value={localSettings[GeneralSettingsKeys.ShowLineNumbers]}
-        label={t('Show Line Number')}
-        dataCy={SHOW_LINE_NUMBER_SWITCH_CYPRESS}
+        label={t('Show Line Numbers')}
+        dataCy={SHOW_LINE_NUMBERS_SWITCH_CYPRESS}
         changeSetting={changeSetting}
       />
       <Divider sx={{ mt: 1 }} />
