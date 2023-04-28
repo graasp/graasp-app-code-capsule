@@ -370,11 +370,6 @@ const Repl = ({ seedValue }: Props): JSX.Element => {
           <ShowFigures figures={figures} />
         </OutlineWrapper>
       </Stack>
-      <Stack direction="row">
-        <OutlineWrapper flex={1}>
-          <ShowFigures figures={figures} />
-        </OutlineWrapper>
-      </Stack>
     </Stack>
   );
 };
