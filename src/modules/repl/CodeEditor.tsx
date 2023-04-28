@@ -20,7 +20,7 @@ import {
 } from '@/config/programmingLanguages';
 import {
   DEFAULT_GENERAL_SETTINGS,
-  DEFAULT_SHOW_LINE_NUMBER_SETTING,
+  DEFAULT_SHOW_LINE_NUMBERS_SETTING,
 } from '@/config/settings';
 import { GeneralSettingsKeys } from '@/interfaces/settings';
 
@@ -56,7 +56,7 @@ const CodeEditor = ({
     useSettings();
   const showLineNumbers =
     settings[GeneralSettingsKeys.ShowLineNumbers] ??
-    DEFAULT_SHOW_LINE_NUMBER_SETTING;
+    DEFAULT_SHOW_LINE_NUMBERS_SETTING;
   const theme = useTheme();
   return (
     <CodeMirror
