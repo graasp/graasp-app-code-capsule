@@ -19,7 +19,10 @@ import {
   CODE_REVIEW_LINE_CYPRESS,
   buildAddButtonDataCy,
 } from '../../config/selectors';
-import { DEFAULT_GENERAL_SETTINGS } from '../../config/settings';
+import {
+  DEFAULT_GENERAL_SETTINGS,
+  DEFAULT_SHOW_LINE_NUMBERS_SETTING,
+} from '../../config/settings';
 import { CommentType } from '../../interfaces/comment';
 import { GeneralSettingsKeys } from '../../interfaces/settings';
 import { buildCodeRowKey } from '../../utils/utils';
@@ -96,6 +99,10 @@ const CodeReviewBody: FC<Props> = () => {
   const { [GENERAL_SETTINGS_NAME]: settings = DEFAULT_GENERAL_SETTINGS } =
     useSettings();
   const allowComments = settings[GeneralSettingsKeys.AllowComments];
+  // Define and get the value of ShowLineNumber from what the user has set from the App settings.
+  const showLineNumbers =
+    settings[GeneralSettingsKeys.ShowLineNumbers] ??
+    DEFAULT_SHOW_LINE_NUMBERS_SETTING;
   const reviewMode = settings[GeneralSettingsKeys.ReviewMode];
   const { postAppData, comments } = useAppDataContext();
   const { mutate: postAction } = useMutation<
@@ -141,7 +148,12 @@ const CodeReviewBody: FC<Props> = () => {
                 })}
               >
                 <LineNoContainer>
-                  <LineNo>{i + 1}</LineNo>
+                  {
+                    // Control the visibility of lines' numbers, and "add comment" Button conditionally, by checking if we have empty content to review,
+                    // And if it's empty, then just show "add comment" Button 'as there is nothing to show to review on the screen',
+                    // And if it's not empty and the user has chosen to whether keep or hide lines' numbers, it will do that by whether including "<LineNo>" tag or not.
+                    showLineNumbers ? <LineNo>{i + 1}</LineNo> : null
+                  }
                   {allowComments && (
                     <AddButton
                       data-cy={CODE_REVIEW_ADD_BUTTON_CYPRESS}
@@ -175,9 +187,6 @@ const CodeReviewBody: FC<Props> = () => {
                     />
                   ))}
                 </div>
-                {
-                  // todo: show line toggle button
-                }
               </Line>
               {currentCommentLine === i && (
                 <CommentEditor

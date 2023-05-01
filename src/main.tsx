@@ -3,9 +3,8 @@ import ReactDOM from 'react-dom/client';
 
 import { mockApi } from '@graasp/apps-query-client';
 
-import { Replay } from '@sentry/browser';
+import { BrowserTracing, Replay } from '@sentry/browser';
 import * as Sentry from '@sentry/react';
-import { BrowserTracing } from '@sentry/tracing';
 
 import { MOCK_API, OPEN_AI_API_URL } from './config/env';
 import { generateSentryConfig } from './config/sentry';

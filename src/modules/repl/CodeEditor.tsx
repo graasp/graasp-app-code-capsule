@@ -8,6 +8,7 @@ import { markdown } from '@codemirror/lang-markdown';
 import { python } from '@codemirror/lang-python';
 import CodeMirror from '@uiw/react-codemirror';
 
+import { GENERAL_SETTINGS_NAME } from '@/config/appSettingsTypes';
 import {
   JAVA,
   JAVASCRIPT,
@@ -17,6 +18,13 @@ import {
   TYPESCRIPT,
   TYPESCRIPT_WITH_JSX,
 } from '@/config/programmingLanguages';
+import {
+  DEFAULT_GENERAL_SETTINGS,
+  DEFAULT_SHOW_LINE_NUMBERS_SETTING,
+} from '@/config/settings';
+import { GeneralSettingsKeys } from '@/interfaces/settings';
+
+import { useSettings } from '../context/SettingsContext';
 
 const DEFAULT_LANGUAGE = 'text' as const;
 
@@ -37,13 +45,18 @@ type Props = {
   setValue: (v: string) => void;
   languageSupport?: (keyof typeof SUPPORTED_LANGUAGES)[];
 };
-
 const CodeEditor = ({
   value,
   setValue,
   id,
   languageSupport = [DEFAULT_LANGUAGE],
 }: Props): JSX.Element => {
+  // Define and get the value of ShowLineNumber from what the user has set from the App settings.
+  const { [GENERAL_SETTINGS_NAME]: settings = DEFAULT_GENERAL_SETTINGS } =
+    useSettings();
+  const showLineNumbers =
+    settings[GeneralSettingsKeys.ShowLineNumbers] ??
+    DEFAULT_SHOW_LINE_NUMBERS_SETTING;
   const theme = useTheme();
   return (
     <CodeMirror
@@ -58,7 +71,8 @@ const CodeEditor = ({
         width: '100%',
       }}
       theme={theme.palette.mode}
-      basicSetup
+      // Control the visibility of lines' numbers using "lineNumbers" option from "basicSetup" prop.
+      basicSetup={{ lineNumbers: showLineNumbers, autocompletion: false }}
       extensions={languageSupport.map((k) => SUPPORTED_LANGUAGES[k])}
     />
   );

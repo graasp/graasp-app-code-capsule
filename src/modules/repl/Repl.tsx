@@ -36,6 +36,7 @@ import ShowFigures from './ShowFigures';
 
 const OutlineWrapper = styled(Box)(({ theme }) =>
   theme.unstable_sx({
+    height: 'auto',
     border: 1,
     borderColor: 'info.main',
     borderRadius: 1,
@@ -312,12 +313,11 @@ const Repl = ({ seedValue }: Props): JSX.Element => {
       onClickSaveCode();
     }
   };
-
   return (
     <Stack
       display="flex"
       direction="column"
-      height={isFullscreen ? '100vh' : '600px'}
+      height={isFullscreen ? '100vh' : '650px'}
       data-cy={REPL_CONTAINER_CY}
       spacing={1}
       p={2}
@@ -337,6 +337,7 @@ const Repl = ({ seedValue }: Props): JSX.Element => {
           flex={1}
           overflow="hidden"
           onKeyDown={handleEditorKeyDown}
+          minHeight="350px"
         >
           <CodeEditor
             id={REPL_EDITOR_ID_CY}
@@ -352,7 +353,7 @@ const Repl = ({ seedValue }: Props): JSX.Element => {
           spacing={1}
           overflow="hidden"
         >
-          <OutlineWrapper display="flex" flex={1} p={1}>
+          <OutlineWrapper display="flex" flex={1} p={1} minHeight="350px">
             <OutputConsole output={output} />
             <NoobInput
               prompt={prompt}
@@ -361,11 +362,13 @@ const Repl = ({ seedValue }: Props): JSX.Element => {
               onCancel={onClickCancel}
             />
           </OutlineWrapper>
-          <OutlineWrapper>
-            <ShowFigures figures={figures} />
-          </OutlineWrapper>
         </Stack>
         {error && <Alert color="error">{error}</Alert>}
+      </Stack>
+      <Stack direction="row">
+        <OutlineWrapper flex={1}>
+          <ShowFigures figures={figures} />
+        </OutlineWrapper>
       </Stack>
     </Stack>
   );
