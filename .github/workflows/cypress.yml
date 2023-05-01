@@ -1,6 +1,7 @@
 name: Cypress
 
 on:
+  merge_group:
   push:
     branches-ignore:
       - 'release-please-**'
