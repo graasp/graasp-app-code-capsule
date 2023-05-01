@@ -10,7 +10,6 @@ jobs:
   cypress-run:
     concurrency:
       group: cypress-${{ github.head_ref || github.ref }}
-      cancel-in-progress: true
     runs-on: ubuntu-latest
     steps:
       - name: checkout
