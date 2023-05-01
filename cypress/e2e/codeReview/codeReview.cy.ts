@@ -18,7 +18,10 @@ import {
   COMMENT_THREAD_CONTAINER_CYPRESS,
   COMMIT_INFO_DIALOG_CYPRESS,
   CUSTOM_DIALOG_TITLE_CYPRESS,
+  DISPLAY_SETTINGS_FAB_CYPRESS,
   PLAYER_VIEW_CYPRESS,
+  SETTINGS_DIALOG_SAVE_BUTTON_CYPRESS,
+  SHOW_LINE_NUMBER_SWITCH_CYPRESS,
   TOOLBAR_COMMIT_INFO_BUTTON_CYPRESS,
   TOOLBAR_EDIT_CODE_BUTTON_CYPRESS,
   TOOLBAR_RUN_CODE_BUTTON_CYPRESS,
@@ -319,5 +322,107 @@ describe('Comment settings', () => {
       'contain.text',
       '20',
     );
+  });
+});
+
+describe('Show Line Numbers Setting Builder View', () => {
+  beforeEach(() => {
+    cy.setUpApi({
+      database: {
+        appSettings: [
+          MOCK_GENERAL_SETTINGS,
+          {
+            ...MOCK_GENERAL_SETTINGS,
+            data: {
+              ...DEFAULT_GENERAL_SETTINGS,
+              [GeneralSettingsKeys.ShowLineNumbers]: true,
+            },
+          },
+          MOCK_CODE_SETTINGS,
+        ],
+      },
+      appContext: {
+        context: Context.BUILDER,
+        permission: PermissionLevel.Admin,
+      },
+    });
+    cy.visit('/');
+  });
+
+  it('Toggling Line Numbers Switch from Display Settings', () => {
+    // Open Dispalay Settings.
+    cy.get(buildDataCy(DISPLAY_SETTINGS_FAB_CYPRESS))
+      .should('be.visible')
+      .as('displaySettingsFab')
+      .click();
+    // Check that Line Numbers Switch is checked.
+    cy.get(`[data-cy=${SHOW_LINE_NUMBER_SWITCH_CYPRESS}]`).within(() => {
+      cy.get('input[type="checkbox"]').should('be.checked');
+    });
+    // Check that line numbers are shown.
+    cy.get('[data-cy=line-number]').should('exist');
+    // Click on switch to toggle setting, check that the switch shouldn't be checked.
+    cy.get(`[data-cy=${SHOW_LINE_NUMBER_SWITCH_CYPRESS}]`).within(() => {
+      cy.get('input[type="checkbox"]').click();
+      cy.get('input[type="checkbox"]').should('not.be.checked');
+    });
+    // Click on Save button from the display settings window.
+    cy.get(buildDataCy(SETTINGS_DIALOG_SAVE_BUTTON_CYPRESS))
+      .as('saveButton')
+      .should('be.visible')
+      .click();
+    // Check that line numbers are not shown.
+    cy.get('[data-cy=line-number]').should('not.exist');
+  });
+});
+
+describe('Show Line Numbers Setting Player View', () => {
+  beforeEach(() => {
+    cy.setUpApi({
+      database: {
+        appSettings: [
+          MOCK_GENERAL_SETTINGS,
+          {
+            ...MOCK_GENERAL_SETTINGS,
+            data: {
+              ...DEFAULT_GENERAL_SETTINGS,
+              [GeneralSettingsKeys.ShowLineNumbers]: true,
+            },
+          },
+          MOCK_CODE_SETTINGS,
+        ],
+      },
+      appContext: {
+        context: Context.PLAYER,
+        permission: PermissionLevel.Read,
+      },
+    });
+    cy.visit('/');
+  });
+  it('Should display line numbers when "ShowLineNumbers" is ture', () => {
+    cy.get('[data-cy=line-number]').should('not.exist');
+  });
+  it('Should not display line numbers when "ShowLineNumbers" is false', () => {
+    cy.setUpApi({
+      database: {
+        appSettings: [
+          MOCK_GENERAL_SETTINGS,
+          {
+            ...MOCK_GENERAL_SETTINGS,
+            data: {
+              ...DEFAULT_GENERAL_SETTINGS,
+              [GeneralSettingsKeys.ShowLineNumbers]: false,
+            },
+          },
+          MOCK_CODE_SETTINGS,
+        ],
+      },
+      appContext: {
+        context: Context.PLAYER,
+        permission: PermissionLevel.Read,
+      },
+    });
+    // Check that the LineNo component does not exist when ShowLineNumbers is false.
+    cy.get('[data-cy=line-number]').should('not.exist');
   });
 });

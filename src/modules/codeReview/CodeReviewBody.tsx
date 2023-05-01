@@ -152,7 +152,9 @@ const CodeReviewBody: FC<Props> = () => {
                     // Control the visibility of lines' numbers, and "add comment" Button conditionally, by checking if we have empty content to review,
                     // And if it's empty, then just show "add comment" Button 'as there is nothing to show to review on the screen',
                     // And if it's not empty and the user has chosen to whether keep or hide lines' numbers, it will do that by whether including "<LineNo>" tag or not.
-                    showLineNumbers ? <LineNo>{i + 1}</LineNo> : null
+                    showLineNumbers ? (
+                      <LineNo data-cy="line-number">{i + 1}</LineNo>
+                    ) : null
                   }
                   {allowComments && (
                     <AddButton
