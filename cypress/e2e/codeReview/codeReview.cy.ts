@@ -21,7 +21,7 @@ import {
   DISPLAY_SETTINGS_FAB_CYPRESS,
   PLAYER_VIEW_CYPRESS,
   SETTINGS_DIALOG_SAVE_BUTTON_CYPRESS,
-  SHOW_LINE_NUMBER_SWITCH_CYPRESS,
+  SHOW_LINE_NUMBERS_SWITCH_CYPRESS,
   TOOLBAR_COMMIT_INFO_BUTTON_CYPRESS,
   TOOLBAR_EDIT_CODE_BUTTON_CYPRESS,
   TOOLBAR_RUN_CODE_BUTTON_CYPRESS,
@@ -356,13 +356,13 @@ describe('Show Line Numbers Setting Builder View', () => {
       .as('displaySettingsFab')
       .click();
     // Check that Line Numbers Switch is checked.
-    cy.get(`[data-cy=${SHOW_LINE_NUMBER_SWITCH_CYPRESS}]`).within(() => {
+    cy.get(`[data-cy=${SHOW_LINE_NUMBERS_SWITCH_CYPRESS}]`).within(() => {
       cy.get('input[type="checkbox"]').should('be.checked');
     });
     // Check that line numbers are shown.
     cy.get('[data-cy=line-number]').should('exist');
     // Click on switch to toggle setting, check that the switch shouldn't be checked.
-    cy.get(`[data-cy=${SHOW_LINE_NUMBER_SWITCH_CYPRESS}]`).within(() => {
+    cy.get(`[data-cy=${SHOW_LINE_NUMBERS_SWITCH_CYPRESS}]`).within(() => {
       cy.get('input[type="checkbox"]').click();
       cy.get('input[type="checkbox"]').should('not.be.checked');
     });
