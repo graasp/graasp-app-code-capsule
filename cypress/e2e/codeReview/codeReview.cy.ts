@@ -19,8 +19,8 @@ import {
   COMMIT_INFO_DIALOG_CYPRESS,
   CUSTOM_DIALOG_TITLE_CYPRESS,
   DISPLAY_SETTINGS_FAB_CYPRESS,
-  LINE_NUMBERS,
   PLAYER_VIEW_CYPRESS,
+  REPL_EDITOR_ID_CY,
   SETTINGS_DIALOG_CANCEL_BUTTON_CYPRESS,
   SETTINGS_DIALOG_SAVE_BUTTON_CYPRESS,
   SHOW_LINE_NUMBERS_SWITCH_CYPRESS,
@@ -374,7 +374,7 @@ describe('Show Line Numbers Setting Builder View', () => {
       .should('be.visible')
       .click();
     // Check that line numbers are shown.
-    cy.get(buildDataCy(LINE_NUMBERS)).should('be.visible');
+    cy.get(`#${REPL_EDITOR_ID_CY} .cm-lineNumbers`).should('be.visible');
     // Check For Line Numbers Are Not Shown.
     // Open Display Settings.
     cy.get(buildDataCy(DISPLAY_SETTINGS_FAB_CYPRESS))
@@ -384,7 +384,7 @@ describe('Show Line Numbers Setting Builder View', () => {
     // Click on switch to toggle setting, check that the switch shouldn't be checked.
     cy.get(buildDataCy(SHOW_LINE_NUMBERS_SWITCH_CYPRESS)).within(() => {
       cy.get('input[type="checkbox"]').click();
-      cy.get('input[type="checkbox"]').should('not.be.checked');
+      cy.get('input[type="checkbox"]').should('not.to.be.checked');
     });
     // Click on Save button from the display settings window.
     cy.get(buildDataCy(SETTINGS_DIALOG_SAVE_BUTTON_CYPRESS))
@@ -392,6 +392,6 @@ describe('Show Line Numbers Setting Builder View', () => {
       .should('be.visible')
       .click();
     // Check that line numbers are not shown.
-    cy.get(buildDataCy(LINE_NUMBERS)).should('not.be.visible');
+    cy.get(`#${REPL_EDITOR_ID_CY} .cm-lineNumbers`).should('not.exist');
   });
 });

@@ -11,7 +11,7 @@ import {
   GENERAL_SETTINGS_NAME,
   INSTRUCTOR_CODE_VERSION_SETTINGS_NAME,
 } from '../../src/config/appSettingsTypes';
-import { PYTHON } from '../../src/config/constants';
+import { PYTHON } from '../../src/config/programmingLanguages';
 import {
   DEFAULT_APP_MODE_SETTINGS,
   DEFAULT_CHATBOT_PROMPT_SETTINGS,
