@@ -27,7 +27,7 @@
     "@graasp/ui": "2.4.2",
     "@mui/icons-material": "5.11.11",
     "@mui/lab": "5.0.0-alpha.84",
-    "@mui/material": "5.11.14",
+    "@mui/material": "5.13.5",
     "@sentry/browser": "7.50.0",
     "@sentry/react": "7.50.0",
     "@tanstack/react-query": "^4.28.0",
