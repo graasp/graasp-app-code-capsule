@@ -1651,7 +1651,22 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@codemirror/lang-javascript@npm:6.1.7, @codemirror/lang-javascript@npm:^6.0.0":
+"@codemirror/lang-javascript@npm:6.1.9":
+  version: 6.1.9
+  resolution: "@codemirror/lang-javascript@npm:6.1.9"
+  dependencies:
+    "@codemirror/autocomplete": ^6.0.0
+    "@codemirror/language": ^6.6.0
+    "@codemirror/lint": ^6.0.0
+    "@codemirror/state": ^6.0.0
+    "@codemirror/view": ^6.0.0
+    "@lezer/common": ^1.0.0
+    "@lezer/javascript": ^1.0.0
+  checksum: 6c79b51c61d37b3f4dde6312df02183045c31f055e5cf8550b497f39798b823b4e380a641a2cfc97f3f26fd4e89194258d8ef741c42acd72b3f2e18257b427a5
+  languageName: node
+  linkType: hard
+
+"@codemirror/lang-javascript@npm:^6.0.0":
   version: 6.1.7
   resolution: "@codemirror/lang-javascript@npm:6.1.7"
   dependencies:
@@ -1690,14 +1705,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@codemirror/lang-python@npm:6.1.2":
-  version: 6.1.2
-  resolution: "@codemirror/lang-python@npm:6.1.2"
+"@codemirror/lang-python@npm:6.1.3":
+  version: 6.1.3
+  resolution: "@codemirror/lang-python@npm:6.1.3"
   dependencies:
     "@codemirror/autocomplete": ^6.3.2
-    "@codemirror/language": ^6.0.0
-    "@lezer/python": ^1.0.0
-  checksum: e822a1236fb3c2773e1889d4a24f8f2f7fb45ab8cf6e0521d311508a3eda19c4dcf4e2f943766b93545e673f3f0336725418e0bb48b3d9fb6a942339d164cfa5
+    "@codemirror/language": ^6.8.0
+    "@lezer/python": ^1.1.4
+  checksum: 65a0276a4503e4e3b70dd28d1c93ef472632b6d2c4bf3ae92d305d14ee8cf60b0bbbf62d5ceb51294de9598d9e2d42eafcde26f317ee7b90d0a11dfa863c1d1a
   languageName: node
   linkType: hard
 
@@ -1712,6 +1727,20 @@ __metadata:
     "@lezer/lr": ^1.0.0
     style-mod: ^4.0.0
   checksum: bb9411620e2f231653a3f0c4429e0d19a3843bff5dbc117df4649d7bf783ec4ad809c0add8bc0887a4ec3f48b4f8f941621168e47d76101d5383f0d670af1722
+  languageName: node
+  linkType: hard
+
+"@codemirror/language@npm:^6.8.0":
+  version: 6.8.0
+  resolution: "@codemirror/language@npm:6.8.0"
+  dependencies:
+    "@codemirror/state": ^6.0.0
+    "@codemirror/view": ^6.0.0
+    "@lezer/common": ^1.0.0
+    "@lezer/highlight": ^1.0.0
+    "@lezer/lr": ^1.0.0
+    style-mod: ^4.0.0
+  checksum: 64408d996641931fa4c6b892e17ee1fdaee0f63d3d84c019a6ea7b1e6d1c774f92357b95c2ebaed60545062b795b72d0a058c03578b2bf4023c87726e97b5d2f
   languageName: node
   linkType: hard
 
@@ -1737,10 +1766,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@codemirror/state@npm:6.2.0":
-  version: 6.2.0
-  resolution: "@codemirror/state@npm:6.2.0"
-  checksum: fdc99c773dc09c700dd02bf918f06132aa8d3069c262cc4eb6ca5c810ce24ae2d7e90719ae7630a8158fd263018de6d40bd78f312e6bfba754e737b64e6c6b3d
+"@codemirror/state@npm:6.2.1":
+  version: 6.2.1
+  resolution: "@codemirror/state@npm:6.2.1"
+  checksum: d12a321d0471b264b9d3259042bff913a8b939e8d28d408ff452004538a71ca9d5329df3f8a1d8a9183f5b42a7ef5b200737bcab1065714f5ae8e0a5ba9d59d3
   languageName: node
   linkType: hard
 
@@ -3471,13 +3500,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@lezer/python@npm:^1.0.0":
-  version: 1.1.5
-  resolution: "@lezer/python@npm:1.1.5"
+"@lezer/python@npm:^1.1.4":
+  version: 1.1.7
+  resolution: "@lezer/python@npm:1.1.7"
   dependencies:
     "@lezer/highlight": ^1.0.0
     "@lezer/lr": ^1.0.0
-  checksum: 0327b90d18135bcc6e0b13369074f6e4cbc3204f6b91e0ffac674a2f8e4d32a0ecb7450fa0974c066018f09ec4be2c6568a0fac219336696188363a8cf1c92a3
+  checksum: 7ae6b4ae770b3cd849eee3d8fb1d904745aee202a76e7db0a079725a97571c4778fa5bd74878206e44aa3349044bf056008e19e7a90650fad93d51890f685077
   languageName: node
   linkType: hard
 
@@ -10751,10 +10780,10 @@ __metadata:
   dependencies:
     "@codemirror/lang-cpp": ^6.0.2
     "@codemirror/lang-java": 6.0.1
-    "@codemirror/lang-javascript": 6.1.7
+    "@codemirror/lang-javascript": 6.1.9
     "@codemirror/lang-json": ^6.0.1
     "@codemirror/lang-markdown": ^6.1.0
-    "@codemirror/lang-python": 6.1.2
+    "@codemirror/lang-python": 6.1.3
     "@commitlint/cli": 17.4.4
     "@commitlint/config-conventional": 17.4.4
     "@cypress/code-coverage": 3.10.7
