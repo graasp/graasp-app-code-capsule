@@ -152,6 +152,7 @@
     "APP_MODE_EXECUTE_DESCRIPTION": "Execute code and iterate on code",
     "APP_MODE_REVIEW_DESCRIPTION": "Review code snippets and interact with bot identities",
     "APP_MODE_EXPLAIN_DESCRIPTION": "Display a diff view to show differences between code snippets",
-    "APP_MODE_COLLABORATE_DESCRIPTION": "Coming soon !"
+    "APP_MODE_COLLABORATE_DESCRIPTION": "Coming soon !",
+    "PUBLIC_ALERT": "You are not authenticated. You cannot save any data."
   }
 }

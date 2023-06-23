@@ -14,7 +14,7 @@ import {
   MOCK_GENERAL_SETTINGS,
 } from '../../../fixtures/appSettings';
 
-describe('Show Line Numbers Code Review', () => {
+describe.only('Show Line Numbers Code Review', () => {
   beforeEach(() => {
     cy.setUpApi({
       database: {
@@ -24,7 +24,7 @@ describe('Show Line Numbers Code Review', () => {
           {
             ...MOCK_GENERAL_SETTINGS,
             data: {
-              ...DEFAULT_GENERAL_SETTINGS,
+              ...DEFAULT_GENERAL_SETTINGS.toJS(),
               [GeneralSettingsKeys.ShowLineNumbers]: true,
             },
           },
@@ -32,7 +32,7 @@ describe('Show Line Numbers Code Review', () => {
         ],
       },
       appContext: {
-        context: Context.PLAYER,
+        context: Context.Player,
         permission: PermissionLevel.Read,
       },
     });
@@ -53,7 +53,7 @@ describe('Hide Line Numbers Code Review', () => {
           {
             ...MOCK_GENERAL_SETTINGS,
             data: {
-              ...DEFAULT_GENERAL_SETTINGS,
+              ...DEFAULT_GENERAL_SETTINGS.toJS(),
               [GeneralSettingsKeys.ShowLineNumbers]: false,
             },
           },
@@ -61,7 +61,7 @@ describe('Hide Line Numbers Code Review', () => {
         ],
       },
       appContext: {
-        context: Context.PLAYER,
+        context: Context.Player,
         permission: PermissionLevel.Read,
       },
     });
@@ -83,7 +83,7 @@ describe('Show Line Numbers Code Execution', () => {
           {
             ...MOCK_GENERAL_SETTINGS,
             data: {
-              ...DEFAULT_GENERAL_SETTINGS,
+              ...DEFAULT_GENERAL_SETTINGS.toJS(),
               [GeneralSettingsKeys.ShowLineNumbers]: true,
             },
           },
@@ -91,7 +91,7 @@ describe('Show Line Numbers Code Execution', () => {
         ],
       },
       appContext: {
-        context: Context.PLAYER,
+        context: Context.Player,
         permission: PermissionLevel.Read,
       },
     });
@@ -113,7 +113,7 @@ describe('Hide Line Numbers Code Execution', () => {
           {
             ...MOCK_GENERAL_SETTINGS,
             data: {
-              ...DEFAULT_GENERAL_SETTINGS,
+              ...DEFAULT_GENERAL_SETTINGS.toJS(),
               [GeneralSettingsKeys.ShowLineNumbers]: false,
             },
           },
@@ -121,7 +121,7 @@ describe('Hide Line Numbers Code Execution', () => {
         ],
       },
       appContext: {
-        context: Context.PLAYER,
+        context: Context.Player,
         permission: PermissionLevel.Read,
       },
     });

@@ -1,9 +1,8 @@
-import React, { FC, useEffect, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { Box, Stack, TextField, styled, useTheme } from '@mui/material';
 
-import { AppSetting } from '@graasp/apps-query-client';
 import { Button } from '@graasp/ui';
 
 import { java } from '@codemirror/lang-java';
@@ -21,7 +20,7 @@ import {
   ProgrammingLanguagesType,
   programmingLanguageSelect,
 } from '../../config/programmingLanguages';
-import { MUTATION_KEYS, hooks, useMutation } from '../../config/queryClient';
+import { hooks, mutations } from '../../config/queryClient';
 import {
   CODE_EDITOR_CANCEL_BUTTON_CYPRESS,
   CODE_EDITOR_COMMIT_DESCRIPTION_CYPRESS,
@@ -35,7 +34,10 @@ import {
   DEFAULT_COMMIT_MESSAGE_SETTING,
   DEFAULT_INSTRUCTOR_CODE_VERSION_SETTINGS,
 } from '../../config/settings';
-import { CodeType, CodeVersionType } from '../../interfaces/codeVersions';
+import {
+  CodeVersionType,
+  CodeVersionTypeRecord,
+} from '../../interfaces/codeVersions';
 import { useCodeVersionContext } from '../context/CodeVersionContext';
 import CustomSelect from '../layout/CustomSelect';
 
@@ -74,21 +76,9 @@ const CodeEditor: FC<Props> = ({
     seedCommitDescription,
   );
 
-  const { mutate: postSettings } = useMutation<
-    unknown,
-    unknown,
-    Partial<AppSetting>
-  >(MUTATION_KEYS.POST_APP_SETTING);
-  const { mutate: patchSettings } = useMutation<
-    unknown,
-    unknown,
-    Partial<AppSetting>
-  >(MUTATION_KEYS.PATCH_APP_SETTING);
-  const { mutateAsync: postAppData } = useMutation<
-    CodeType,
-    unknown,
-    Partial<CodeType>
-  >(MUTATION_KEYS.POST_APP_DATA);
+  const { mutate: postSettings } = mutations.usePostAppSetting();
+  const { mutate: patchSettings } = mutations.usePatchAppSetting();
+  const { mutateAsync: postAppData } = mutations.usePostAppData();
   const appSettingsQuery = hooks.useAppSettings();
   const codeVersionSettings = appSettingsQuery.data?.find(
     (res) => res.name === INSTRUCTOR_CODE_VERSION_SETTINGS_NAME,
@@ -103,7 +93,7 @@ const CodeEditor: FC<Props> = ({
           language: languageSetting,
           commitMessage: commitMessageSetting,
           commitDescription: commitDescriptionSetting,
-        } = (codeVersionSettings?.data as CodeVersionType) ||
+        } = (codeVersionSettings?.data as CodeVersionTypeRecord) ||
         DEFAULT_INSTRUCTOR_CODE_VERSION_SETTINGS;
         setCode(codeSetting);
         setLanguage(languageSetting);

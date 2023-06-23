@@ -1,10 +1,12 @@
-import { AppData } from '@graasp/apps-query-client';
+import { AppData, AppDataVisibility, Member } from '@graasp/sdk';
 
 import { v4 as uuid } from 'uuid';
 
 import { APP_DATA_TYPES } from '../../src/config/appDataTypes';
-import { INSTRUCTOR_CODE_ID, PYTHON } from '../../src/config/constants';
+import { INSTRUCTOR_CODE_ID } from '../../src/config/constants';
+import { PYTHON } from '../../src/config/programmingLanguages';
 import { CodeType } from '../../src/interfaces/codeVersions';
+import { CommentAppData } from '../../src/interfaces/comment';
 import { LiveCodeType } from '../../src/interfaces/liveCode';
 import { MOCK_CHATBOT_PROMPT_SETTINGS_INPUT } from './appSettings';
 import { CURRENT_MEMBER, MEMBERS } from './members';
@@ -22,12 +24,13 @@ export const SINGLE_LINE_MOCK_COMMENTS: AppData[] = [
       content: 'Thread start\n\nComment on line 1',
       parent: null,
     },
-    memberId: CURRENT_MEMBER.id,
-    creator: CURRENT_MEMBER.id,
-    itemId: MOCK_SERVER_ITEM.id,
-    createdAt: new Date('2020-01-01').toISOString(),
-    updatedAt: new Date('2020-01-01').toISOString(),
+    member: CURRENT_MEMBER,
+    creator: CURRENT_MEMBER,
+    item: MOCK_SERVER_ITEM,
+    createdAt: new Date('2020-01-01'),
+    updatedAt: new Date('2020-01-01'),
     type: APP_DATA_TYPES.COMMENT,
+    visibility: AppDataVisibility.Member,
   },
   {
     id: uuid(),
@@ -37,12 +40,13 @@ export const SINGLE_LINE_MOCK_COMMENTS: AppData[] = [
       content: 'Other Thread start\n\nComment on line 3\n\nFrom Bob',
       parent: null,
     },
-    memberId: MEMBERS.BOB.id,
-    creator: MEMBERS.BOB.id,
-    itemId: MOCK_SERVER_ITEM.id,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
+    member: MEMBERS.BOB,
+    creator: MEMBERS.BOB,
+    item: MOCK_SERVER_ITEM,
+    createdAt: new Date(),
+    updatedAt: new Date(),
     type: APP_DATA_TYPES.COMMENT,
+    visibility: AppDataVisibility.Member,
   },
   {
     id: uuid(),
@@ -52,16 +56,17 @@ export const SINGLE_LINE_MOCK_COMMENTS: AppData[] = [
       content: 'Other Thread start\n\nComment on line 3\n\nFrom Anna',
       parent: null,
     },
-    memberId: CURRENT_MEMBER.id,
-    creator: CURRENT_MEMBER.id,
-    itemId: MOCK_SERVER_ITEM.id,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
+    member: CURRENT_MEMBER,
+    creator: CURRENT_MEMBER,
+    item: MOCK_SERVER_ITEM,
+    createdAt: new Date(),
+    updatedAt: new Date(),
     type: APP_DATA_TYPES.COMMENT,
+    visibility: AppDataVisibility.Member,
   },
 ];
 
-export const MOCK_ORPHAN_COMMENT = {
+export const MOCK_ORPHAN_COMMENT: AppData & CommentAppData = {
   id: uuid(),
   data: {
     line: 1,
@@ -69,12 +74,13 @@ export const MOCK_ORPHAN_COMMENT = {
     content: 'Orphan comment',
     parent: '123456789',
   },
-  memberId: MEMBERS.BOB.id,
-  creator: MEMBERS.BOB.id,
-  itemId: MOCK_SERVER_ITEM.id,
-  createdAt: new Date().toISOString(),
-  updatedAt: new Date().toISOString(),
+  member: MEMBERS.BOB,
+  creator: MEMBERS.BOB,
+  item: MOCK_SERVER_ITEM,
+  createdAt: new Date(),
+  updatedAt: new Date(),
   type: APP_DATA_TYPES.COMMENT,
+  visibility: AppDataVisibility.Member,
 };
 
 export const MULTILINE_MOCK_COMMENTS: AppData[] = [
@@ -91,50 +97,54 @@ export const MULTILINE_MOCK_COMMENTS: AppData[] = [
         'Multiline Thread start\n\nComment from line 1 to line 3\n\nFrom Bob',
       parent: null,
     },
-    memberId: MEMBERS.BOB.id,
-    creator: MEMBERS.BOB.id,
-    itemId: MOCK_SERVER_ITEM.id,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
+    member: MEMBERS.BOB,
+    creator: MEMBERS.BOB,
+    item: MOCK_SERVER_ITEM,
+    createdAt: new Date(),
+    updatedAt: new Date(),
     type: APP_DATA_TYPES.COMMENT,
+    visibility: AppDataVisibility.Member,
   },
   {
     id: uuid(),
     data: { text: 'some text' },
-    memberId: MEMBERS.BOB.id,
-    creator: MEMBERS.BOB.id,
-    itemId: MOCK_SERVER_ITEM.id,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
+    member: MEMBERS.BOB,
+    creator: MEMBERS.BOB,
+    item: MOCK_SERVER_ITEM,
+    createdAt: new Date(),
+    updatedAt: new Date(),
     type: APP_DATA_TYPES.COMMENT,
+    visibility: AppDataVisibility.Member,
   },
   {
     id: uuid(),
     data: { text: 'some text' },
-    memberId: CURRENT_MEMBER.id,
-    creator: CURRENT_MEMBER.id,
-    itemId: MOCK_SERVER_ITEM.id,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
+    member: CURRENT_MEMBER,
+    creator: CURRENT_MEMBER,
+    item: MOCK_SERVER_ITEM,
+    createdAt: new Date(),
+    updatedAt: new Date(),
     type: APP_DATA_TYPES.COMMENT,
+    visibility: AppDataVisibility.Member,
   },
   // teacher comments
   {
     id: uuid(),
     data: { text: 'some text' },
-    memberId: CURRENT_MEMBER.id,
-    creator: CURRENT_MEMBER.id,
-    itemId: MOCK_SERVER_ITEM.id,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
+    member: CURRENT_MEMBER,
+    creator: CURRENT_MEMBER,
+    item: MOCK_SERVER_ITEM,
+    createdAt: new Date(),
+    updatedAt: new Date(),
     type: APP_DATA_TYPES.TEACHER_COMMENT,
+    visibility: AppDataVisibility.Member,
   },
 ];
 
 export const generateSingleLineThread = (
   lineIndex: number,
   threadLength = 1,
-  creator: string = CURRENT_MEMBER.id,
+  creator: Member = CURRENT_MEMBER,
 ): AppData[] => {
   let parentId = null;
   const thread: AppData[] = [];
@@ -147,12 +157,13 @@ export const generateSingleLineThread = (
         content: `Thread content ${idx + 1}`,
         parent: parentId,
       },
-      itemId: MOCK_SERVER_ITEM.id,
-      memberId: creator,
+      item: MOCK_SERVER_ITEM,
+      member: creator,
       creator,
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
+      createdAt: new Date(),
+      updatedAt: new Date(),
       type: APP_DATA_TYPES.COMMENT,
+      visibility: AppDataVisibility.Member,
     });
     parentId = thread.at(-1)?.id;
   }
@@ -171,55 +182,59 @@ export const MOCK_COMMIT_DESCRIPTION = 'Full description\nOn multiple lines';
 
 export const MOCK_CODE_APP_DATA_BOB_PY: LiveCodeType = {
   id: uuid(),
-  itemId: MOCK_SERVER_ITEM.id,
+  item: MOCK_SERVER_ITEM,
   type: APP_DATA_TYPES.LIVE_CODE,
-  createdAt: new Date().toISOString(),
-  updatedAt: new Date().toISOString(),
-  creator: MEMBERS.BOB.id,
-  memberId: MEMBERS.BOB.id,
+  createdAt: new Date(),
+  updatedAt: new Date(),
+  creator: MEMBERS.BOB,
+  member: MEMBERS.BOB,
   data: {
     code: 'sample code from bob',
   },
+  visibility: AppDataVisibility.Member,
 };
 
 export const MOCK_CODE_APP_DATA_OLD_BOB_PY: LiveCodeType = {
   id: uuid(),
-  itemId: MOCK_SERVER_ITEM.id,
+  item: MOCK_SERVER_ITEM,
   type: APP_DATA_TYPES.LIVE_CODE,
-  createdAt: new Date('2020-06-02').toISOString(),
-  updatedAt: new Date('2020-06-02').toISOString(),
-  creator: MEMBERS.BOB.id,
-  memberId: MEMBERS.BOB.id,
+  createdAt: new Date('2020-06-02'),
+  updatedAt: new Date('2020-06-02'),
+  creator: MEMBERS.BOB,
+  member: MEMBERS.BOB,
   data: {
     code: 'sample code from bob 2',
   },
+  visibility: AppDataVisibility.Member,
 };
 
 export const MOCK_CODE_VERSIONS: CodeType[] = [
   {
     id: uuid(),
-    itemId: MOCK_SERVER_ITEM.id,
+    item: MOCK_SERVER_ITEM,
     type: APP_DATA_TYPES.CODE,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
-    creator: MEMBERS.ANNA.id,
-    memberId: MEMBERS.ANNA.id,
+    createdAt: new Date(),
+    updatedAt: new Date(),
+    creator: MEMBERS.ANNA,
+    member: MEMBERS.ANNA,
     data: {
       code: 'sample code from Anna',
       language: PYTHON,
       commitMessage: 'Anna 1',
       commitDescription: 'Long Anna 1',
     },
+    visibility: AppDataVisibility.Member,
   },
 
   {
     id: uuid(),
-    itemId: MOCK_SERVER_ITEM.id,
+    item: MOCK_SERVER_ITEM,
     type: APP_DATA_TYPES.CODE,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
-    creator: MEMBERS.ANNA.id,
-    memberId: MEMBERS.ANNA.id,
+    createdAt: new Date(),
+    updatedAt: new Date(),
+    creator: MEMBERS.ANNA,
+    member: MEMBERS.ANNA,
+    visibility: AppDataVisibility.Member,
     data: {
       code: 'sample code from Anna 2',
       language: PYTHON,
@@ -244,12 +259,13 @@ export const CHATBOT_THREAD_MOCK_COMMENTS: AppData[] = [
       parent: null,
       chatbotPromptSettingId: MOCK_CHATBOT_PROMPT_SETTINGS_INPUT.id,
     },
-    memberId: CURRENT_MEMBER.id,
-    creator: CURRENT_MEMBER.id,
-    itemId: MOCK_SERVER_ITEM.id,
-    createdAt: new Date('2020-01-01').toISOString(),
-    updatedAt: new Date('2020-01-01').toISOString(),
+    member: CURRENT_MEMBER,
+    creator: CURRENT_MEMBER,
+    item: MOCK_SERVER_ITEM,
+    createdAt: new Date('2020-01-01'),
+    updatedAt: new Date('2020-01-01'),
     type: APP_DATA_TYPES.BOT_COMMENT,
+    visibility: AppDataVisibility.Member,
   },
   {
     id: threadIds[1],
@@ -259,12 +275,13 @@ export const CHATBOT_THREAD_MOCK_COMMENTS: AppData[] = [
       content: 'User response to chatbot prompt',
       parent: threadIds[0],
     },
-    memberId: CURRENT_MEMBER.id,
-    creator: CURRENT_MEMBER.id,
-    itemId: MOCK_SERVER_ITEM.id,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
+    member: CURRENT_MEMBER,
+    creator: CURRENT_MEMBER,
+    item: MOCK_SERVER_ITEM,
+    createdAt: new Date(),
+    updatedAt: new Date(),
     type: APP_DATA_TYPES.COMMENT,
+    visibility: AppDataVisibility.Member,
   },
   {
     id: threadIds[2],
@@ -274,11 +291,12 @@ export const CHATBOT_THREAD_MOCK_COMMENTS: AppData[] = [
       content: 'Bipbooop',
       parent: threadIds[1],
     },
-    memberId: CURRENT_MEMBER.id,
-    creator: CURRENT_MEMBER.id,
-    itemId: MOCK_SERVER_ITEM.id,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
+    member: CURRENT_MEMBER,
+    creator: CURRENT_MEMBER,
+    item: MOCK_SERVER_ITEM,
+    createdAt: new Date(),
+    updatedAt: new Date(),
     type: APP_DATA_TYPES.BOT_COMMENT,
+    visibility: AppDataVisibility.Member,
   },
 ];

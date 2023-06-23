@@ -10,7 +10,7 @@ import {
   DEFAULT_BOT_USERNAME,
   INSTRUCTOR_CODE_ID,
 } from '../../config/constants';
-import { MUTATION_KEYS, useMutation } from '../../config/queryClient';
+import { mutations } from '../../config/queryClient';
 import {
   buildChatbotPromptContainerDataCy,
   buildCommentResponseBoxDataCy,
@@ -39,11 +39,7 @@ const ChatbotPrompts: FC<Props> = ({ line }) => {
   const { t } = useTranslation();
   const { postAppDataAsync, comments } = useAppDataContext();
   const [openEditor, setOpenEditor] = useState(false);
-  const { mutate: postAction } = useMutation<
-    unknown,
-    unknown,
-    { data: unknown; type: string }
-  >(MUTATION_KEYS.POST_APP_ACTION);
+  const { mutate: postAction } = mutations.usePostAppAction();
   // if a message already exists with the prompt id we should not display this prompt
   const {
     chatbotPrompts,
@@ -94,7 +90,7 @@ const ChatbotPrompts: FC<Props> = ({ line }) => {
     })?.then((botComment) => {
       const userData = {
         line,
-        parent: botComment.id,
+        parent: botComment?.id,
         codeId: INSTRUCTOR_CODE_ID,
         content: newUserComment,
       };
@@ -106,7 +102,7 @@ const ChatbotPrompts: FC<Props> = ({ line }) => {
         const fullPrompt = `${currentLinePrompt?.data.initialPrompt}\n\nChatbot: ${chatbotMessage}\n\nÉtudiant: ${newUserComment}\n\n`;
         callApi(fullPrompt, {
           line,
-          parent: userMessage.id,
+          parent: userMessage?.id,
           codeId: INSTRUCTOR_CODE_ID,
         });
         postAction({

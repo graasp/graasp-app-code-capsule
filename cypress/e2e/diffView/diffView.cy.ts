@@ -16,7 +16,7 @@ describe('Diff View', () => {
         appSettings: [CODE_EXPLAIN_MODE_SETTING, MOCK_DIFF_VIEW_SETTINGS],
       },
       appContext: {
-        context: Context.PLAYER,
+        context: Context.Player,
         permission: PermissionLevel.Read,
       },
     });

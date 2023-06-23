@@ -8,16 +8,12 @@ import {
   ListItemText,
 } from '@mui/material';
 
-import { AppSetting } from '@graasp/apps-query-client';
+import { AppSettingRecord } from '@graasp/sdk/frontend';
 
-import {
-  MUTATION_KEYS,
-  hooks,
-  useMutation,
-} from '../../../../config/queryClient';
+import { hooks, mutations } from '../../../../config/queryClient';
 
 type Props = {
-  appSetting: AppSetting;
+  appSetting: AppSettingRecord;
   fileName: string;
   virtualPath: string;
   onDelete: (appSettingIdToDelete: string) => void;
@@ -34,11 +30,7 @@ const FileList: FC<Props> = ({
   const { isLoading, isSuccess } = hooks.useAppSettingFile({
     appSettingId: appSetting.id,
   });
-  const { mutate: deleteAppSettingFile } = useMutation<
-    unknown,
-    unknown,
-    { id: string }
-  >(MUTATION_KEYS.DELETE_APP_SETTING);
+  const { mutate: deleteAppSettingFile } = mutations.useDeleteAppSetting();
   if (isLoading || !isSuccess) {
     return <p>Loading</p>;
   }

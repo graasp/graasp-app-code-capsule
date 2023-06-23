@@ -1,9 +1,16 @@
-import type { Database, LocalContext, Member } from '@graasp/apps-query-client';
-import { AppDataVisibility } from '@graasp/apps-query-client';
+import type { Database, LocalContext } from '@graasp/apps-query-client';
+import {
+  AppDataVisibility,
+  Item,
+  Member,
+  MemberType,
+  PermissionLevel,
+} from '@graasp/sdk';
 
 import { v4 } from 'uuid';
 
 import { APP_DATA_TYPES } from '@/config/appDataTypes';
+import { INSTRUCTOR_CODE_ID } from '@/config/constants';
 import { API_HOST } from '@/config/env';
 
 import {
@@ -18,12 +25,26 @@ import {
   DEFAULT_INSTRUCTOR_CODE_VERSION_SETTINGS,
 } from '../config/settings';
 
+export const mockMember = {
+  id: '0f0a2774-a965-4b97-afb4-bccc3796e060',
+  name: 'anna',
+  email: 'bob@gmail.com',
+  extra: {},
+  type: MemberType.Individual,
+  createdAt: new Date(),
+  updatedAt: new Date(),
+};
+
+export const mockItem = {
+  id: '1234-1234-123456-8123-123456',
+} as Item;
+
 export const mockContext: LocalContext = {
   apiHost: API_HOST,
-  permission: 'admin',
+  permission: PermissionLevel.Admin,
   context: 'builder',
-  itemId: '1234-1234-123456-8123-123456',
-  memberId: 'mock-member-id',
+  itemId: mockItem.id,
+  memberId: mockMember.id,
 };
 
 export const mockMembers: Member[] = [
@@ -32,12 +53,18 @@ export const mockMembers: Member[] = [
     name: 'current-member',
     email: '',
     extra: {},
+    type: MemberType.Individual,
+    createdAt: new Date(),
+    updatedAt: new Date(),
   },
   {
     id: 'mock-member-id-2',
     name: 'mock-member-2',
     email: '',
     extra: {},
+    type: MemberType.Individual,
+    createdAt: new Date(),
+    updatedAt: new Date(),
   },
 ];
 
@@ -80,6 +107,7 @@ const buildDatabase = (
   appContext: Partial<LocalContext>,
   members?: Member[],
 ): Database => ({
+  items: [mockItem],
   appData: [
     {
       id: v4(),
@@ -100,13 +128,13 @@ And some more text here
 And some text to **finish** _off_`,
         parent: null,
       },
-      memberId: 'mock-member-id-2',
+      member: mockMembers[1],
       type: APP_DATA_TYPES.COMMENT,
-      itemId: appContext.itemId || '',
-      creator: 'mock-member-id-2',
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-      visibility: AppDataVisibility.MEMBER,
+      item: mockItem,
+      creator: mockMembers[1],
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      visibility: AppDataVisibility.Member,
     },
     {
       id: v4(),
@@ -114,14 +142,15 @@ And some text to **finish** _off_`,
         line: 3,
         content: '*Hello* this is a _response_ on line 3',
         parent: commentParent,
+        codeId: INSTRUCTOR_CODE_ID,
       },
-      memberId: 'mock-member-id',
+      member: mockMembers[0],
       type: APP_DATA_TYPES.COMMENT,
-      itemId: appContext.itemId || '',
-      creator: 'mock-member-id',
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-      visibility: AppDataVisibility.MEMBER,
+      item: mockItem,
+      creator: mockMembers[0],
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      visibility: AppDataVisibility.Member,
     },
     {
       id: commentParent,
@@ -129,14 +158,15 @@ And some text to **finish** _off_`,
         line: 3,
         content: '*Hello* this is a _comment_ on line 3',
         parent: null,
+        codeId: INSTRUCTOR_CODE_ID,
       },
-      memberId: 'mock-member-id',
+      member: mockMembers[0],
       type: APP_DATA_TYPES.COMMENT,
-      itemId: appContext.itemId || '',
-      creator: 'mock-member-id',
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-      visibility: AppDataVisibility.MEMBER,
+      item: mockItem,
+      creator: mockMembers[0],
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      visibility: AppDataVisibility.Member,
     },
     {
       id: v4(),
@@ -144,14 +174,15 @@ And some text to **finish** _off_`,
         line: 3,
         content: '*A different _thread_* on line 3',
         parent: null,
+        codeId: INSTRUCTOR_CODE_ID,
       },
-      memberId: 'mock-member-id-2',
+      member: mockMembers[0],
       type: APP_DATA_TYPES.COMMENT,
-      itemId: appContext.itemId || '',
-      creator: 'mock-member-id-2',
-      createdAt: new Date(Date.now() - 1500).toISOString(),
-      updatedAt: new Date(Date.now() - 1500).toISOString(),
-      visibility: AppDataVisibility.MEMBER,
+      item: mockItem,
+      creator: mockMembers[1],
+      createdAt: new Date(Date.now() - 1500),
+      updatedAt: new Date(Date.now() - 1500),
+      visibility: AppDataVisibility.Member,
     },
   ],
   appActions: [],
@@ -160,33 +191,67 @@ And some text to **finish** _off_`,
     {
       id: v4(),
       name: APP_MODE_SETTINGS_NAME,
-      data: { ...DEFAULT_APP_MODE_SETTINGS, mode: AppMode.Execute },
-      itemId: appContext.itemId || '',
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-      creator: mockMembers[0].id,
+      data: { ...DEFAULT_APP_MODE_SETTINGS.toJS(), mode: AppMode.Execute },
+      item: mockItem,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      creator: mockMembers[0],
     },
     {
       id: v4(),
       name: INSTRUCTOR_CODE_VERSION_SETTINGS_NAME,
       data: {
-        ...DEFAULT_INSTRUCTOR_CODE_VERSION_SETTINGS,
+        ...DEFAULT_INSTRUCTOR_CODE_VERSION_SETTINGS.toJS(),
         code: mockPythonCode,
+        codeId: INSTRUCTOR_CODE_ID,
       },
-      itemId: appContext.itemId || '',
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-      creator: mockMembers[0].id,
+      item: mockItem,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      creator: mockMembers[0],
     },
     {
       id: v4(),
       name: GENERAL_SETTINGS_NAME,
-      data: { ...DEFAULT_GENERAL_SETTINGS, showEditButton: true },
-      itemId: appContext.itemId || '',
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-      creator: mockMembers[0].id,
+      data: { ...DEFAULT_GENERAL_SETTINGS.toJS(), showEditButton: true },
+      item: mockItem,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      creator: mockMembers[0],
     },
+    // disable to test data file
+    // {
+    //   id: 'file-id',
+    //   data: {
+    //     s3File: {
+    //       mimetype: 'text/csv',
+    //       name: 'DATA_FILE_SETTING-Book1.csv',
+    //       path: 'apps/app-setting/28850284-5593-4b13-bb26-dc1e4411fcfb/7a3a9108-fb6c-49fe-b6fe-742a90ff929c',
+    //       size: 74,
+    //     },
+    //   },
+    //   name: 'DATA_FILE_SETTING-Bo',
+    //   updatedAt: new Date(),
+    //   createdAt: new Date(),
+    //   item: mockItem,
+    // },
+    // {
+    //   id: v4(),
+    //   data: {
+    //     files: [
+    //       {
+    //         appSettingId: 'file-id',
+    //         fileName: 'DATA_FILE_SETTING-Book1.csv',
+    //         virtualPath:
+    //           'apps/app-setting/28850284-5593-4b13-bb26-dc1e4411fcfb/7a3a9108-fb6c-49fe-b6fe-742a90ff929c',
+    //       },
+    //     ],
+    //   },
+    //   name: DATA_FILE_LIST_SETTINGS_NAME,
+    //   updatedAt: new Date(),
+    //   createdAt: new Date(),
+    //   item: mockItem,
+    // },
   ],
 });
 

@@ -31,7 +31,7 @@ describe('Code Editing', () => {
           {
             ...MOCK_GENERAL_SETTINGS,
             data: {
-              ...DEFAULT_GENERAL_SETTINGS,
+              ...DEFAULT_GENERAL_SETTINGS.toJS(),
               [GeneralSettingsKeys.ShowEditButton]: true,
             },
           },
@@ -39,7 +39,7 @@ describe('Code Editing', () => {
         ],
       },
       appContext: {
-        context: Context.PLAYER,
+        context: Context.Player,
         permission: PermissionLevel.Write,
       },
     });

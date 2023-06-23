@@ -55,10 +55,7 @@ const SettingsFab: FC = () => {
     settingKey: string,
     newValue: string | boolean,
   ): void => {
-    setLocalSettings({
-      ...localSettings,
-      [settingKey]: newValue,
-    });
+    setLocalSettings(localSettings.set(settingKey, newValue));
   };
 
   const handleClose = (save: boolean): void => {

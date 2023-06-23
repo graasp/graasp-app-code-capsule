@@ -14,7 +14,7 @@ describe('Button Layout', () => {
         appSettings: [MOCK_CODE_EXECUTION_SETTINGS],
       },
       appContext: {
-        context: Context.PLAYER,
+        context: Context.Player,
         permission: PermissionLevel.Write,
       },
     });

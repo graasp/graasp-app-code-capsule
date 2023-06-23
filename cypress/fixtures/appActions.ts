@@ -1,4 +1,4 @@
-import { AppAction } from '@graasp/apps-query-client';
+import type { AppAction } from '@graasp/sdk';
 
 import { v4 } from 'uuid';
 
@@ -13,9 +13,9 @@ export const MOCK_APP_ACTIONS: AppAction[] = [
       code: 'test code',
     },
     type: APP_ACTIONS_TYPES.RUN_CODE,
-    memberId: MEMBERS.ANNA.id,
-    itemId: MOCK_SERVER_ITEM.id,
-    createdAt: new Date().toISOString(),
+    member: MEMBERS.ANNA,
+    item: MOCK_SERVER_ITEM,
+    createdAt: new Date(),
   },
   {
     id: v4(),
@@ -23,9 +23,9 @@ export const MOCK_APP_ACTIONS: AppAction[] = [
       userInput: 'My user input',
     },
     type: APP_ACTIONS_TYPES.SUBMITTED_INPUT,
-    memberId: MEMBERS.BOB.id,
-    itemId: MOCK_SERVER_ITEM.id,
-    createdAt: new Date().toISOString(),
+    member: MEMBERS.BOB,
+    item: MOCK_SERVER_ITEM,
+    createdAt: new Date(),
   },
   {
     id: v4(),
@@ -33,8 +33,8 @@ export const MOCK_APP_ACTIONS: AppAction[] = [
       code: 'test code',
     },
     type: APP_ACTIONS_TYPES.SAVE_CODE,
-    memberId: MEMBERS.ANNA.id,
-    itemId: MOCK_SERVER_ITEM.id,
-    createdAt: new Date().toISOString(),
+    member: MEMBERS.ANNA,
+    item: MOCK_SERVER_ITEM,
+    createdAt: new Date(),
   },
 ];

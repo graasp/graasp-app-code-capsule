@@ -68,7 +68,7 @@ describe('Code review single comments', () => {
         ],
       },
       appContext: {
-        context: Context.PLAYER,
+        context: Context.Player,
         permission: PermissionLevel.Admin,
       },
     });
@@ -161,7 +161,7 @@ describe('Code Review thread comments', () => {
         ],
       },
       appContext: {
-        context: Context.PLAYER,
+        context: Context.Player,
         permission: PermissionLevel.Admin,
       },
     });
@@ -192,7 +192,7 @@ describe('Code Review Tools', () => {
           {
             ...MOCK_GENERAL_SETTINGS,
             data: {
-              ...DEFAULT_GENERAL_SETTINGS,
+              ...DEFAULT_GENERAL_SETTINGS.toJS(),
               [GeneralSettingsKeys.ShowRunButton]: true,
               [GeneralSettingsKeys.ShowEditButton]: true,
               [GeneralSettingsKeys.ShowVersionNavigation]: true,
@@ -204,7 +204,7 @@ describe('Code Review Tools', () => {
         members: Object.values(MEMBERS),
       },
       appContext: {
-        context: Context.PLAYER,
+        context: Context.Player,
         permission: PermissionLevel.Admin,
         lang: 'fr',
       },
@@ -298,7 +298,7 @@ describe('Comment settings', () => {
           {
             ...MOCK_GENERAL_SETTINGS,
             data: {
-              ...DEFAULT_GENERAL_SETTINGS,
+              ...DEFAULT_GENERAL_SETTINGS.toJS(),
               [GeneralSettingsKeys.MaxCommentLength]: 20,
             },
           },
@@ -306,7 +306,7 @@ describe('Comment settings', () => {
         ],
       },
       appContext: {
-        context: Context.PLAYER,
+        context: Context.Player,
         permission: PermissionLevel.Read,
       },
     });
@@ -337,7 +337,7 @@ describe('Show Line Numbers Setting Builder View', () => {
           {
             ...MOCK_GENERAL_SETTINGS,
             data: {
-              ...DEFAULT_GENERAL_SETTINGS,
+              ...DEFAULT_GENERAL_SETTINGS.toJS(),
               [GeneralSettingsKeys.ShowLineNumbers]: true,
             },
           },
@@ -345,7 +345,7 @@ describe('Show Line Numbers Setting Builder View', () => {
         ],
       },
       appContext: {
-        context: Context.BUILDER,
+        context: Context.Builder,
         permission: PermissionLevel.Admin,
       },
     });

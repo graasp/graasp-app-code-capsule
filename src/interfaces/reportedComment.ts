@@ -1,4 +1,4 @@
-import { AppData } from '@graasp/apps-query-client';
+import type { AppData } from '@graasp/sdk';
 
 interface ReportedCommentAppData {
   data: {

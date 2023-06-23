@@ -33,7 +33,7 @@ describe('Display Code Execution', () => {
         ],
       },
       appContext: {
-        context: Context.PLAYER,
+        context: Context.Player,
         permission: PermissionLevel.Write,
       },
     });
@@ -99,7 +99,7 @@ describe('Initial Code value', () => {
           ],
         },
         appContext: {
-          context: Context.PLAYER,
+          context: Context.Player,
           permission: PermissionLevel.Write,
         },
       });
@@ -139,7 +139,7 @@ describe('Initial Code value', () => {
           ],
         },
         appContext: {
-          context: Context.PLAYER,
+          context: Context.Player,
           permission: PermissionLevel.Write,
         },
       });
