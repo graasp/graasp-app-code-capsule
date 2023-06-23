@@ -37,7 +37,7 @@ const CustomSelect = <T extends string, K extends ReactNode>({
       data-cy={dataCy}
       label={label}
       renderValue={renderValue}
-      value={value}
+      value={value ?? values[0]?.value}
       onChange={({ target }) => onChange(target.value as T)}
     >
       {values.map((v) => (

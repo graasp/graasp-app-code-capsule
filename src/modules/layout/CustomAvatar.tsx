@@ -1,8 +1,8 @@
-import React, { FC } from 'react';
+import { FC } from 'react';
 
 import { Avatar } from '@mui/material';
 
-import { Member } from '@graasp/apps-query-client';
+import { MemberRecord } from '@graasp/sdk/frontend';
 
 import { ANONYMOUS_USER, MAX_INITIALS_AVATAR } from '../../config/constants';
 
@@ -28,7 +28,7 @@ const stringToColor = (name: string): string => {
 };
 
 type Props = {
-  member?: Member;
+  member?: MemberRecord;
   imgSrc?: string;
 };
 

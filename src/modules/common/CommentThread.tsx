@@ -12,11 +12,11 @@ import {
   DEFAULT_CHATBOT_PROMPT_APP_DATA,
   MAX_CHATBOT_THREAD_LENGTH,
 } from '../../config/constants';
-import { MUTATION_KEYS, useMutation } from '../../config/queryClient';
+import { mutations } from '../../config/queryClient';
 import { COMMENT_THREAD_CONTAINER_CYPRESS } from '../../config/selectors';
 import { DEFAULT_GENERAL_SETTINGS } from '../../config/settings';
 import { UserDataType, useChatbotApi } from '../../hooks/useChatbotApi';
-import { CommentType } from '../../interfaces/comment';
+import { CommentTypeRecord } from '../../interfaces/comment';
 import { GeneralSettingsKeys } from '../../interfaces/settings';
 import { buildThread } from '../../utils/comments';
 import { useAppDataContext } from '../context/AppDataContext';
@@ -31,7 +31,7 @@ import CommentEditor from './CommentEditor';
 import ResponseBox from './ResponseBox';
 
 type Props = {
-  children?: List<CommentType>;
+  children?: List<CommentTypeRecord>;
   hiddenState: boolean;
 };
 
@@ -45,11 +45,7 @@ const CommentThread: FC<Props> = ({ children, hiddenState }) => {
     closeEditingComment,
   } = useReviewContext();
   const { patchAppData, postAppDataAsync } = useAppDataContext();
-  const { mutate: postAction } = useMutation<
-    unknown,
-    unknown,
-    { data: unknown; type: string }
-  >(MUTATION_KEYS.POST_APP_ACTION);
+  const { mutate: postAction } = mutations.usePostAppAction();
   const {
     chatbotPrompts,
     [GENERAL_SETTINGS_NAME]: generalSettings = DEFAULT_GENERAL_SETTINGS,
@@ -63,7 +59,9 @@ const CommentThread: FC<Props> = ({ children, hiddenState }) => {
       postAppDataAsync({
         data: newData,
         type: APP_DATA_TYPES.BOT_COMMENT,
-      })?.then(() => stopLoading());
+      })?.then(() => {
+        stopLoading();
+      });
       postAction({ data: newData, type: APP_ACTIONS_TYPES.CREATE_COMMENT });
     },
   );
@@ -71,7 +69,7 @@ const CommentThread: FC<Props> = ({ children, hiddenState }) => {
   const isEdited = (id: string): boolean => id === currentEditedCommentId;
   const isReplied = (id: string): boolean => id === currentRepliedCommentId;
   const allowedChatbotResponse = (
-    arr: List<CommentType>,
+    arr: List<CommentTypeRecord>,
     idx: number,
     commentType: string,
   ): boolean =>
@@ -151,7 +149,7 @@ const CommentThread: FC<Props> = ({ children, hiddenState }) => {
                     onSend={(content) => {
                       startLoading();
                       const data = {
-                        ...c.data,
+                        ...c.data.toJS(),
                         parent: c.id,
                         content,
                       };
@@ -178,9 +176,10 @@ const CommentThread: FC<Props> = ({ children, hiddenState }) => {
                             )
                             .join('\n\n');
                           const fullPrompt = `${promptSetting?.data.initialPrompt}\n\n${concatenatedMessages}\n\nÉtudiant: ${content}\n\n`;
+
                           callApi(fullPrompt, {
                             ...data,
-                            parent: parent.id,
+                            parent: parent?.id,
                           });
                           postAction({
                             data: { prompt: fullPrompt },
@@ -194,7 +193,7 @@ const CommentThread: FC<Props> = ({ children, hiddenState }) => {
                       });
                       closeComment();
                     }}
-                    comment={{ ...c, data: { ...c.data, content: '' } }}
+                    comment={c.setIn(['data', 'content'], '')}
                   />
                 )
               }

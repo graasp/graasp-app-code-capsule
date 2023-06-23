@@ -1,4 +1,4 @@
-import { Context, PermissionLevel } from '@graasp/sdk';
+import { Context, PermissionLevel, convertJs } from '@graasp/sdk';
 
 import { List } from 'immutable';
 import countBy from 'lodash.countby';
@@ -25,7 +25,7 @@ import {
   buildTableRowCypress,
   tableRowUserCypress,
 } from '../../../src/config/selectors';
-import { CommentType } from '../../../src/interfaces/comment';
+import { CommentTypeRecord } from '../../../src/interfaces/comment';
 import { getOrphans } from '../../../src/utils/comments';
 import { MOCK_APP_ACTIONS } from '../../fixtures/appActions';
 import {
@@ -38,7 +38,7 @@ import { MOCK_CODE_SETTINGS } from '../../fixtures/appSettings';
 describe('Builder as Admin', () => {
   // define the context for the tests in this section
   const appContext = {
-    context: Context.BUILDER,
+    context: Context.Builder,
     permission: PermissionLevel.Admin,
   };
 
@@ -107,17 +107,17 @@ describe('Builder as Admin', () => {
       cy.get(buildDataCy(TABLE_VIEW_PANE_CYPRESS)).should('be.visible');
 
       // check that all users are displayed
-      const comments = List(
+      const comments = convertJs(
         [...SINGLE_LINE_MOCK_COMMENTS, ...MULTILINE_MOCK_COMMENTS].filter(
           (r) => r.type === APP_DATA_TYPES.COMMENT,
         ),
-      ) as List<CommentType>;
+      ) as List<CommentTypeRecord>;
       const orphansId = getOrphans(comments).map((c) => c.id);
       const nonOrphanComments = comments?.filter(
         (c) => !orphansId.includes(c.id),
       );
       // map resources to memberId and convert to JS to use the countBy function
-      const users = nonOrphanComments.map((r) => r.memberId).toJS();
+      const users = nonOrphanComments.map((r) => r.member.id).toJS();
       const userCounts = countBy(users);
 
       // check that table is displayed
@@ -202,7 +202,7 @@ describe('Builder as Writer', () => {
     cy.setUpApi({
       database: { appData: [] },
       appContext: {
-        context: Context.BUILDER,
+        context: Context.Builder,
         permission: PermissionLevel.Write,
       },
     });
@@ -219,7 +219,7 @@ describe('Builder as Read', () => {
     cy.setUpApi({
       database: { appData: [] },
       appContext: {
-        context: Context.BUILDER,
+        context: Context.Builder,
         permission: PermissionLevel.Read,
       },
     });

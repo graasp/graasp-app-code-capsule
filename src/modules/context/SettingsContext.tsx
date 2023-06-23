@@ -1,6 +1,6 @@
 import { FC, ReactElement, createContext, useContext } from 'react';
 
-import { AppSetting } from '@graasp/apps-query-client';
+import { AppSettingRecord } from '@graasp/sdk/frontend';
 
 import { List } from 'immutable';
 
@@ -14,7 +14,7 @@ import {
   GENERAL_SETTINGS_NAME,
   INSTRUCTOR_CODE_VERSION_SETTINGS_NAME,
 } from '../../config/appSettingsTypes';
-import { MUTATION_KEYS, hooks, useMutation } from '../../config/queryClient';
+import { hooks, mutations } from '../../config/queryClient';
 import {
   DEFAULT_APP_MODE_SETTINGS,
   DEFAULT_CODE_EXECUTION_SETTINGS,
@@ -24,28 +24,28 @@ import {
   DEFAULT_INSTRUCTOR_CODE_VERSION_SETTINGS,
 } from '../../config/settings';
 import {
-  AppModeSettings,
-  ChatbotPromptAppSettings,
-  CodeExecutionSettings,
-  DataFileListSettings,
-  DiffViewSettings,
-  GeneralSettings,
-  InstructorCodeVersionSettings,
+  AppModeSettingsRecord,
+  ChatbotPromptAppSettingRecord,
+  CodeExecutionSettingsRecord,
+  DataFileListSettingsRecord,
+  DiffViewSettingsRecord,
+  GeneralSettingsRecord,
+  InstructorCodeVersionSettingsRecord,
 } from '../../interfaces/settings';
 import Loader from '../common/Loader';
 
 // mapping between Setting names and their data type
-interface AllSettingsType {
-  [GENERAL_SETTINGS_NAME]?: GeneralSettings;
-  [CODE_EXECUTION_SETTINGS_NAME]?: CodeExecutionSettings;
-  [INSTRUCTOR_CODE_VERSION_SETTINGS_NAME]?: InstructorCodeVersionSettings;
-  [APP_MODE_SETTINGS_NAME]?: AppModeSettings;
-  [DATA_FILE_LIST_SETTINGS_NAME]?: DataFileListSettings;
-  [DIFF_VIEW_SETTINGS_NAME]?: DiffViewSettings;
+interface AllSettingsTypeRecord {
+  [GENERAL_SETTINGS_NAME]?: GeneralSettingsRecord;
+  [CODE_EXECUTION_SETTINGS_NAME]?: CodeExecutionSettingsRecord;
+  [INSTRUCTOR_CODE_VERSION_SETTINGS_NAME]?: InstructorCodeVersionSettingsRecord;
+  [APP_MODE_SETTINGS_NAME]?: AppModeSettingsRecord;
+  [DATA_FILE_LIST_SETTINGS_NAME]?: DataFileListSettingsRecord;
+  [DIFF_VIEW_SETTINGS_NAME]?: DiffViewSettingsRecord;
 }
 
 // default values for the data property of settings by name
-const defaultSettingsValues: AllSettingsType = {
+const defaultSettingsValues: AllSettingsTypeRecord = {
   [GENERAL_SETTINGS_NAME]: DEFAULT_GENERAL_SETTINGS,
   [CODE_EXECUTION_SETTINGS_NAME]: DEFAULT_CODE_EXECUTION_SETTINGS,
   [INSTRUCTOR_CODE_VERSION_SETTINGS_NAME]:
@@ -66,22 +66,24 @@ const ALL_SETTING_NAMES = [
 ] as const;
 
 // automatically generated types
+// eslint-disable-next-line prettier/prettier
 type AllSettingsNameType = (typeof ALL_SETTING_NAMES)[number];
-type AllSettingsDataType = AllSettingsType[keyof AllSettingsType];
+type AllSettingsDataTypeRecord =
+  AllSettingsTypeRecord[keyof AllSettingsTypeRecord];
 
-export type SettingsContextType = AllSettingsType & {
-  dataFileSettings: List<AppSetting>;
-  chatbotPrompts: List<ChatbotPromptAppSettings>;
+export type SettingsContextType = AllSettingsTypeRecord & {
+  dataFileSettings: List<AppSettingRecord>;
+  chatbotPrompts: List<ChatbotPromptAppSettingRecord>;
   saveSettings: (
     name: AllSettingsNameType,
-    newValue: AllSettingsDataType,
+    newValue: AllSettingsDataTypeRecord,
   ) => void;
 };
 
 const defaultContextValue = {
   ...defaultSettingsValues,
-  dataFileSettings: List<AppSetting>(),
-  chatbotPrompts: List<ChatbotPromptAppSettings>(),
+  dataFileSettings: List<AppSettingRecord>(),
+  chatbotPrompts: List<ChatbotPromptAppSettingRecord>(),
   saveSettings: () => null,
 };
 
@@ -92,12 +94,8 @@ type Prop = {
 };
 
 export const SettingsProvider: FC<Prop> = ({ children }) => {
-  const postSettings = useMutation<unknown, unknown, Partial<AppSetting>>(
-    MUTATION_KEYS.POST_APP_SETTING,
-  );
-  const patchSettings = useMutation<unknown, unknown, Partial<AppSetting>>(
-    MUTATION_KEYS.PATCH_APP_SETTING,
-  );
+  const postSettings = mutations.usePostAppSetting();
+  const patchSettings = mutations.usePatchAppSetting();
   const {
     data: appSettingsList,
     isLoading,
@@ -106,20 +104,20 @@ export const SettingsProvider: FC<Prop> = ({ children }) => {
 
   const saveSettings = (
     name: AllSettingsNameType,
-    newValue: AllSettingsDataType,
+    newValue: AllSettingsDataTypeRecord,
   ): void => {
     if (appSettingsList) {
       const previousSetting = appSettingsList.find((s) => s.name === name);
       // setting does not exist
       if (!previousSetting) {
         postSettings.mutate({
-          data: newValue,
+          data: newValue?.toJS(),
           name,
         });
       } else {
         patchSettings.mutate({
           id: previousSetting.id,
-          data: newValue,
+          data: newValue?.toJS(),
         });
       }
     }
@@ -131,11 +129,11 @@ export const SettingsProvider: FC<Prop> = ({ children }) => {
 
   const getContextValue = (): SettingsContextType => {
     if (isSuccess) {
-      const allSettings: AllSettingsType = ALL_SETTING_NAMES.reduce(
-        <T extends AllSettingsNameType>(acc: AllSettingsType, key: T) => {
+      const allSettings: AllSettingsTypeRecord = ALL_SETTING_NAMES.reduce(
+        <T extends AllSettingsNameType>(acc: AllSettingsTypeRecord, key: T) => {
           const setting = appSettingsList.find((s) => s.name === key);
           const settingData = setting?.data;
-          acc[key] = settingData as AllSettingsType[T];
+          acc[key] = settingData as AllSettingsTypeRecord[T];
           return acc;
         },
         {},
@@ -144,13 +142,13 @@ export const SettingsProvider: FC<Prop> = ({ children }) => {
       const dataFileSettings =
         appSettingsList.filter((s) =>
           s.name.startsWith(DATA_FILE_SETTINGS_NAME),
-        ) || List<AppSetting>();
+        ) || List<AppSettingRecord>();
 
       const chatbotPrompts =
         (appSettingsList.filter(
           (s) => s.name === CHATBOT_PROMPT_SETTINGS_NAME,
-        ) as List<ChatbotPromptAppSettings>) ||
-        List<ChatbotPromptAppSettings>();
+        ) as List<ChatbotPromptAppSettingRecord>) ||
+        List<ChatbotPromptAppSettingRecord>();
 
       return {
         ...allSettings,

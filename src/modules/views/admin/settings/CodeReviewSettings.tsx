@@ -24,7 +24,7 @@ import {
   ProgrammingLanguagesType,
   programmingLanguageSelect,
 } from '@/config/programmingLanguages';
-import { MUTATION_KEYS, useMutation } from '@/config/queryClient';
+import { mutations } from '@/config/queryClient';
 import {
   CODE_EDITOR_LANGUAGE_SELECT_CYPRESS,
   REVIEW_MODE_SETTINGS_KEY,
@@ -39,8 +39,8 @@ import {
   DEFAULT_CHATBOT_PROMPT_SETTINGS,
   DEFAULT_INSTRUCTOR_CODE_VERSION_SETTINGS,
 } from '@/config/settings';
+import { CodeVersionTypeRecord } from '@/interfaces/codeVersions';
 import {
-  ChatbotPromptSettings,
   ChatbotPromptSettingsKeys,
   InstructorCodeSettingsKeys,
 } from '@/interfaces/settings';
@@ -52,26 +52,14 @@ import CodeEditor from '@/modules/repl/CodeEditor';
 
 const DEFAULT_EDITED_PROMPT = {
   id: '',
-  data: DEFAULT_CHATBOT_PROMPT_SETTINGS,
+  data: DEFAULT_CHATBOT_PROMPT_SETTINGS.toJS(),
 };
 
 const CodeReviewSettings: FC = () => {
   const { t } = useTranslation();
-  const { mutate: postSettings } = useMutation<
-    unknown,
-    unknown,
-    { name: string; data: ChatbotPromptSettings }
-  >(MUTATION_KEYS.POST_APP_SETTING);
-  const { mutate: patchSettings } = useMutation<
-    unknown,
-    unknown,
-    { id: string; data: ChatbotPromptSettings }
-  >(MUTATION_KEYS.PATCH_APP_SETTING);
-  const { mutate: deleteSetting } = useMutation<
-    unknown,
-    unknown,
-    { id: string }
-  >(MUTATION_KEYS.DELETE_APP_SETTING);
+  const { mutate: postSettings } = mutations.usePostAppSetting();
+  const { mutate: patchSettings } = mutations.usePatchAppSetting();
+  const { mutate: deleteSetting } = mutations.useDeleteAppSetting();
   const {
     [INSTRUCTOR_CODE_VERSION_SETTINGS_NAME]:
       instructorCodeVersionSetting = DEFAULT_INSTRUCTOR_CODE_VERSION_SETTINGS,
@@ -81,7 +69,9 @@ const CodeReviewSettings: FC = () => {
   const [
     instructorCodeVersionLocalSetting,
     setInstructorCodeVersionLocalSetting,
-  ] = useState(instructorCodeVersionSetting);
+  ] = useState<CodeVersionTypeRecord>(
+    instructorCodeVersionSetting as CodeVersionTypeRecord,
+  );
   const [openModal, setOpenModal] = useState(false);
   const [unsavedChanges, setUnsavedChanges] = useState(false);
   const [editedChatbotPrompt, setEditedChatbotPrompt] = useState(
@@ -95,7 +85,10 @@ const CodeReviewSettings: FC = () => {
 
   // update instructorCodeVersionLocalSetting value when setting changes
   useEffect(
-    () => setInstructorCodeVersionLocalSetting(instructorCodeVersionSetting),
+    () =>
+      setInstructorCodeVersionLocalSetting(
+        instructorCodeVersionSetting as CodeVersionTypeRecord,
+      ),
     [instructorCodeVersionSetting],
   );
 
@@ -127,10 +120,9 @@ const CodeReviewSettings: FC = () => {
       <CustomSelect
         dataCy={CODE_EDITOR_LANGUAGE_SELECT_CYPRESS}
         onChange={(newLanguage: ProgrammingLanguagesType) =>
-          setInstructorCodeVersionLocalSetting((prevSetting) => ({
-            ...prevSetting,
-            [InstructorCodeSettingsKeys.Language]: newLanguage,
-          }))
+          setInstructorCodeVersionLocalSetting((prevSetting) =>
+            prevSetting.set(InstructorCodeSettingsKeys.Language, newLanguage),
+          )
         }
         value={
           instructorCodeVersionLocalSetting[InstructorCodeSettingsKeys.Language]
@@ -150,10 +142,9 @@ const CodeReviewSettings: FC = () => {
           instructorCodeVersionLocalSetting[InstructorCodeSettingsKeys.Code]
         }
         setValue={(newValue) =>
-          setInstructorCodeVersionLocalSetting((prevSetting) => ({
-            ...prevSetting,
-            [InstructorCodeSettingsKeys.Code]: newValue,
-          }))
+          setInstructorCodeVersionLocalSetting((prevSetting) =>
+            prevSetting.set(InstructorCodeSettingsKeys.Code, newValue),
+          )
         }
       />
       <FormLabel>{t('Chatbot Prompts')}</FormLabel>
@@ -207,7 +198,9 @@ const CodeReviewSettings: FC = () => {
       </Button>
       <SubmitButtons
         onCancel={() =>
-          setInstructorCodeVersionLocalSetting(instructorCodeVersionSetting)
+          setInstructorCodeVersionLocalSetting(
+            instructorCodeVersionSetting as CodeVersionTypeRecord,
+          )
         }
         onSave={() =>
           saveSettings(

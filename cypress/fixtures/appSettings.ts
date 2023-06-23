@@ -1,4 +1,4 @@
-import { AppSetting } from '@graasp/apps-query-client';
+import type { AppSetting } from '@graasp/sdk';
 
 import { v4 } from 'uuid';
 
@@ -60,17 +60,17 @@ export const EMPTY_SETTING: AppSetting = {
   id: v4(),
   name: '',
   data: {},
-  itemId: MOCK_SERVER_ITEM.id,
-  creator: MEMBERS.BOB.id,
-  createdAt: new Date().toISOString(),
-  updatedAt: new Date().toISOString(),
+  item: MOCK_SERVER_ITEM,
+  creator: MEMBERS.BOB,
+  createdAt: new Date(),
+  updatedAt: new Date(),
 };
 
 export const MOCK_GENERAL_SETTINGS = {
   ...EMPTY_SETTING,
   id: v4(),
   name: GENERAL_SETTINGS_NAME,
-  data: DEFAULT_GENERAL_SETTINGS,
+  data: DEFAULT_GENERAL_SETTINGS.toJS(),
 };
 
 export const MOCK_CODE_EXECUTION_SETTINGS: AppSetting & {
@@ -80,7 +80,7 @@ export const MOCK_CODE_EXECUTION_SETTINGS: AppSetting & {
   id: v4(),
   name: CODE_EXECUTION_SETTINGS_NAME,
   data: {
-    ...DEFAULT_CODE_EXECUTION_SETTINGS,
+    ...DEFAULT_CODE_EXECUTION_SETTINGS.toJS(),
     headerCode: printMessageCode(HEADER_CODE_MESSAGE),
     footerCode: printMessageCode(FOOTER_CODE_MESSAGE),
   },
@@ -90,7 +90,7 @@ export const MOCK_APP_MODE_SETTING: AppSetting & { data: AppModeSettings } = {
   ...EMPTY_SETTING,
   id: v4(),
   name: APP_MODE_SETTINGS_NAME,
-  data: DEFAULT_APP_MODE_SETTINGS,
+  data: DEFAULT_APP_MODE_SETTINGS.toJS(),
 };
 
 export const CODE_EXECUTION_MODE_SETTING: AppSetting & {
@@ -134,7 +134,7 @@ export const MOCK_CODE_SETTINGS: AppSetting & { data: CodeVersionType } = {
   id: v4(),
   name: INSTRUCTOR_CODE_VERSION_SETTINGS_NAME,
   data: {
-    ...DEFAULT_INSTRUCTOR_CODE_VERSION_SETTINGS,
+    ...DEFAULT_INSTRUCTOR_CODE_VERSION_SETTINGS.toJS(),
     commitMessage: MOCK_COMMIT_MESSAGE,
     commitDescription: MOCK_COMMIT_DESCRIPTION,
     code: MOCK_CODE_SAMPLE,
@@ -147,7 +147,7 @@ export const MOCK_DIFF_VIEW_SETTINGS: AppSetting & { data: DiffViewSettings } =
     id: v4(),
     name: DIFF_VIEW_SETTINGS_NAME,
     data: {
-      ...DEFAULT_DIFF_VIEW_SETTINGS,
+      ...DEFAULT_DIFF_VIEW_SETTINGS.toJS(),
       oldCode: MOCK_DIFF_OLD_CODE,
       newCode: MOCK_DIFF_NEW_CODE,
     },
@@ -160,7 +160,7 @@ export const MOCK_CHATBOT_PROMPT_SETTINGS_INPUT: AppSetting & {
   id: v4(),
   name: CHATBOT_PROMPT_SETTINGS_NAME,
   data: {
-    ...DEFAULT_CHATBOT_PROMPT_SETTINGS,
+    ...DEFAULT_CHATBOT_PROMPT_SETTINGS.toJS(),
     initialPrompt:
       'My initial prompt is here - I am a bot that can have an initial prompt',
     chatbotPrompt: 'Biip boop hello i am a chatbot',
@@ -186,34 +186,12 @@ export const MOCK_APP_SETTINGS: AppSetting[] = [
     id: v4(),
     name: GENERAL_SETTINGS_NAME,
     data: {
-      ...DEFAULT_GENERAL_SETTINGS,
+      ...DEFAULT_GENERAL_SETTINGS.toJS(),
       code: MOCK_CODE_SAMPLE,
     },
-    itemId: MOCK_SERVER_ITEM.id,
-    creator: MEMBERS.BOB.id,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
+    item: MOCK_SERVER_ITEM,
+    creator: MEMBERS.BOB,
+    createdAt: new Date(),
+    updatedAt: new Date(),
   },
 ];
-
-// todo: update this
-export const MOCK_FILE_SETTING = {
-  id: '78363930-b86d-46fe-b5f9-61333b195bdd',
-  name: 'background',
-  itemId: 'd6ed724f-d57d-4841-b892-6fb4b4b6d4dd',
-  data: {
-    name: 'background',
-    type: 's3File',
-    extra: {
-      s3File: {
-        name: 'background',
-        path: 'apps/5b43/3311/c94a-1668414819160',
-        size: 104279,
-        mimetype: 'image/png',
-      },
-    },
-  },
-  creator: 'b78afd8f-8376-46c4-9135-cf59aabe1828',
-  createdAt: '2022-11-14T08:33:39.160Z',
-  updatedAt: '2022-11-14T08:33:39.160Z',
-};

@@ -14,7 +14,7 @@ describe('Show code', () => {
         appSettings: MOCK_APP_SETTINGS,
       },
       appContext: {
-        context: Context.PLAYER,
+        context: Context.Player,
         permission: PermissionLevel.Read,
       },
     });

@@ -1,8 +1,8 @@
 import React, { FC, PropsWithChildren, createContext, useMemo } from 'react';
 
-import { AppData } from '@graasp/apps-query-client';
+import type { AppData } from '@graasp/sdk';
 
-import Immutable, { List } from 'immutable';
+import { List } from 'immutable';
 
 import {
   APP_DATA_TYPES,
@@ -14,11 +14,11 @@ import {
   VISIBILITY_ITEM,
   VISIBILITY_MEMBER,
 } from '../../config/constants';
-import { MUTATION_KEYS, hooks, useMutation } from '../../config/queryClient';
+import { hooks, mutations } from '../../config/queryClient';
 import { DEFAULT_GENERAL_SETTINGS } from '../../config/settings';
-import { CodeType } from '../../interfaces/codeVersions';
-import { CommentType } from '../../interfaces/comment';
-import { LiveCodeType } from '../../interfaces/liveCode';
+import { CodeTypeRecord } from '../../interfaces/codeVersions';
+import { CommentTypeRecord } from '../../interfaces/comment';
+import { LiveCodeTypeRecord } from '../../interfaces/liveCode';
 import { GeneralSettingsKeys } from '../../interfaces/settings';
 import Loader from '../common/Loader';
 import { useSettings } from './SettingsContext';
@@ -40,22 +40,22 @@ type DeleteAppDataType = {
 
 export type AppDataContextType = {
   postAppData: (payload: PostAppDataType) => void;
-  postAppDataAsync: (payload: PostAppDataType) => Promise<AppData> | undefined;
+  postAppDataAsync: (payload: PostAppDataType) => Promise<AppData | undefined>;
   patchAppData: (payload: PatchAppDataType) => void;
   deleteAppData: (payload: DeleteAppDataType) => void;
-  codeAppData: Immutable.List<CodeType>;
-  comments: Immutable.List<CommentType>;
-  liveCode: Immutable.List<LiveCodeType>;
+  codeAppData: List<CodeTypeRecord>;
+  comments: List<CommentTypeRecord>;
+  liveCode: List<LiveCodeTypeRecord>;
 };
 
 const defaultContextValue = {
   postAppData: () => null,
-  postAppDataAsync: () => undefined,
+  postAppDataAsync: async () => undefined,
   patchAppData: () => null,
   deleteAppData: () => null,
-  codeAppData: Immutable.List<CodeType>(),
-  comments: Immutable.List<CommentType>(),
-  liveCode: Immutable.List<LiveCodeType>(),
+  codeAppData: List<CodeTypeRecord>(),
+  comments: List<CommentTypeRecord>(),
+  liveCode: List<LiveCodeTypeRecord>(),
 };
 
 const AppDataContext = createContext<AppDataContextType>(defaultContextValue);
@@ -77,35 +77,27 @@ export const AppDataProvider: FC<PropsWithChildren<Prop>> = ({
     settings[GeneralSettingsKeys.ReviewMode] === REVIEW_MODE_INDIVIDUAL
       ? VISIBILITY_MEMBER
       : VISIBILITY_ITEM;
-  const { mutate: postAppData, mutateAsync: postAppDataAsync } = useMutation<
-    AppData,
-    unknown,
-    PostAppDataType
-  >(MUTATION_KEYS.POST_APP_DATA);
-  const { mutate: patchAppData } = useMutation<
-    unknown,
-    unknown,
-    PatchAppDataType
-  >(MUTATION_KEYS.PATCH_APP_DATA);
-  const { mutate: deleteAppData } = useMutation<
-    unknown,
-    unknown,
-    DeleteAppDataType
-  >(MUTATION_KEYS.DELETE_APP_DATA);
+  const { mutate: postAppData, mutateAsync: postAppDataAsync } =
+    mutations.usePostAppData();
+  const { mutate: patchAppData } = mutations.usePatchAppData();
+  const { mutate: deleteAppData } = mutations.useDeleteAppData();
 
   const contextValue = useMemo(() => {
     const filteredAppData = currentUserId
-      ? appData.data?.filter((res) => res.creator === currentUserId)
+      ? appData.data?.filter((res) => res.creator?.id === currentUserId)
       : appData.data;
-    const comments = filteredAppData?.filter((res) =>
-      COMMENT_APP_DATA_TYPES.includes(res.type),
-    ) as List<CommentType>;
-    const codeAppData = filteredAppData?.filter(
-      (res) => res.type === APP_DATA_TYPES.CODE,
-    ) as List<CodeType>;
-    const liveCode = filteredAppData?.filter(
-      (res) => res.type === APP_DATA_TYPES.LIVE_CODE,
-    ) as List<LiveCodeType>;
+    const comments =
+      (filteredAppData?.filter((res) =>
+        COMMENT_APP_DATA_TYPES.includes(res.type),
+      ) as List<CommentTypeRecord>) ?? List();
+    const codeAppData =
+      (filteredAppData?.filter(
+        (res) => res.type === APP_DATA_TYPES.CODE,
+      ) as List<CodeTypeRecord>) ?? List();
+    const liveCode =
+      (filteredAppData?.filter(
+        (res) => res.type === APP_DATA_TYPES.LIVE_CODE,
+      ) as List<LiveCodeTypeRecord>) ?? List();
 
     return {
       postAppData: (payload: PostAppDataType) =>

@@ -26,13 +26,13 @@ const App: FC = () => {
   const renderContent = (): ReactElement => {
     switch (context.get('context')) {
       // eslint-disable-next-line default-case-last
-      case Context.BUILDER:
+      case Context.Builder:
         return <BuilderView />;
 
-      case Context.ANALYTICS:
+      case Context.Analytics:
         return <div data-cy={ANALYTICS_VIEW_CY}>Analytics View</div>;
 
-      case Context.PLAYER:
+      case Context.Player:
       default:
         return <PlayerView />;
     }

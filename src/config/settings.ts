@@ -1,20 +1,20 @@
-import { Context, PermissionLevel } from '@graasp/sdk';
+import { Context, PermissionLevel, convertJs } from '@graasp/sdk';
 
 import {
-  AppModeSettings,
   AppModeSettingsKeys,
-  ChatbotPromptSettings,
+  AppModeSettingsRecord,
   ChatbotPromptSettingsKeys,
-  CodeExecutionSettings,
+  ChatbotPromptSettingsRecord,
   CodeExecutionSettingsKeys,
-  DataFileListSettings,
+  CodeExecutionSettingsRecord,
   DataFileListSettingsKeys,
-  DiffViewSettings,
+  DataFileListSettingsRecord,
   DiffViewSettingsKeys,
-  GeneralSettings,
+  DiffViewSettingsRecord,
   GeneralSettingsKeys,
+  GeneralSettingsRecord,
   InstructorCodeSettingsKeys,
-  InstructorCodeVersionSettings,
+  InstructorCodeVersionSettingsRecord,
 } from '../interfaces/settings';
 import { AppMode } from './appSettingsTypes';
 import { REVIEW_MODE_INDIVIDUAL } from './constants';
@@ -24,7 +24,7 @@ import { PYTHON } from './programmingLanguages';
 export const DEFAULT_APP_MODE = AppMode.Execute;
 export const DEFAULT_APP_VIEW = AppView.CodeExecution;
 
-export const DEFAULT_CONTEXT = Context.BUILDER;
+export const DEFAULT_CONTEXT = Context.Builder;
 export const DEFAULT_PERMISSION = PermissionLevel.Read;
 export const DEFAULT_LINE_HIDDEN_STATE = false;
 
@@ -56,7 +56,7 @@ export const DEFAULT_MAX_COMMENT_LENGTH_SETTING = 300;
 export const DEFAULT_REVIEW_MODE_SETTING = REVIEW_MODE_INDIVIDUAL;
 
 // default settings object
-export const DEFAULT_GENERAL_SETTINGS: GeneralSettings = {
+export const DEFAULT_GENERAL_SETTINGS: GeneralSettingsRecord = convertJs({
   [GeneralSettingsKeys.ShowHeader]: DEFAULT_SHOW_HEADER_SETTING,
   [GeneralSettingsKeys.ShowToolbar]: DEFAULT_SHOW_TOOLBAR_SETTING,
   [GeneralSettingsKeys.ShowLineNumbers]: DEFAULT_SHOW_LINE_NUMBERS_SETTING,
@@ -71,46 +71,49 @@ export const DEFAULT_GENERAL_SETTINGS: GeneralSettings = {
   [GeneralSettingsKeys.AllowCommentsReporting]: DEFAULT_ALLOW_COMMENT_REPORTING,
   [GeneralSettingsKeys.ReviewMode]: DEFAULT_REVIEW_MODE_SETTING,
   [GeneralSettingsKeys.MaxCommentLength]: DEFAULT_MAX_COMMENT_LENGTH_SETTING,
-};
+});
 
 // default Instructor Code Version settings
-export const DEFAULT_INSTRUCTOR_CODE_VERSION_SETTINGS: InstructorCodeVersionSettings =
-  {
+export const DEFAULT_INSTRUCTOR_CODE_VERSION_SETTINGS: InstructorCodeVersionSettingsRecord =
+  convertJs({
     [InstructorCodeSettingsKeys.Code]: DEFAULT_CODE_SETTING,
     [InstructorCodeSettingsKeys.Language]: DEFAULT_PROGRAMMING_LANGUAGE_SETTING,
     [InstructorCodeSettingsKeys.CommitMessage]: DEFAULT_COMMIT_MESSAGE_SETTING,
     [InstructorCodeSettingsKeys.CommitDescription]:
       DEFAULT_COMMIT_DESCRIPTION_SETTING,
-  };
+  });
 
 // code Execution settings
-export const DEFAULT_CODE_EXECUTION_SETTINGS: CodeExecutionSettings = {
-  [CodeExecutionSettingsKeys.HeaderCode]: '',
-  [CodeExecutionSettingsKeys.FooterCode]: '',
-  [CodeExecutionSettingsKeys.PreLoadedLibraries]: '',
-};
+export const DEFAULT_CODE_EXECUTION_SETTINGS: CodeExecutionSettingsRecord =
+  convertJs({
+    [CodeExecutionSettingsKeys.HeaderCode]: '',
+    [CodeExecutionSettingsKeys.FooterCode]: '',
+    [CodeExecutionSettingsKeys.PreLoadedLibraries]: '',
+  });
 
 // app mode setting
-export const DEFAULT_APP_MODE_SETTINGS: AppModeSettings = {
+export const DEFAULT_APP_MODE_SETTINGS: AppModeSettingsRecord = convertJs({
   [AppModeSettingsKeys.Mode]: DEFAULT_APP_MODE,
-};
+});
 
 // app mode setting
-export const DEFAULT_DATA_FILE_LIST_SETTINGS: DataFileListSettings = {
-  [DataFileListSettingsKeys.Files]: [],
-};
+export const DEFAULT_DATA_FILE_LIST_SETTINGS: DataFileListSettingsRecord =
+  convertJs({
+    [DataFileListSettingsKeys.Files]: [],
+  });
 
 // diff view setting
-export const DEFAULT_DIFF_VIEW_SETTINGS: DiffViewSettings = {
+export const DEFAULT_DIFF_VIEW_SETTINGS: DiffViewSettingsRecord = convertJs({
   [DiffViewSettingsKeys.Language]: DEFAULT_PROGRAMMING_LANGUAGE_SETTING,
   [DiffViewSettingsKeys.OldCode]: '',
   [DiffViewSettingsKeys.NewCode]: '',
   [DiffViewSettingsKeys.LinesOffset]: 0,
-};
+});
 
 // chatbot prompt setting
-export const DEFAULT_CHATBOT_PROMPT_SETTINGS: ChatbotPromptSettings = {
-  [ChatbotPromptSettingsKeys.InitialPrompt]: '',
-  [ChatbotPromptSettingsKeys.ChatbotPrompt]: '',
-  [ChatbotPromptSettingsKeys.LineNumber]: 0,
-};
+export const DEFAULT_CHATBOT_PROMPT_SETTINGS: ChatbotPromptSettingsRecord =
+  convertJs({
+    [ChatbotPromptSettingsKeys.InitialPrompt]: '',
+    [ChatbotPromptSettingsKeys.ChatbotPrompt]: '',
+    [ChatbotPromptSettingsKeys.LineNumber]: 0,
+  });

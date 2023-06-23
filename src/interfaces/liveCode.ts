@@ -1,4 +1,5 @@
-import { AppData } from '@graasp/apps-query-client';
+import type { AppData } from '@graasp/sdk';
+import { ImmutableCast } from '@graasp/sdk/frontend';
 
 import { APP_DATA_TYPES } from '../config/appDataTypes';
 
@@ -11,3 +12,5 @@ export interface LiveCodeAppData {
   type: APP_DATA_TYPES.LIVE_CODE;
 }
 export type LiveCodeType = AppData & LiveCodeAppData;
+
+export type LiveCodeTypeRecord = ImmutableCast<LiveCodeType>;

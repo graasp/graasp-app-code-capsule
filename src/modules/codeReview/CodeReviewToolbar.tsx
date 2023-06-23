@@ -9,12 +9,17 @@ import {
 } from '@mui/icons-material';
 import { Stack, Tooltip, styled } from '@mui/material';
 
+import { UUID } from '@graasp/sdk';
+import { MemberRecord } from '@graasp/sdk/frontend';
+
 import { faInfo } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { TFunction } from 'i18next';
+import { List } from 'immutable';
 
 import { GENERAL_SETTINGS_NAME } from '../../config/appSettingsTypes';
 import {
+  ANONYMOUS_USER,
   DEFAULT_TRUNCATION_COMMIT_MESSAGE_LENGTH,
   INSTRUCTOR_CODE_ID,
   INSTRUCTOR_CODE_NAME,
@@ -35,7 +40,10 @@ import {
   DEFAULT_GENERAL_SETTINGS,
   DEFAULT_LINE_HIDDEN_STATE,
 } from '../../config/settings';
-import { CodeVersionSelectType } from '../../interfaces/codeVersions';
+import {
+  CodeVersionSelectType,
+  CodeVersionSelectTypeRecord,
+} from '../../interfaces/codeVersions';
 import { GeneralSettingsKeys } from '../../interfaces/settings';
 import { NO_DATE_PLACEHOLDER, getFormattedTime } from '../../utils/datetime';
 import CommitInfo from '../common/CommitInfo';
@@ -48,7 +56,7 @@ import ToolbarButton from '../layout/ToolbarButton';
 
 // generate the labels
 const getVersionLabel = (
-  { data, updatedAt }: CodeVersionSelectType,
+  { data, updatedAt }: CodeVersionSelectTypeRecord,
   t: TFunction,
   lang: string,
 ): string => {
@@ -100,59 +108,68 @@ const CodeReviewToolbar: FC<Props> = ({ setView }) => {
   );
   const [isOpenCommitInfo, setIsOpenCommitInfo] = useState(false);
   const [isHidden, setIsHidden] = useState(DEFAULT_LINE_HIDDEN_STATE);
-  const [selectedUser, setSelectedUser] = useState(
-    groupedVersions[0].user.value,
-  );
 
   const getFormattedVersionOptions = (
-    versions: CodeVersionSelectType[],
+    versions?: List<CodeVersionSelectTypeRecord>,
   ): { label: string; value: string }[] =>
-    versions.map((v) => ({
-      label: getVersionLabel(v, t, i18n.language),
-      value: v.id,
-    })) || [{ label: INSTRUCTOR_CODE_NAME, value: INSTRUCTOR_CODE_ID }];
+    versions
+      ?.map((v) => ({
+        label: getVersionLabel(v, t, i18n.language),
+        value: v.id,
+      }))
+      ?.toJS() || [{ label: INSTRUCTOR_CODE_NAME, value: INSTRUCTOR_CODE_ID }];
 
-  const [userOptions, setUserOptions] = useState(
-    groupedVersions.map((r) => r.user),
+  const [selectedUserId, setSelectedUserId] = useState<UUID>();
+  const [userOptions, setUserOptions] = useState<List<MemberRecord>>(
+    groupedVersions
+      .toList()
+      .map((versions) => versions.first()?.creator)
+      .filter(Boolean) as List<MemberRecord>,
   );
 
-  const [versionOptions, setVersionOptions] = useState(
-    getFormattedVersionOptions(groupedVersions[0].versions),
-  );
+  const [versionOptions, setVersionOptions] =
+    useState<List<CodeVersionSelectTypeRecord>>();
+  // getFormattedVersionOptions(groupedVersions.keySeq()?.first()?.versions),
 
-  const [selectedVersion, setSelectedVersion] = useState(
-    versionOptions[0].value,
-  );
-
+  const [selectedVersionId, setSelectedVersionId] = useState<UUID>();
   // called when the user changes
   // only sets the new codeId and not the select value directly
   const resetVersionSelect = (userId: string): void => {
-    const newVersionOptions = groupedVersions.find(
-      (a) => a.user.value === userId,
-    );
+    const newVersionOptions = groupedVersions.get(userId);
     if (!newVersionOptions) {
       return;
     }
-    const defaultId = newVersionOptions.versions[0].id;
+    const defaultId = newVersionOptions.first()?.id;
+    if (!defaultId) {
+      return;
+    }
     setCodeId(defaultId);
   };
 
   // update the values when the codeId changes
   useEffect(
     () => {
-      const version = groupedVersions.find((a) =>
-        a.versions.find((b) => b.id === codeId),
-      );
+      const versions = groupedVersions
+        .toList()
+        .flatten() as List<CodeVersionSelectType>;
+
+      const version = versions.find((v) => v.id === codeId);
+
       if (!version) {
         return;
       }
-      const newUser = version.user.value;
-      const newVersionOptions = getFormattedVersionOptions(version.versions);
+      const newUser = version.creator;
+      const newVersionOptions = groupedVersions.get(newUser.id);
 
-      setUserOptions(groupedVersions.map((r) => r.user));
+      setUserOptions(
+        groupedVersions
+          .toList()
+          .map((vs) => vs.first()?.creator)
+          .filter(Boolean) as List<MemberRecord>,
+      );
       setVersionOptions(newVersionOptions);
-      setSelectedVersion(codeId);
-      setSelectedUser(newUser);
+      setSelectedVersionId(version.id);
+      setSelectedUserId(newUser.id);
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [codeId, groupedVersions, i18n.language],
@@ -171,12 +188,17 @@ const CodeReviewToolbar: FC<Props> = ({ setView }) => {
     <CustomSelect
       dataCy={TOOLBAR_USER_SELECT_CYPRESS}
       onChange={(id) => {
-        setSelectedUser(id);
+        setSelectedUserId(id);
         resetVersionSelect(id);
       }}
       label={t('User')}
-      value={selectedUser}
-      values={userOptions}
+      value={selectedUserId}
+      values={userOptions
+        .map(({ id, name }) => ({
+          value: id,
+          label: name ?? ANONYMOUS_USER,
+        }))
+        .toJS()}
     />
   );
 
@@ -187,8 +209,8 @@ const CodeReviewToolbar: FC<Props> = ({ setView }) => {
         setCodeId(id);
       }}
       label={t('Version')}
-      value={selectedVersion}
-      values={versionOptions}
+      value={selectedVersionId}
+      values={getFormattedVersionOptions(versionOptions)}
     />
   );
 

@@ -1,4 +1,4 @@
-import React, { FC, ReactElement, useRef, useState } from 'react';
+import { FC, ReactElement, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { MoreVert } from '@mui/icons-material';
@@ -18,11 +18,10 @@ import { APP_DATA_TYPES } from '../../config/appDataTypes';
 import { GENERAL_SETTINGS_NAME } from '../../config/appSettingsTypes';
 import { ANONYMOUS_USER, DEFAULT_BOT_USERNAME } from '../../config/constants';
 import { BIG_BORDER_RADIUS } from '../../config/layout';
-import { MUTATION_KEYS, useMutation } from '../../config/queryClient';
+import { mutations } from '../../config/queryClient';
 import { buildCommentContainerDataCy } from '../../config/selectors';
 import { DEFAULT_GENERAL_SETTINGS } from '../../config/settings';
-import { CommentType } from '../../interfaces/comment';
-import { ReportedCommentType } from '../../interfaces/reportedComment';
+import { CommentTypeRecord } from '../../interfaces/comment';
 import { GeneralSettingsKeys } from '../../interfaces/settings';
 import { getFormattedTime } from '../../utils/datetime';
 import ChatbotAvatar from '../chatbot/ChatbotAvatar';
@@ -38,7 +37,7 @@ const CustomCard = styled(Card)<CardProps>({
 });
 
 type Props = {
-  comment: CommentType;
+  comment: CommentTypeRecord;
 };
 
 const Comment: FC<Props> = ({ comment }) => {
@@ -46,13 +45,8 @@ const Comment: FC<Props> = ({ comment }) => {
   const members = useMembersContext();
   const { [GENERAL_SETTINGS_NAME]: settings = DEFAULT_GENERAL_SETTINGS } =
     useSettings();
-  const currentMember = useLocalContext().get('memberId');
-  const { mutate: postAppData } = useMutation<
-    ReportedCommentType,
-    unknown,
-    unknown,
-    ReportedCommentType
-  >(MUTATION_KEYS.POST_APP_DATA);
+  const currentMemberId = useLocalContext().get('memberId');
+  const { mutate: postAppData } = mutations.usePostAppData();
 
   const allowCommentReporting =
     settings[GeneralSettingsKeys.AllowCommentsReporting];
@@ -61,12 +55,12 @@ const Comment: FC<Props> = ({ comment }) => {
   const [openFlagDialog, setOpenFlagDialog] = useState(false);
   const commentRef = useRef<HTMLDivElement>(null);
 
-  const member = members.find((u) => u.id === comment.memberId);
+  const member = members.find((u) => u.id === comment.member.id);
   const userName = member?.name || ANONYMOUS_USER;
 
   const isBot = comment.type === APP_DATA_TYPES.BOT_COMMENT;
 
-  const isEditable = (): boolean => currentMember === comment.creator;
+  const isEditable = (): boolean => currentMemberId === comment.creator?.id;
   const isDeletable = (): boolean => isEditable();
 
   const sendCommentReport = (reason: string): void => {

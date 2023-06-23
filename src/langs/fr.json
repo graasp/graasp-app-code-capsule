@@ -147,6 +147,8 @@
     "Line Number (first line is 0)": "Numéro de ligne (première ligne est 0)",
     "Loading": "Chargement",
     "EXECUTION_SUPPORTED_LANGUAGE_NOTICE": "Actuellement l’exécution de code n'est supportée que pour le language {{language}}",
-    "APP_MODE_EXECUTE_DESCRIPTION": "Exécuter du code code et apprendre en développant"
+    "APP_MODE_EXECUTE_DESCRIPTION": "Exécuter du code code et apprendre en développant",
+    "PUBLIC_ALERT": "Vous n'êtes pas authentifié. Vous ne pourrez pas sauver de données."
+
   }
 }

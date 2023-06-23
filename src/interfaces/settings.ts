@@ -1,4 +1,5 @@
-import { AppSetting } from '@graasp/apps-query-client';
+import type { AppSetting } from '@graasp/sdk';
+import { ImmutableCast } from '@graasp/sdk/frontend';
 
 import { ProgrammingLanguagesType } from '@/config/programmingLanguages';
 
@@ -78,6 +79,7 @@ export type GeneralSettings = {
   // used to allow access using settings[settingKey] syntax
   [key: string]: unknown;
 };
+export type GeneralSettingsRecord = ImmutableCast<GeneralSettings>;
 
 export type InstructorCodeVersionSettings = {
   [InstructorCodeSettingsKeys.Code]: string;
@@ -88,6 +90,8 @@ export type InstructorCodeVersionSettings = {
   // used to allow access using settings[settingKey] syntax
   [key: string]: unknown;
 };
+export type InstructorCodeVersionSettingsRecord =
+  ImmutableCast<InstructorCodeVersionSettings>;
 
 export type CodeExecutionSettings = {
   [CodeExecutionSettingsKeys.HeaderCode]: string;
@@ -97,6 +101,7 @@ export type CodeExecutionSettings = {
   // used to allow access using settings[settingKey] syntax
   [key: string]: unknown;
 };
+export type CodeExecutionSettingsRecord = ImmutableCast<CodeExecutionSettings>;
 
 export type AppModeSettings = {
   [AppModeSettingsKeys.Mode]: AppMode;
@@ -104,6 +109,7 @@ export type AppModeSettings = {
   // used to allow access using settings[settingKey] syntax
   [key: string]: unknown;
 };
+export type AppModeSettingsRecord = ImmutableCast<AppModeSettings>;
 
 export type DataFileListSettings = {
   [DataFileListSettingsKeys.Files]: DataFile[];
@@ -111,6 +117,7 @@ export type DataFileListSettings = {
   // used to allow access using settings[settingKey] syntax
   [key: string]: unknown;
 };
+export type DataFileListSettingsRecord = ImmutableCast<DataFileListSettings>;
 
 export type DiffViewSettings = {
   [DiffViewSettingsKeys.Language]: ProgrammingLanguagesType;
@@ -121,6 +128,7 @@ export type DiffViewSettings = {
   // used to allow access using settings[settingKey] syntax
   [key: string]: unknown;
 };
+export type DiffViewSettingsRecord = ImmutableCast<DiffViewSettings>;
 
 export type ChatbotPromptSettings = {
   [ChatbotPromptSettingsKeys.InitialPrompt]: string;
@@ -130,6 +138,11 @@ export type ChatbotPromptSettings = {
   // used to allow access using settings[settingKey] syntax
   [key: string]: unknown;
 };
+export type ChatbotPromptSettingsRecord = ImmutableCast<ChatbotPromptSettings>;
+
 export type ChatbotPromptAppSettings = AppSetting & {
   data: ChatbotPromptSettings;
 };
+
+export type ChatbotPromptAppSettingRecord =
+  ImmutableCast<ChatbotPromptAppSettings>;

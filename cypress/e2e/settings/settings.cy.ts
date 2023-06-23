@@ -43,7 +43,7 @@ describe('Settings', () => {
   beforeEach(() => {
     cy.setUpApi({
       appContext: {
-        context: Context.BUILDER,
+        context: Context.Builder,
         permission: PermissionLevel.Admin,
       },
     });

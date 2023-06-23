@@ -1,4 +1,5 @@
-import { AppData } from '@graasp/apps-query-client';
+import type { AppData, Member, UUID } from '@graasp/sdk';
+import { ImmutableCast } from '@graasp/sdk/frontend';
 
 import { ProgrammingLanguagesType } from '@/config/programmingLanguages';
 
@@ -11,12 +12,16 @@ export type CodeVersionType = {
   commitDescription: string;
 };
 
+export type CodeVersionTypeRecord = ImmutableCast<CodeVersionType>;
+
 export type CodeVersionSelectType = {
-  id: string;
+  id: UUID;
   data: CodeVersionType;
-  creator: string;
-  updatedAt: string;
+  creator: Member;
+  updatedAt: Date;
 };
+
+export type CodeVersionSelectTypeRecord = ImmutableCast<CodeVersionSelectType>;
 
 export interface CodeAppData {
   data: CodeVersionType;
@@ -25,3 +30,5 @@ export interface CodeAppData {
 
 // stripped out version of a code Resource but without the AppData properties like id, creator ...
 export type CodeType = { data: CodeVersionType } & AppData;
+
+export type CodeTypeRecord = ImmutableCast<CodeType>;

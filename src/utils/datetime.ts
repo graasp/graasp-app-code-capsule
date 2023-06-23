@@ -13,16 +13,13 @@ const locales: { [key: string]: Locale } = {
 
 export const NO_DATE_PLACEHOLDER = 'N.D.';
 
-const getFormattedTime = (time: string, lang: string): string => {
-  const parsedInputDate = Date.parse(time);
-
-  return Number.isNaN(parsedInputDate)
+const getFormattedTime = (time: Date, lang: string): string =>
+  Number.isNaN(time)
     ? NO_DATE_PLACEHOLDER
-    : formatDistance(parsedInputDate, new Date(), {
+    : formatDistance(time, new Date(), {
         includeSeconds: true,
         addSuffix: true, // adds "ago" at the end
         locale: locales[lang], // provides localization
       });
-};
 
 export { getFormattedTime };

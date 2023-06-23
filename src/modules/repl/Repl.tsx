@@ -14,7 +14,7 @@ import {
   CODE_EXECUTION_SETTINGS_NAME,
   DATA_FILE_LIST_SETTINGS_NAME,
 } from '../../config/appSettingsTypes';
-import { MUTATION_KEYS, useMutation } from '../../config/queryClient';
+import { mutations } from '../../config/queryClient';
 import { REPL_CONTAINER_CY, REPL_EDITOR_ID_CY } from '../../config/selectors';
 import {
   DEFAULT_CODE_EXECUTION_SETTINGS,
@@ -67,11 +67,7 @@ const Repl = ({ seedValue }: Props): JSX.Element => {
   const token = useContext(TokenContext);
   const apiHost = context?.get('apiHost');
 
-  const { mutate: postAction } = useMutation<
-    unknown,
-    unknown,
-    { type: string; data: { [key: string]: unknown } }
-  >(MUTATION_KEYS.POST_APP_ACTION);
+  const { mutate: postAction } = mutations.usePostAppAction();
 
   const { liveCode, postAppData } = useAppDataContext();
   // sort app data by the latest to the oldest
@@ -164,7 +160,7 @@ const Repl = ({ seedValue }: Props): JSX.Element => {
   useEffect(() => {
     const callback = async (): Promise<void> => {
       if (
-        dataFileListSetting[DataFileListSettingsKeys.Files].length &&
+        dataFileListSetting[DataFileListSettingsKeys.Files].size &&
         !dataFileSettings.isEmpty() &&
         apiHost &&
         token

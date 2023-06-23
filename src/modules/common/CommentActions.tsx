@@ -5,7 +5,7 @@ import { Delete, Edit, Flag } from '@mui/icons-material';
 import { ListItemIcon, ListItemText, Menu, MenuItem } from '@mui/material';
 
 import { APP_ACTIONS_TYPES } from '../../config/appActionsTypes';
-import { MUTATION_KEYS, useMutation } from '../../config/queryClient';
+import { mutations } from '../../config/queryClient';
 import { useAppDataContext } from '../context/AppDataContext';
 import { useCommentContext } from '../context/CommentContext';
 import { useReviewContext } from '../context/ReviewContext';
@@ -33,11 +33,7 @@ const CommentActions: FC<Props> = ({
   const comment = useCommentContext();
   const { editComment } = useReviewContext();
   const { deleteAppData } = useAppDataContext();
-  const { mutate: postAction } = useMutation<
-    unknown,
-    unknown,
-    { data: unknown; type: string }
-  >(MUTATION_KEYS.POST_APP_ACTION);
+  const { mutate: postAction } = mutations.usePostAppAction();
 
   return (
     <Menu

@@ -73,7 +73,7 @@ const TableView: FC = () => {
       );
     }
     const commentsByUsers = nonOrphanComments
-      .groupBy(({ memberId }) => memberId)
+      .groupBy(({ member }) => member.id)
       .toArray();
     return commentsByUsers.map(([userId, userComments]) => {
       const userName =

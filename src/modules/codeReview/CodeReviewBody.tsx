@@ -12,7 +12,7 @@ import { APP_DATA_TYPES, APP_DATA_VISIBILITY } from '../../config/appDataTypes';
 import { GENERAL_SETTINGS_NAME } from '../../config/appSettingsTypes';
 import { REVIEW_MODE_INDIVIDUAL } from '../../config/constants';
 import { SMALL_BORDER_RADIUS } from '../../config/layout';
-import { MUTATION_KEYS, useMutation } from '../../config/queryClient';
+import { mutations } from '../../config/queryClient';
 import {
   CODE_REVIEW_ADD_BUTTON_CYPRESS,
   CODE_REVIEW_LINE_CONTENT_CYPRESS,
@@ -24,7 +24,7 @@ import {
   DEFAULT_GENERAL_SETTINGS,
   DEFAULT_SHOW_LINE_NUMBERS_SETTING,
 } from '../../config/settings';
-import { CommentType } from '../../interfaces/comment';
+import { CommentTypeRecord } from '../../interfaces/comment';
 import { GeneralSettingsKeys } from '../../interfaces/settings';
 import { buildCodeRowKey } from '../../utils/utils';
 import ChatbotPrompts from '../chatbot/ChatbotPrompts';
@@ -106,12 +106,7 @@ const CodeReviewBody: FC<Props> = () => {
     DEFAULT_SHOW_LINE_NUMBERS_SETTING;
   const reviewMode = settings[GeneralSettingsKeys.ReviewMode];
   const { postAppData, comments } = useAppDataContext();
-  const { mutate: postAction } = useMutation<
-    unknown,
-    unknown,
-    { data: unknown; type: string }
-  >(MUTATION_KEYS.POST_APP_ACTION);
-
+  const { mutate: postAction } = mutations.usePostAppAction();
   const versionComments = comments?.filter((c) => c.data.codeId === codeId);
 
   const groupedComments = versionComments?.groupBy(({ data }) => data.line);
@@ -227,7 +222,7 @@ const CodeReviewBody: FC<Props> = () => {
               <LoadingIndicatorProvider>
                 <ChatbotPrompts line={i} />
                 <CommentThread hiddenState={lineHiddenState[i]}>
-                  {groupedComments.get(i)?.toList() as List<CommentType>}
+                  {groupedComments.get(i)?.toList() as List<CommentTypeRecord>}
                 </CommentThread>
               </LoadingIndicatorProvider>
             </Fragment>

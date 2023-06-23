@@ -4,6 +4,10 @@ import { useTranslation } from 'react-i18next';
 import { Add } from '@mui/icons-material';
 import { Box, Button, List, Stack, Typography } from '@mui/material';
 
+import { convertJs } from '@graasp/sdk';
+
+import { List as ImmList } from 'immutable';
+
 import {
   DATA_FILE_LIST_SETTINGS_NAME,
   DataFile,
@@ -27,17 +31,22 @@ const DataFileUpload: FC = () => {
   const filesMetaData = dataFileListSetting[DataFileListSettingsKeys.Files];
 
   const handleFileDelete = (appSettingIdToDelete: string): void => {
-    saveSettings(DATA_FILE_LIST_SETTINGS_NAME, {
-      [DataFileListSettingsKeys.Files]: filesMetaData.filter(
-        ({ appSettingId }) => appSettingId !== appSettingIdToDelete,
-      ),
-    });
+    saveSettings(
+      DATA_FILE_LIST_SETTINGS_NAME,
+      convertJs({
+        [DataFileListSettingsKeys.Files]: filesMetaData
+          .toJS()
+          .filter(({ appSettingId }) => appSettingId !== appSettingIdToDelete),
+      }),
+    );
   };
 
   const handleFileUpload = (newFileMetaData: DataFile[]): void => {
-    saveSettings(DATA_FILE_LIST_SETTINGS_NAME, {
-      [DataFileListSettingsKeys.Files]: [...filesMetaData, ...newFileMetaData],
-    });
+    const newData = dataFileListSetting.update(
+      DataFileListSettingsKeys.Files,
+      (list: ImmList<DataFile>) => list.concat(convertJs(newFileMetaData)),
+    );
+    saveSettings(DATA_FILE_LIST_SETTINGS_NAME, newData);
     // close modal
     setAddNewFilesOpen(false);
   };
@@ -48,7 +57,7 @@ const DataFileUpload: FC = () => {
         {t('Upload Data Files')}
       </Button>
       <Box flex={1} borderColor="info.main" borderRadius={2} border={1}>
-        {filesMetaData.length ? (
+        {filesMetaData.size ? (
           <List dense>
             {filesMetaData.map(({ appSettingId, fileName, virtualPath }) => {
               const appSetting = dataFileSettings.find(

@@ -6,7 +6,7 @@ describe('Analytics View', () => {
   beforeEach(() => {
     cy.setUpApi({
       appContext: {
-        context: Context.ANALYTICS,
+        context: Context.Analytics,
         permission: PermissionLevel.Admin,
       },
     });
