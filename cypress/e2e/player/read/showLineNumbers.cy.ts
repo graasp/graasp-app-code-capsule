@@ -14,7 +14,7 @@ import {
   MOCK_GENERAL_SETTINGS,
 } from '../../../fixtures/appSettings';
 
-describe.only('Show Line Numbers Code Review', () => {
+describe('Show Line Numbers Code Review', () => {
   beforeEach(() => {
     cy.setUpApi({
       database: {
