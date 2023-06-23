@@ -2,6 +2,42 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.0.0](https://github.com/graasp/graasp-app-code-capsule/compare/v1.5.2...v2.0.0) (2023-06-23)
+
+
+### ⚠ BREAKING CHANGES
+
+* apply changes for typeorm ([#114](https://github.com/graasp/graasp-app-code-capsule/issues/114))
+
+### Features
+
+* add setting for line numbers ([#84](https://github.com/graasp/graasp-app-code-capsule/issues/84)) ([7194121](https://github.com/graasp/graasp-app-code-capsule/commit/719412100210f10fb84322bdead1611bbd9784e5))
+* apply changes for typeorm ([#114](https://github.com/graasp/graasp-app-code-capsule/issues/114)) ([97e386c](https://github.com/graasp/graasp-app-code-capsule/commit/97e386c21ad03daf13d50008a7e1ea33e1a08cfd))
+* implement tests for show line numbers feature ([#108](https://github.com/graasp/graasp-app-code-capsule/issues/108)) ([03002b0](https://github.com/graasp/graasp-app-code-capsule/commit/03002b08685195e0162971eaef52aeffe209edae))
+
+
+### Bug Fixes
+
+* add dummy workflow for status checks requirments ([#89](https://github.com/graasp/graasp-app-code-capsule/issues/89)) ([088ed45](https://github.com/graasp/graasp-app-code-capsule/commit/088ed45993dc6e8535bc5ecdb36126e5beb10ec9))
+* add merge group trigger ([c62c675](https://github.com/graasp/graasp-app-code-capsule/commit/c62c67553e4ba71fd54fc7fb618f10d3c4bf3a37))
+* concurrency rule for cypress ci tests ([088ed45](https://github.com/graasp/graasp-app-code-capsule/commit/088ed45993dc6e8535bc5ecdb36126e5beb10ec9))
+* **deps:** update codemirror packages ([#119](https://github.com/graasp/graasp-app-code-capsule/issues/119)) ([632a0c2](https://github.com/graasp/graasp-app-code-capsule/commit/632a0c2b1c601c1e9a65dc8a85b9a6d08f56e22f))
+* **deps:** update codemirror packages ([#87](https://github.com/graasp/graasp-app-code-capsule/issues/87)) ([02f1727](https://github.com/graasp/graasp-app-code-capsule/commit/02f17270e3a5fdb5711e136f47807cd238930f24))
+* **deps:** update dependency @graasp/ui to v2.4.3 ([#120](https://github.com/graasp/graasp-app-code-capsule/issues/120)) ([0f3c05d](https://github.com/graasp/graasp-app-code-capsule/commit/0f3c05dd06c770104be0ab27471a0efee43f7d06))
+* **deps:** update dependency @mui/material to v5.13.5 ([#95](https://github.com/graasp/graasp-app-code-capsule/issues/95)) ([d00ea69](https://github.com/graasp/graasp-app-code-capsule/commit/d00ea69224663802b3e378750b03dd29d43d51db))
+* **deps:** update dependency @uiw/react-codemirror to v4.19.16 ([#91](https://github.com/graasp/graasp-app-code-capsule/issues/91)) ([9d968df](https://github.com/graasp/graasp-app-code-capsule/commit/9d968dfdbdfb50444d58082b79084fa3613a3ed0))
+* **deps:** update dependency i18next to v22.4.15 ([#123](https://github.com/graasp/graasp-app-code-capsule/issues/123)) ([2221210](https://github.com/graasp/graasp-app-code-capsule/commit/2221210ecd37d5fe9dccb88692acfc107107b13d))
+* **deps:** update dependency qs to v6.11.2 ([#124](https://github.com/graasp/graasp-app-code-capsule/issues/124)) ([3851812](https://github.com/graasp/graasp-app-code-capsule/commit/3851812d1e259d4b8ce05dc7a5b9b3f5c50387df))
+* **deps:** update dependency react-i18next to v12.2.2 ([#125](https://github.com/graasp/graasp-app-code-capsule/issues/125)) ([be3496b](https://github.com/graasp/graasp-app-code-capsule/commit/be3496ba2d0aabcf7c82acbbab7ab3e7a6e58ae1))
+* **deps:** update dependency react-markdown to v8.0.7 ([#94](https://github.com/graasp/graasp-app-code-capsule/issues/94)) ([be0e621](https://github.com/graasp/graasp-app-code-capsule/commit/be0e6212f1fa37301ee3c70cc8241e6126bab2bd))
+* **deps:** update dependency react-router-dom to v6.13.0 ([#98](https://github.com/graasp/graasp-app-code-capsule/issues/98)) ([b249182](https://github.com/graasp/graasp-app-code-capsule/commit/b249182b87c762bdbe4435a6fc7fc484c338508d))
+* **deps:** update dependency react-toastify to v9.1.3 ([#126](https://github.com/graasp/graasp-app-code-capsule/issues/126)) ([361f486](https://github.com/graasp/graasp-app-code-capsule/commit/361f486c80e4fd19fb23db2508e79d61397d94b6))
+* **deps:** update dependency remark-breaks to v3.0.3 ([#127](https://github.com/graasp/graasp-app-code-capsule/issues/127)) ([4c3ae93](https://github.com/graasp/graasp-app-code-capsule/commit/4c3ae932228664e16ccbaa18a7bf82ce15c5d371))
+* **deps:** update mui (non-major) ([#129](https://github.com/graasp/graasp-app-code-capsule/issues/129)) ([a28f4e4](https://github.com/graasp/graasp-app-code-capsule/commit/a28f4e4f0ad7d84f854409bae2fb8da3be82a818))
+* **deps:** update react monorepo ([#100](https://github.com/graasp/graasp-app-code-capsule/issues/100)) ([002f6a3](https://github.com/graasp/graasp-app-code-capsule/commit/002f6a39d66ceca51f1d75aba8ce6ad4f0b20cb1))
+* remove cancel-in-progress setting ([0c19419](https://github.com/graasp/graasp-app-code-capsule/commit/0c19419b03fdf2a1adf0923518e4a42e13834638))
+* update deployment workflows ([#86](https://github.com/graasp/graasp-app-code-capsule/issues/86)) ([352c3ff](https://github.com/graasp/graasp-app-code-capsule/commit/352c3fff04b90efb3509394806b8c7d031805351))
+
 ## [1.5.2](https://github.com/graasp/graasp-app-code-capsule/compare/v1.5.1...v1.5.2) (2023-04-26)
 
 
