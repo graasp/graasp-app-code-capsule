@@ -199,14 +199,12 @@ describe('Settings', () => {
     cy.get('@select').should('have.value', REVIEW_MODE_COLLABORATIVE);
 
     // switches
-    cy.get(buildDataCy(ALLOW_REPLIES_SWITCH_CYPRESS))
-      .should('be.visible')
-      .click()
-      .click();
-    cy.get(buildDataCy(ALLOW_COMMENTS_SWITCH_CYPRESS))
-      .should('be.visible')
-      .click()
-      .click();
+    cy.get(buildDataCy(ALLOW_REPLIES_SWITCH_CYPRESS)).should('be.visible');
+    cy.get(buildDataCy(ALLOW_REPLIES_SWITCH_CYPRESS)).click();
+    cy.get(buildDataCy(ALLOW_REPLIES_SWITCH_CYPRESS)).click();
+    cy.get(buildDataCy(ALLOW_COMMENTS_SWITCH_CYPRESS)).should('be.visible');
+    cy.get(buildDataCy(ALLOW_COMMENTS_SWITCH_CYPRESS)).click();
+    cy.get(buildDataCy(ALLOW_COMMENTS_SWITCH_CYPRESS)).click();
 
     // change the max length of comments
     cy.get(`#${SETTING_MAX_COMMENT_LENGTH}`).should('be.visible').type('340');

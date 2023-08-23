@@ -1,4 +1,4 @@
-import { SENTRY_ENV, VERSION } from './env';
+import { SENTRY_DSN, SENTRY_ENV, VERSION } from './env';
 
 type SentryConfigType = {
   dsn: string;
@@ -9,40 +9,16 @@ type SentryConfigType = {
   replaysOnErrorSampleRate: number;
 };
 
-export const generateSentryConfig = (): SentryConfigType => {
-  let SENTRY_ENVIRONMENT = 'development';
-  let SENTRY_TRACE_SAMPLE_RATE = 1.0;
-  // This sets the sample rate to be 10%. You may want this to be 100% while
-  // in development and sample at a lower rate in production
-  let SENTRY_REPLAY_SAMPLE_RATE = 1.0;
-  switch (process.env.NODE_ENV) {
-    case 'production':
-      SENTRY_ENVIRONMENT = 'production';
-      SENTRY_TRACE_SAMPLE_RATE = 1.0;
-      SENTRY_REPLAY_SAMPLE_RATE = 0.5;
-      break;
-    case 'test':
-      SENTRY_TRACE_SAMPLE_RATE = 0.0;
-      SENTRY_REPLAY_SAMPLE_RATE = 0.0;
-      break;
-    case 'development':
-      SENTRY_TRACE_SAMPLE_RATE = 1.0;
-      SENTRY_REPLAY_SAMPLE_RATE = 1.0;
-      break;
-    default:
-  }
+export const generateSentryConfig = (): SentryConfigType => ({
+  // dsn is set only when not running inside cypress
+  dsn: (!window.Cypress && SENTRY_DSN) || '',
+  environment: SENTRY_ENV,
+  tracesSampleRate: import.meta.env.PROD ? 0.3 : 0.0,
+  // release is set only when building for production
+  release: VERSION,
 
-  return {
-    // dsn is set only when not running inside cypress
-    dsn: (!window.Cypress && process.env.REACT_APP_SENTRY_DSN) || '',
-    environment: SENTRY_ENV || SENTRY_ENVIRONMENT,
-    tracesSampleRate: SENTRY_TRACE_SAMPLE_RATE,
-    // release is set only when building for production
-    release: SENTRY_ENVIRONMENT === 'production' ? VERSION : '',
-
-    replaysSessionSampleRate: SENTRY_REPLAY_SAMPLE_RATE,
-    // If the entire session is not sampled, use the below sample rate to sample
-    // sessions when an error occurs.
-    replaysOnErrorSampleRate: 1.0,
-  };
-};
+  replaysSessionSampleRate: import.meta.env.PROD ? 1.0 : 0.0,
+  // If the entire session is not sampled, use the below sample rate to sample
+  // sessions when an error occurs.
+  replaysOnErrorSampleRate: 1.0,
+});

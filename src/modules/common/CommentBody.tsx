@@ -4,8 +4,7 @@ import { CodeProps } from 'react-markdown/lib/ast-to-react';
 
 import { styled } from '@mui/material';
 
-import Highlight, { Language, defaultProps } from 'prism-react-renderer';
-import vsLight from 'prism-react-renderer/themes/vsLight';
+import { Highlight, Language, themes } from 'prism-react-renderer';
 import remarkBreaks from 'remark-breaks';
 import remarkGfm from 'remark-gfm';
 
@@ -83,8 +82,7 @@ const renderCode = ({
   const match = /language-(\w+)/.exec(classNameInit || '');
   return !inline && match ? (
     <Highlight
-      {...defaultProps}
-      theme={vsLight}
+      theme={themes.vsLight}
       code={String(codeContent).replace(/\n$/, '')}
       language={match[1] as Language}
       {...props}

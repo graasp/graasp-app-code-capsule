@@ -42,7 +42,7 @@ export const mockItem = {
 export const mockContext: LocalContext = {
   apiHost: API_HOST,
   permission: PermissionLevel.Admin,
-  context: 'builder',
+  context: 'player',
   itemId: mockItem.id,
   memberId: mockMember.id,
 };
