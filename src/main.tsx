@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom/client';
 
 import { mockApi } from '@graasp/apps-query-client';
 
-import { BrowserTracing, Replay } from '@sentry/browser';
 import * as Sentry from '@sentry/react';
 
 import { MOCK_API, OPEN_AI_API_URL } from './config/env';
@@ -13,7 +12,7 @@ import './index.css';
 import Root from './modules/main/Root';
 
 Sentry.init({
-  integrations: [new BrowserTracing(), new Replay()],
+  integrations: [new Sentry.BrowserTracing(), new Sentry.Replay()],
 
   // Set tracesSampleRate to 1.0 to capture 100%
   // of transactions for performance monitoring.
