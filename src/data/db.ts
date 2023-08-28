@@ -1,7 +1,8 @@
 import type { Database, LocalContext } from '@graasp/apps-query-client';
 import {
   AppDataVisibility,
-  Item,
+  CurrentMember,
+  DiscriminatedItem,
   Member,
   MemberType,
   PermissionLevel,
@@ -37,7 +38,7 @@ export const mockMember = {
 
 export const mockItem = {
   id: '1234-1234-123456-8123-123456',
-} as Item;
+} as DiscriminatedItem;
 
 export const mockContext: LocalContext = {
   apiHost: API_HOST,
@@ -47,7 +48,7 @@ export const mockContext: LocalContext = {
   memberId: mockMember.id,
 };
 
-export const mockMembers: Member[] = [
+export const mockMembers: CurrentMember[] = [
   {
     id: mockContext.memberId || '',
     name: 'current-member',

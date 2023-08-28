@@ -3882,9 +3882,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/sdk@npm:1.2.1":
+"@graasp/sdk@github:graasp/graasp-sdk#251-fix-use-discriminateditem-instead-of-item-in-types":
   version: 1.2.1
-  resolution: "@graasp/sdk@npm:1.2.1"
+  resolution: "@graasp/sdk@https://github.com/graasp/graasp-sdk.git#commit=ab1aa9a274291441a60ea5bc715537e89ced9336"
   dependencies:
     "@aws-sdk/client-s3": 3.370.0
     "@fastify/secure-session": 6.1.0
@@ -3897,7 +3897,7 @@ __metadata:
     typeorm: 0.3.17
     uuid: 9.0.0
     validator: 13.11.0
-  checksum: 8507f3157e77a1cf0fb9e01a32c72cbfdb8bd3fd5a960a5fa299dbe36eba4a6f28f5f094a5d09214599e54a1fd91b95e945f80525a6165e4caf96ca9822544b7
+  checksum: 865b90825b1cdb7c4dacbd4cd35145466e50d9bfd3e9c6d70c873eb76f7862ae35c41cc921c2a5f8be9b3c120cb646b65ace238910c7189df00d9f691b9c5497
   languageName: node
   linkType: hard
 
@@ -12351,7 +12351,7 @@ __metadata:
     "@fortawesome/react-fontawesome": 0.2.0
     "@graasp/apps-query-client": "github:graasp/graasp-apps-query-client#main"
     "@graasp/pyodide": "github:graasp/graasp-pyodide"
-    "@graasp/sdk": 1.2.1
+    "@graasp/sdk": "github:graasp/graasp-sdk#251-fix-use-discriminateditem-instead-of-item-in-types"
     "@graasp/ui": 3.3.2
     "@mui/icons-material": 5.14.3
     "@mui/lab": 5.0.0-alpha.134
