@@ -5358,33 +5358,33 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tanstack/query-core@npm:4.29.5":
-  version: 4.29.5
-  resolution: "@tanstack/query-core@npm:4.29.5"
-  checksum: 367176beccd78e959c74e69e96497b626dd1c139398501eb7a04cf92215edf262665c3e7bb59df68320779d49893d3153a3b41e750b9046655b45cfe44691b36
+"@tanstack/query-core@npm:4.29.25":
+  version: 4.29.25
+  resolution: "@tanstack/query-core@npm:4.29.25"
+  checksum: 5287e278cf0ef781c5bd238842243adc4430a43ffc9bee1963131726c5bdf6a67d38e122f45c3375232d05c5a335b1309026ce4252647bb3e4710b70bcebdbf5
   languageName: node
   linkType: hard
 
 "@tanstack/react-query-devtools@npm:^4.28.0":
-  version: 4.29.6
-  resolution: "@tanstack/react-query-devtools@npm:4.29.6"
+  version: 4.29.25
+  resolution: "@tanstack/react-query-devtools@npm:4.29.25"
   dependencies:
     "@tanstack/match-sorter-utils": ^8.7.0
     superjson: ^1.10.0
     use-sync-external-store: ^1.2.0
   peerDependencies:
-    "@tanstack/react-query": 4.29.5
+    "@tanstack/react-query": 4.29.25
     react: ^16.8.0 || ^17.0.0 || ^18.0.0
     react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
-  checksum: aeab54a9e8d5c25a60fccd78326259214b9dc0838cf24d272fedf06f6a628dacb58cddddfe245d02085b644d33a2b15fc20756fd1a8d4b65b487f7efb529df31
+  checksum: 2861f78de92a5c7595221383d9e60a70eafd0b1ed08313b624697fb221a1e6694200c14f4f5c3c2ef9ee0b1a525f7b7f04d3e0587b32b7a73cfb2d466d3e98af
   languageName: node
   linkType: hard
 
 "@tanstack/react-query@npm:^4.28.0":
-  version: 4.29.5
-  resolution: "@tanstack/react-query@npm:4.29.5"
+  version: 4.29.25
+  resolution: "@tanstack/react-query@npm:4.29.25"
   dependencies:
-    "@tanstack/query-core": 4.29.5
+    "@tanstack/query-core": 4.29.25
     use-sync-external-store: ^1.2.0
   peerDependencies:
     react: ^16.8.0 || ^17.0.0 || ^18.0.0
@@ -5395,7 +5395,7 @@ __metadata:
       optional: true
     react-native:
       optional: true
-  checksum: de45573900810b37216aa8d6599cae5ea43602eaada9fd2224f57ff7ab1de10b3f2e681e7fdb993ee1519ed8ffc7e6e07d6bf3ad1b9da4136b1ae78ca19f31f6
+  checksum: e0ae4cbe1d8f691d488bc1c68df3df12d1ed093796eb879842ef8d4d388d07cebbdd7ab6174481d624dc133326895a53a5442864bb27ffcc0db5f4f40d7f827f
   languageName: node
   linkType: hard
 
