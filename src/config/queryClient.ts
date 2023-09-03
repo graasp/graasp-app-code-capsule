@@ -1,6 +1,6 @@
 import { configureQueryClient } from '@graasp/apps-query-client';
 
-import { GRAASP_APP_KEY, MOCK_API } from './env';
+import { API_HOST, GRAASP_APP_KEY, MOCK_API } from './env';
 
 const {
   queryClient,
@@ -10,6 +10,7 @@ const {
   API_ROUTES,
   mutations,
 } = configureQueryClient({
+  API_HOST,
   notifier: (data) => {
     // eslint-disable-next-line no-console
     console.log('notifier: ', data);
