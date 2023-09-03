@@ -20,6 +20,7 @@ export default ({ mode }: { mode: string }): UserConfigExport => {
     },
     build: {
       outDir: 'build',
+      sourcemap: true,
     },
     plugins: [
       checker({

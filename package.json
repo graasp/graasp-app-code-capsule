@@ -21,7 +21,7 @@
     "@fortawesome/free-regular-svg-icons": "6.4.2",
     "@fortawesome/free-solid-svg-icons": "6.4.2",
     "@fortawesome/react-fontawesome": "0.2.0",
-    "@graasp/apps-query-client": "github:graasp/graasp-apps-query-client#main",
+    "@graasp/apps-query-client": "github:graasp/graasp-apps-query-client#159-add-msw-alternative-for-mocking",
     "@graasp/pyodide": "github:graasp/graasp-pyodide",
     "@graasp/sdk": "github:graasp/graasp-sdk#251-fix-use-discriminateditem-instead-of-item-in-types",
     "@graasp/ui": "3.4.0",
@@ -123,6 +123,7 @@
     "vite": "^4.4.9",
     "vite-plugin-checker": "^0.6.2",
     "vite-plugin-istanbul": "^5.0.0",
+    "vite-plugin-static-copy": "0.17.0",
     "wait-on": "7.0.1"
   },
   "browserslist": {
@@ -150,5 +151,8 @@
   "resolutions": {
     "@graasp/sdk": "github:graasp/graasp-sdk#251-fix-use-discriminateditem-instead-of-item-in-types"
   },
-  "packageManager": "yarn@3.5.1"
+  "packageManager": "yarn@3.6.3",
+  "msw": {
+    "workerDirectory": "public"
+  }
 }

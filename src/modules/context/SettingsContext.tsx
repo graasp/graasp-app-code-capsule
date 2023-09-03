@@ -1,6 +1,7 @@
 import { FC, ReactElement, createContext, useContext } from 'react';
 
-import { AppSettingRecord } from '@graasp/sdk/frontend';
+import { AppSetting } from '@graasp/sdk';
+import { AppSettingRecord, ImmutableCast } from '@graasp/sdk/frontend';
 
 import { List } from 'immutable';
 
@@ -72,7 +73,7 @@ type AllSettingsDataTypeRecord =
   AllSettingsTypeRecord[keyof AllSettingsTypeRecord];
 
 export type SettingsContextType = AllSettingsTypeRecord & {
-  dataFileSettings: List<AppSettingRecord>;
+  dataFileSettings: ImmutableCast<AppSetting[]>;
   chatbotPrompts: List<ChatbotPromptAppSettingRecord>;
   saveSettings: (
     name: AllSettingsNameType,
@@ -142,7 +143,7 @@ export const SettingsProvider: FC<Prop> = ({ children }) => {
       const dataFileSettings =
         appSettingsList.filter((s) =>
           s.name.startsWith(DATA_FILE_SETTINGS_NAME),
-        ) || List<AppSettingRecord>();
+        ) || List<ImmutableCast<AppSetting>>();
 
       const chatbotPrompts =
         (appSettingsList.filter(

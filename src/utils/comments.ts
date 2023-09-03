@@ -1,5 +1,5 @@
 import type { UUID } from '@graasp/sdk';
-import { AppDataRecord, ImmutableCast } from '@graasp/sdk/frontend';
+import { ImmutableCast } from '@graasp/sdk/frontend';
 
 import { List } from 'immutable';
 
@@ -8,12 +8,12 @@ import { CommentType, CommentTypeRecord } from '../interfaces/comment';
 const findCommentWithId = (
   comments: List<CommentTypeRecord>,
   commentId: UUID,
-): AppDataRecord | undefined => comments.find((c) => c.id === commentId);
+): CommentTypeRecord | undefined => comments.find((c) => c.id === commentId);
 
 const findCommentWithParentId = (
   comments: ImmutableCast<CommentType[]>,
   commentId: UUID,
-): AppDataRecord | undefined =>
+): ImmutableCast<CommentType> | undefined =>
   comments.find((c) => c.data?.parent === commentId);
 
 const findChild = (
