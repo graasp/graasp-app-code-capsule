@@ -18,7 +18,7 @@ Create a `.env.development` file with the following content:
 VITE_PORT=3005
 VITE_API_HOST=localhost
 VITE_MOCK_API=true
-VITE_GRAASP_APP_ID=45678-677889
+VITE_GRAASP_APP_KEY=45678-677889
 VITE_VERSION=latest
 
 VITE_OPEN_AI_API_URL=http://localhost:1234
@@ -34,7 +34,7 @@ Create a `.env.test` file with the following content:
 VITE_PORT=3333
 VITE_API_HOST=localhost
 VITE_MOCK_API=true
-VITE_GRAASP_APP_ID=45678-677889
+VITE_GRAASP_APP_KEY=45678-677889
 VITE_VERSION=latest
 
 # dont open browser

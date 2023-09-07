@@ -5,7 +5,7 @@ import {
 } from '@graasp/apps-query-client';
 
 import { mockContext } from '../data/db';
-import { GRAASP_APP_KEY, MOCK_API } from './env';
+import { API_HOST, GRAASP_APP_KEY, MOCK_API } from './env';
 
 const {
   queryClient,
@@ -23,6 +23,8 @@ const {
   // avoid refetching when same data are closely fetched
   staleTime: 1000, // ms
   GRAASP_APP_KEY,
+  API_HOST,
+  enableWebsocket: false,
   targetWindow: MOCK_API
     ? // build mock parent window given cypress (app) context or mock data
       (buildMockParentWindow(

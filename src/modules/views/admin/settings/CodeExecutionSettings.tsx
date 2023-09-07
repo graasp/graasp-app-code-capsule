@@ -43,10 +43,7 @@ const CodeExecutionSettings = (): JSX.Element => {
     settingKey: string,
     newValue: string,
   ): void =>
-    setLocalCodeExecSettings({
-      ...localCodeExecSettings,
-      [settingKey]: newValue,
-    });
+    setLocalCodeExecSettings(localCodeExecSettings.set(settingKey, newValue));
 
   const unsavedCodeExecChanges = !isEqual(
     localCodeExecSettings,
