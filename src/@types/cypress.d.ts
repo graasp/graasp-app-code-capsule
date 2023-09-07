@@ -17,6 +17,14 @@ declare global {
         editorID?: string,
       ): Chainable<JQuery<HTMLElement>>;
       /**
+       * Custom command to check the specified content into the code editor.
+       * @example cy.expectContentInEditor('print("Hello World")')
+       */
+      expectContentInEditor(
+        content: string,
+        editorID?: string,
+      ): Chainable<JQuery<HTMLElement>>;
+      /**
        * Custom command to select DOM element by data-cy attribute.
        * @example cy.dataCy('greeting')
        */

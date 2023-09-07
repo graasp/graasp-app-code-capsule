@@ -81,6 +81,15 @@ Cypress.Commands.add('typeInEditor', (content, editorID = CODE_EDITOR_ID_CY) =>
     .type(`{selectAll}{backspace}${content}`, { delay: SLOW_TYPING_IN_EDITOR }),
 );
 
+Cypress.Commands.add(
+  'expectContentInEditor',
+  (content, editorID = CODE_EDITOR_ID_CY) =>
+    cy
+      .get(`#${editorID}`)
+      .find('[contenteditable]')
+      .should('include.text', content),
+);
+
 Cypress.Commands.add('openTab', (tabId) =>
   cy.get(buildDataCy(tabId)).should('be.visible').click(),
 );

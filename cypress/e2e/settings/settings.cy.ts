@@ -15,6 +15,7 @@ import {
   CODE_SETTINGS_FAB_CYPRESS,
   CUSTOM_DIALOG_CONTENT_CY,
   DISPLAY_SETTINGS_FAB_CYPRESS,
+  EXECUTION_MODE_SETTINGS_KEY,
   REVIEW_MODES_SELECT_CYPRESS,
   SETTINGS_CODE_DIALOG_WINDOW_CYPRESS,
   SETTINGS_DIALOG_CANCEL_BUTTON_CYPRESS,
@@ -31,6 +32,7 @@ import {
   SETTING_MAX_COMMENT_LENGTH,
   SETTING_NEW_CHATBOT_PROMPT_KEY,
   TAB_SETTINGS_VIEW_CYPRESS,
+  TAB_TABLE_VIEW_CYPRESS,
   buildDataCy,
   settingKeyDataCy,
 } from '../../../src/config/selectors';
@@ -65,15 +67,27 @@ describe('Settings', () => {
     cy.get(`#${SETTING_FOOTER_CODE_EDITOR_CY}`).should('be.visible');
 
     // set the header code
-    cy.typeInEditor(
-      `print('hello world')\n# this is the end of the header code`,
-      SETTING_HEADER_CODE_EDITOR_CY,
-    );
+    const c1 = `print('hello world')`;
+    const newHeaderContent = `${c1}\n# this is the end of the header code`;
+    cy.typeInEditor(newHeaderContent, SETTING_HEADER_CODE_EDITOR_CY);
     // set the footer code
-    cy.typeInEditor(
-      `# beginning of the footer code\nprint('Goodbye')`,
-      SETTING_FOOTER_CODE_EDITOR_CY,
-    );
+    const f1 = `# beginning of the footer code`;
+    cy.typeInEditor(`${f1}\nprint('Goodbye')`, SETTING_FOOTER_CODE_EDITOR_CY);
+
+    cy.get(
+      `#${settingKeyDataCy(EXECUTION_MODE_SETTINGS_KEY)} > ${buildDataCy(
+        SETTINGS_DIALOG_SAVE_BUTTON_CYPRESS,
+      )}`,
+    ).click();
+
+    // go back to table view and check data stayed in setting view
+    cy.openTab(TAB_TABLE_VIEW_CYPRESS);
+    // open the settings tab
+    cy.openTab(TAB_SETTINGS_VIEW_CYPRESS);
+
+    cy.expectContentInEditor(c1, SETTING_HEADER_CODE_EDITOR_CY);
+
+    cy.expectContentInEditor(f1, SETTING_FOOTER_CODE_EDITOR_CY);
   });
 
   it('Change code review settings in tab', () => {
