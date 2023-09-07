@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.0.1](https://github.com/graasp/graasp-app-code-capsule/compare/v2.0.0...v2.0.1) (2023-09-07)
+
+
+### Bug Fixes
+
+* allow to save header and footer settings again ([#143](https://github.com/graasp/graasp-app-code-capsule/issues/143)) ([4500680](https://github.com/graasp/graasp-app-code-capsule/commit/4500680f050f3e8cd55e9c07dcc01aa1b73379ef))
+* **deps:** update codemirror packages ([#113](https://github.com/graasp/graasp-app-code-capsule/issues/113)) ([6686efc](https://github.com/graasp/graasp-app-code-capsule/commit/6686efc3851eeed6870349fa5abd6df65211b0c7))
+* **deps:** update dependency date-fns to v2.30.0 ([#103](https://github.com/graasp/graasp-app-code-capsule/issues/103)) ([5804a49](https://github.com/graasp/graasp-app-code-capsule/commit/5804a4941e0b3490a37d1af949b5522ba9700b57))
+* **deps:** update dependency react-i18next to v12.3.1 ([#93](https://github.com/graasp/graasp-app-code-capsule/issues/93)) ([2af3fed](https://github.com/graasp/graasp-app-code-capsule/commit/2af3fed7a38b36645e6c248076b7cc31b3e7aae1))
+* **deps:** update font awesome to v6.4.2 ([#99](https://github.com/graasp/graasp-app-code-capsule/issues/99)) ([d282a88](https://github.com/graasp/graasp-app-code-capsule/commit/d282a88cb6e38d795fe17e2926d872e65117cf13))
+* **deps:** update react monorepo ([#121](https://github.com/graasp/graasp-app-code-capsule/issues/121)) ([8bec1fa](https://github.com/graasp/graasp-app-code-capsule/commit/8bec1fab9ca46fe9b02f77a8f4ab02b387b1aed8))
+* **deps:** update tanstack-query monorepo to v4.29.25 ([#130](https://github.com/graasp/graasp-app-code-capsule/issues/130)) ([4059981](https://github.com/graasp/graasp-app-code-capsule/commit/40599814feb9a0e27b108a5fb36f2f3ea3d98625))
+
 ## [2.0.0](https://github.com/graasp/graasp-app-code-capsule/compare/v1.5.2...v2.0.0) (2023-06-23)
 
 
