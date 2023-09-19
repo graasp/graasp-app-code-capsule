@@ -25,6 +25,10 @@ jobs:
         with:
           cypress: true
 
+      - name: Build App
+        run: NODE_OPTIONS=--max-old-space-size=3072 yarn build
+        shell: bash
+
       - name: cypress run
         uses: cypress-io/github-action@v4
         env:
@@ -36,7 +40,6 @@ jobs:
           VITE_OPEN_AI_API_URL: http://localhost:1234
         with:
           install: false
-          build: NODE_OPTIONS=--max-old-space-size=3072 yarn build
           config: baseUrl=http://localhost:3000
           start: yarn dev
           browser: chrome
