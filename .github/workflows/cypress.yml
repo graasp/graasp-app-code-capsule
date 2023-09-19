@@ -26,7 +26,7 @@ jobs:
           cypress: true
 
       - name: Build App
-        run: NODE_OPTIONS=--max-old-space-size=3072 yarn build
+        run: NODE_OPTIONS=--max-old-space-size=8192 yarn build
         shell: bash
 
       - name: cypress run
