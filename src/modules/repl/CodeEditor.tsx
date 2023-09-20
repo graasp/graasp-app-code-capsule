@@ -51,8 +51,6 @@ const CodeEditor = ({
   id,
   languageSupport = [DEFAULT_LANGUAGE],
 }: Props): JSX.Element => {
-  // eslint-disable-next-line no-console
-  console.log(languageSupport);
   // Define and get the value of ShowLineNumber from what the user has set from the App settings.
   const { [GENERAL_SETTINGS_NAME]: settings = DEFAULT_GENERAL_SETTINGS } =
     useSettings();

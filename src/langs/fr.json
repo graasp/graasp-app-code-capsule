@@ -86,6 +86,7 @@
     "Table View": "Réponses",
     "Settings View": "Réglages",
     "Preset View": "Pré-réglages",
+    "Preset View Explanation": "Dans cette vue vous pouvez prévisualiser comment l'application s'affichera pour les étudiants. Quand l'application est en mode \"Révision\", les commentaires ajoutés ici seront attribués à l'instructeur et tous les étudiants les verrons.",
     "No Comments": "Pas de commentaires",
     "Define Interaction Mode": "Définir le mode d'interaction",
     "App Customization": "Personnaliser l'app",

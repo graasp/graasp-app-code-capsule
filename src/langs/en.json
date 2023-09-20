@@ -86,6 +86,7 @@
     "Table View": "Table View",
     "Settings View": "Settings",
     "Preset View": "Preset View",
+    "Preset View Explanation": "In this view you can see what the students will see. When the app is set to the \"Review\" mode, comments added here will be set as instructor comments and all students will see them.",
     "No Comments": "No Comments",
     "Define Interaction Mode": "Define Interaction Mode",
     "App Customization": "App Customization",
