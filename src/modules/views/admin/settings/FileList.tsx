@@ -1,6 +1,6 @@
 import { FC } from 'react';
 
-import { Close, Edit, TextSnippet as FileIcon } from '@mui/icons-material';
+import { Close, TextSnippet as FileIcon } from '@mui/icons-material';
 import {
   IconButton,
   ListItem,
