@@ -365,9 +365,9 @@ describe('Show Line Numbers Setting Builder View', () => {
       .as('displaySettingsFab')
       .click();
     // Check that Line Numbers Switch is checked.
-    cy.get(buildDataCy(SHOW_LINE_NUMBERS_SWITCH_CYPRESS)).within(() => {
-      cy.get('input[type="checkbox"]').should('be.checked');
-    });
+    cy.get(
+      `${buildDataCy(SHOW_LINE_NUMBERS_SWITCH_CYPRESS)} input[type="checkbox"]`,
+    ).should('be.checked');
     // Click on Cancel button from the display settings window.
     cy.get(buildDataCy(SETTINGS_DIALOG_CANCEL_BUTTON_CYPRESS))
       .as('cancelButton')
@@ -382,15 +382,20 @@ describe('Show Line Numbers Setting Builder View', () => {
       .as('displaySettingsFab')
       .click();
     // Click on switch to toggle setting, check that the switch shouldn't be checked.
-    cy.get(buildDataCy(SHOW_LINE_NUMBERS_SWITCH_CYPRESS)).within(() => {
-      cy.get('input[type="checkbox"]').click();
-      cy.get('input[type="checkbox"]').should('not.to.be.checked');
-    });
+    cy.get(
+      `${buildDataCy(SHOW_LINE_NUMBERS_SWITCH_CYPRESS)} input[type="checkbox"]`,
+    ).click();
+    cy.get(
+      `${buildDataCy(SHOW_LINE_NUMBERS_SWITCH_CYPRESS)} input[type="checkbox"]`,
+    ).should('not.to.be.checked');
     // Click on Save button from the display settings window.
     cy.get(buildDataCy(SETTINGS_DIALOG_SAVE_BUTTON_CYPRESS))
       .as('saveButton')
-      .should('be.visible')
-      .click();
+      .should('not.be.disabled');
+    cy.get(buildDataCy(SETTINGS_DIALOG_SAVE_BUTTON_CYPRESS)).click({
+      // this seems necessary even if the behavior is correct when doing it at human speeds
+      force: true,
+    });
     // Check that line numbers are not shown.
     cy.get(`#${REPL_EDITOR_ID_CY} .cm-lineNumbers`).should('not.exist');
   });

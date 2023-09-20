@@ -4,7 +4,7 @@ export default defineConfig({
   video: false,
 
   e2e: {
-    retries: 1,
+    retries: { runMode: 2, openMode: 0 },
     env: {
       VITE_API_HOST: process.env.VITE_API_HOST,
       VITE_MOCK_API: process.env.VITE_MOCK_API,

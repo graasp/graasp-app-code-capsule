@@ -37,7 +37,8 @@ const SettingsFab: FC = () => {
 
   useEffect(() => setLocalSettings(settings), [settings]);
 
-  const unsavedChanges = !isEqual(settings, localSettings);
+  // need to compare the raw JS objects
+  const unsavedChanges = !isEqual(settings.toJS(), localSettings.toJS());
 
   const resetSettings = (): void => setLocalSettings(settings);
 
