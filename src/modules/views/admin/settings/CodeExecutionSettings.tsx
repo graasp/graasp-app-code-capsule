@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { Box, FormLabel, Stack, Typography } from '@mui/material';
+import { InfoOutlined } from '@mui/icons-material';
+import { Box, FormLabel, Stack, Tooltip, Typography } from '@mui/material';
 
 import isEqual from 'lodash.isequal';
 
@@ -84,7 +85,18 @@ const CodeExecutionSettings = (): JSX.Element => {
         />
       </Box>
       <Box>
-        <FormLabel>{t('Pre-loaded libraries')}</FormLabel>
+        <FormLabel>
+          <Stack direction="row" spacing={1}>
+            <span>{t('Pre-loaded libraries')}</span>
+            <Tooltip
+              title={t('PRE_LOADED_LIBS_DESCRIPTION')}
+              placement="right"
+              arrow
+            >
+              <InfoOutlined color="primary" />
+            </Tooltip>
+          </Stack>
+        </FormLabel>
         <PreLoadedLibrariesInput
           value={
             localCodeExecSettings[CodeExecutionSettingsKeys.PreLoadedLibraries]

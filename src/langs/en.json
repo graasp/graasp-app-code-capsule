@@ -133,6 +133,7 @@
     "Save Setting to Preview": "Save Setting to Preview",
     "Show Preview": "Show Preview",
     "Pre-loaded libraries": "Preloaded Libraries",
+    "PRE_LOADED_LIBS_DESCRIPTION": "You can add python libraries to make them available to users. Simply put the library name and separate multiple libraries with spaces. For example: matplotlib pandas",
     "Stop Execution": "Stop Execution",
     "Clear outputs and figures": "Clear Outputs and Figures",
     "Run Code": "Run Code",

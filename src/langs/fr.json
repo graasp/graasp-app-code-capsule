@@ -131,6 +131,7 @@
     "Save Setting to Preview": "Enregistrer les settings pour voir l'aperçu",
     "Show Preview": "Ouvrir l'aperçu",
     "Pre-loaded libraries": "Librairies pré-chargées",
+    "PRE_LOADED_LIBS_DESCRIPTION": "Vous pouvez ajouter des librairies python pour les rendre disponibles aux utilisateurs. Il vous suffit de lister le nom de la librairie en séparant plusieurs librairies par des espaces. Par example: matplotlib pandas",
     "Stop Execution": "Arrêter l'exécution",
     "Clear outputs and figures": "Effacer les sorties et les figures",
     "Run Code": "Exécuter le code",
@@ -149,6 +150,5 @@
     "EXECUTION_SUPPORTED_LANGUAGE_NOTICE": "Actuellement l’exécution de code n'est supportée que pour le language {{language}}",
     "APP_MODE_EXECUTE_DESCRIPTION": "Exécuter du code code et apprendre en développant",
     "PUBLIC_ALERT": "Vous n'êtes pas authentifié. Vous ne pourrez pas sauver de données."
-
   }
 }
