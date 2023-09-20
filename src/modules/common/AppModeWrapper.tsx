@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { APP_MODE_SETTINGS_NAME, AppMode } from '../../config/appSettingsTypes';
 import { AppView } from '../../config/layout';
@@ -17,10 +17,7 @@ import Repl from '../repl/Repl';
 import CodeEditor from './CodeEditor';
 import Loader from './Loader';
 
-// eslint-disable-next-line @typescript-eslint/ban-types
-type Props = {};
-
-const AppModeWrapper: FC<Props> = () => {
+const AppModeWrapper = (): JSX.Element => {
   const { codeVersion } = useCodeVersionContext();
   const {
     [APP_MODE_SETTINGS_NAME]: appModeSetting = DEFAULT_APP_MODE_SETTINGS,

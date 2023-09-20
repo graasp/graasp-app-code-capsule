@@ -1,6 +1,6 @@
 import { FC } from 'react';
 
-import { Close, Edit, TextSnippet as FileIcon } from '@mui/icons-material';
+import { Close, TextSnippet as FileIcon } from '@mui/icons-material';
 import {
   IconButton,
   ListItem,
@@ -39,7 +39,7 @@ const FileList: FC<Props> = ({
     <ListItem
       secondaryAction={
         <>
-          <IconButton
+          {/* <IconButton
             edge="end"
             aria-label="edit"
             onClick={() => {
@@ -49,7 +49,7 @@ const FileList: FC<Props> = ({
             }}
           >
             <Edit />
-          </IconButton>
+          </IconButton> */}
           <IconButton
             edge="end"
             aria-label="delete"

@@ -144,6 +144,13 @@ export const SETTING_CHATBOT_PROMPT_LINE_NUMBER_CY =
   'setting_chatbot_prompt_line_number';
 export const SETTING_MAX_COMMENT_LENGTH = 'setting_max_comment_length';
 export const SETTING_ADD_CHATBOT_PROMPT_CY = 'setting_add_chatbot_prompt';
+export const SETTING_EDIT_CHATBOT_PROMPT_CY = 'setting_edit_chatbot_prompt';
+export const SETTING_DELETE_CHATBOT_PROMPT_CY = 'setting_delete_chatbot_prompt';
+export const SETTING_CHATBOT_INITIAL_PROMPT_DISPLAY_CY =
+  'setting_initial_prompt_display';
+export const SETTING_CHATBOT_PROMPT_DISPLAY_CY = 'setting_prompt_display';
+export const SETTING_CHATBOT_PROMPT_LINE_DISPLAY_CY =
+  'setting_prompt_line_display';
 
 export const REPL_RUN_CODE_BUTTON_CY = 'repl_run_code_button';
 export const REPL_OUTPUT_CONSOLE_CY = 'repl_output_console_area';
