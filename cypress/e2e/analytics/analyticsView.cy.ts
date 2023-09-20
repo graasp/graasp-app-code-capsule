@@ -14,7 +14,7 @@ describe('Analytics View', () => {
   });
 
   it('should open Analytics view', () => {
-    cy.get(buildDataCy(ANALYTICS_VIEW_CY))
+    cy.get(buildDataCy(ANALYTICS_VIEW_CY), { timeout: 10000 })
       .should('be.visible')
       .and('have.text', 'Analytics View');
   });

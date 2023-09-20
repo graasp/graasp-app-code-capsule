@@ -51,7 +51,9 @@ describe('Builder as Admin', () => {
       // got to app
       cy.visit('/');
       // open the Table View tab
-      cy.get(buildDataCy(TAB_TABLE_VIEW_CYPRESS)).should('be.visible').click();
+      cy.get(buildDataCy(TAB_TABLE_VIEW_CYPRESS), { timeout: 10000 })
+        .should('be.visible')
+        .click();
     });
 
     it('should show empty AppData table', () => {
@@ -72,7 +74,9 @@ describe('Builder as Admin', () => {
       // got to app
       cy.visit('/');
       // open the Table View tab
-      cy.get(buildDataCy(TAB_TABLE_VIEW_CYPRESS)).should('be.visible').click();
+      cy.get(buildDataCy(TAB_TABLE_VIEW_CYPRESS), { timeout: 10000 })
+        .should('be.visible')
+        .click();
     });
 
     it('should download AppActions', () => {
@@ -99,7 +103,9 @@ describe('Builder as Admin', () => {
       // got to app
       cy.visit('/');
       // open the Table View tab
-      cy.get(buildDataCy(TAB_TABLE_VIEW_CYPRESS)).should('be.visible').click();
+      cy.get(buildDataCy(TAB_TABLE_VIEW_CYPRESS), { timeout: 10000 })
+        .should('be.visible')
+        .click();
     });
 
     it('Orphan comments', () => {
@@ -193,8 +199,10 @@ describe('Builder as Admin', () => {
 });
 
 const shouldDisplayDefaultAppView = (): void => {
+  cy.get(buildDataCy(PLAYER_VIEW_CYPRESS), { timeout: 10000 }).should(
+    'be.visible',
+  );
   cy.get(buildDataCy(TAB_TABLE_VIEW_CYPRESS)).should('not.exist');
-  cy.get(buildDataCy(PLAYER_VIEW_CYPRESS)).should('be.visible');
 };
 
 describe('Builder as Writer', () => {

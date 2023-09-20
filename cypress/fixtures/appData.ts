@@ -66,7 +66,7 @@ export const SINGLE_LINE_MOCK_COMMENTS: AppData[] = [
   },
 ];
 
-export const MOCK_ORPHAN_COMMENT: AppData & CommentAppData = {
+export const MOCK_ORPHAN_COMMENT: AppData<CommentAppData> = {
   id: uuid(),
   data: {
     line: 1,

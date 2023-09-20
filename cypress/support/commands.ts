@@ -1,4 +1,6 @@
 /// <reference types="../../src/window" />
+import { Context, PermissionLevel } from '@graasp/sdk';
+
 import {
   CODE_EDITOR_ID_CY,
   REPL_RUN_CODE_BUTTON_CY,
@@ -50,10 +52,20 @@ Cypress.Commands.add(
         appSettings: [],
         items: [MOCK_SERVER_ITEM],
         members: Object.values(MEMBERS),
+        appContext: {
+          context: Context.Builder,
+          permission: PermissionLevel.Admin,
+          memberId: currentMember.id,
+          itemId: MOCK_SERVER_ITEM.id,
+          apiHost: Cypress.env('REACT_APP_API_HOST') || MOCK_SERVER_API_HOST,
+          ...appContext,
+        },
         ...database,
       };
       // eslint-disable-next-line no-param-reassign
       win.appContext = {
+        context: Context.Builder,
+        permission: PermissionLevel.Admin,
         memberId: currentMember.id,
         itemId: MOCK_SERVER_ITEM.id,
         apiHost: Cypress.env('REACT_APP_API_HOST') || MOCK_SERVER_API_HOST,
