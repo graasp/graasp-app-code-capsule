@@ -39,7 +39,7 @@ const FileList: FC<Props> = ({
     <ListItem
       secondaryAction={
         <>
-          <IconButton
+          {/* <IconButton
             edge="end"
             aria-label="edit"
             onClick={() => {
@@ -49,7 +49,7 @@ const FileList: FC<Props> = ({
             }}
           >
             <Edit />
-          </IconButton>
+          </IconButton> */}
           <IconButton
             edge="end"
             aria-label="delete"

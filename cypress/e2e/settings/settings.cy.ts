@@ -1,30 +1,26 @@
 import { Context, PermissionLevel } from '@graasp/sdk';
 
 import { REVIEW_MODE_COLLABORATIVE } from '../../../src/config/constants';
-import { JAVASCRIPT } from '../../../src/config/programmingLanguages';
 import {
   ALLOW_COMMENTS_SWITCH_CYPRESS,
   ALLOW_REPLIES_SWITCH_CYPRESS,
   APP_MODE_EXECUTE_BUTTON_CY,
   APP_MODE_REVIEW_BUTTON_CY,
-  CODE_EDITOR_CANCEL_BUTTON_CYPRESS,
-  CODE_EDITOR_COMMIT_DESCRIPTION_CYPRESS,
-  CODE_EDITOR_COMMIT_MESSAGE_CYPRESS,
-  CODE_EDITOR_LANGUAGE_SELECT_CYPRESS,
-  CODE_EDITOR_SUBMIT_BUTTON_CYPRESS,
-  CODE_SETTINGS_FAB_CYPRESS,
   CUSTOM_DIALOG_CONTENT_CY,
   DISPLAY_SETTINGS_FAB_CYPRESS,
   EXECUTION_MODE_SETTINGS_KEY,
   REVIEW_MODES_SELECT_CYPRESS,
-  SETTINGS_CODE_DIALOG_WINDOW_CYPRESS,
   SETTINGS_DIALOG_CANCEL_BUTTON_CYPRESS,
   SETTINGS_DIALOG_SAVE_BUTTON_CYPRESS,
   SETTINGS_DISPLAY_DIALOG_WINDOW_CYPRESS,
   SETTING_ADD_CHATBOT_PROMPT_CY,
   SETTING_APP_MODE_SELECT_NAME_CY,
+  SETTING_CHATBOT_INITIAL_PROMPT_DISPLAY_CY,
   SETTING_CHATBOT_PROMPT_CODE_EDITOR_CY,
+  SETTING_CHATBOT_PROMPT_DISPLAY_CY,
+  SETTING_CHATBOT_PROMPT_LINE_DISPLAY_CY,
   SETTING_CHATBOT_PROMPT_LINE_NUMBER_CY,
+  SETTING_EDIT_CHATBOT_PROMPT_CY,
   SETTING_FOOTER_CODE_EDITOR_CY,
   SETTING_HEADER_CODE_EDITOR_CY,
   SETTING_INITIAL_PROMPT_CODE_EDITOR_CY,
@@ -36,10 +32,7 @@ import {
   buildDataCy,
   settingKeyDataCy,
 } from '../../../src/config/selectors';
-import {
-  DEFAULT_PROGRAMMING_LANGUAGE_SETTING,
-  DEFAULT_REVIEW_MODE_SETTING,
-} from '../../../src/config/settings';
+import { DEFAULT_REVIEW_MODE_SETTING } from '../../../src/config/settings';
 
 describe('Settings', () => {
   beforeEach(() => {
@@ -90,7 +83,11 @@ describe('Settings', () => {
     cy.expectContentInEditor(f1, SETTING_FOOTER_CODE_EDITOR_CY);
   });
 
-  it('Change code review settings in tab', () => {
+  it.only('Change code review settings in tab', () => {
+    const initialChatbotPrompt = 'Initial prompt hello chatbot';
+    const chatbotPrompt = 'Hello i  am a friendly chatbot, ask me anything';
+    const promptLine = 4;
+
     // open the settings tab
     cy.openTab(TAB_SETTINGS_VIEW_CYPRESS);
 
@@ -111,16 +108,13 @@ describe('Settings', () => {
     cy.get(buildDataCy(CUSTOM_DIALOG_CONTENT_CY)).should('be.visible');
 
     cy.typeInEditor(
-      'Initial prompt hello chatbot',
+      initialChatbotPrompt,
       SETTING_INITIAL_PROMPT_CODE_EDITOR_CY,
     );
 
-    cy.typeInEditor(
-      'Hello i  am a friendly chatbot, ask me anything',
-      SETTING_CHATBOT_PROMPT_CODE_EDITOR_CY,
-    );
+    cy.typeInEditor(chatbotPrompt, SETTING_CHATBOT_PROMPT_CODE_EDITOR_CY);
     cy.get(buildDataCy(SETTING_CHATBOT_PROMPT_LINE_NUMBER_CY)).type(
-      '{selectAll}{del}4',
+      `{selectAll}{del}${promptLine}`,
     );
 
     cy.get(
@@ -128,66 +122,51 @@ describe('Settings', () => {
         SETTINGS_DIALOG_SAVE_BUTTON_CYPRESS,
       )}`,
     ).click();
-  });
-
-  it.skip('Open Code settings', () => {
-    // click on the code settings FAB
-    cy.get(buildDataCy(CODE_SETTINGS_FAB_CYPRESS))
-      .should('be.visible')
-      .as('codeSettingsFab')
-      .click();
-
-    // check buttons are visible
-    cy.get(buildDataCy(CODE_EDITOR_CANCEL_BUTTON_CYPRESS)).should('be.visible');
-    cy.get(buildDataCy(CODE_EDITOR_SUBMIT_BUTTON_CYPRESS))
-      .as('saveButton')
-      .should('be.visible');
-
-    // check select (drop-down)
-    cy.get(buildDataCy(CODE_EDITOR_LANGUAGE_SELECT_CYPRESS)).should(
-      'be.visible',
+    // check the displayed values for the chatbot prompt after editing
+    cy.get(buildDataCy(SETTING_CHATBOT_INITIAL_PROMPT_DISPLAY_CY)).should(
+      'contain.text',
+      initialChatbotPrompt,
     );
-    cy.get(`${buildDataCy(CODE_EDITOR_LANGUAGE_SELECT_CYPRESS)} > input`).as(
-      'select',
+    cy.get(buildDataCy(SETTING_CHATBOT_PROMPT_DISPLAY_CY)).should(
+      'contain.text',
+      chatbotPrompt,
     );
-    // check initial value of programming language select
-    cy.get('@select').should(
-      'have.value',
-      DEFAULT_PROGRAMMING_LANGUAGE_SETTING,
+    cy.get(buildDataCy(SETTING_CHATBOT_PROMPT_LINE_DISPLAY_CY)).should(
+      'contain.text',
+      promptLine,
     );
-    cy.get(buildDataCy(CODE_EDITOR_LANGUAGE_SELECT_CYPRESS)).click();
-    cy.get(`ul > li[data-value="${JAVASCRIPT}"]`).click();
-    cy.get('@select').should('have.value', JAVASCRIPT);
 
-    // type in editor
-    const testCode = `const greeting = 'Hello World';{enter}// Wow !{enter}{enter}`;
-    cy.typeInEditor(testCode);
+    // update chatbot prompt settings
+    cy.get(buildDataCy(SETTING_EDIT_CHATBOT_PROMPT_CY)).click();
 
-    // type a commit message
-    const commitMessage = 'This is my commit message';
-    const commitDescription =
-      'My commitDescription will be long and\nhave a very long\ndescription';
-    cy.get(buildDataCy(CODE_EDITOR_COMMIT_MESSAGE_CYPRESS))
-      .should('be.visible')
-      .type(commitMessage);
-    cy.get(`${buildDataCy(CODE_EDITOR_COMMIT_MESSAGE_CYPRESS)} input`).should(
-      'have.value',
-      commitMessage,
+    cy.get(buildDataCy(CUSTOM_DIALOG_CONTENT_CY)).should('be.visible');
+
+    cy.typeInEditor('!', SETTING_INITIAL_PROMPT_CODE_EDITOR_CY);
+    // check that the other editor is not empty
+    cy.get(`#${SETTING_CHATBOT_PROMPT_CODE_EDITOR_CY}`).should(
+      'contain.text',
+      chatbotPrompt,
     );
-    cy.get(buildDataCy(CODE_EDITOR_COMMIT_DESCRIPTION_CYPRESS))
-      .should('be.visible')
-      .type(commitDescription);
+
     cy.get(
-      `${buildDataCy(CODE_EDITOR_COMMIT_DESCRIPTION_CYPRESS)} textarea`,
-    ).should('have.value', commitDescription);
+      `#${settingKeyDataCy(SETTING_NEW_CHATBOT_PROMPT_KEY)} > ${buildDataCy(
+        SETTINGS_DIALOG_SAVE_BUTTON_CYPRESS,
+      )}`,
+    ).click();
 
-    cy.get('@saveButton').click();
-    cy.get(buildDataCy(SETTINGS_CODE_DIALOG_WINDOW_CYPRESS)).should(
-      'not.be.visible',
+    // check the displayed values for the chatbot prompt after editing
+    cy.get(buildDataCy(SETTING_CHATBOT_INITIAL_PROMPT_DISPLAY_CY)).should(
+      'contain.text',
+      '!',
     );
-
-    // open settings
-    cy.get('@codeSettingsFab').click();
+    cy.get(buildDataCy(SETTING_CHATBOT_PROMPT_DISPLAY_CY)).should(
+      'contain.text',
+      chatbotPrompt,
+    );
+    cy.get(buildDataCy(SETTING_CHATBOT_PROMPT_LINE_DISPLAY_CY)).should(
+      'contain.text',
+      promptLine,
+    );
   });
 
   it('Open Display settings', () => {

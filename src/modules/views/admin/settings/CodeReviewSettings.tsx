@@ -29,8 +29,13 @@ import {
   CODE_EDITOR_LANGUAGE_SELECT_CYPRESS,
   REVIEW_MODE_SETTINGS_KEY,
   SETTING_ADD_CHATBOT_PROMPT_CY,
+  SETTING_CHATBOT_INITIAL_PROMPT_DISPLAY_CY,
   SETTING_CHATBOT_PROMPT_CODE_EDITOR_CY,
+  SETTING_CHATBOT_PROMPT_DISPLAY_CY,
+  SETTING_CHATBOT_PROMPT_LINE_DISPLAY_CY,
   SETTING_CHATBOT_PROMPT_LINE_NUMBER_CY,
+  SETTING_DELETE_CHATBOT_PROMPT_CY,
+  SETTING_EDIT_CHATBOT_PROMPT_CY,
   SETTING_INITIAL_PROMPT_CODE_EDITOR_CY,
   SETTING_MAIN_CODE_EDITOR_CY,
   SETTING_NEW_CHATBOT_PROMPT_KEY,
@@ -156,19 +161,28 @@ const CodeReviewSettings: FC = () => {
               <CardContent sx={{ pb: 0 }}>
                 <Stack direction="row" spacing={1}>
                   <FormLabel>{t('Initial Prompt')}:</FormLabel>
-                  <Typography>{s.data.initialPrompt}</Typography>
+                  <Typography
+                    data-cy={SETTING_CHATBOT_INITIAL_PROMPT_DISPLAY_CY}
+                  >
+                    {s.data.initialPrompt}
+                  </Typography>
                 </Stack>
                 <Stack direction="row" spacing={1}>
                   <FormLabel>{t('Chatbot Prompt')}:</FormLabel>
-                  <Typography>{s.data.chatbotPrompt}</Typography>
+                  <Typography data-cy={SETTING_CHATBOT_PROMPT_DISPLAY_CY}>
+                    {s.data.chatbotPrompt}
+                  </Typography>
                 </Stack>
                 <Stack direction="row" spacing={1}>
                   <FormLabel>{t('Line Number (first line is 0)')}:</FormLabel>
-                  <Typography>{s.data.lineNumber}</Typography>
+                  <Typography data-cy={SETTING_CHATBOT_PROMPT_LINE_DISPLAY_CY}>
+                    {s.data.lineNumber}
+                  </Typography>
                 </Stack>
               </CardContent>
               <CardActions sx={{ justifyContent: 'flex-end' }}>
                 <Button
+                  data-cy={SETTING_DELETE_CHATBOT_PROMPT_CY}
                   color="error"
                   variant="outlined"
                   onClick={() => deleteSetting({ id: s.id })}
@@ -176,9 +190,10 @@ const CodeReviewSettings: FC = () => {
                   {t('Delete')}
                 </Button>
                 <Button
+                  data-cy={SETTING_EDIT_CHATBOT_PROMPT_CY}
                   variant="outlined"
                   onClick={() => {
-                    setEditedChatbotPrompt({ id: s.id, data: s.data });
+                    setEditedChatbotPrompt({ id: s.id, data: s.data.toJS() });
                     setOpenModal(true);
                   }}
                 >
