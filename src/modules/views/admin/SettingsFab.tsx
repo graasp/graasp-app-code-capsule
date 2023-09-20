@@ -1,34 +1,25 @@
 import { FC, ReactElement, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import {
-  Code,
-  DisplaySettings as DisplaySettingsIcon,
-} from '@mui/icons-material';
+import { DisplaySettings as DisplaySettingsIcon } from '@mui/icons-material';
 import { Box, Fab, Stack, Tooltip } from '@mui/material';
 
 import { Button } from '@graasp/ui';
 
 import isEqual from 'lodash.isequal';
 
-import {
-  CodeEditorSubmitTarget,
-  GENERAL_SETTINGS_NAME,
-} from '../../../config/appSettingsTypes';
+import { GENERAL_SETTINGS_NAME } from '../../../config/appSettingsTypes';
 import {
   CLOSE_SETTINGS_TIMEOUT,
   INSTRUCTOR_CODE_ID,
 } from '../../../config/constants';
 import {
-  CODE_SETTINGS_FAB_CYPRESS,
   DISPLAY_SETTINGS_FAB_CYPRESS,
-  SETTINGS_CODE_DIALOG_WINDOW_CYPRESS,
   SETTINGS_DIALOG_CANCEL_BUTTON_CYPRESS,
   SETTINGS_DIALOG_SAVE_BUTTON_CYPRESS,
   SETTINGS_DISPLAY_DIALOG_WINDOW_CYPRESS,
 } from '../../../config/selectors';
 import { DEFAULT_GENERAL_SETTINGS } from '../../../config/settings';
-import CodeEditor from '../../common/CodeEditor';
 import { useCodeVersionContext } from '../../context/CodeVersionContext';
 import { useSettings } from '../../context/SettingsContext';
 import CustomDialog from '../../layout/CustomDialog';
@@ -42,7 +33,6 @@ const SettingsFab: FC = () => {
   } = useSettings();
   const { setCodeId } = useCodeVersionContext();
   const [openDisplaySettings, setOpenDisplaySettings] = useState(false);
-  const [openCodeSettings, setOpenCodeSettings] = useState(false);
   const [localSettings, setLocalSettings] = useState(settings);
 
   useEffect(() => setLocalSettings(settings), [settings]);
@@ -112,38 +102,10 @@ const SettingsFab: FC = () => {
         }
         actions={renderActions()}
       />
-      <CustomDialog
-        dataCy={SETTINGS_CODE_DIALOG_WINDOW_CYPRESS}
-        open={openCodeSettings}
-        noPadding
-        title={
-          <Stack direction="row" alignItems="center">
-            <Code sx={{ mr: 1 }} />
-            {t('Code Settings')}
-          </Stack>
-        }
-        content={
-          <CodeEditor
-            submitTarget={CodeEditorSubmitTarget.Settings}
-            onClose={() => setOpenCodeSettings(false)}
-          />
-        }
-      />
       <Stack
         spacing={1}
         sx={{ position: 'fixed !important', right: '1rem', bottom: '1rem' }}
       >
-        <Tooltip title={t('Code Settings')} placement="left">
-          <Fab
-            color="primary"
-            onClick={() => {
-              setOpenCodeSettings(true);
-            }}
-            data-cy={CODE_SETTINGS_FAB_CYPRESS}
-          >
-            <Code />
-          </Fab>
-        </Tooltip>
         <Tooltip title={t('Display Settings')} placement="left">
           <Fab
             color="primary"
