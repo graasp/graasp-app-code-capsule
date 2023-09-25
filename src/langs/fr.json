@@ -150,6 +150,9 @@
     "Loading": "Chargement",
     "EXECUTION_SUPPORTED_LANGUAGE_NOTICE": "Actuellement l’exécution de code n'est supportée que pour le language {{language}}",
     "APP_MODE_EXECUTE_DESCRIPTION": "Exécuter du code code et apprendre en développant",
+    "APP_MODE_REVIEW_DESCRIPTION": "Passer ne revue des bouts de code et interagir avec des chatbots",
+    "APP_MODE_EXPLAIN_DESCRIPTION": "Afficher deux bouts de code et montrer les différences entre eux",
+    "APP_MODE_COLLABORATE_DESCRIPTION": "Prochainement !",
     "PUBLIC_ALERT": "Vous n'êtes pas authentifié. Vous ne pourrez pas sauver de données."
   }
 }
