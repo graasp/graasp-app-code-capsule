@@ -85,7 +85,7 @@ describe('Display Code Execution', () => {
 });
 
 describe('Initial Code value', () => {
-  describe('Seed', () => {
+  describe.only('Seed', () => {
     const seed = `print('I am the seed')`;
     beforeEach(() => {
       cy.setUpApi({

@@ -18,6 +18,7 @@ export enum GeneralSettingsKeys {
   AllowCommentsReporting = 'allowCommentReporting',
   ReviewMode = 'reviewMode',
   MaxCommentLength = 'maxCommentLength',
+  MaxThreadLength = 'maxThreadLength',
 }
 
 // Code Execution settings keys
@@ -74,6 +75,7 @@ export type GeneralSettings = {
   [GeneralSettingsKeys.AllowCommentsReporting]: boolean;
   [GeneralSettingsKeys.ReviewMode]: string;
   [GeneralSettingsKeys.MaxCommentLength]: number;
+  [GeneralSettingsKeys.MaxThreadLength]: number;
 
   // used to allow access using settings[settingKey] syntax
   [key: string]: unknown;

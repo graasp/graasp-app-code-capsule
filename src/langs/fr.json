@@ -153,6 +153,8 @@
     "APP_MODE_REVIEW_DESCRIPTION": "Passer ne revue des bouts de code et interagir avec des chatbots",
     "APP_MODE_EXPLAIN_DESCRIPTION": "Afficher deux bouts de code et montrer les différences entre eux",
     "APP_MODE_COLLABORATE_DESCRIPTION": "Prochainement !",
-    "PUBLIC_ALERT": "Vous n'êtes pas authentifié. Vous ne pourrez pas sauver de données."
+    "PUBLIC_ALERT": "Vous n'êtes pas authentifié. Vous ne pourrez pas sauver de données.",
+    "MAX_COMMENT_LENGTH_SETTING": "Longueur maximum des commentaires (valeur par default {{default}} character)",
+    "MAX_THREAD_LENGTH_SETTING": "Longueur maximum de conversation (valeur par default {{default}} messages par utilisateur)"
   }
 }

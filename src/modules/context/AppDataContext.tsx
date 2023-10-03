@@ -18,7 +18,6 @@ import { CodeType } from '../../interfaces/codeVersions';
 import { CommentType } from '../../interfaces/comment';
 import { LiveCodeType } from '../../interfaces/liveCode';
 import { GeneralSettingsKeys } from '../../interfaces/settings';
-import Loader from '../common/Loader';
 import { useSettings } from './SettingsContext';
 
 type PostAppDataType = {
@@ -115,9 +114,9 @@ export const AppDataProvider: FC<PropsWithChildren<Prop>> = ({
     visibilityVariant,
   ]);
 
-  if (appData.isLoading) {
-    return <Loader />;
-  }
+  // if (appData.isLoading) {
+  //   return <Loader />;
+  // }
 
   return (
     <AppDataContext.Provider value={contextValue}>

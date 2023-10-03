@@ -57,6 +57,7 @@ describe('Settings', () => {
       .click();
 
     cy.get(`#${SETTING_HEADER_CODE_EDITOR_CY}`).should('be.visible');
+    // todo: add the editor for the main code instructor
     cy.get(`#${SETTING_FOOTER_CODE_EDITOR_CY}`).should('be.visible');
 
     // set the header code
@@ -94,7 +95,10 @@ describe('Settings', () => {
     // choose a mode
     cy.get(buildDataCy(SETTING_APP_MODE_SELECT_NAME_CY)).click();
     cy.get(buildDataCy(APP_MODE_REVIEW_BUTTON_CY)).should('be.visible').click();
-
+    cy.get(buildDataCy(SETTING_APP_MODE_SELECT_NAME_CY)).should(
+      'contain.text',
+      'Review',
+    );
     cy.get(`#${SETTING_MAIN_CODE_EDITOR_CY}`).should('be.visible');
     // set the main code to review
     cy.typeInEditor(
