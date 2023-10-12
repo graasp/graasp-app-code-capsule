@@ -1,4 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
+
+import { TokenContext, useLocalContext } from '@graasp/apps-query-client';
 
 import { OPEN_AI_API_URL } from '@/config/env';
 
@@ -13,16 +15,24 @@ export const useChatbotApi = (callback: CallbackType): ReturnType => {
   const [shouldFetch, setShouldFetch] = useState(false);
   const [prompt, setPrompt] = useState('');
   const [data, setData] = useState<UserDataType>({});
+  const token = useContext(TokenContext);
+  const context = useLocalContext();
+  const itemId = context?.get('itemId');
+  // because the chatBot is moved behind the base api,
+  // the itemId is used to check that the member has access to this item
+  const openAiItemUrl = OPEN_AI_API_URL.replace(':itemId', itemId);
 
   useEffect(
     () => {
       async function fetchApi(): Promise<void> {
         setIsLoading(true);
-        fetch(OPEN_AI_API_URL, {
+        fetch(openAiItemUrl, {
           method: 'POST',
           body: JSON.stringify({ prompt }),
           headers: {
             'Content-type': 'application/json; charset=UTF-8',
+            // because the chatBot is behind the api, the auth token is required
+            Authorization: `Bearer ${token}`,
           },
         })
           .then((response) => {
