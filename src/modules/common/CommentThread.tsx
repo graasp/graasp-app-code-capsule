@@ -50,7 +50,7 @@ const CommentThread: FC<Props> = ({ children, hiddenState }) => {
   } = useSettings();
   const { isLoading, startLoading, stopLoading } = useLoadingIndicator();
 
-  const { callApi } = useChatbotApi(
+  const { callApi, buildPrompt } = useChatbotApi(
     (completion: string, data: UserDataType) => {
       // post comment from bot
       const newData = { ...data, content: completion };
@@ -175,21 +175,19 @@ const CommentThread: FC<Props> = ({ children, hiddenState }) => {
                           const promptSetting = chatbotPrompts.find(
                             (a) => a.id === chatbotPromptSettingId,
                           );
-                          const concatenatedMessages = thread
-                            .map((msg) =>
-                              msg.type === APP_DATA_TYPES.BOT_COMMENT
-                                ? `Chatbot: ${msg.data.content}`
-                                : `Étudiant: ${msg.data.content}`,
-                            )
-                            .join('\n\n');
-                          const fullPrompt = `${promptSetting?.data.initialPrompt}\n\n${concatenatedMessages}\n\nÉtudiant: ${content}\n\n`;
 
-                          callApi(fullPrompt, {
+                          const prompt = buildPrompt(
+                            promptSetting?.data.initialPrompt,
+                            thread,
+                            content,
+                          );
+
+                          callApi(prompt, {
                             ...data,
                             parent: parent?.id,
                           });
                           postAction({
-                            data: { prompt: fullPrompt },
+                            data: prompt,
                             type: APP_ACTIONS_TYPES.SEND_PROMPT,
                           });
                         }

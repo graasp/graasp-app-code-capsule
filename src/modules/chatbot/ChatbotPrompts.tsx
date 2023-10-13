@@ -3,6 +3,10 @@ import { useTranslation } from 'react-i18next';
 
 import { CardContent, CardHeader } from '@mui/material';
 
+import { List } from 'immutable';
+
+import { ThreadMessage } from '@/interfaces/threadMessage';
+
 import { APP_ACTIONS_TYPES } from '../../config/appActionsTypes';
 import { APP_DATA_TYPES } from '../../config/appDataTypes';
 import { GENERAL_SETTINGS_NAME } from '../../config/appSettingsTypes';
@@ -47,7 +51,7 @@ const ChatbotPrompts: FC<Props> = ({ line }) => {
   } = useSettings();
   const { startLoading, stopLoading } = useLoadingIndicator();
 
-  const { callApi } = useChatbotApi(
+  const { callApi, buildPrompt } = useChatbotApi(
     (completion: string, data: UserDataType) => {
       const newData = { ...data, content: completion };
       // post comment from bot
@@ -99,14 +103,26 @@ const ChatbotPrompts: FC<Props> = ({ line }) => {
         data: userData,
         type: APP_DATA_TYPES.COMMENT,
       })?.then((userMessage) => {
-        const fullPrompt = `${currentLinePrompt?.data.initialPrompt}\n\nChatbot: ${chatbotMessage}\n\nÉtudiant: ${newUserComment}\n\n`;
-        callApi(fullPrompt, {
+        const threadMessages: List<ThreadMessage> = List([
+          {
+            type: APP_DATA_TYPES.BOT_COMMENT,
+            data: { content: chatbotMessage },
+          },
+        ]);
+
+        const prompt = buildPrompt(
+          currentLinePrompt?.data.initialPrompt,
+          threadMessages,
+          newUserComment,
+        );
+
+        callApi(prompt, {
           line,
           parent: userMessage?.id,
           codeId: INSTRUCTOR_CODE_ID,
         });
         postAction({
-          data: { prompt: fullPrompt },
+          data: { prompt },
           type: APP_ACTIONS_TYPES.SEND_PROMPT,
         });
       });
