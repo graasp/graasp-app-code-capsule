@@ -41,8 +41,6 @@ VITE_DEBUG=false # disable success toast message
 
 # dont open browser
 BROWSER=none
-
-VITE_OPEN_AI_API_URL=http://localhost:1234
 ```
 
 Start the tests with `yarn test` for automatic start of the dev server as well as cypress (similar to the CI run).

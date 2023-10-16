@@ -1,18 +1,14 @@
 import { useContext, useEffect, useState } from 'react';
 
-import {
-  API_ROUTES,
-  TokenContext,
-  useLocalContext,
-} from '@graasp/apps-query-client';
-import { ChatBotMessage } from '@graasp/sdk';
+import { TokenContext, useLocalContext } from '@graasp/apps-query-client';
+import { ChatBotMessage, ChatbotRole } from '@graasp/sdk';
 
 import { List } from 'immutable';
 
 import { APP_DATA_TYPES } from '@/config/appDataTypes';
+import { API_HOST } from '@/config/env';
 import { ThreadMessage } from '@/interfaces/threadMessage';
-
-const { buildPostChatBotRoute } = API_ROUTES;
+import { chatBotPostUrl } from '@/utils/chatBotUrl';
 
 export type UserDataType = { [key: string]: unknown };
 type CallbackType = (completion: string, data: UserDataType) => void;
@@ -32,9 +28,9 @@ export const useChatbotApi = (callback: CallbackType): ReturnType => {
   const [data, setData] = useState<UserDataType>({});
   const token = useContext(TokenContext);
   const context = useLocalContext();
-  const apiHost = context?.get('apiHost');
+  const apiHost = API_HOST;
   const itemId = context?.get('itemId');
-  const apiUrl = `${apiHost}/${buildPostChatBotRoute(itemId)}`;
+  const apiUrl = chatBotPostUrl(apiHost, itemId);
 
   useEffect(
     () => {
@@ -90,17 +86,19 @@ export const useChatbotApi = (callback: CallbackType): ReturnType => {
     // define the message to send to OpenAI with the initial prompt first if needed (role system).
     // Each call to OpenAI must contain the whole history of the messages.
     const finalPrompt: Array<ChatBotMessage> = initialPrompt
-      ? [{ role: 'system', content: initialPrompt }]
+      ? [{ role: ChatbotRole.System, content: initialPrompt }]
       : [];
 
     threadMessages.forEach((msg) => {
       const msgRole =
-        msg.type === APP_DATA_TYPES.BOT_COMMENT ? 'assistant' : 'user';
+        msg.type === APP_DATA_TYPES.BOT_COMMENT
+          ? ChatbotRole.Assistant
+          : ChatbotRole.User;
       finalPrompt.push({ role: msgRole, content: msg.data.content });
     });
 
     // add the last user's message in the prompt
-    finalPrompt.push({ role: 'user', content: userMessage });
+    finalPrompt.push({ role: ChatbotRole.User, content: userMessage });
 
     return finalPrompt;
   };

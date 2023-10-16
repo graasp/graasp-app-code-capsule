@@ -1,12 +1,13 @@
 import { HttpMethod } from '@graasp/sdk';
 
+import { chatBotPostUrl } from '../../src/utils/chatBotUrl';
 import { DEFAULT_OPEN_AI_RESPONSE } from '../fixtures/appData';
 
 export const mockOpenAIAPI = (): void => {
   cy.intercept(
     {
       method: HttpMethod.POST,
-      url: Cypress.env().VITE_OPEN_AI_API_URL,
+      url: chatBotPostUrl(Cypress.env().VITE_API_HOST, '*'),
     },
     (req) =>
       req.reply({
