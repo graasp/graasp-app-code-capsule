@@ -12,7 +12,6 @@ import { MOCK_SERVER_API_HOST } from '../fixtures/appData';
 import { REPL_TIMEOUT, SLOW_TYPING_IN_EDITOR } from '../fixtures/constants';
 import { CURRENT_MEMBER, MEMBERS } from '../fixtures/members';
 import { MOCK_SERVER_ITEM } from '../fixtures/mockItem';
-import { mockOpenAIAPI } from './mockServer';
 
 // ***********************************************
 // This example commands.js shows you how to
@@ -58,15 +57,12 @@ Cypress.Commands.add(
       win.appContext = {
         memberId: currentMember.id,
         itemId: MOCK_SERVER_ITEM.id,
-        apiHost: Cypress.env('REACT_APP_API_HOST') || MOCK_SERVER_API_HOST,
+        apiHost: Cypress.env('VITE_API_HOST') || MOCK_SERVER_API_HOST,
         context: Context.Builder,
         permission: PermissionLevel.Read,
         ...appContext,
       };
     });
-
-    // setup mocks
-    mockOpenAIAPI();
   },
 );
 

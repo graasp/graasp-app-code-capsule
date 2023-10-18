@@ -244,8 +244,6 @@ export const MOCK_CODE_VERSIONS: CodeType[] = [
   },
 ];
 
-export const DEFAULT_OPEN_AI_RESPONSE = 'Biip boop i am a bot';
-
 const threadIds = Array.from({ length: 5 }, () => uuid());
 
 export const CHATBOT_THREAD_MOCK_COMMENTS: AppData[] = [
