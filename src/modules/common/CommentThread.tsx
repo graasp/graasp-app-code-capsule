@@ -10,12 +10,13 @@ import {
   DEFAULT_CHATBOT_PROMPT_APP_DATA,
   MAX_CHATBOT_THREAD_LENGTH,
 } from '../../config/constants';
-import { mutations } from '../../config/queryClient';
+import { hooks, mutations } from '../../config/queryClient';
 import { COMMENT_THREAD_CONTAINER_CYPRESS } from '../../config/selectors';
 import { DEFAULT_GENERAL_SETTINGS } from '../../config/settings';
 import { UserDataType, useChatbotApi } from '../../hooks/useChatbotApi';
 import { CommentType } from '../../interfaces/comment';
 import { GeneralSettingsKeys } from '../../interfaces/settings';
+import { buildPrompt } from '../../utils/chatbot';
 import { buildThread } from '../../utils/comments';
 import { useAppDataContext } from '../context/AppDataContext';
 import { CommentProvider } from '../context/CommentContext';
@@ -27,6 +28,8 @@ import ResponseContainer from '../layout/ResponseContainer';
 import Comment from './Comment';
 import CommentEditor from './CommentEditor';
 import ResponseBox from './ResponseBox';
+
+const { useChatbotApi } = hooks;
 
 type Props = {
   children?: CommentType[];
@@ -50,7 +53,7 @@ const CommentThread: FC<Props> = ({ children, hiddenState }) => {
   } = useSettings();
   const { isLoading, startLoading, stopLoading } = useLoadingIndicator();
 
-  const { callApi, buildPrompt } = useChatbotApi(
+  const { callApi } = useChatbotApi(
     (completion: string, data: UserDataType) => {
       // post comment from bot
       const newData = { ...data, content: completion };

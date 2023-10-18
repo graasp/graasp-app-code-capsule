@@ -3,6 +3,8 @@ import { useTranslation } from 'react-i18next';
 
 import { CardContent, CardHeader } from '@mui/material';
 
+import { UserDataType } from '@graasp/apps-query-client';
+
 import { List } from 'immutable';
 
 import { ThreadMessage } from '@/interfaces/threadMessage';
@@ -14,17 +16,17 @@ import {
   DEFAULT_BOT_USERNAME,
   INSTRUCTOR_CODE_ID,
 } from '../../config/constants';
-import { mutations } from '../../config/queryClient';
+import { hooks, mutations } from '../../config/queryClient';
 import {
   buildChatbotPromptContainerDataCy,
   buildCommentResponseBoxDataCy,
 } from '../../config/selectors';
 import { DEFAULT_GENERAL_SETTINGS } from '../../config/settings';
-import { UserDataType, useChatbotApi } from '../../hooks/useChatbotApi';
 import {
   ChatbotPromptSettingsKeys,
   GeneralSettingsKeys,
 } from '../../interfaces/settings';
+import { buildPrompt } from '../../utils/chatbot';
 import CommentBody from '../common/CommentBody';
 import CommentEditor from '../common/CommentEditor';
 import ResponseBox from '../common/ResponseBox';
@@ -34,6 +36,8 @@ import { useSettings } from '../context/SettingsContext';
 import CommentContainer from '../layout/CommentContainer';
 import CustomCommentCard from '../layout/CustomCommentCard';
 import ChatbotAvatar from './ChatbotAvatar';
+
+const { useChatbotApi } = hooks;
 
 type Props = {
   line: number;
@@ -51,7 +55,7 @@ const ChatbotPrompts: FC<Props> = ({ line }) => {
   } = useSettings();
   const { startLoading, stopLoading } = useLoadingIndicator();
 
-  const { callApi, buildPrompt } = useChatbotApi(
+  const { callApi } = useChatbotApi(
     (completion: string, data: UserDataType) => {
       const newData = { ...data, content: completion };
       // post comment from bot
