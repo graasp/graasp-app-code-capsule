@@ -7,13 +7,13 @@ import { APP_ACTIONS_TYPES } from '../../config/appActionsTypes';
 import { APP_DATA_TYPES } from '../../config/appDataTypes';
 import { GENERAL_SETTINGS_NAME } from '../../config/appSettingsTypes';
 import {
+  CHAT_BOT_ERROR_MESSAGE,
   DEFAULT_CHATBOT_PROMPT_APP_DATA,
   MAX_CHATBOT_THREAD_LENGTH,
 } from '../../config/constants';
-import { hooks, mutations } from '../../config/queryClient';
+import { mutations } from '../../config/queryClient';
 import { COMMENT_THREAD_CONTAINER_CYPRESS } from '../../config/selectors';
 import { DEFAULT_GENERAL_SETTINGS } from '../../config/settings';
-import { UserDataType, useChatbotApi } from '../../hooks/useChatbotApi';
 import { CommentType } from '../../interfaces/comment';
 import { GeneralSettingsKeys } from '../../interfaces/settings';
 import { buildPrompt } from '../../utils/chatbot';
@@ -28,8 +28,6 @@ import ResponseContainer from '../layout/ResponseContainer';
 import Comment from './Comment';
 import CommentEditor from './CommentEditor';
 import ResponseBox from './ResponseBox';
-
-const { useChatbotApi } = hooks;
 
 type Props = {
   children?: CommentType[];
@@ -53,19 +51,7 @@ const CommentThread: FC<Props> = ({ children, hiddenState }) => {
   } = useSettings();
   const { isLoading, startLoading, stopLoading } = useLoadingIndicator();
 
-  const { callApi } = useChatbotApi(
-    (completion: string, data: UserDataType) => {
-      // post comment from bot
-      const newData = { ...data, content: completion };
-      postAppDataAsync({
-        data: newData,
-        type: APP_DATA_TYPES.BOT_COMMENT,
-      })?.then(() => {
-        stopLoading();
-      });
-      postAction({ data: newData, type: APP_ACTIONS_TYPES.CREATE_COMMENT });
-    },
-  );
+  const { mutateAsync: postChatBot } = mutations.usePostChatBot();
 
   const isEdited = (id: string): boolean => id === currentEditedCommentId;
   const isReplied = (id: string): boolean => id === currentRepliedCommentId;
@@ -185,10 +171,29 @@ const CommentThread: FC<Props> = ({ children, hiddenState }) => {
                             content,
                           );
 
-                          callApi(prompt, {
+                          const newData = {
                             ...data,
                             parent: parent?.id,
-                          });
+                            content: CHAT_BOT_ERROR_MESSAGE,
+                          };
+
+                          postChatBot(prompt)
+                            .then((chatBotRes) => {
+                              newData.content = chatBotRes.completion;
+                            })
+                            .finally(() => {
+                              postAppDataAsync({
+                                data: newData,
+                                type: APP_DATA_TYPES.BOT_COMMENT,
+                              })?.then(() => {
+                                stopLoading();
+                              });
+                              postAction({
+                                data: newData,
+                                type: APP_ACTIONS_TYPES.CREATE_COMMENT,
+                              });
+                            });
+
                           postAction({
                             data: prompt,
                             type: APP_ACTIONS_TYPES.SEND_PROMPT,

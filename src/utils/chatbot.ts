@@ -1,15 +1,9 @@
-import { API_ROUTES } from '@graasp/apps-query-client';
 import { ChatBotMessage, ChatbotRole } from '@graasp/sdk';
 
 import { List } from 'immutable';
 
 import { APP_DATA_TYPES } from '@/config/appDataTypes';
 import { ThreadMessage } from '@/interfaces/threadMessage';
-
-const { buildPostChatBotRoute } = API_ROUTES;
-
-export const chatBotPostUrl = (apiHost: string, itemId: string): string =>
-  `${apiHost}/${buildPostChatBotRoute(itemId)}`;
 
 export const buildPrompt = (
   initialPrompt: string | undefined,

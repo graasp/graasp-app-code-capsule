@@ -3,8 +3,6 @@ import { useTranslation } from 'react-i18next';
 
 import { CardContent, CardHeader } from '@mui/material';
 
-import { UserDataType } from '@graasp/apps-query-client';
-
 import { List } from 'immutable';
 
 import { ThreadMessage } from '@/interfaces/threadMessage';
@@ -13,10 +11,11 @@ import { APP_ACTIONS_TYPES } from '../../config/appActionsTypes';
 import { APP_DATA_TYPES } from '../../config/appDataTypes';
 import { GENERAL_SETTINGS_NAME } from '../../config/appSettingsTypes';
 import {
+  CHAT_BOT_ERROR_MESSAGE,
   DEFAULT_BOT_USERNAME,
   INSTRUCTOR_CODE_ID,
 } from '../../config/constants';
-import { hooks, mutations } from '../../config/queryClient';
+import { mutations } from '../../config/queryClient';
 import {
   buildChatbotPromptContainerDataCy,
   buildCommentResponseBoxDataCy,
@@ -37,8 +36,6 @@ import CommentContainer from '../layout/CommentContainer';
 import CustomCommentCard from '../layout/CustomCommentCard';
 import ChatbotAvatar from './ChatbotAvatar';
 
-const { useChatbotApi } = hooks;
-
 type Props = {
   line: number;
 };
@@ -48,24 +45,13 @@ const ChatbotPrompts: FC<Props> = ({ line }) => {
   const { postAppDataAsync, comments } = useAppDataContext();
   const [openEditor, setOpenEditor] = useState(false);
   const { mutate: postAction } = mutations.usePostAppAction();
+  const { mutateAsync: postChatBot } = mutations.usePostChatBot();
   // if a message already exists with the prompt id we should not display this prompt
   const {
     chatbotPrompts,
     [GENERAL_SETTINGS_NAME]: generalSettings = DEFAULT_GENERAL_SETTINGS,
   } = useSettings();
   const { startLoading, stopLoading } = useLoadingIndicator();
-
-  const { callApi } = useChatbotApi(
-    (completion: string, data: UserDataType) => {
-      const newData = { ...data, content: completion };
-      // post comment from bot
-      postAppDataAsync({
-        data: newData,
-        type: APP_DATA_TYPES.BOT_COMMENT,
-      })?.then(() => stopLoading());
-      postAction({ data: newData, type: APP_ACTIONS_TYPES.CREATE_COMMENT });
-    },
-  );
 
   const currentLinePrompt = chatbotPrompts.find(
     (c) => c.data[ChatbotPromptSettingsKeys.LineNumber] === line,
@@ -120,15 +106,33 @@ const ChatbotPrompts: FC<Props> = ({ line }) => {
           newUserComment,
         );
 
-        callApi(prompt, {
-          line,
-          parent: userMessage?.id,
-          codeId: INSTRUCTOR_CODE_ID,
-        });
         postAction({
           data: { prompt },
           type: APP_ACTIONS_TYPES.SEND_PROMPT,
         });
+
+        const actionData = {
+          line,
+          parent: userMessage?.id,
+          codeId: INSTRUCTOR_CODE_ID,
+          content: CHAT_BOT_ERROR_MESSAGE,
+        };
+
+        postChatBot(prompt)
+          .then((chatBotRes) => {
+            actionData.content = chatBotRes.completion;
+          })
+          .finally(() => {
+            // post comment from bot
+            postAppDataAsync({
+              data: actionData,
+              type: APP_DATA_TYPES.BOT_COMMENT,
+            })?.then(() => stopLoading());
+            postAction({
+              data: actionData,
+              type: APP_ACTIONS_TYPES.CREATE_COMMENT,
+            });
+          });
       });
       postAction({ data: userData, type: APP_ACTIONS_TYPES.CREATE_COMMENT });
     });
