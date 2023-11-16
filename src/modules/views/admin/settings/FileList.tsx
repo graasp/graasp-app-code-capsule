@@ -8,12 +8,12 @@ import {
   ListItemText,
 } from '@mui/material';
 
-import { AppSettingRecord } from '@graasp/sdk/frontend';
+import { AppSetting } from '@graasp/sdk';
 
 import { hooks, mutations } from '../../../../config/queryClient';
 
 type Props = {
-  appSetting: AppSettingRecord;
+  appSetting: AppSetting;
   fileName: string;
   virtualPath: string;
   onDelete: (appSettingIdToDelete: string) => void;

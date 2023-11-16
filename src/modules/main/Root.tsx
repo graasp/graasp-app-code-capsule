@@ -5,7 +5,15 @@ import { CssBaseline, ThemeProvider, createTheme, styled } from '@mui/material';
 import { grey, orange, pink } from '@mui/material/colors';
 import { StyledEngineProvider } from '@mui/material/styles';
 
-import { withContext, withToken } from '@graasp/apps-query-client';
+import {
+  GraaspContextDevTool,
+  WithLocalContext,
+  WithTokenContext,
+  useObjectState,
+} from '@graasp/apps-query-client';
+
+import { MOCK_API } from '@/config/env';
+import { mockContext as defaultMockContext, mockMembers } from '@/data/db';
 
 import i18nConfig from '../../config/i18n';
 import {
@@ -14,9 +22,10 @@ import {
   hooks,
   queryClient,
 } from '../../config/queryClient';
-import { showErrorToast } from '../../utils/toast';
 import Loader from '../common/Loader';
 import App from './App';
+
+// import App from './App';
 
 // declare the module to enable theme modification
 declare module '@mui/material/styles' {
@@ -63,25 +72,8 @@ const RootDiv = styled('div')({
 });
 
 const Root: FC = () => {
-  const AppWithContext = withToken(App, {
-    LoadingComponent: <Loader />,
-    useAuthToken: hooks.useAuthToken,
-    onError:
-      /* istanbul ignore next */
-      () => {
-        showErrorToast('An error occurred while requesting the token.');
-      },
-  });
-  const AppWithContextAndToken = withContext(AppWithContext, {
-    LoadingComponent: <Loader />,
-    useGetLocalContext: hooks.useGetLocalContext,
-    useAutoResize: hooks.useAutoResize,
-    onError:
-      /* istanbul ignore next */
-      () => {
-        showErrorToast('An error occurred while fetching the context.');
-      },
-  });
+  const [mockContext, setMockContext] = useObjectState(defaultMockContext);
+
   return (
     <RootDiv>
       {/* Used to define the order of injected properties between JSS and emotion */}
@@ -90,7 +82,37 @@ const Root: FC = () => {
           <CssBaseline enableColorScheme />
           <I18nextProvider i18n={i18nConfig}>
             <QueryClientProvider client={queryClient}>
-              <AppWithContextAndToken />
+              <WithLocalContext
+                defaultValue={window.Cypress ? window.appContext : mockContext}
+                // LoadingComponent={<Loader />}
+                useGetLocalContext={hooks.useGetLocalContext}
+                // useAutoResize={hooks.useAutoResize}
+                onError={() => {
+                  console.error(
+                    'An error occurred while fetching the context.',
+                  );
+                }}
+              >
+                <WithTokenContext
+                  LoadingComponent={<Loader />}
+                  useAuthToken={hooks.useAuthToken}
+                  onError={() => {
+                    console.error(
+                      'An error occurred while requesting the token.',
+                    );
+                  }}
+                >
+                  <App />
+                  {import.meta.env.DEV && MOCK_API && (
+                    <GraaspContextDevTool
+                      members={mockMembers}
+                      context={mockContext}
+                      setContext={setMockContext}
+                    />
+                  )}
+                </WithTokenContext>
+              </WithLocalContext>
+
               {import.meta.env.MODE === 'development' && (
                 <ReactQueryDevtools position="top-right" />
               )}

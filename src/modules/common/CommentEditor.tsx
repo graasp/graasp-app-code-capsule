@@ -42,7 +42,7 @@ import {
   COMMENT_EDITOR_TEXTAREA_HELPER_TEXT_CY,
 } from '../../config/selectors';
 import { DEFAULT_MAX_COMMENT_LENGTH_SETTING } from '../../config/settings';
-import { CommentTypeRecord } from '../../interfaces/comment';
+import { CommentType } from '../../interfaces/comment';
 import { NO_COMMENT_OPENED, useReviewContext } from '../context/ReviewContext';
 import ToolbarButton from '../layout/ToolbarButton';
 
@@ -69,7 +69,7 @@ const TextArea = styled(TextareaAutosize)(({ theme }) => ({
 type Props = {
   onCancel: () => void;
   onSend: (comment: string) => void;
-  comment?: CommentTypeRecord;
+  comment?: CommentType;
   maxTextLength?: number;
 };
 

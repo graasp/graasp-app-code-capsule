@@ -32,7 +32,7 @@ describe('Code Versions', () => {
           {
             ...MOCK_GENERAL_SETTINGS,
             data: {
-              ...DEFAULT_GENERAL_SETTINGS.toJS(),
+              ...DEFAULT_GENERAL_SETTINGS,
               [GeneralSettingsKeys.ReviewMode]: REVIEW_MODE_COLLABORATIVE,
               [GeneralSettingsKeys.ShowVersionNavigation]: true,
             },

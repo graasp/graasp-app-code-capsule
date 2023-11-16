@@ -34,10 +34,7 @@ import {
   DEFAULT_COMMIT_MESSAGE_SETTING,
   DEFAULT_INSTRUCTOR_CODE_VERSION_SETTINGS,
 } from '../../config/settings';
-import {
-  CodeVersionType,
-  CodeVersionTypeRecord,
-} from '../../interfaces/codeVersions';
+import { CodeVersionType } from '../../interfaces/codeVersions';
 import { useCodeVersionContext } from '../context/CodeVersionContext';
 import CustomSelect from '../layout/CustomSelect';
 
@@ -93,7 +90,7 @@ const CodeEditor: FC<Props> = ({
           language: languageSetting,
           commitMessage: commitMessageSetting,
           commitDescription: commitDescriptionSetting,
-        } = (codeVersionSettings?.data as CodeVersionTypeRecord) ||
+        } = (codeVersionSettings?.data as CodeVersionType) ||
         DEFAULT_INSTRUCTOR_CODE_VERSION_SETTINGS;
         setCode(codeSetting);
         setLanguage(languageSetting);

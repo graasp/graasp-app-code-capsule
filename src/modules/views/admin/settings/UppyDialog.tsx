@@ -29,9 +29,9 @@ type Props = {
 const UppyDialog: FC<Props> = ({ open, onFinish, onClose }) => {
   const { t } = useTranslation();
   const context = useLocalContext();
-  const apiHost = context?.get('apiHost');
-  const itemId = context?.get('itemId');
-  const standalone = context?.get('standalone');
+  const apiHost = context?.apiHost;
+  const itemId = context?.itemId;
+  const standalone = context?.standalone;
   const token = useContext(TokenContext);
 
   const { mutate: onFileUploadComplete } = mutations.useUploadAppSettingFile();

@@ -4,10 +4,6 @@ import { useTranslation } from 'react-i18next';
 import { Add } from '@mui/icons-material';
 import { Box, Button, List, Stack, Typography } from '@mui/material';
 
-import { convertJs } from '@graasp/sdk';
-
-import { List as ImmList } from 'immutable';
-
 import {
   DATA_FILE_LIST_SETTINGS_NAME,
   DataFile,
@@ -31,22 +27,28 @@ const DataFileUpload: FC = () => {
   const filesMetaData = dataFileListSetting[DataFileListSettingsKeys.Files];
 
   const handleFileDelete = (appSettingIdToDelete: string): void => {
-    saveSettings(
-      DATA_FILE_LIST_SETTINGS_NAME,
-      convertJs({
-        [DataFileListSettingsKeys.Files]: filesMetaData
-          .toJS()
-          .filter(({ appSettingId }) => appSettingId !== appSettingIdToDelete),
-      }),
-    );
+    saveSettings(DATA_FILE_LIST_SETTINGS_NAME, {
+      [DataFileListSettingsKeys.Files]: filesMetaData.filter(
+        ({ appSettingId }) => appSettingId !== appSettingIdToDelete,
+      ),
+    });
   };
 
   const handleFileUpload = (newFileMetaData: DataFile[]): void => {
-    const newData = dataFileListSetting.update(
-      DataFileListSettingsKeys.Files,
-      (list: ImmList<DataFile>) => list.concat(convertJs(newFileMetaData)),
-    );
+    // TODO: I used this before but I don't know if it is better to use spread ?
+    // dataFileListSetting[DataFileListSettingsKeys.Files].concat(newFileMetaData);
+    // saveSettings(DATA_FILE_LIST_SETTINGS_NAME, dataFileListSetting);
+
+    const newData = {
+      ...dataFileListSetting,
+      [DataFileListSettingsKeys.Files]: [
+        ...dataFileListSetting[DataFileListSettingsKeys.Files],
+        ...newFileMetaData,
+      ],
+    };
+
     saveSettings(DATA_FILE_LIST_SETTINGS_NAME, newData);
+
     // close modal
     setAddNewFilesOpen(false);
   };
@@ -57,7 +59,7 @@ const DataFileUpload: FC = () => {
         {t('Upload Data Files')}
       </Button>
       <Box flex={1} borderColor="info.main" borderRadius={2} border={1}>
-        {filesMetaData.size ? (
+        {filesMetaData.length ? (
           <List dense>
             {filesMetaData.map(({ appSettingId, fileName, virtualPath }) => {
               const appSetting = dataFileSettings.find(

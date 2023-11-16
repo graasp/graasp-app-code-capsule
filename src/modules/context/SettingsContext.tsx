@@ -1,8 +1,6 @@
 import { FC, ReactElement, createContext, useContext } from 'react';
 
-import { AppSettingRecord } from '@graasp/sdk/frontend';
-
-import { List } from 'immutable';
+import { AppSetting } from '@graasp/sdk';
 
 import {
   APP_MODE_SETTINGS_NAME,
@@ -24,28 +22,28 @@ import {
   DEFAULT_INSTRUCTOR_CODE_VERSION_SETTINGS,
 } from '../../config/settings';
 import {
-  AppModeSettingsRecord,
-  ChatbotPromptAppSettingRecord,
-  CodeExecutionSettingsRecord,
-  DataFileListSettingsRecord,
-  DiffViewSettingsRecord,
-  GeneralSettingsRecord,
-  InstructorCodeVersionSettingsRecord,
+  AppModeSettings,
+  ChatbotPromptAppSettings,
+  CodeExecutionSettings,
+  DataFileListSettings,
+  DiffViewSettings,
+  GeneralSettings,
+  InstructorCodeVersionSettings,
 } from '../../interfaces/settings';
 import Loader from '../common/Loader';
 
 // mapping between Setting names and their data type
-interface AllSettingsTypeRecord {
-  [GENERAL_SETTINGS_NAME]?: GeneralSettingsRecord;
-  [CODE_EXECUTION_SETTINGS_NAME]?: CodeExecutionSettingsRecord;
-  [INSTRUCTOR_CODE_VERSION_SETTINGS_NAME]?: InstructorCodeVersionSettingsRecord;
-  [APP_MODE_SETTINGS_NAME]?: AppModeSettingsRecord;
-  [DATA_FILE_LIST_SETTINGS_NAME]?: DataFileListSettingsRecord;
-  [DIFF_VIEW_SETTINGS_NAME]?: DiffViewSettingsRecord;
+interface AllSettingsType {
+  [GENERAL_SETTINGS_NAME]?: GeneralSettings;
+  [CODE_EXECUTION_SETTINGS_NAME]?: CodeExecutionSettings;
+  [INSTRUCTOR_CODE_VERSION_SETTINGS_NAME]?: InstructorCodeVersionSettings;
+  [APP_MODE_SETTINGS_NAME]?: AppModeSettings;
+  [DATA_FILE_LIST_SETTINGS_NAME]?: DataFileListSettings;
+  [DIFF_VIEW_SETTINGS_NAME]?: DiffViewSettings;
 }
 
 // default values for the data property of settings by name
-const defaultSettingsValues: AllSettingsTypeRecord = {
+const defaultSettingsValues: AllSettingsType = {
   [GENERAL_SETTINGS_NAME]: DEFAULT_GENERAL_SETTINGS,
   [CODE_EXECUTION_SETTINGS_NAME]: DEFAULT_CODE_EXECUTION_SETTINGS,
   [INSTRUCTOR_CODE_VERSION_SETTINGS_NAME]:
@@ -68,22 +66,21 @@ const ALL_SETTING_NAMES = [
 // automatically generated types
 // eslint-disable-next-line prettier/prettier
 type AllSettingsNameType = (typeof ALL_SETTING_NAMES)[number];
-type AllSettingsDataTypeRecord =
-  AllSettingsTypeRecord[keyof AllSettingsTypeRecord];
+type AllSettingsDataType = AllSettingsType[keyof AllSettingsType];
 
-export type SettingsContextType = AllSettingsTypeRecord & {
-  dataFileSettings: List<AppSettingRecord>;
-  chatbotPrompts: List<ChatbotPromptAppSettingRecord>;
+export type SettingsContextType = AllSettingsType & {
+  dataFileSettings: AppSetting[];
+  chatbotPrompts: ChatbotPromptAppSettings[];
   saveSettings: (
     name: AllSettingsNameType,
-    newValue: AllSettingsDataTypeRecord,
+    newValue: AllSettingsDataType,
   ) => void;
 };
 
 const defaultContextValue = {
   ...defaultSettingsValues,
-  dataFileSettings: List<AppSettingRecord>(),
-  chatbotPrompts: List<ChatbotPromptAppSettingRecord>(),
+  dataFileSettings: [],
+  chatbotPrompts: [],
   saveSettings: () => null,
 };
 
@@ -104,20 +101,20 @@ export const SettingsProvider: FC<Prop> = ({ children }) => {
 
   const saveSettings = (
     name: AllSettingsNameType,
-    newValue: AllSettingsDataTypeRecord,
+    newValue: AllSettingsDataType,
   ): void => {
     if (appSettingsList) {
       const previousSetting = appSettingsList.find((s) => s.name === name);
       // setting does not exist
       if (!previousSetting) {
         postSettings.mutate({
-          data: newValue?.toJS(),
+          data: newValue,
           name,
         });
       } else {
         patchSettings.mutate({
           id: previousSetting.id,
-          data: newValue?.toJS(),
+          data: newValue,
         });
       }
     }
@@ -129,26 +126,23 @@ export const SettingsProvider: FC<Prop> = ({ children }) => {
 
   const getContextValue = (): SettingsContextType => {
     if (isSuccess) {
-      const allSettings: AllSettingsTypeRecord = ALL_SETTING_NAMES.reduce(
-        <T extends AllSettingsNameType>(acc: AllSettingsTypeRecord, key: T) => {
+      const allSettings: AllSettingsType = ALL_SETTING_NAMES.reduce(
+        <T extends AllSettingsNameType>(acc: AllSettingsType, key: T) => {
           const setting = appSettingsList.find((s) => s.name === key);
           const settingData = setting?.data;
-          acc[key] = settingData as AllSettingsTypeRecord[T];
+          acc[key] = settingData as AllSettingsType[T];
           return acc;
         },
         {},
       );
 
-      const dataFileSettings =
-        appSettingsList.filter((s) =>
-          s.name.startsWith(DATA_FILE_SETTINGS_NAME),
-        ) || List<AppSettingRecord>();
+      const dataFileSettings = appSettingsList.filter((s) =>
+        s.name.startsWith(DATA_FILE_SETTINGS_NAME),
+      ) as AppSetting[];
 
-      const chatbotPrompts =
-        (appSettingsList.filter(
-          (s) => s.name === CHATBOT_PROMPT_SETTINGS_NAME,
-        ) as List<ChatbotPromptAppSettingRecord>) ||
-        List<ChatbotPromptAppSettingRecord>();
+      const chatbotPrompts = appSettingsList.filter(
+        (s) => s.name === CHATBOT_PROMPT_SETTINGS_NAME,
+      ) as ChatbotPromptAppSettings[];
 
       return {
         ...allSettings,

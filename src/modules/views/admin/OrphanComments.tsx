@@ -6,10 +6,8 @@ import { FormControlLabel } from '@mui/material';
 import { UUID } from '@graasp/sdk';
 import { Button } from '@graasp/ui';
 
-import { List } from 'immutable';
-
 import { ORPHAN_BUTTON_CYPRESS } from '../../../config/selectors';
-import { CommentTypeRecord } from '../../../interfaces/comment';
+import { CommentType } from '../../../interfaces/comment';
 import {
   getOrphans,
   getThreadIdsFromFirstCommentId,
@@ -17,21 +15,19 @@ import {
 import { useAppDataContext } from '../../context/AppDataContext';
 
 type Prop = {
-  comments: List<CommentTypeRecord>;
+  comments: CommentType[];
 };
 
 const OrphanComments: FC<Prop> = ({ comments }) => {
   const { t } = useTranslation();
   const { deleteAppData } = useAppDataContext();
 
-  const getOrphanComments = (
-    allComments: List<CommentTypeRecord>,
-  ): List<UUID[]> => {
+  const getOrphanComments = (allComments: CommentType[]): UUID[][] => {
     const orphans = getOrphans(allComments);
     return orphans.map((o) => getThreadIdsFromFirstCommentId(comments, o.id));
   };
 
-  const handleOnClickRemoveOrphans = (orphanThreads: List<UUID[]>): void => {
+  const handleOnClickRemoveOrphans = (orphanThreads: UUID[][]): void => {
     orphanThreads.forEach((thread) => {
       thread.forEach((id) => {
         deleteAppData({ id });
@@ -41,7 +37,7 @@ const OrphanComments: FC<Prop> = ({ comments }) => {
 
   const orphanThreads = getOrphanComments(comments);
 
-  if (!orphanThreads.size) {
+  if (!orphanThreads.length) {
     return null;
   }
 
@@ -52,7 +48,7 @@ const OrphanComments: FC<Prop> = ({ comments }) => {
       color="primary"
       sx={{ mr: 1 }}
       onClick={() => handleOnClickRemoveOrphans(orphanThreads)}
-      disabled={orphanThreads.size === 0}
+      disabled={orphanThreads.length === 0}
     >
       {t('Remove orphans')}
     </Button>
@@ -62,7 +58,7 @@ const OrphanComments: FC<Prop> = ({ comments }) => {
     0,
   );
   const buttonLabel = t('Number of orphan threads', {
-    threads: orphanThreads.size,
+    threads: orphanThreads.length,
     totalComments: totalNumberOfOrphanComments,
   });
 

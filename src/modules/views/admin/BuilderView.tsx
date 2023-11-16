@@ -16,7 +16,7 @@ const BuilderView: FC = () => {
     return <Loader />;
   }
 
-  switch (context?.get('permission')) {
+  switch (context?.permission) {
     // show "teacher view"
     case PermissionLevel.Admin:
       return <AdminView />;

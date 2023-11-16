@@ -65,14 +65,14 @@ const Repl = ({ seedValue }: Props): JSX.Element => {
   const context = useLocalContext();
   const { isFullscreen, toggleFullscreen } = useFullscreen();
   const token = useContext(TokenContext);
-  const apiHost = context?.get('apiHost');
+  const apiHost = context?.apiHost;
 
   const { mutate: postAction } = mutations.usePostAppAction();
 
   const { liveCode, postAppData } = useAppDataContext();
   // sort app data by the latest to the oldest
   const sortedCodeVersions = sortAppDataFromNewest(liveCode);
-  const latestCode = sortedCodeVersions.get(0)?.data?.code;
+  const latestCode = sortedCodeVersions[0]?.data?.code;
   const currentCode = latestCode || (seedValue ? seedValue.code : '');
 
   const [value, setValue] = useState(currentCode);
@@ -160,8 +160,8 @@ const Repl = ({ seedValue }: Props): JSX.Element => {
   useEffect(() => {
     const callback = async (): Promise<void> => {
       if (
-        dataFileListSetting[DataFileListSettingsKeys.Files].size &&
-        !dataFileSettings.isEmpty() &&
+        dataFileListSetting[DataFileListSettingsKeys.Files].length &&
+        dataFileSettings.length > 0 &&
         apiHost &&
         token
       ) {

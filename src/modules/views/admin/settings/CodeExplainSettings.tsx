@@ -12,8 +12,6 @@ import {
   Tooltip,
 } from '@mui/material';
 
-import { convertJs } from '@graasp/sdk';
-
 import { t } from 'i18next';
 import isEqual from 'lodash.isequal';
 
@@ -41,22 +39,18 @@ const CodeExplainSettings = (): JSX.Element => {
     [DIFF_VIEW_SETTINGS_NAME]: diffViewSetting = DEFAULT_DIFF_VIEW_SETTINGS,
     saveSettings,
   } = useSettings();
-  const [diffViewLocalSetting, setDiffViewLocalSetting] = useState(
-    diffViewSetting.toJS(),
-  );
+  const [diffViewLocalSetting, setDiffViewLocalSetting] =
+    useState(diffViewSetting);
   // modal variables
   const [openDiffPreview, setOpenDiffPreview] = useState(false);
 
   const unsavedDiffViewChanges = !isEqual(
     diffViewLocalSetting,
-    diffViewSetting.toJS(),
+    diffViewSetting,
   );
 
   // update diffViewLocalSetting value when setting changes
-  useEffect(
-    () => setDiffViewLocalSetting(diffViewSetting.toJS()),
-    [diffViewSetting],
-  );
+  useEffect(() => setDiffViewLocalSetting(diffViewSetting), [diffViewSetting]);
 
   return (
     <Stack spacing={1}>
@@ -153,7 +147,7 @@ const CodeExplainSettings = (): JSX.Element => {
       <SubmitButtons
         onCancel={() => setDiffViewLocalSetting(diffViewSetting)}
         onSave={() =>
-          saveSettings(DIFF_VIEW_SETTINGS_NAME, convertJs(diffViewLocalSetting))
+          saveSettings(DIFF_VIEW_SETTINGS_NAME, diffViewLocalSetting)
         }
         settingKey={EXPLAIN_MODE_SETTINGS_KEY}
         unsavedChanges={unsavedDiffViewChanges}

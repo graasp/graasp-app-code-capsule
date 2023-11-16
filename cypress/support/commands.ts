@@ -1,4 +1,6 @@
 /// <reference types="../../src/window" />
+import { LocalContext } from '@graasp/apps-query-client';
+
 import {
   CODE_EDITOR_ID_CY,
   REPL_RUN_CODE_BUTTON_CY,
@@ -58,7 +60,7 @@ Cypress.Commands.add(
         itemId: MOCK_SERVER_ITEM.id,
         apiHost: Cypress.env('REACT_APP_API_HOST') || MOCK_SERVER_API_HOST,
         ...appContext,
-      };
+      } as LocalContext;
     });
 
     // setup mocks

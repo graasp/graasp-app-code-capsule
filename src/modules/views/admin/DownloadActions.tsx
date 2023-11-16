@@ -21,7 +21,7 @@ const DownloadActions: FC = () => {
         // fetch actions
         refetch().then(({ data }) => {
           const actions = data;
-          const dataBlob = new Blob([JSON.stringify(actions?.toJS())] || [], {
+          const dataBlob = new Blob([JSON.stringify(actions)] || [], {
             type: 'text/plain;charset=utf-8',
           });
           const fileName = `${new Date().toISOString()}_app_actions.json`;

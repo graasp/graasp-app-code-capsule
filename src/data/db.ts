@@ -1,8 +1,9 @@
-import type { Database, LocalContext } from '@graasp/apps-query-client';
+import { type Database, type LocalContext } from '@graasp/apps-query-client';
 import {
   AppDataVisibility,
-  Item,
-  Member,
+  CompleteMember,
+  DiscriminatedItem,
+  ItemType,
   MemberType,
   PermissionLevel,
 } from '@graasp/sdk';
@@ -31,13 +32,14 @@ export const mockMember = {
   email: 'bob@gmail.com',
   extra: {},
   type: MemberType.Individual,
-  createdAt: new Date(),
-  updatedAt: new Date(),
+  createdAt: new Date().toISOString(),
+  updatedAt: new Date().toISOString(),
 };
 
 export const mockItem = {
   id: '1234-1234-123456-8123-123456',
-} as Item;
+  type: ItemType.APP,
+} as DiscriminatedItem;
 
 export const mockContext: LocalContext = {
   apiHost: API_HOST,
@@ -47,15 +49,15 @@ export const mockContext: LocalContext = {
   memberId: mockMember.id,
 };
 
-export const mockMembers: Member[] = [
+export const mockMembers: CompleteMember[] = [
   {
     id: mockContext.memberId || '',
     name: 'current-member',
     email: '',
     extra: {},
     type: MemberType.Individual,
-    createdAt: new Date(),
-    updatedAt: new Date(),
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
   },
   {
     id: 'mock-member-id-2',
@@ -63,8 +65,8 @@ export const mockMembers: Member[] = [
     email: '',
     extra: {},
     type: MemberType.Individual,
-    createdAt: new Date(),
-    updatedAt: new Date(),
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
   },
 ];
 
@@ -103,10 +105,7 @@ print('See you !')
 
 const commentParent = v4();
 
-const buildDatabase = (
-  appContext: Partial<LocalContext>,
-  members?: Member[],
-): Database => ({
+const buildDatabase = (members?: CompleteMember[]): Database => ({
   items: [mockItem],
   appData: [
     {
@@ -132,8 +131,8 @@ And some text to **finish** _off_`,
       type: APP_DATA_TYPES.COMMENT,
       item: mockItem,
       creator: mockMembers[1],
-      createdAt: new Date(),
-      updatedAt: new Date(),
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
       visibility: AppDataVisibility.Member,
     },
     {
@@ -148,8 +147,8 @@ And some text to **finish** _off_`,
       type: APP_DATA_TYPES.COMMENT,
       item: mockItem,
       creator: mockMembers[0],
-      createdAt: new Date(),
-      updatedAt: new Date(),
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
       visibility: AppDataVisibility.Member,
     },
     {
@@ -164,8 +163,8 @@ And some text to **finish** _off_`,
       type: APP_DATA_TYPES.COMMENT,
       item: mockItem,
       creator: mockMembers[0],
-      createdAt: new Date(),
-      updatedAt: new Date(),
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
       visibility: AppDataVisibility.Member,
     },
     {
@@ -180,8 +179,8 @@ And some text to **finish** _off_`,
       type: APP_DATA_TYPES.COMMENT,
       item: mockItem,
       creator: mockMembers[1],
-      createdAt: new Date(Date.now() - 1500),
-      updatedAt: new Date(Date.now() - 1500),
+      createdAt: new Date(Date.now() - 1500).toISOString(),
+      updatedAt: new Date(Date.now() - 1500).toISOString(),
       visibility: AppDataVisibility.Member,
     },
   ],
@@ -191,32 +190,32 @@ And some text to **finish** _off_`,
     {
       id: v4(),
       name: APP_MODE_SETTINGS_NAME,
-      data: { ...DEFAULT_APP_MODE_SETTINGS.toJS(), mode: AppMode.Execute },
+      data: { ...DEFAULT_APP_MODE_SETTINGS, mode: AppMode.Execute },
       item: mockItem,
-      createdAt: new Date(),
-      updatedAt: new Date(),
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
       creator: mockMembers[0],
     },
     {
       id: v4(),
       name: INSTRUCTOR_CODE_VERSION_SETTINGS_NAME,
       data: {
-        ...DEFAULT_INSTRUCTOR_CODE_VERSION_SETTINGS.toJS(),
+        ...DEFAULT_INSTRUCTOR_CODE_VERSION_SETTINGS,
         code: mockPythonCode,
         codeId: INSTRUCTOR_CODE_ID,
       },
       item: mockItem,
-      createdAt: new Date(),
-      updatedAt: new Date(),
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
       creator: mockMembers[0],
     },
     {
       id: v4(),
       name: GENERAL_SETTINGS_NAME,
-      data: { ...DEFAULT_GENERAL_SETTINGS.toJS(), showEditButton: true },
+      data: { ...DEFAULT_GENERAL_SETTINGS, showEditButton: true },
       item: mockItem,
-      createdAt: new Date(),
-      updatedAt: new Date(),
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
       creator: mockMembers[0],
     },
     // disable to test data file
@@ -231,8 +230,8 @@ And some text to **finish** _off_`,
     //     },
     //   },
     //   name: 'DATA_FILE_SETTING-Bo',
-    //   updatedAt: new Date(),
-    //   createdAt: new Date(),
+    //   updatedAt: new Date().toISOString(),
+    //   createdAt: new Date().toISOString(),
     //   item: mockItem,
     // },
     // {
@@ -248,8 +247,8 @@ And some text to **finish** _off_`,
     //     ],
     //   },
     //   name: DATA_FILE_LIST_SETTINGS_NAME,
-    //   updatedAt: new Date(),
-    //   createdAt: new Date(),
+    //   updatedAt: new Date().toISOString(),
+    //   createdAt: new Date().toISOString(),
     //   item: mockItem,
     // },
   ],

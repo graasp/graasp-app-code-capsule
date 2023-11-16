@@ -1,6 +1,5 @@
-import { Context, PermissionLevel, convertJs } from '@graasp/sdk';
+import { Context, PermissionLevel } from '@graasp/sdk';
 
-import { List } from 'immutable';
 import countBy from 'lodash.countby';
 
 import { APP_DATA_TYPES } from '../../../src/config/appDataTypes';
@@ -25,7 +24,7 @@ import {
   buildTableRowCypress,
   tableRowUserCypress,
 } from '../../../src/config/selectors';
-import { CommentTypeRecord } from '../../../src/interfaces/comment';
+import { CommentType } from '../../../src/interfaces/comment';
 import { getOrphans } from '../../../src/utils/comments';
 import { MOCK_APP_ACTIONS } from '../../fixtures/appActions';
 import {
@@ -107,17 +106,16 @@ describe('Builder as Admin', () => {
       cy.get(buildDataCy(TABLE_VIEW_PANE_CYPRESS)).should('be.visible');
 
       // check that all users are displayed
-      const comments = convertJs(
-        [...SINGLE_LINE_MOCK_COMMENTS, ...MULTILINE_MOCK_COMMENTS].filter(
-          (r) => r.type === APP_DATA_TYPES.COMMENT,
-        ),
-      ) as List<CommentTypeRecord>;
+      const comments = [
+        ...SINGLE_LINE_MOCK_COMMENTS,
+        ...MULTILINE_MOCK_COMMENTS,
+      ].filter((r) => r.type === APP_DATA_TYPES.COMMENT) as CommentType[];
       const orphansId = getOrphans(comments).map((c) => c.id);
       const nonOrphanComments = comments?.filter(
         (c) => !orphansId.includes(c.id),
       );
       // map resources to memberId and convert to JS to use the countBy function
-      const users = nonOrphanComments.map((r) => r.member.id).toJS();
+      const users = nonOrphanComments.map((r) => r.member.id);
       const userCounts = countBy(users);
 
       // check that table is displayed

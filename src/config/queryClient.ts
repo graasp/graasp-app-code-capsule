@@ -1,10 +1,5 @@
-import {
-  buildMockLocalContext,
-  buildMockParentWindow,
-  configureQueryClient,
-} from '@graasp/apps-query-client';
+import { configureQueryClient } from '@graasp/apps-query-client';
 
-import { mockContext } from '../data/db';
 import { API_HOST, GRAASP_APP_KEY, MOCK_API } from './env';
 
 const {
@@ -25,12 +20,7 @@ const {
   GRAASP_APP_KEY,
   API_HOST,
   enableWebsocket: false,
-  targetWindow: MOCK_API
-    ? // build mock parent window given cypress (app) context or mock data
-      (buildMockParentWindow(
-        buildMockLocalContext(window.Cypress ? window.appContext : mockContext),
-      ) as Window)
-    : window.parent,
+  isStandalone: MOCK_API,
 });
 
 export {

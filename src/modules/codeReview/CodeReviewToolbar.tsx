@@ -9,13 +9,13 @@ import {
 } from '@mui/icons-material';
 import { Stack, Tooltip, styled } from '@mui/material';
 
-import { UUID } from '@graasp/sdk';
-import { MemberRecord } from '@graasp/sdk/frontend';
+import { Member, UUID } from '@graasp/sdk';
 
 import { faInfo } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { TFunction } from 'i18next';
-import { List } from 'immutable';
+
+import { flattenMap } from '@/utils/utils';
 
 import { GENERAL_SETTINGS_NAME } from '../../config/appSettingsTypes';
 import {
@@ -40,10 +40,7 @@ import {
   DEFAULT_GENERAL_SETTINGS,
   DEFAULT_LINE_HIDDEN_STATE,
 } from '../../config/settings';
-import {
-  CodeVersionSelectType,
-  CodeVersionSelectTypeRecord,
-} from '../../interfaces/codeVersions';
+import { CodeVersionSelectType } from '../../interfaces/codeVersions';
 import { GeneralSettingsKeys } from '../../interfaces/settings';
 import { NO_DATE_PLACEHOLDER, getFormattedTime } from '../../utils/datetime';
 import CommitInfo from '../common/CommitInfo';
@@ -56,7 +53,7 @@ import ToolbarButton from '../layout/ToolbarButton';
 
 // generate the labels
 const getVersionLabel = (
-  { data, updatedAt }: CodeVersionSelectTypeRecord,
+  { data, updatedAt }: CodeVersionSelectType,
   t: TFunction,
   lang: string,
 ): string => {
@@ -72,7 +69,7 @@ const getVersionLabel = (
   // format updatedAt date
   // a placeholder is used if the property does not exist (fake API)
   const date = updatedAt
-    ? getFormattedTime(updatedAt, lang)
+    ? getFormattedTime(new Date(updatedAt), lang)
     : NO_DATE_PLACEHOLDER;
   return `${msg} - ${date}`;
 };
@@ -110,25 +107,23 @@ const CodeReviewToolbar: FC<Props> = ({ setView }) => {
   const [isHidden, setIsHidden] = useState(DEFAULT_LINE_HIDDEN_STATE);
 
   const getFormattedVersionOptions = (
-    versions?: List<CodeVersionSelectTypeRecord>,
+    versions?: CodeVersionSelectType[],
   ): { label: string; value: string }[] =>
-    versions
-      ?.map((v) => ({
-        label: getVersionLabel(v, t, i18n.language),
-        value: v.id,
-      }))
-      ?.toJS() || [{ label: INSTRUCTOR_CODE_NAME, value: INSTRUCTOR_CODE_ID }];
+    versions?.map((v) => ({
+      label: getVersionLabel(v, t, i18n.language),
+      value: v.id,
+    })) || [{ label: INSTRUCTOR_CODE_NAME, value: INSTRUCTOR_CODE_ID }];
 
   const [selectedUserId, setSelectedUserId] = useState<UUID>();
-  const [userOptions, setUserOptions] = useState<List<MemberRecord>>(
-    groupedVersions
-      .toList()
-      .map((versions) => versions.first()?.creator)
-      .filter(Boolean) as List<MemberRecord>,
+
+  const [userOptions, setUserOptions] = useState<Member[]>(
+    Array.from(groupedVersions.values())
+      .map((versions) => versions[0]?.creator)
+      .filter(Boolean) as Member[],
   );
 
   const [versionOptions, setVersionOptions] =
-    useState<List<CodeVersionSelectTypeRecord>>();
+    useState<CodeVersionSelectType[]>();
   // getFormattedVersionOptions(groupedVersions.keySeq()?.first()?.versions),
 
   const [selectedVersionId, setSelectedVersionId] = useState<UUID>();
@@ -139,7 +134,7 @@ const CodeReviewToolbar: FC<Props> = ({ setView }) => {
     if (!newVersionOptions) {
       return;
     }
-    const defaultId = newVersionOptions.first()?.id;
+    const defaultId = newVersionOptions[0]?.id;
     if (!defaultId) {
       return;
     }
@@ -149,10 +144,8 @@ const CodeReviewToolbar: FC<Props> = ({ setView }) => {
   // update the values when the codeId changes
   useEffect(
     () => {
-      const versions = groupedVersions
-        .toList()
-        .flatten() as List<CodeVersionSelectType>;
-
+      const flatGroupedVersions = flattenMap(groupedVersions);
+      const versions = flatGroupedVersions.flat();
       const version = versions.find((v) => v.id === codeId);
 
       if (!version) {
@@ -161,11 +154,11 @@ const CodeReviewToolbar: FC<Props> = ({ setView }) => {
       const newUser = version.creator;
       const newVersionOptions = groupedVersions.get(newUser.id);
 
+      // TODO: update with lodash group by
       setUserOptions(
-        groupedVersions
-          .toList()
-          .map((vs) => vs.first()?.creator)
-          .filter(Boolean) as List<MemberRecord>,
+        Array.from(groupedVersions.values())
+          .map((vs) => vs[0]?.creator)
+          .filter(Boolean),
       );
       setVersionOptions(newVersionOptions);
       setSelectedVersionId(version.id);
@@ -193,12 +186,11 @@ const CodeReviewToolbar: FC<Props> = ({ setView }) => {
       }}
       label={t('User')}
       value={selectedUserId}
-      values={userOptions
-        .map(({ id, name }) => ({
-          value: id,
-          label: name ?? ANONYMOUS_USER,
-        }))
-        .toJS()}
+      // check this conversion too
+      values={userOptions.map(({ id, name }) => ({
+        value: id,
+        label: name ?? ANONYMOUS_USER,
+      }))}
     />
   );
 
