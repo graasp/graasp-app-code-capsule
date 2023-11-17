@@ -3,6 +3,7 @@ import React, { FC, Fragment } from 'react';
 import { Add } from '@mui/icons-material';
 import { IconButton, styled } from '@mui/material';
 
+import groupBy from 'lodash.groupby';
 import Highlight, { Language, defaultProps } from 'prism-react-renderer';
 import theme from 'prism-react-renderer/themes/vsLight';
 
@@ -24,7 +25,7 @@ import {
   DEFAULT_SHOW_LINE_NUMBERS_SETTING,
 } from '../../config/settings';
 import { GeneralSettingsKeys } from '../../interfaces/settings';
-import { GroupBy, buildCodeRowKey } from '../../utils/utils';
+import { buildCodeRowKey } from '../../utils/utils';
 import ChatbotPrompts from '../chatbot/ChatbotPrompts';
 import CommentEditor from '../common/CommentEditor';
 import CommentThread from '../common/CommentThread';
@@ -106,7 +107,7 @@ const CodeReviewBody: FC<Props> = () => {
   const { postAppData, comments } = useAppDataContext();
   const { mutate: postAction } = mutations.usePostAppAction();
   const versionComments = comments?.filter((c) => c.data.codeId === codeId);
-  const groupedComments = GroupBy.toRecord(versionComments, (c) => c.data.line);
+  const groupedComments = groupBy(versionComments, (c) => c.data.line);
 
   const handleClick = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,

@@ -14,8 +14,9 @@ import { Member, UUID } from '@graasp/sdk';
 import { faInfo } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { TFunction } from 'i18next';
+import type { Dictionary } from 'lodash';
 
-import { flattenMap } from '@/utils/utils';
+import { flattenDictionary } from '@/utils/utils';
 
 import { GENERAL_SETTINGS_NAME } from '../../config/appSettingsTypes';
 import {
@@ -116,10 +117,16 @@ const CodeReviewToolbar: FC<Props> = ({ setView }) => {
 
   const [selectedUserId, setSelectedUserId] = useState<UUID>();
 
+  // extract distinct authors from grouped comments by author
+  const getUsersFromVersions = (
+    versions: Dictionary<CodeVersionSelectType[]>,
+  ): Member[] =>
+    Object.values(versions)
+      .map((v) => v[0]?.creator)
+      .filter(Boolean) as Member[];
+
   const [userOptions, setUserOptions] = useState<Member[]>(
-    Array.from(groupedVersions.values())
-      .map((versions) => versions[0]?.creator)
-      .filter(Boolean) as Member[],
+    getUsersFromVersions(groupedVersions),
   );
 
   const [versionOptions, setVersionOptions] =
@@ -130,7 +137,7 @@ const CodeReviewToolbar: FC<Props> = ({ setView }) => {
   // called when the user changes
   // only sets the new codeId and not the select value directly
   const resetVersionSelect = (userId: string): void => {
-    const newVersionOptions = groupedVersions.get(userId);
+    const newVersionOptions = groupedVersions[userId];
     if (!newVersionOptions) {
       return;
     }
@@ -144,7 +151,7 @@ const CodeReviewToolbar: FC<Props> = ({ setView }) => {
   // update the values when the codeId changes
   useEffect(
     () => {
-      const flatGroupedVersions = flattenMap(groupedVersions);
+      const flatGroupedVersions = flattenDictionary(groupedVersions);
       const versions = flatGroupedVersions.flat();
       const version = versions.find((v) => v.id === codeId);
 
@@ -152,14 +159,9 @@ const CodeReviewToolbar: FC<Props> = ({ setView }) => {
         return;
       }
       const newUser = version.creator;
-      const newVersionOptions = groupedVersions.get(newUser.id);
+      const newVersionOptions = groupedVersions[newUser.id];
 
-      // TODO: update with lodash group by
-      setUserOptions(
-        Array.from(groupedVersions.values())
-          .map((vs) => vs[0]?.creator)
-          .filter(Boolean),
-      );
+      setUserOptions(getUsersFromVersions(groupedVersions));
       setVersionOptions(newVersionOptions);
       setSelectedVersionId(version.id);
       setSelectedUserId(newUser.id);

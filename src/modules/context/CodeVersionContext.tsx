@@ -8,7 +8,8 @@ import React, {
 
 import { Member } from '@graasp/sdk';
 
-import { GroupBy } from '@/utils/utils';
+import type { Dictionary } from 'lodash';
+import groupBy from 'lodash.groupby';
 
 import { INSTRUCTOR_CODE_VERSION_SETTINGS_NAME } from '../../config/appSettingsTypes';
 import {
@@ -26,7 +27,7 @@ import { useAppDataContext } from './AppDataContext';
 type CodeVersionContextType = {
   codeVersionResource: CodeVersionSelectType;
   codeVersion: CodeVersionType;
-  groupedVersions: Map<string, CodeVersionSelectType[]>;
+  groupedVersions: Dictionary<CodeVersionSelectType[]>;
   codeId: string; // id of the appData with the current code
   setCodeId: (id: string) => void;
 };
@@ -41,7 +42,7 @@ const defaultCodeVersion = {
 const defaultContextValue: CodeVersionContextType = {
   codeVersionResource: defaultCodeVersion,
   codeVersion: defaultCodeVersion.data,
-  groupedVersions: new Map(),
+  groupedVersions: {},
   codeId: INSTRUCTOR_CODE_ID,
   setCodeId: () => {
     // do nothing
@@ -83,8 +84,8 @@ export const CodeVersionProvider: FC<PropsWithChildren<Prop>> = ({
     };
     const allCodeVersions = [...codeVersions, instructorCodeVersion];
 
-    const groupedVersions = GroupBy.toMap(codeVersions, (c) => c.creator.id);
-    groupedVersions.set(INSTRUCTOR_CODE_ID, [instructorCodeVersion]);
+    const groupedVersions = groupBy(codeVersions, (c) => c.creator.id);
+    groupedVersions[INSTRUCTOR_CODE_ID] = [instructorCodeVersion];
 
     const codeVersionResource =
       allCodeVersions?.find((c) => c.id === codeId) || instructorCodeVersion;

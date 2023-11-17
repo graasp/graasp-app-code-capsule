@@ -13,7 +13,7 @@ import {
   TableRow,
 } from '@mui/material';
 
-import { GroupBy } from '@/utils/utils';
+import groupBy from 'lodash.groupby';
 
 import {
   ANONYMOUS_USER,
@@ -75,7 +75,7 @@ const TableView: FC = () => {
       );
     }
     const commentsByUsers = Object.entries(
-      GroupBy.toRecord(nonOrphanComments, ({ member }) => member.id),
+      groupBy(nonOrphanComments, ({ member }) => member.id),
     );
 
     return commentsByUsers.map(([userId, userComments]) => {
