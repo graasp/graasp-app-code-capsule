@@ -30,6 +30,7 @@ jobs:
           VITE_SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
           VITE_VERSION: ${{ github.event.client_payload.tag }}
           VITE_OPEN_AI_API_URL: ${{ secrets.REACT_APP_OPEN_AI_API_URL_PROD }}
+          VITE_DEBUG: false
         run: yarn build
         shell: bash
 

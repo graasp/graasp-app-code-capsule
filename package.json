@@ -150,8 +150,7 @@
     ]
   },
   "resolutions": {
-    "@codemirror/state": "6.2.1",
-    "immutable": "4.3.2"
+    "@codemirror/state": "6.2.1"
   },
   "packageManager": "yarn@3.6.3",
   "msw": {
