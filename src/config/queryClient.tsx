@@ -34,7 +34,7 @@ const notifier: Notifier = (data) => {
         />,
       );
     }
-    if (ENABLE_SUCCESS_TOASTS) {
+    if (ENABLE_SUCCESS_TOASTS === true) {
       toast.success(<InfoToast type={data.type} payload={payload} />);
     }
   }
