@@ -20,6 +20,7 @@ VITE_API_HOST=http://localhost:3000
 VITE_MOCK_API=true
 VITE_GRAASP_APP_KEY=45678-677889
 VITE_VERSION=latest
+VITE_DEBUG=false # disable success toast message
 
 VITE_OPEN_AI_API_URL=http://localhost:1234
 ```
@@ -36,6 +37,7 @@ VITE_API_HOST=http://localhost:3000
 VITE_MOCK_API=true
 VITE_GRAASP_APP_KEY=45678-677889
 VITE_VERSION=latest
+VITE_DEBUG=false # disable success toast message
 
 # dont open browser
 BROWSER=none
