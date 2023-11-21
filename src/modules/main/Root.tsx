@@ -27,8 +27,6 @@ import {
 import Loader from '../common/Loader';
 import App from './App';
 
-// import App from './App';
-
 // declare the module to enable theme modification
 declare module '@mui/material/styles' {
   interface Theme {
@@ -86,9 +84,9 @@ const Root: FC = () => {
             <QueryClientProvider client={queryClient}>
               <WithLocalContext
                 defaultValue={window.Cypress ? window.appContext : mockContext}
-                // LoadingComponent={<Loader />}
+                LoadingComponent={<Loader />}
                 useGetLocalContext={hooks.useGetLocalContext}
-                // useAutoResize={hooks.useAutoResize}
+                useAutoResize={hooks.useAutoResize}
                 onError={() => {
                   console.error(
                     'An error occurred while fetching the context.',

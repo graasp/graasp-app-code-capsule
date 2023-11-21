@@ -381,14 +381,11 @@ describe('Show Line Numbers Setting Builder View', () => {
       .should('be.visible')
       .as('displaySettingsFab')
       .click();
-    /* eslint-disable cypress/no-unnecessary-waiting */
-    cy.wait(500);
     // Click on switch to toggle setting, check that the switch shouldn't be checked.
     cy.get(
       `${buildDataCy(SHOW_LINE_NUMBERS_SWITCH_CYPRESS)} input[type="checkbox"]`,
     ).click();
     /* eslint-disable cypress/no-unnecessary-waiting */
-    cy.wait(100);
     cy.get(
       `${buildDataCy(SHOW_LINE_NUMBERS_SWITCH_CYPRESS)} input[type="checkbox"]`,
     ).should('not.to.be.checked');

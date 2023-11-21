@@ -1,5 +1,5 @@
 /// <reference types="../../src/window" />
-import { LocalContext } from '@graasp/apps-query-client';
+import { Context, PermissionLevel } from '@graasp/sdk';
 
 import {
   CODE_EDITOR_ID_CY,
@@ -59,8 +59,10 @@ Cypress.Commands.add(
         memberId: currentMember.id,
         itemId: MOCK_SERVER_ITEM.id,
         apiHost: Cypress.env('REACT_APP_API_HOST') || MOCK_SERVER_API_HOST,
+        context: Context.Builder,
+        permission: PermissionLevel.Read,
         ...appContext,
-      } as LocalContext;
+      };
     });
 
     // setup mocks

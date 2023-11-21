@@ -18,4 +18,4 @@ export const GRAASP_APP_KEY = VITE_GRAASP_APP_KEY;
 export const OPEN_AI_API_URL = VITE_OPEN_AI_API_URL || 'invalidURL';
 export const SENTRY_ENV = VITE_SENTRY_ENV;
 export const SENTRY_DSN = VITE_SENTRY_DSN;
-export const ENABLE_SUCCESS_TOASTS = VITE_DEBUG || false;
+export const ENABLE_SUCCESS_TOASTS = VITE_DEBUG ?? false;

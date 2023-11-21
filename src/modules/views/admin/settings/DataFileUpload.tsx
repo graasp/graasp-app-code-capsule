@@ -35,10 +35,6 @@ const DataFileUpload: FC = () => {
   };
 
   const handleFileUpload = (newFileMetaData: DataFile[]): void => {
-    // TODO: I used this before but I don't know if it is better to use spread ?
-    // dataFileListSetting[DataFileListSettingsKeys.Files].concat(newFileMetaData);
-    // saveSettings(DATA_FILE_LIST_SETTINGS_NAME, dataFileListSetting);
-
     const newData = {
       ...dataFileListSetting,
       [DataFileListSettingsKeys.Files]: [

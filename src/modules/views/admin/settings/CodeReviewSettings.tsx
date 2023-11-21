@@ -125,7 +125,6 @@ const CodeReviewSettings: FC = () => {
       <CustomSelect
         dataCy={CODE_EDITOR_LANGUAGE_SELECT_CYPRESS}
         onChange={(newLanguage: ProgrammingLanguagesType) =>
-          // eslint-disable-next-line arrow-body-style
           setInstructorCodeVersionLocalSetting((prevSetting) => ({
             ...prevSetting,
             [InstructorCodeSettingsKeys.Language]: newLanguage,

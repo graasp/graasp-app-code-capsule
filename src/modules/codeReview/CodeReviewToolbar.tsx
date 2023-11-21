@@ -188,7 +188,6 @@ const CodeReviewToolbar: FC<Props> = ({ setView }) => {
       }}
       label={t('User')}
       value={selectedUserId}
-      // check this conversion too
       values={userOptions.map(({ id, name }) => ({
         value: id,
         label: name ?? ANONYMOUS_USER,
