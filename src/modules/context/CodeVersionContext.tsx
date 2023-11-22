@@ -6,9 +6,10 @@ import React, {
   useState,
 } from 'react';
 
-import { Member, convertJs } from '@graasp/sdk';
+import { Member } from '@graasp/sdk';
 
-import { List, Map } from 'immutable';
+import type { Dictionary } from 'lodash';
+import groupBy from 'lodash.groupby';
 
 import { INSTRUCTOR_CODE_VERSION_SETTINGS_NAME } from '../../config/appSettingsTypes';
 import {
@@ -19,30 +20,29 @@ import { hooks } from '../../config/queryClient';
 import { DEFAULT_INSTRUCTOR_CODE_VERSION_SETTINGS } from '../../config/settings';
 import {
   CodeVersionSelectType,
-  CodeVersionSelectTypeRecord,
-  CodeVersionTypeRecord,
+  CodeVersionType,
 } from '../../interfaces/codeVersions';
 import { useAppDataContext } from './AppDataContext';
 
 type CodeVersionContextType = {
-  codeVersionResource: CodeVersionSelectTypeRecord;
-  codeVersion: CodeVersionTypeRecord;
-  groupedVersions: Map<string, List<CodeVersionSelectTypeRecord>>;
+  codeVersionResource: CodeVersionSelectType;
+  codeVersion: CodeVersionType;
+  groupedVersions: Dictionary<CodeVersionSelectType[]>;
   codeId: string; // id of the appData with the current code
   setCodeId: (id: string) => void;
 };
 
-const defaultCodeVersion = convertJs({
+const defaultCodeVersion = {
   id: INSTRUCTOR_CODE_ID,
-  data: DEFAULT_INSTRUCTOR_CODE_VERSION_SETTINGS.toJS(),
+  data: DEFAULT_INSTRUCTOR_CODE_VERSION_SETTINGS,
   creator: { id: INSTRUCTOR_CODE_ID, name: INSTRUCTOR_CODE_NAME } as Member,
-  updatedAt: new Date(),
-}) as CodeVersionSelectTypeRecord;
+  updatedAt: new Date().toISOString(),
+} as CodeVersionSelectType;
 
 const defaultContextValue: CodeVersionContextType = {
   codeVersionResource: defaultCodeVersion,
   codeVersion: defaultCodeVersion.data,
-  groupedVersions: Map(),
+  groupedVersions: {},
   codeId: INSTRUCTOR_CODE_ID,
   setCodeId: () => {
     // do nothing
@@ -61,35 +61,31 @@ export const CodeVersionProvider: FC<PropsWithChildren<Prop>> = ({
   const [codeId, setCodeId] = useState(INSTRUCTOR_CODE_ID);
   const appSettings = hooks.useAppSettings();
   const { codeAppData } = useAppDataContext();
-  const codeVersions =
-    (codeAppData?.map(({ id, data, creator, updatedAt }) => ({
-      id,
-      data,
-      creator,
-      updatedAt,
-    })) as List<CodeVersionSelectTypeRecord>) ?? List();
+  const codeVersions = codeAppData?.map(({ id, data, creator, updatedAt }) => ({
+    id,
+    data,
+    creator,
+    updatedAt,
+  })) as CodeVersionSelectType[];
   const instructorCodeVersionSetting = appSettings.data?.find(
     (s) => s.name === INSTRUCTOR_CODE_VERSION_SETTINGS_NAME,
   );
 
   const contextValue = useMemo(() => {
     // todo: refactor this
-    const instructorCodeVersion: CodeVersionSelectTypeRecord = convertJs({
-      ...defaultCodeVersion.toJS(),
+    const instructorCodeVersion: CodeVersionSelectType = {
+      ...defaultCodeVersion,
       data:
-        (instructorCodeVersionSetting?.data.toJS() as CodeVersionSelectType['data']) ||
-        DEFAULT_INSTRUCTOR_CODE_VERSION_SETTINGS.toJS(),
-      updatedAt:
-        instructorCodeVersionSetting?.updatedAt || defaultCodeVersion.updatedAt,
-    });
-    const allCodeVersions = codeVersions.push(instructorCodeVersion);
+        (instructorCodeVersionSetting?.data as CodeVersionSelectType['data']) ||
+        DEFAULT_INSTRUCTOR_CODE_VERSION_SETTINGS,
+      updatedAt: instructorCodeVersionSetting
+        ? instructorCodeVersionSetting?.updatedAt
+        : defaultCodeVersion.updatedAt,
+    };
+    const allCodeVersions = [...codeVersions, instructorCodeVersion];
 
-    const groupedVersions = codeVersions
-      .groupBy((c) => c.creator.id)
-      .set(INSTRUCTOR_CODE_ID, List([instructorCodeVersion])) as Map<
-      string,
-      List<CodeVersionSelectTypeRecord>
-    >;
+    const groupedVersions = groupBy(codeVersions, (c) => c.creator.id);
+    groupedVersions[INSTRUCTOR_CODE_ID] = [instructorCodeVersion];
 
     const codeVersionResource =
       allCodeVersions?.find((c) => c.id === codeId) || instructorCodeVersion;

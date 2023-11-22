@@ -192,7 +192,7 @@ describe('Code Review Tools', () => {
           {
             ...MOCK_GENERAL_SETTINGS,
             data: {
-              ...DEFAULT_GENERAL_SETTINGS.toJS(),
+              ...DEFAULT_GENERAL_SETTINGS,
               [GeneralSettingsKeys.ShowRunButton]: true,
               [GeneralSettingsKeys.ShowEditButton]: true,
               [GeneralSettingsKeys.ShowVersionNavigation]: true,
@@ -298,7 +298,7 @@ describe('Comment settings', () => {
           {
             ...MOCK_GENERAL_SETTINGS,
             data: {
-              ...DEFAULT_GENERAL_SETTINGS.toJS(),
+              ...DEFAULT_GENERAL_SETTINGS,
               [GeneralSettingsKeys.MaxCommentLength]: 20,
             },
           },
@@ -337,7 +337,7 @@ describe('Show Line Numbers Setting Builder View', () => {
           {
             ...MOCK_GENERAL_SETTINGS,
             data: {
-              ...DEFAULT_GENERAL_SETTINGS.toJS(),
+              ...DEFAULT_GENERAL_SETTINGS,
               [GeneralSettingsKeys.ShowLineNumbers]: true,
             },
           },
@@ -381,6 +381,7 @@ describe('Show Line Numbers Setting Builder View', () => {
       .should('be.visible')
       .as('displaySettingsFab')
       .click();
+    cy.wait(waitingDelay);
     // Click on switch to toggle setting, check that the switch shouldn't be checked.
     cy.get(
       `${buildDataCy(SHOW_LINE_NUMBERS_SWITCH_CYPRESS)} input[type="checkbox"]`,

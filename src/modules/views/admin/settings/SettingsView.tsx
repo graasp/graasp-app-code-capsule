@@ -41,13 +41,10 @@ const SettingsView: FC = () => {
           label={t('App Mode')}
           value={appModeLocalSetting[AppModeSettingsKeys.Mode]}
           onChange={(newAppMode) =>
-            saveSettings(
-              APP_MODE_SETTINGS_NAME,
-              appModeLocalSetting.set(
-                AppModeSettingsKeys.Mode,
-                newAppMode as AppMode,
-              ),
-            )
+            saveSettings(APP_MODE_SETTINGS_NAME, {
+              ...appModeLocalSetting,
+              [AppModeSettingsKeys.Mode]: newAppMode,
+            })
           }
           renderValue={(value) => value as ReactNode}
           values={[

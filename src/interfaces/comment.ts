@@ -1,5 +1,4 @@
 import type { AppData } from '@graasp/sdk';
-import { ImmutableCast } from '@graasp/sdk/frontend';
 
 import { APP_DATA_TYPES } from '../config/appDataTypes';
 
@@ -19,5 +18,3 @@ export type CommentAppData = {
 };
 
 export type CommentType = AppData & CommentAppData;
-
-export type CommentTypeRecord = ImmutableCast<CommentType>;

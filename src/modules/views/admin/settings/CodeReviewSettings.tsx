@@ -44,7 +44,7 @@ import {
   DEFAULT_CHATBOT_PROMPT_SETTINGS,
   DEFAULT_INSTRUCTOR_CODE_VERSION_SETTINGS,
 } from '@/config/settings';
-import { CodeVersionTypeRecord } from '@/interfaces/codeVersions';
+import { CodeVersionType } from '@/interfaces/codeVersions';
 import {
   ChatbotPromptSettingsKeys,
   InstructorCodeSettingsKeys,
@@ -57,7 +57,7 @@ import CodeEditor from '@/modules/repl/CodeEditor';
 
 const DEFAULT_EDITED_PROMPT = {
   id: '',
-  data: DEFAULT_CHATBOT_PROMPT_SETTINGS.toJS(),
+  data: DEFAULT_CHATBOT_PROMPT_SETTINGS,
 };
 
 const CodeReviewSettings: FC = () => {
@@ -74,8 +74,8 @@ const CodeReviewSettings: FC = () => {
   const [
     instructorCodeVersionLocalSetting,
     setInstructorCodeVersionLocalSetting,
-  ] = useState<CodeVersionTypeRecord>(
-    instructorCodeVersionSetting as CodeVersionTypeRecord,
+  ] = useState<CodeVersionType>(
+    instructorCodeVersionSetting as CodeVersionType,
   );
   const [openModal, setOpenModal] = useState(false);
   const [unsavedChanges, setUnsavedChanges] = useState(false);
@@ -92,7 +92,7 @@ const CodeReviewSettings: FC = () => {
   useEffect(
     () =>
       setInstructorCodeVersionLocalSetting(
-        instructorCodeVersionSetting as CodeVersionTypeRecord,
+        instructorCodeVersionSetting as CodeVersionType,
       ),
     [instructorCodeVersionSetting],
   );
@@ -125,9 +125,10 @@ const CodeReviewSettings: FC = () => {
       <CustomSelect
         dataCy={CODE_EDITOR_LANGUAGE_SELECT_CYPRESS}
         onChange={(newLanguage: ProgrammingLanguagesType) =>
-          setInstructorCodeVersionLocalSetting((prevSetting) =>
-            prevSetting.set(InstructorCodeSettingsKeys.Language, newLanguage),
-          )
+          setInstructorCodeVersionLocalSetting((prevSetting) => ({
+            ...prevSetting,
+            [InstructorCodeSettingsKeys.Language]: newLanguage,
+          }))
         }
         value={
           instructorCodeVersionLocalSetting[InstructorCodeSettingsKeys.Language]
@@ -147,9 +148,10 @@ const CodeReviewSettings: FC = () => {
           instructorCodeVersionLocalSetting[InstructorCodeSettingsKeys.Code]
         }
         setValue={(newValue) =>
-          setInstructorCodeVersionLocalSetting((prevSetting) =>
-            prevSetting.set(InstructorCodeSettingsKeys.Code, newValue),
-          )
+          setInstructorCodeVersionLocalSetting((prevSetting) => ({
+            ...prevSetting,
+            [InstructorCodeSettingsKeys.Code]: newValue,
+          }))
         }
       />
       <FormLabel>{t('Chatbot Prompts')}</FormLabel>
@@ -193,7 +195,7 @@ const CodeReviewSettings: FC = () => {
                   data-cy={SETTING_EDIT_CHATBOT_PROMPT_CY}
                   variant="outlined"
                   onClick={() => {
-                    setEditedChatbotPrompt({ id: s.id, data: s.data.toJS() });
+                    setEditedChatbotPrompt({ id: s.id, data: s.data });
                     setOpenModal(true);
                   }}
                 >
@@ -214,7 +216,7 @@ const CodeReviewSettings: FC = () => {
       <SubmitButtons
         onCancel={() =>
           setInstructorCodeVersionLocalSetting(
-            instructorCodeVersionSetting as CodeVersionTypeRecord,
+            instructorCodeVersionSetting as CodeVersionType,
           )
         }
         onSave={() =>

@@ -1,29 +1,24 @@
-import type { UUID } from '@graasp/sdk';
-import { AppDataRecord } from '@graasp/sdk/frontend';
+import type { AppData, UUID } from '@graasp/sdk';
 
-import { List } from 'immutable';
-
-import { CommentTypeRecord } from '../interfaces/comment';
+import { CommentType } from '../interfaces/comment';
 
 const findCommentWithId = (
-  comments: List<CommentTypeRecord>,
+  comments: CommentType[],
   commentId: UUID,
-): AppDataRecord | undefined => comments.find((c) => c.id === commentId);
+): AppData | undefined => comments.find((c) => c.id === commentId);
 
 const findCommentWithParentId = (
-  comments: List<CommentTypeRecord>,
+  comments: CommentType[],
   commentId: UUID,
-): AppDataRecord | undefined =>
-  comments.find((c) => c.data?.parent === commentId);
+): AppData | undefined => comments.find((c) => c.data?.parent === commentId);
 
 const findChild = (
-  comments: List<CommentTypeRecord>,
+  comments: CommentType[],
   parentId: UUID,
-): CommentTypeRecord | undefined =>
-  comments.find((c) => c.data.parent === parentId);
+): CommentType | undefined => comments.find((c) => c.data.parent === parentId);
 
 const getThreadIdsFromLastCommentId = (
-  allComments: List<CommentTypeRecord>,
+  allComments: CommentType[],
   lastCommentId: UUID,
 ): UUID[] => {
   // this method goes bottom up to find comment ids in the thread
@@ -41,7 +36,7 @@ const getThreadIdsFromLastCommentId = (
 };
 
 const getThreadIdsFromFirstCommentId = (
-  allComments: List<CommentTypeRecord>,
+  allComments: CommentType[],
   firstId: UUID,
 ): UUID[] => {
   // this method goes from top to bottom
@@ -59,34 +54,32 @@ const getThreadIdsFromFirstCommentId = (
   return thread;
 };
 
-const getOrphans = (
-  allComments: List<CommentTypeRecord>,
-): List<CommentTypeRecord> => {
+const getOrphans = (allComments: CommentType[]): CommentType[] => {
   // orphans are comments which parent does not exist
-  let orphans: List<CommentTypeRecord> = List();
+  let orphans: CommentType[] = [];
   allComments.forEach((c) => {
     const parentId = c.data?.parent as UUID;
     const parent = findCommentWithId(allComments, parentId);
     // comment is not on thread start but his parent is not found
     if (parentId && !parent) {
-      orphans = orphans.push(c);
+      orphans = [...orphans, c];
     }
   });
   return orphans;
 };
 
 const buildThread = (
-  parentComment: CommentTypeRecord,
-  comments: List<CommentTypeRecord>,
-): List<CommentTypeRecord> => {
+  parentComment: CommentType,
+  comments: CommentType[],
+): CommentType[] => {
   // build thread list
-  let thread = List([parentComment]);
+  let thread = [parentComment];
   let parentId = parentComment.id;
   let nextChild = null;
   do {
     nextChild = findChild(comments, parentId);
     if (nextChild) {
-      thread = thread.push(nextChild);
+      thread = [...thread, nextChild];
       parentId = nextChild?.id;
     }
   } while (nextChild);

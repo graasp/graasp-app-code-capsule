@@ -24,7 +24,7 @@ describe('Show Line Numbers Code Review', () => {
           {
             ...MOCK_GENERAL_SETTINGS,
             data: {
-              ...DEFAULT_GENERAL_SETTINGS.toJS(),
+              ...DEFAULT_GENERAL_SETTINGS,
               [GeneralSettingsKeys.ShowLineNumbers]: true,
             },
           },
@@ -53,7 +53,7 @@ describe('Hide Line Numbers Code Review', () => {
           {
             ...MOCK_GENERAL_SETTINGS,
             data: {
-              ...DEFAULT_GENERAL_SETTINGS.toJS(),
+              ...DEFAULT_GENERAL_SETTINGS,
               [GeneralSettingsKeys.ShowLineNumbers]: false,
             },
           },
@@ -83,7 +83,7 @@ describe('Show Line Numbers Code Execution', () => {
           {
             ...MOCK_GENERAL_SETTINGS,
             data: {
-              ...DEFAULT_GENERAL_SETTINGS.toJS(),
+              ...DEFAULT_GENERAL_SETTINGS,
               [GeneralSettingsKeys.ShowLineNumbers]: true,
             },
           },
@@ -113,7 +113,7 @@ describe('Hide Line Numbers Code Execution', () => {
           {
             ...MOCK_GENERAL_SETTINGS,
             data: {
-              ...DEFAULT_GENERAL_SETTINGS.toJS(),
+              ...DEFAULT_GENERAL_SETTINGS,
               [GeneralSettingsKeys.ShowLineNumbers]: false,
             },
           },

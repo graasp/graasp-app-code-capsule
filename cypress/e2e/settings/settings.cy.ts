@@ -83,7 +83,7 @@ describe('Settings', () => {
     cy.expectContentInEditor(f1, SETTING_FOOTER_CODE_EDITOR_CY);
   });
 
-  it.only('Change code review settings in tab', () => {
+  it('Change code review settings in tab', () => {
     const initialChatbotPrompt = 'Initial prompt hello chatbot';
     const chatbotPrompt = 'Hello i  am a friendly chatbot, ask me anything';
     const promptLine = 4;

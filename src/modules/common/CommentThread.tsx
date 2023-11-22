@@ -3,8 +3,6 @@ import { useTranslation } from 'react-i18next';
 
 import { CircularProgress, Stack, Typography } from '@mui/material';
 
-import { List } from 'immutable';
-
 import { APP_ACTIONS_TYPES } from '../../config/appActionsTypes';
 import { APP_DATA_TYPES } from '../../config/appDataTypes';
 import { GENERAL_SETTINGS_NAME } from '../../config/appSettingsTypes';
@@ -16,7 +14,7 @@ import { mutations } from '../../config/queryClient';
 import { COMMENT_THREAD_CONTAINER_CYPRESS } from '../../config/selectors';
 import { DEFAULT_GENERAL_SETTINGS } from '../../config/settings';
 import { UserDataType, useChatbotApi } from '../../hooks/useChatbotApi';
-import { CommentTypeRecord } from '../../interfaces/comment';
+import { CommentType } from '../../interfaces/comment';
 import { GeneralSettingsKeys } from '../../interfaces/settings';
 import { buildThread } from '../../utils/comments';
 import { useAppDataContext } from '../context/AppDataContext';
@@ -31,7 +29,7 @@ import CommentEditor from './CommentEditor';
 import ResponseBox from './ResponseBox';
 
 type Props = {
-  children?: List<CommentTypeRecord>;
+  children?: CommentType[];
   hiddenState: boolean;
 };
 
@@ -69,32 +67,44 @@ const CommentThread: FC<Props> = ({ children, hiddenState }) => {
   const isEdited = (id: string): boolean => id === currentEditedCommentId;
   const isReplied = (id: string): boolean => id === currentRepliedCommentId;
   const allowedChatbotResponse = (
-    arr: List<CommentTypeRecord>,
+    arr: CommentType[],
     idx: number,
     commentType: string,
   ): boolean =>
-    (arr.size < MAX_CHATBOT_THREAD_LENGTH &&
+    (arr.length < MAX_CHATBOT_THREAD_LENGTH &&
       commentType === APP_DATA_TYPES.BOT_COMMENT) ||
     // when the comment is a user comment it should not be a response to a chatbot comment
     // -> in this case, we want to wait for the cahtbot response
     (commentType === APP_DATA_TYPES.COMMENT &&
-      arr.get(idx - 1)?.type !== APP_DATA_TYPES.BOT_COMMENT);
+      arr[idx - 1]?.type !== APP_DATA_TYPES.BOT_COMMENT);
 
-  if (!children || children?.isEmpty() || hiddenState) {
+  if (!children || children?.length === 0 || hiddenState) {
     return null;
   }
 
   const threads = children
     .filter((c) => !c.data.parent)
     .map((parent) => buildThread(parent, children))
-    .sortBy((thread) => thread.get(0)?.createdAt);
+    .map((thread) => thread.slice()) // Create a shallow copy of each thread
+    .sort((threadA, threadB) => {
+      const createdAtA = new Date(threadA[0]?.createdAt || 0).getTime();
+      const createdAtB = new Date(threadB[0]?.createdAt || 0).getTime();
+
+      return createdAtA - createdAtB;
+    });
+
+  const copyWithEmptyContent = (c: CommentType): CommentType => {
+    const newComment = JSON.parse(JSON.stringify(c)) as CommentType;
+    newComment.data.content = '';
+    return newComment;
+  };
 
   return (
     <>
       {threads.map((thread) => (
         <CommentContainer
           data-cy={COMMENT_THREAD_CONTAINER_CYPRESS}
-          key={`comment-thread-${thread.get(0)?.id}`}
+          key={`comment-thread-${thread[0]?.id}`}
         >
           {thread.map((c, i, arr) => (
             <Fragment key={c.id}>
@@ -125,7 +135,7 @@ const CommentThread: FC<Props> = ({ children, hiddenState }) => {
               </CommentProvider>
               {
                 // show input bar to respond to comment
-                i + 1 === arr.size &&
+                i + 1 === arr.length &&
                   !isLoading &&
                   !isEdited(c.id) &&
                   !isReplied(c.id) &&
@@ -133,7 +143,7 @@ const CommentThread: FC<Props> = ({ children, hiddenState }) => {
                     <ResponseBox commentId={c.id} onClick={addResponse} />
                   )
               }
-              {i + 1 === arr.size && isLoading && (
+              {i + 1 === arr.length && isLoading && (
                 <ResponseContainer>
                   <Stack spacing={2} direction="row" justifyContent="center">
                     <Typography color="#666">{t('Loading')}</Typography>
@@ -149,7 +159,7 @@ const CommentThread: FC<Props> = ({ children, hiddenState }) => {
                     onSend={(content) => {
                       startLoading();
                       const data = {
-                        ...c.data.toJS(),
+                        ...c.data,
                         parent: c.id,
                         content,
                       };
@@ -159,12 +169,9 @@ const CommentThread: FC<Props> = ({ children, hiddenState }) => {
                         type: APP_DATA_TYPES.COMMENT,
                       })?.then((parent) => {
                         // when in a chatbot thread, should also post to the api
-                        if (
-                          thread.get(0)?.type === APP_DATA_TYPES.BOT_COMMENT
-                        ) {
+                        if (thread[0]?.type === APP_DATA_TYPES.BOT_COMMENT) {
                           const { chatbotPromptSettingId } =
-                            thread.get(0)?.data ||
-                            DEFAULT_CHATBOT_PROMPT_APP_DATA;
+                            thread[0]?.data || DEFAULT_CHATBOT_PROMPT_APP_DATA;
                           const promptSetting = chatbotPrompts.find(
                             (a) => a.id === chatbotPromptSettingId,
                           );
@@ -193,7 +200,7 @@ const CommentThread: FC<Props> = ({ children, hiddenState }) => {
                       });
                       closeComment();
                     }}
-                    comment={c.setIn(['data', 'content'], '')}
+                    comment={copyWithEmptyContent(c)}
                   />
                 )
               }

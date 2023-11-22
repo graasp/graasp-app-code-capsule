@@ -5,7 +5,7 @@ import { FormLabel, Stack, Typography, styled } from '@mui/material';
 
 import { ANONYMOUS_USER, INSTRUCTOR_CODE_ID } from '../../config/constants';
 import { buildCommitFieldDataCy } from '../../config/selectors';
-import { CodeVersionSelectTypeRecord } from '../../interfaces/codeVersions';
+import { CodeVersionSelectType } from '../../interfaces/codeVersions';
 import { Fields } from '../../interfaces/enums';
 import { getFormattedTime } from '../../utils/datetime';
 import { useMembersContext } from '../context/MembersContext';
@@ -15,7 +15,7 @@ const StyledTypography = styled(Typography)({
 });
 
 type Props = {
-  commitResource: CodeVersionSelectTypeRecord;
+  commitResource: CodeVersionSelectType;
 };
 
 const CommitInfo: FC<Props> = ({ commitResource }) => {
@@ -27,7 +27,7 @@ const CommitInfo: FC<Props> = ({ commitResource }) => {
       : members.find((c) => commitResource.creator.id === c.id)?.name ||
         ANONYMOUS_USER;
   const formattedCreatedAt = getFormattedTime(
-    commitResource.updatedAt,
+    new Date(commitResource.updatedAt),
     i18n.language,
   );
   const commitInfo: { label: Fields; value: string }[] = [

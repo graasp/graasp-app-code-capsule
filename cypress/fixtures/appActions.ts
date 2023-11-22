@@ -15,7 +15,7 @@ export const MOCK_APP_ACTIONS: AppAction[] = [
     type: APP_ACTIONS_TYPES.RUN_CODE,
     member: MEMBERS.ANNA,
     item: MOCK_SERVER_ITEM,
-    createdAt: new Date(),
+    createdAt: new Date().toISOString(),
   },
   {
     id: v4(),
@@ -25,7 +25,7 @@ export const MOCK_APP_ACTIONS: AppAction[] = [
     type: APP_ACTIONS_TYPES.SUBMITTED_INPUT,
     member: MEMBERS.BOB,
     item: MOCK_SERVER_ITEM,
-    createdAt: new Date(),
+    createdAt: new Date().toISOString(),
   },
   {
     id: v4(),
@@ -35,6 +35,6 @@ export const MOCK_APP_ACTIONS: AppAction[] = [
     type: APP_ACTIONS_TYPES.SAVE_CODE,
     member: MEMBERS.ANNA,
     item: MOCK_SERVER_ITEM,
-    createdAt: new Date(),
+    createdAt: new Date().toISOString(),
   },
 ];

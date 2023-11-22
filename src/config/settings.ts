@@ -1,20 +1,20 @@
-import { Context, PermissionLevel, convertJs } from '@graasp/sdk';
+import { Context, PermissionLevel } from '@graasp/sdk';
 
 import {
+  AppModeSettings,
   AppModeSettingsKeys,
-  AppModeSettingsRecord,
+  ChatbotPromptSettings,
   ChatbotPromptSettingsKeys,
-  ChatbotPromptSettingsRecord,
+  CodeExecutionSettings,
   CodeExecutionSettingsKeys,
-  CodeExecutionSettingsRecord,
+  DataFileListSettings,
   DataFileListSettingsKeys,
-  DataFileListSettingsRecord,
+  DiffViewSettings,
   DiffViewSettingsKeys,
-  DiffViewSettingsRecord,
+  GeneralSettings,
   GeneralSettingsKeys,
-  GeneralSettingsRecord,
   InstructorCodeSettingsKeys,
-  InstructorCodeVersionSettingsRecord,
+  InstructorCodeVersionSettings,
 } from '../interfaces/settings';
 import { AppMode } from './appSettingsTypes';
 import { REVIEW_MODE_INDIVIDUAL } from './constants';
@@ -56,7 +56,7 @@ export const DEFAULT_MAX_COMMENT_LENGTH_SETTING = 300;
 export const DEFAULT_REVIEW_MODE_SETTING = REVIEW_MODE_INDIVIDUAL;
 
 // default settings object
-export const DEFAULT_GENERAL_SETTINGS: GeneralSettingsRecord = convertJs({
+export const DEFAULT_GENERAL_SETTINGS: GeneralSettings = {
   [GeneralSettingsKeys.ShowHeader]: DEFAULT_SHOW_HEADER_SETTING,
   [GeneralSettingsKeys.ShowToolbar]: DEFAULT_SHOW_TOOLBAR_SETTING,
   [GeneralSettingsKeys.ShowLineNumbers]: DEFAULT_SHOW_LINE_NUMBERS_SETTING,
@@ -71,49 +71,46 @@ export const DEFAULT_GENERAL_SETTINGS: GeneralSettingsRecord = convertJs({
   [GeneralSettingsKeys.AllowCommentsReporting]: DEFAULT_ALLOW_COMMENT_REPORTING,
   [GeneralSettingsKeys.ReviewMode]: DEFAULT_REVIEW_MODE_SETTING,
   [GeneralSettingsKeys.MaxCommentLength]: DEFAULT_MAX_COMMENT_LENGTH_SETTING,
-});
+};
 
 // default Instructor Code Version settings
-export const DEFAULT_INSTRUCTOR_CODE_VERSION_SETTINGS: InstructorCodeVersionSettingsRecord =
-  convertJs({
+export const DEFAULT_INSTRUCTOR_CODE_VERSION_SETTINGS: InstructorCodeVersionSettings =
+  {
     [InstructorCodeSettingsKeys.Code]: DEFAULT_CODE_SETTING,
     [InstructorCodeSettingsKeys.Language]: DEFAULT_PROGRAMMING_LANGUAGE_SETTING,
     [InstructorCodeSettingsKeys.CommitMessage]: DEFAULT_COMMIT_MESSAGE_SETTING,
     [InstructorCodeSettingsKeys.CommitDescription]:
       DEFAULT_COMMIT_DESCRIPTION_SETTING,
-  });
+  };
 
 // code Execution settings
-export const DEFAULT_CODE_EXECUTION_SETTINGS: CodeExecutionSettingsRecord =
-  convertJs({
-    [CodeExecutionSettingsKeys.HeaderCode]: '',
-    [CodeExecutionSettingsKeys.FooterCode]: '',
-    [CodeExecutionSettingsKeys.PreLoadedLibraries]: '',
-  });
+export const DEFAULT_CODE_EXECUTION_SETTINGS: CodeExecutionSettings = {
+  [CodeExecutionSettingsKeys.HeaderCode]: '',
+  [CodeExecutionSettingsKeys.FooterCode]: '',
+  [CodeExecutionSettingsKeys.PreLoadedLibraries]: '',
+};
 
 // app mode setting
-export const DEFAULT_APP_MODE_SETTINGS: AppModeSettingsRecord = convertJs({
+export const DEFAULT_APP_MODE_SETTINGS: AppModeSettings = {
   [AppModeSettingsKeys.Mode]: DEFAULT_APP_MODE,
-});
+};
 
 // app mode setting
-export const DEFAULT_DATA_FILE_LIST_SETTINGS: DataFileListSettingsRecord =
-  convertJs({
-    [DataFileListSettingsKeys.Files]: [],
-  });
+export const DEFAULT_DATA_FILE_LIST_SETTINGS: DataFileListSettings = {
+  [DataFileListSettingsKeys.Files]: [],
+};
 
 // diff view setting
-export const DEFAULT_DIFF_VIEW_SETTINGS: DiffViewSettingsRecord = convertJs({
+export const DEFAULT_DIFF_VIEW_SETTINGS: DiffViewSettings = {
   [DiffViewSettingsKeys.Language]: DEFAULT_PROGRAMMING_LANGUAGE_SETTING,
   [DiffViewSettingsKeys.OldCode]: '',
   [DiffViewSettingsKeys.NewCode]: '',
   [DiffViewSettingsKeys.LinesOffset]: 0,
-});
+};
 
 // chatbot prompt setting
-export const DEFAULT_CHATBOT_PROMPT_SETTINGS: ChatbotPromptSettingsRecord =
-  convertJs({
-    [ChatbotPromptSettingsKeys.InitialPrompt]: '',
-    [ChatbotPromptSettingsKeys.ChatbotPrompt]: '',
-    [ChatbotPromptSettingsKeys.LineNumber]: 0,
-  });
+export const DEFAULT_CHATBOT_PROMPT_SETTINGS: ChatbotPromptSettings = {
+  [ChatbotPromptSettingsKeys.InitialPrompt]: '',
+  [ChatbotPromptSettingsKeys.ChatbotPrompt]: '',
+  [ChatbotPromptSettingsKeys.LineNumber]: 0,
+};

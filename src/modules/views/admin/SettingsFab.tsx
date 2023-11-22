@@ -38,16 +38,18 @@ const SettingsFab: FC = () => {
   useEffect(() => setLocalSettings(settings), [settings]);
 
   // need to compare the raw JS objects
-  const unsavedChanges = !isEqual(settings.toJS(), localSettings.toJS());
+  const unsavedChanges = !isEqual(settings, localSettings);
 
   const resetSettings = (): void => setLocalSettings(settings);
 
   const changeSetting = (
     settingKey: string,
     newValue: string | boolean,
-  ): void => {
-    setLocalSettings(localSettings.set(settingKey, newValue));
-  };
+  ): void =>
+    setLocalSettings((prevSetting) => ({
+      ...prevSetting,
+      [settingKey]: newValue,
+    }));
 
   const handleClose = (save: boolean): void => {
     if (save) {

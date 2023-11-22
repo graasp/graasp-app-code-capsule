@@ -13,6 +13,8 @@ import {
   TableRow,
 } from '@mui/material';
 
+import groupBy from 'lodash.groupby';
+
 import {
   ANONYMOUS_USER,
   NB_COL_TABLE_VIEW_TABLE,
@@ -59,7 +61,7 @@ const TableView: FC = () => {
       (c) => !orphansId.includes(c.id),
     );
     // nonOrphanComments is undefined or, is an empty list -> there are not resources to display
-    if (!nonOrphanComments || nonOrphanComments.isEmpty()) {
+    if (!nonOrphanComments || nonOrphanComments.length === 0) {
       // show that there are no comments available
       return (
         <TableRow>
@@ -72,9 +74,10 @@ const TableView: FC = () => {
         </TableRow>
       );
     }
-    const commentsByUsers = nonOrphanComments
-      .groupBy(({ member }) => member.id)
-      .toArray();
+    const commentsByUsers = Object.entries(
+      groupBy(nonOrphanComments, ({ member }) => member.id),
+    );
+
     return commentsByUsers.map(([userId, userComments]) => {
       const userName =
         members.find(({ id }) => id === userId)?.name || ANONYMOUS_USER;
@@ -87,7 +90,7 @@ const TableView: FC = () => {
             {false}
           </TableCell>
           <TableCell data-cy={TABLE_VIEW_NB_COMMENTS_CELL_CYPRESS}>
-            <div>{userComments.count()}</div>
+            <div>{userComments.length}</div>
           </TableCell>
           <TableCell data-cy={TABLE_VIEW_VIEW_COMMENTS_CELL_CYPRESS}>
             <IconButton

@@ -2,8 +2,6 @@ import React, { FC, PropsWithChildren, createContext, useMemo } from 'react';
 
 import type { AppData } from '@graasp/sdk';
 
-import { List } from 'immutable';
-
 import {
   APP_DATA_TYPES,
   COMMENT_APP_DATA_TYPES,
@@ -16,9 +14,9 @@ import {
 } from '../../config/constants';
 import { hooks, mutations } from '../../config/queryClient';
 import { DEFAULT_GENERAL_SETTINGS } from '../../config/settings';
-import { CodeTypeRecord } from '../../interfaces/codeVersions';
-import { CommentTypeRecord } from '../../interfaces/comment';
-import { LiveCodeTypeRecord } from '../../interfaces/liveCode';
+import { CodeType } from '../../interfaces/codeVersions';
+import { CommentType } from '../../interfaces/comment';
+import { LiveCodeType } from '../../interfaces/liveCode';
 import { GeneralSettingsKeys } from '../../interfaces/settings';
 import Loader from '../common/Loader';
 import { useSettings } from './SettingsContext';
@@ -43,9 +41,9 @@ export type AppDataContextType = {
   postAppDataAsync: (payload: PostAppDataType) => Promise<AppData | undefined>;
   patchAppData: (payload: PatchAppDataType) => void;
   deleteAppData: (payload: DeleteAppDataType) => void;
-  codeAppData: List<CodeTypeRecord>;
-  comments: List<CommentTypeRecord>;
-  liveCode: List<LiveCodeTypeRecord>;
+  codeAppData: CodeType[];
+  comments: CommentType[];
+  liveCode: LiveCodeType[];
 };
 
 const defaultContextValue = {
@@ -53,9 +51,9 @@ const defaultContextValue = {
   postAppDataAsync: async () => undefined,
   patchAppData: () => null,
   deleteAppData: () => null,
-  codeAppData: List<CodeTypeRecord>(),
-  comments: List<CommentTypeRecord>(),
-  liveCode: List<LiveCodeTypeRecord>(),
+  codeAppData: [],
+  comments: [],
+  liveCode: [],
 };
 
 const AppDataContext = createContext<AppDataContextType>(defaultContextValue);
@@ -86,18 +84,15 @@ export const AppDataProvider: FC<PropsWithChildren<Prop>> = ({
     const filteredAppData = currentUserId
       ? appData.data?.filter((res) => res.creator?.id === currentUserId)
       : appData.data;
-    const comments =
-      (filteredAppData?.filter((res) =>
-        COMMENT_APP_DATA_TYPES.includes(res.type),
-      ) as List<CommentTypeRecord>) ?? List();
-    const codeAppData =
-      (filteredAppData?.filter(
-        (res) => res.type === APP_DATA_TYPES.CODE,
-      ) as List<CodeTypeRecord>) ?? List();
-    const liveCode =
-      (filteredAppData?.filter(
-        (res) => res.type === APP_DATA_TYPES.LIVE_CODE,
-      ) as List<LiveCodeTypeRecord>) ?? List();
+    const comments = filteredAppData?.filter((res) =>
+      COMMENT_APP_DATA_TYPES.includes(res.type),
+    ) as CommentType[];
+    const codeAppData = filteredAppData?.filter(
+      (res) => res.type === APP_DATA_TYPES.CODE,
+    ) as CodeType[];
+    const liveCode = filteredAppData?.filter(
+      (res) => res.type === APP_DATA_TYPES.LIVE_CODE,
+    ) as LiveCodeType[];
 
     return {
       postAppData: (payload: PostAppDataType) =>

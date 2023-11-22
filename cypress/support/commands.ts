@@ -1,4 +1,6 @@
 /// <reference types="../../src/window" />
+import { Context, PermissionLevel } from '@graasp/sdk';
+
 import {
   CODE_EDITOR_ID_CY,
   REPL_RUN_CODE_BUTTON_CY,
@@ -57,6 +59,8 @@ Cypress.Commands.add(
         memberId: currentMember.id,
         itemId: MOCK_SERVER_ITEM.id,
         apiHost: Cypress.env('REACT_APP_API_HOST') || MOCK_SERVER_API_HOST,
+        context: Context.Builder,
+        permission: PermissionLevel.Read,
         ...appContext,
       };
     });

@@ -3,7 +3,7 @@ import React, { FC, Fragment } from 'react';
 import { Add } from '@mui/icons-material';
 import { IconButton, styled } from '@mui/material';
 
-import { List } from 'immutable';
+import groupBy from 'lodash.groupby';
 import Highlight, { Language, defaultProps } from 'prism-react-renderer';
 import theme from 'prism-react-renderer/themes/vsLight';
 
@@ -24,7 +24,6 @@ import {
   DEFAULT_GENERAL_SETTINGS,
   DEFAULT_SHOW_LINE_NUMBERS_SETTING,
 } from '../../config/settings';
-import { CommentTypeRecord } from '../../interfaces/comment';
 import { GeneralSettingsKeys } from '../../interfaces/settings';
 import { buildCodeRowKey } from '../../utils/utils';
 import ChatbotPrompts from '../chatbot/ChatbotPrompts';
@@ -108,8 +107,7 @@ const CodeReviewBody: FC<Props> = () => {
   const { postAppData, comments } = useAppDataContext();
   const { mutate: postAction } = mutations.usePostAppAction();
   const versionComments = comments?.filter((c) => c.data.codeId === codeId);
-
-  const groupedComments = versionComments?.groupBy(({ data }) => data.line);
+  const groupedComments = groupBy(versionComments, (c) => c.data.line);
 
   const handleClick = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
@@ -222,7 +220,7 @@ const CodeReviewBody: FC<Props> = () => {
               <LoadingIndicatorProvider>
                 <ChatbotPrompts line={i} />
                 <CommentThread hiddenState={lineHiddenState[i]}>
-                  {groupedComments.get(i)?.toList() as List<CommentTypeRecord>}
+                  {groupedComments[i]}
                 </CommentThread>
               </LoadingIndicatorProvider>
             </Fragment>

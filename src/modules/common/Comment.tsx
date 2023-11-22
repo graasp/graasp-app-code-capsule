@@ -14,6 +14,9 @@ import {
 
 import { useLocalContext } from '@graasp/apps-query-client';
 
+import i18n from '@/config/i18n';
+import { getFormattedTime } from '@/utils/datetime';
+
 import { APP_DATA_TYPES } from '../../config/appDataTypes';
 import { GENERAL_SETTINGS_NAME } from '../../config/appSettingsTypes';
 import { ANONYMOUS_USER, DEFAULT_BOT_USERNAME } from '../../config/constants';
@@ -21,9 +24,8 @@ import { BIG_BORDER_RADIUS } from '../../config/layout';
 import { mutations } from '../../config/queryClient';
 import { buildCommentContainerDataCy } from '../../config/selectors';
 import { DEFAULT_GENERAL_SETTINGS } from '../../config/settings';
-import { CommentTypeRecord } from '../../interfaces/comment';
+import { CommentType } from '../../interfaces/comment';
 import { GeneralSettingsKeys } from '../../interfaces/settings';
-import { getFormattedTime } from '../../utils/datetime';
 import ChatbotAvatar from '../chatbot/ChatbotAvatar';
 import { useMembersContext } from '../context/MembersContext';
 import { useSettings } from '../context/SettingsContext';
@@ -37,15 +39,15 @@ const CustomCard = styled(Card)<CardProps>({
 });
 
 type Props = {
-  comment: CommentTypeRecord;
+  comment: CommentType;
 };
 
 const Comment: FC<Props> = ({ comment }) => {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const members = useMembersContext();
   const { [GENERAL_SETTINGS_NAME]: settings = DEFAULT_GENERAL_SETTINGS } =
     useSettings();
-  const currentMemberId = useLocalContext().get('memberId');
+  const currentMemberId = useLocalContext().memberId;
   const { mutate: postAppData } = mutations.usePostAppData();
 
   const allowCommentReporting =
@@ -110,7 +112,7 @@ const Comment: FC<Props> = ({ comment }) => {
     >
       <CardHeader
         title={isBot ? DEFAULT_BOT_USERNAME : userName}
-        subheader={getFormattedTime(comment.updatedAt, i18n.language)}
+        subheader={getFormattedTime(new Date(comment.updatedAt), i18n.language)}
         avatar={isBot ? <ChatbotAvatar /> : <CustomAvatar member={member} />}
         action={renderCommentActions()}
       />
