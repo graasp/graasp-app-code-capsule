@@ -1,13 +1,11 @@
 import { ChatBotMessage, ChatbotRole } from '@graasp/sdk';
 
-import { List } from 'immutable';
-
 import { APP_DATA_TYPES } from '@/config/appDataTypes';
 import { ThreadMessage } from '@/interfaces/threadMessage';
 
 export const buildPrompt = (
   initialPrompt: string | undefined,
-  threadMessages: List<ThreadMessage>,
+  threadMessages: ThreadMessage[],
   userMessage: string,
 ): Array<ChatBotMessage> => {
   // define the message to send to OpenAI with the initial prompt first if needed (role system).

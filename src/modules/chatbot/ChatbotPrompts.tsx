@@ -3,8 +3,6 @@ import { useTranslation } from 'react-i18next';
 
 import { CardContent, CardHeader } from '@mui/material';
 
-import { List } from 'immutable';
-
 import { ThreadMessage } from '@/interfaces/threadMessage';
 
 import { APP_ACTIONS_TYPES } from '../../config/appActionsTypes';
@@ -93,12 +91,12 @@ const ChatbotPrompts: FC<Props> = ({ line }) => {
         data: userData,
         type: APP_DATA_TYPES.COMMENT,
       })?.then((userMessage) => {
-        const threadMessages: List<ThreadMessage> = List([
+        const threadMessages: ThreadMessage[] = [
           {
             type: APP_DATA_TYPES.BOT_COMMENT,
             data: { content: chatbotMessage },
           },
-        ]);
+        ];
 
         const prompt = buildPrompt(
           currentLinePrompt?.data.initialPrompt,
@@ -107,7 +105,7 @@ const ChatbotPrompts: FC<Props> = ({ line }) => {
         );
 
         postAction({
-          data: { prompt },
+          data: { prompt: JSON.stringify(prompt) },
           type: APP_ACTIONS_TYPES.SEND_PROMPT,
         });
 

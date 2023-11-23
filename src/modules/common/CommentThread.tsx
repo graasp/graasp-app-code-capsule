@@ -195,7 +195,7 @@ const CommentThread: FC<Props> = ({ children, hiddenState }) => {
                             });
 
                           postAction({
-                            data: prompt,
+                            data: { prompt: JSON.stringify(prompt) },
                             type: APP_ACTIONS_TYPES.SEND_PROMPT,
                           });
                         }
