@@ -3283,9 +3283,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/apps-query-client@github:graasp/graasp-apps-query-client#641-add-a-chatbot-endpoint-for-apps":
-  version: 3.1.0
-  resolution: "@graasp/apps-query-client@https://github.com/graasp/graasp-apps-query-client.git#commit=a56f5e721e6f31ead8df38b393bdc8057d324712"
+"@graasp/apps-query-client@npm:3.2.0":
+  version: 3.2.0
+  resolution: "@graasp/apps-query-client@npm:3.2.0"
   dependencies:
     "@emotion/react": 11.11.1
     "@emotion/styled": 11.11.0
@@ -3303,7 +3303,7 @@ __metadata:
     "@tanstack/react-query-devtools": ^4.28.0
     react: ^18.0.0
     react-dom: ^18.0.0
-  checksum: 8dccd138ce8a836ef431e7da754df5d7c8591701cecc177e4355cec0646ca624b0b2b28599bcea198017c9b98c6d7d6cec4a2d528332746a315243e2260e3574
+  checksum: 5d50fda5a5ed08f2110a28e074ec4a7567580fd6df7a8e27e6f3ae38e16645ee9fda14c0a3e600f043a678f9ec0744487fffaeec3b1761b2afadc0434e174bcd
   languageName: node
   linkType: hard
 
@@ -9532,7 +9532,7 @@ __metadata:
     "@fortawesome/free-regular-svg-icons": 6.4.2
     "@fortawesome/free-solid-svg-icons": 6.4.2
     "@fortawesome/react-fontawesome": 0.2.0
-    "@graasp/apps-query-client": "github:graasp/graasp-apps-query-client#641-add-a-chatbot-endpoint-for-apps"
+    "@graasp/apps-query-client": 3.2.0
     "@graasp/pyodide": "github:graasp/graasp-pyodide"
     "@graasp/sdk": 2.0.0
     "@graasp/ui": 4.1.0
