@@ -105,7 +105,7 @@ const ChatbotPrompts: FC<Props> = ({ line }) => {
         );
 
         postAction({
-          data: { prompt: JSON.stringify(prompt) },
+          data: { prompt },
           type: APP_ACTIONS_TYPES.SEND_PROMPT,
         });
 
