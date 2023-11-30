@@ -42,3 +42,5 @@ export const DEFAULT_BOT_USERNAME = 'Graasp Bot';
 export const MAX_CHATBOT_THREAD_LENGTH = 50;
 
 export const DEFAULT_CHATBOT_PROMPT_APP_DATA = { chatbotPromptSettingId: '' };
+
+export const CHAT_BOT_ERROR_MESSAGE = 'Sorry, an error occurred.';

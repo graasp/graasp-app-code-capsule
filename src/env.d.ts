@@ -6,7 +6,6 @@ interface ImportMetaEnv {
   readonly VITE_MOCK_API?: string;
   readonly VITE_GRAASP_APP_KEY: string;
   readonly VITE_VERSION?: string;
-  readonly VITE_OPEN_AI_API_URL?: string;
 }
 
 interface ImportMeta {
