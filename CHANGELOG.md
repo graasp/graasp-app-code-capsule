@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.1.0](https://github.com/graasp/graasp-app-code-capsule/compare/v2.0.2...v2.1.0) (2023-11-30)
+
+
+### Features
+
+* use ChatGPT backend endpoint (graasp/graasp[#641](https://github.com/graasp/graasp-app-code-capsule/issues/641)) ([#162](https://github.com/graasp/graasp-app-code-capsule/issues/162)) ([a3d1d9b](https://github.com/graasp/graasp-app-code-capsule/commit/a3d1d9bc3c442b5d38ee26806267bb487a422afa))
+
+
+### Bug Fixes
+
+* add missing translations ([#157](https://github.com/graasp/graasp-app-code-capsule/issues/157)) ([18beca4](https://github.com/graasp/graasp-app-code-capsule/commit/18beca4020fd2457e4290f8f6f200fa51587b886))
+* **deps:** update emotion monorepo ([#101](https://github.com/graasp/graasp-app-code-capsule/issues/101)) ([6a80516](https://github.com/graasp/graasp-app-code-capsule/commit/6a8051691a20878a6f7df0b51295a86b55508543))
+
 ## [2.0.2](https://github.com/graasp/graasp-app-code-capsule/compare/v2.0.1...v2.0.2) (2023-09-20)
 
 
