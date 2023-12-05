@@ -88,7 +88,7 @@
     "cov:report": "open ./coverage/lcov-report/index.html"
   },
   "devDependencies": {
-    "@commitlint/cli": "17.7.1",
+    "@commitlint/cli": "17.7.2",
     "@commitlint/config-conventional": "17.7.0",
     "@cypress/code-coverage": "3.12.1",
     "@cypress/instrument-cra": "1.4.0",
