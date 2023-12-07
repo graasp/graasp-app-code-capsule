@@ -20,7 +20,7 @@ import {
   DEFAULT_CODE_EXECUTION_SETTINGS,
   DEFAULT_DATA_FILE_LIST_SETTINGS,
 } from '../../config/settings';
-import { CodeVersionTypeRecord } from '../../interfaces/codeVersions';
+import { CodeVersionType } from '../../interfaces/codeVersions';
 import {
   CodeExecutionSettingsKeys,
   DataFileListSettingsKeys,
@@ -45,7 +45,7 @@ const OutlineWrapper = styled(Box)(({ theme }) =>
 );
 
 type Props = {
-  seedValue: CodeVersionTypeRecord;
+  seedValue: CodeVersionType;
   // todo: implement "bo-back" button
   // eslint-disable-next-line react/no-unused-prop-types
   onClose: () => void;
