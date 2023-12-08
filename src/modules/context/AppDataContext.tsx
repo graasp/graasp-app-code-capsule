@@ -83,15 +83,18 @@ export const AppDataProvider: FC<PropsWithChildren<Prop>> = ({
     const filteredAppData = currentUserId
       ? appData.data?.filter((res) => res.creator?.id === currentUserId)
       : appData.data;
-    const comments = filteredAppData?.filter((res) =>
-      COMMENT_APP_DATA_TYPES.includes(res.type),
-    ) as CommentType[];
-    const codeAppData = filteredAppData?.filter(
-      (res) => res.type === APP_DATA_TYPES.CODE,
-    ) as CodeType[];
-    const liveCode = filteredAppData?.filter(
-      (res) => res.type === APP_DATA_TYPES.LIVE_CODE,
-    ) as LiveCodeType[];
+    const comments =
+      (filteredAppData?.filter((res) =>
+        COMMENT_APP_DATA_TYPES.includes(res.type),
+      ) as CommentType[] | undefined) || [];
+    const codeAppData =
+      (filteredAppData?.filter((res) => res.type === APP_DATA_TYPES.CODE) as
+        | CodeType[]
+        | undefined) || [];
+    const liveCode =
+      (filteredAppData?.filter(
+        (res) => res.type === APP_DATA_TYPES.LIVE_CODE,
+      ) as LiveCodeType[] | undefined) || [];
 
     return {
       postAppData: (payload: PostAppDataType) =>

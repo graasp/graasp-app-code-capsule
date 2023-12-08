@@ -66,7 +66,7 @@ export const CodeVersionProvider: FC<PropsWithChildren<Prop>> = ({
     data,
     creator,
     updatedAt,
-  })) as CodeVersionSelectType[];
+  })) as CodeVersionSelectType[] | undefined;
   const instructorCodeVersionSetting = appSettings.data?.find(
     (s) => s.name === INSTRUCTOR_CODE_VERSION_SETTINGS_NAME,
   );
@@ -82,7 +82,7 @@ export const CodeVersionProvider: FC<PropsWithChildren<Prop>> = ({
         ? instructorCodeVersionSetting?.updatedAt
         : defaultCodeVersion.updatedAt,
     };
-    const allCodeVersions = [...codeVersions, instructorCodeVersion];
+    const allCodeVersions = [...(codeVersions ?? []), instructorCodeVersion];
 
     const groupedVersions = groupBy(codeVersions, (c) => c.creator.id);
     groupedVersions[INSTRUCTOR_CODE_ID] = [instructorCodeVersion];

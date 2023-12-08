@@ -69,6 +69,7 @@
   },
   "scripts": {
     "dev": "yarn vite",
+    "start": "yarn dev",
     "start:test": "yarn vite --mode test",
     "build": "yarn vite build",
     "build:dev": "yarn vite build  --mode development",
