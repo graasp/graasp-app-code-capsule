@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 
 import { CardContent, CardHeader } from '@mui/material';
 
-import { ThreadMessage } from '@/interfaces/threadMessage';
+import { ChatbotThreadMessage, buildPrompt } from '@graasp/apps-query-client';
 
 import { APP_ACTIONS_TYPES } from '../../config/appActionsTypes';
 import { APP_DATA_TYPES } from '../../config/appDataTypes';
@@ -23,7 +23,6 @@ import {
   ChatbotPromptSettingsKeys,
   GeneralSettingsKeys,
 } from '../../interfaces/settings';
-import { buildPrompt } from '../../utils/chatbot';
 import CommentBody from '../common/CommentBody';
 import CommentEditor from '../common/CommentEditor';
 import ResponseBox from '../common/ResponseBox';
@@ -91,10 +90,11 @@ const ChatbotPrompts: FC<Props> = ({ line }) => {
         data: userData,
         type: APP_DATA_TYPES.COMMENT,
       })?.then((userMessage) => {
-        const threadMessages: ThreadMessage[] = [
+        const threadMessages: ChatbotThreadMessage[] = [
           {
-            type: APP_DATA_TYPES.BOT_COMMENT,
-            data: { content: chatbotMessage },
+            botDataType: APP_DATA_TYPES.BOT_COMMENT,
+            msgType: APP_DATA_TYPES.BOT_COMMENT,
+            data: chatbotMessage,
           },
         ];
 
