@@ -14,7 +14,7 @@ jobs:
     environment: staging
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           ref: ${{ github.event.client_payload.tag }}
 
@@ -24,7 +24,7 @@ jobs:
       - name: Yarn build
         # Set environment variables required to perform the build. These are only available to this step
         env:
-          VITE_API_HOST: ${{ secrets.REACT_APP_API_HOST_STAGE }}
+          VITE_API_HOST: ${{ vars.VITE_API_HOST }}
           VITE_GRAASP_APP_KEY: ${{ secrets.APP_KEY }}
           VITE_SENTRY_ENV: staging
           VITE_SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
@@ -42,6 +42,6 @@ jobs:
           version: 'latest'
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID_STAGE }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_STAGE }}
-          aws-region: ${{ secrets.APPS_AWS_REGION }}
-          aws-s3-bucket-name: ${{ secrets.AWS_S3_BUCKET_NAME_APPS_STAGE }}
+          aws-region: ${{ vars.APPS_AWS_REGION_STAGE }}
+          aws-s3-bucket-name: ${{ vars.AWS_S3_BUCKET_NAME_APPS_STAGE }}
           cloudfront-distribution-id: ${{ secrets.CLOUDFRONT_DISTRIBUTION_APPS_STAGE }}
