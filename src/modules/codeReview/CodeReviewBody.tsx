@@ -4,8 +4,7 @@ import { Add } from '@mui/icons-material';
 import { IconButton, styled } from '@mui/material';
 
 import groupBy from 'lodash.groupby';
-import Highlight, { Language, defaultProps } from 'prism-react-renderer';
-import theme from 'prism-react-renderer/themes/vsLight';
+import { Highlight, Language, themes } from 'prism-react-renderer';
 
 import { APP_ACTIONS_TYPES } from '../../config/appActionsTypes';
 import { APP_DATA_TYPES, APP_DATA_VISIBILITY } from '../../config/appDataTypes';
@@ -123,8 +122,7 @@ const CodeReviewBody: FC<Props> = () => {
 
   return (
     <Highlight
-      Prism={defaultProps.Prism}
-      theme={theme}
+      theme={themes.vsLight}
       code={code}
       language={language as Language}
     >
