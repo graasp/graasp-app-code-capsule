@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.2.1](https://github.com/graasp/graasp-app-code-capsule/compare/v2.2.0...v2.2.1) (2023-12-11)
+
+
+### Bug Fixes
+
+* issues with release-please output sending ghost tags ([9d3f820](https://github.com/graasp/graasp-app-code-capsule/commit/9d3f82054777c6039143313c720996ef2c8f1658))
+
 ## [2.2.0](https://github.com/graasp/graasp-app-code-capsule/compare/v2.1.0...v2.2.0) (2023-12-11)
 
 
