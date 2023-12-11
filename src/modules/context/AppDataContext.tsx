@@ -117,10 +117,6 @@ export const AppDataProvider: FC<PropsWithChildren<Prop>> = ({
     visibilityVariant,
   ]);
 
-  // if (appData.isLoading) {
-  //   return <Loader />;
-  // }
-
   return (
     <AppDataContext.Provider value={contextValue}>
       {children}

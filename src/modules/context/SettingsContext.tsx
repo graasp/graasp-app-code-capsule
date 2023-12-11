@@ -115,10 +115,6 @@ export const SettingsProvider: FC<Prop> = ({ children }) => {
     }
   };
 
-  // if (isLoading) {
-  //   return <Loader />;
-  // }
-
   const getContextValue = (): SettingsContextType => {
     if (isSuccess) {
       const allSettings: AllSettingsType = ALL_SETTING_NAMES.reduce(
