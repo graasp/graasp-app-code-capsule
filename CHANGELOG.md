@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.2.0](https://github.com/graasp/graasp-app-code-capsule/compare/v2.1.0...v2.2.0) (2023-12-11)
+
+
+### Features
+
+* use chatbot buildPrompt from apps-query-client ([#168](https://github.com/graasp/graasp-app-code-capsule/issues/168)) ([03dc501](https://github.com/graasp/graasp-app-code-capsule/commit/03dc50187484c5246341832d43268b5a04cb7ec9))
+
+
+### Bug Fixes
+
+* update deployment workflows ([#170](https://github.com/graasp/graasp-app-code-capsule/issues/170)) ([78aef5b](https://github.com/graasp/graasp-app-code-capsule/commit/78aef5bf8c63ba4a375115079a914f5107a1e2a1))
+
 ## [2.1.0](https://github.com/graasp/graasp-app-code-capsule/compare/v2.0.2...v2.1.0) (2023-11-30)
 
 
