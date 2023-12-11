@@ -3,12 +3,18 @@ import { useTranslation } from 'react-i18next';
 
 import { Divider, Stack, TextField, Typography } from '@mui/material';
 
+import {
+  DEFAULT_MAX_COMMENT_LENGTH_SETTING,
+  DEFAULT_MAX_THREAD_LENGTH_SETTING,
+} from '@/config/settings';
+
 import { REVIEW_MODES } from '../../../../config/constants';
 import {
   ALLOW_COMMENTS_SWITCH_CYPRESS,
   ALLOW_REPLIES_SWITCH_CYPRESS,
   REVIEW_MODES_SELECT_CYPRESS,
   SETTING_MAX_COMMENT_LENGTH,
+  SETTING_MAX_THREAD_LENGTH,
   SHOW_EDIT_BUTTON_SWITCH_CYPRESS,
   SHOW_HEADER_SWITCH_CYPRESS,
   SHOW_LINE_NUMBERS_SWITCH_CYPRESS,
@@ -115,8 +121,33 @@ const DisplaySettings: FC<Props> = ({ localSettings, changeSetting }) => {
       />
 
       <Divider sx={{ mt: 1 }} />
-      <Typography variant="subtitle2">{t('Maximum comment length')}</Typography>
-      <TextField id={SETTING_MAX_COMMENT_LENGTH} type="number" />
+
+      <Typography variant="subtitle2">
+        {t('MAX_COMMENT_LENGTH_SETTING', {
+          default: DEFAULT_MAX_COMMENT_LENGTH_SETTING,
+        })}
+      </Typography>
+      <TextField
+        id={SETTING_MAX_COMMENT_LENGTH}
+        type="number"
+        value={localSettings[GeneralSettingsKeys.MaxCommentLength]}
+        onChange={(e) =>
+          changeSetting(GeneralSettingsKeys.MaxCommentLength, e.target.value)
+        }
+      />
+      <Typography variant="subtitle2">
+        {t('MAX_THREAD_LENGTH_SETTING', {
+          default: DEFAULT_MAX_THREAD_LENGTH_SETTING,
+        })}
+      </Typography>
+      <TextField
+        id={SETTING_MAX_THREAD_LENGTH}
+        type="number"
+        value={localSettings[GeneralSettingsKeys.MaxThreadLength]}
+        onChange={(e) =>
+          changeSetting(GeneralSettingsKeys.MaxThreadLength, e.target.value)
+        }
+      />
     </Stack>
   );
 };

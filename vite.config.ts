@@ -18,6 +18,10 @@ export default ({ mode }: { mode: string }): UserConfigExport => {
         ignored: ['**/coverage/**'],
       },
     },
+    preview: {
+      strictPort: true,
+      port: parseInt(process.env.VITE_PORT, 10) || 4001,
+    },
     build: {
       outDir: 'build',
     },
@@ -32,6 +36,7 @@ export default ({ mode }: { mode: string }): UserConfigExport => {
         exclude: ['node_modules', 'test/'],
         extension: ['.js', '.ts', '.tsx'],
         requireEnv: false,
+        forceBuildInstrument: mode === 'test',
         checkProd: true,
       }),
     ],
@@ -39,9 +44,6 @@ export default ({ mode }: { mode: string }): UserConfigExport => {
       alias: {
         '@': resolve(__dirname, 'src'),
       },
-    },
-    define: {
-      'process.env.REACT_APP_GRAASP_ASSETS_URL': `"${process.env.VITE_GRAASP_ASSETS_URL}"`,
     },
   });
 };

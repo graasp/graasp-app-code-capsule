@@ -52,6 +52,7 @@ export const DEFAULT_CODE_SETTING = '';
 export const DEFAULT_COMMIT_MESSAGE_SETTING = '';
 export const DEFAULT_COMMIT_DESCRIPTION_SETTING = '';
 export const DEFAULT_MAX_COMMENT_LENGTH_SETTING = 300;
+export const DEFAULT_MAX_THREAD_LENGTH_SETTING = 50;
 
 export const DEFAULT_REVIEW_MODE_SETTING = REVIEW_MODE_INDIVIDUAL;
 
@@ -71,6 +72,7 @@ export const DEFAULT_GENERAL_SETTINGS: GeneralSettings = {
   [GeneralSettingsKeys.AllowCommentsReporting]: DEFAULT_ALLOW_COMMENT_REPORTING,
   [GeneralSettingsKeys.ReviewMode]: DEFAULT_REVIEW_MODE_SETTING,
   [GeneralSettingsKeys.MaxCommentLength]: DEFAULT_MAX_COMMENT_LENGTH_SETTING,
+  [GeneralSettingsKeys.MaxThreadLength]: DEFAULT_MAX_THREAD_LENGTH_SETTING,
 };
 
 // default Instructor Code Version settings

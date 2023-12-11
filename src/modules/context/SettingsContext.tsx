@@ -30,7 +30,6 @@ import {
   GeneralSettings,
   InstructorCodeVersionSettings,
 } from '../../interfaces/settings';
-import Loader from '../common/Loader';
 
 // mapping between Setting names and their data type
 interface AllSettingsType {
@@ -93,11 +92,7 @@ type Prop = {
 export const SettingsProvider: FC<Prop> = ({ children }) => {
   const postSettings = mutations.usePostAppSetting();
   const patchSettings = mutations.usePatchAppSetting();
-  const {
-    data: appSettingsList,
-    isLoading,
-    isSuccess,
-  } = hooks.useAppSettings();
+  const { data: appSettingsList, isSuccess } = hooks.useAppSettings();
 
   const saveSettings = (
     name: AllSettingsNameType,
@@ -119,10 +114,6 @@ export const SettingsProvider: FC<Prop> = ({ children }) => {
       }
     }
   };
-
-  if (isLoading) {
-    return <Loader />;
-  }
 
   const getContextValue = (): SettingsContextType => {
     if (isSuccess) {

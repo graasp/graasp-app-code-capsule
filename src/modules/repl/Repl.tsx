@@ -74,8 +74,10 @@ const Repl = ({ seedValue }: Props): JSX.Element => {
   const sortedCodeVersions = sortAppDataFromNewest(liveCode);
   const latestCode = sortedCodeVersions[0]?.data?.code;
   const currentCode = latestCode || (seedValue ? seedValue.code : '');
-
   const [value, setValue] = useState(currentCode);
+  useEffect(() => {
+    setValue(currentCode);
+  }, [currentCode]);
   const savedStatus = value === currentCode;
   const {
     [CODE_EXECUTION_SETTINGS_NAME]:

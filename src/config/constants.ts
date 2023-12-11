@@ -38,9 +38,6 @@ export const REVIEW_MODES = [
 
 export const DEFAULT_BOT_USERNAME = 'Graasp Bot';
 
-// maximum number of messages allowed in a chatbot thread
-export const MAX_CHATBOT_THREAD_LENGTH = 50;
-
 export const DEFAULT_CHATBOT_PROMPT_APP_DATA = { chatbotPromptSettingId: '' };
 
 export const CHAT_BOT_ERROR_MESSAGE = 'Sorry, an error occurred.';

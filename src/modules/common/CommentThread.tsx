@@ -13,7 +13,6 @@ import { GENERAL_SETTINGS_NAME } from '../../config/appSettingsTypes';
 import {
   CHAT_BOT_ERROR_MESSAGE,
   DEFAULT_CHATBOT_PROMPT_APP_DATA,
-  MAX_CHATBOT_THREAD_LENGTH,
 } from '../../config/constants';
 import { mutations } from '../../config/queryClient';
 import { COMMENT_THREAD_CONTAINER_CYPRESS } from '../../config/selectors';
@@ -51,6 +50,7 @@ const CommentThread: FC<Props> = ({ children, hiddenState }) => {
     chatbotPrompts,
     [GENERAL_SETTINGS_NAME]: generalSettings = DEFAULT_GENERAL_SETTINGS,
   } = useSettings();
+  const maxThreadLength = generalSettings[GeneralSettingsKeys.MaxThreadLength];
   const { isLoading, startLoading, stopLoading } = useLoadingIndicator();
 
   const { mutateAsync: postChatBot } = mutations.usePostChatBot();
@@ -62,10 +62,10 @@ const CommentThread: FC<Props> = ({ children, hiddenState }) => {
     idx: number,
     commentType: string,
   ): boolean =>
-    (arr.length < MAX_CHATBOT_THREAD_LENGTH &&
+    (arr.length < maxThreadLength &&
       commentType === APP_DATA_TYPES.BOT_COMMENT) ||
     // when the comment is a user comment it should not be a response to a chatbot comment
-    // -> in this case, we want to wait for the cahtbot response
+    // -> in this case, we want to wait for the chatbot response
     (commentType === APP_DATA_TYPES.COMMENT &&
       arr[idx - 1]?.type !== APP_DATA_TYPES.BOT_COMMENT);
 

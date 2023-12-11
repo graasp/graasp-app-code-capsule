@@ -143,6 +143,7 @@ export const SETTING_INITIAL_PROMPT_CODE_EDITOR_CY =
 export const SETTING_CHATBOT_PROMPT_LINE_NUMBER_CY =
   'setting_chatbot_prompt_line_number';
 export const SETTING_MAX_COMMENT_LENGTH = 'setting_max_comment_length';
+export const SETTING_MAX_THREAD_LENGTH = 'setting_max_thread_length';
 export const SETTING_ADD_CHATBOT_PROMPT_CY = 'setting_add_chatbot_prompt';
 export const SETTING_EDIT_CHATBOT_PROMPT_CY = 'setting_edit_chatbot_prompt';
 export const SETTING_DELETE_CHATBOT_PROMPT_CY = 'setting_delete_chatbot_prompt';
