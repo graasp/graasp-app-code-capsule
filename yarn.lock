@@ -4182,6 +4182,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/prismjs@npm:^1.26.0":
+  version: 1.26.3
+  resolution: "@types/prismjs@npm:1.26.3"
+  checksum: 4bd55230ffc0b2b16f4008be3a7f1d7c6b32dd3bed8006e64d24fb22c44fc7e300dac77b856f732803ccdc9a3472b2c0ee7776cad048843c47d608c41a89b6a6
+  languageName: node
+  linkType: hard
+
 "@types/prop-types@npm:*, @types/prop-types@npm:^15.7.5":
   version: 15.7.5
   resolution: "@types/prop-types@npm:15.7.5"
@@ -8552,7 +8559,7 @@ __metadata:
     lodash.isstring: "npm:4.0.1"
     nyc: "npm:15.1.0"
     prettier: "npm:3.1.1"
-    prism-react-renderer: "npm:1.3.5"
+    prism-react-renderer: "npm:2.3.0"
     react: "npm:18.2.0"
     react-diff-viewer: "npm:3.1.1"
     react-dom: "npm:18.2.0"
@@ -11833,12 +11840,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prism-react-renderer@npm:1.3.5":
-  version: 1.3.5
-  resolution: "prism-react-renderer@npm:1.3.5"
+"prism-react-renderer@npm:2.3.0":
+  version: 2.3.0
+  resolution: "prism-react-renderer@npm:2.3.0"
+  dependencies:
+    "@types/prismjs": "npm:^1.26.0"
+    clsx: "npm:^2.0.0"
   peerDependencies:
-    react: ">=0.14.9"
-  checksum: 6deeef1bf497b5ce2ea5113f253f5d5e0842caa74eee385f15f17b75012fdea994cddf097759d0a2a9426ff857ea44bf2febe219392be4c72f887c7df88cc34d
+    react: ">=16.0.0"
+  checksum: f582e0de68548dbe16754c5125929b13b59d430acc57ad1f724e811d247d2e1d00185e151e4b5b76661f62a34b3fdcf3caf88f057531ece0fbc8b0946c0300ef
   languageName: node
   linkType: hard
 
