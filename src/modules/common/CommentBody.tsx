@@ -3,8 +3,7 @@ import ReactMarkdown from 'react-markdown';
 
 import { styled } from '@mui/material';
 
-import Highlight, { Language, defaultProps } from 'prism-react-renderer';
-import vsLight from 'prism-react-renderer/themes/vsLight';
+import { Highlight, Language, themes } from 'prism-react-renderer';
 import remarkBreaks from 'remark-breaks';
 import remarkGfm from 'remark-gfm';
 
@@ -81,9 +80,8 @@ function code(props: {
   const match = /language-(\w+)/.exec(language || '');
   return match ? (
     <Highlight
-      {...defaultProps}
-      theme={vsLight}
       code={String(children).replace(/\n$/, '')}
+      theme={themes.vsLight}
       language={match[1] as Language}
     >
       {({ className, style, tokens, getLineProps, getTokenProps }) => (
