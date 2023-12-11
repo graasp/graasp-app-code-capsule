@@ -35,9 +35,9 @@ jobs:
           VITE_DEBUG: false
         with:
           install: false
-          build: yarn build
+          build: yarn build:test
           config: baseUrl=http://localhost:3000
-          start: yarn dev
+          start: yarn preview:test
           browser: chrome
           quiet: true
           # point to new cypress@10 config file

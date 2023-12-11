@@ -94,7 +94,11 @@ describe('Settings', () => {
 
     // choose a mode
     cy.get(buildDataCy(SETTING_APP_MODE_SELECT_NAME_CY)).click();
-    cy.get(buildDataCy(APP_MODE_REVIEW_BUTTON_CY)).should('be.visible').click();
+    cy.get(buildDataCy(APP_MODE_REVIEW_BUTTON_CY)).should('be.visible');
+    cy.get(buildDataCy(APP_MODE_REVIEW_BUTTON_CY)).click();
+    // repeat to be sure it was done (this is a hack)
+    cy.get(buildDataCy(SETTING_APP_MODE_SELECT_NAME_CY)).click();
+    cy.get(buildDataCy(APP_MODE_REVIEW_BUTTON_CY)).click();
     cy.get(buildDataCy(SETTING_APP_MODE_SELECT_NAME_CY)).should(
       'contain.text',
       'Review',
