@@ -3,6 +3,10 @@ import { useTranslation } from 'react-i18next';
 
 import { CircularProgress, Stack, Typography } from '@mui/material';
 
+import { ChatbotThreadMessage, buildPrompt } from '@graasp/apps-query-client';
+
+import { buildThread } from '@/utils/comments';
+
 import { APP_ACTIONS_TYPES } from '../../config/appActionsTypes';
 import { APP_DATA_TYPES } from '../../config/appDataTypes';
 import { GENERAL_SETTINGS_NAME } from '../../config/appSettingsTypes';
@@ -16,8 +20,6 @@ import { COMMENT_THREAD_CONTAINER_CYPRESS } from '../../config/selectors';
 import { DEFAULT_GENERAL_SETTINGS } from '../../config/settings';
 import { CommentType } from '../../interfaces/comment';
 import { GeneralSettingsKeys } from '../../interfaces/settings';
-import { buildPrompt } from '../../utils/chatbot';
-import { buildThread } from '../../utils/comments';
 import { useAppDataContext } from '../context/AppDataContext';
 import { CommentProvider } from '../context/CommentContext';
 import { useLoadingIndicator } from '../context/LoadingIndicatorContext';
@@ -165,9 +167,16 @@ const CommentThread: FC<Props> = ({ children, hiddenState }) => {
                             (a) => a.id === chatbotPromptSettingId,
                           );
 
+                          const chatbotThread: ChatbotThreadMessage[] =
+                            thread.map((botThread) => ({
+                              botDataType: APP_DATA_TYPES.BOT_COMMENT,
+                              msgType: botThread.type,
+                              data: botThread.data.content,
+                            }));
+
                           const prompt = buildPrompt(
                             promptSetting?.data.initialPrompt,
-                            thread,
+                            chatbotThread,
                             content,
                           );
 
