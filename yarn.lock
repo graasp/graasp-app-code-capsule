@@ -2028,10 +2028,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@codemirror/state@npm:6.2.1":
-  version: 6.2.1
-  resolution: "@codemirror/state@npm:6.2.1"
-  checksum: c5fd6f214b78852f805b8410074cfcbb2284ed8cc187fd91b02c2fecba65594db413e9be0fd10a7156bff357285e6ed362fb2a9f2157edd16d9063cfd0cc464d
+"@codemirror/state@npm:6.3.3":
+  version: 6.3.3
+  resolution: "@codemirror/state@npm:6.3.3"
+  checksum: c0db0fc943ed36925238242522a8f4b2a4e3ecc4489cc013ea6d32be2bc615ecd813c98ff6a4c8f8ec1179376e555ec93a07dc1f0d1751aae721b5b38f812c08
   languageName: node
   linkType: hard
 
