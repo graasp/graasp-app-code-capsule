@@ -151,7 +151,7 @@
     ]
   },
   "resolutions": {
-    "@codemirror/state": "6.2.1"
+    "@codemirror/state": "6.3.3"
   },
   "packageManager": "yarn@4.0.2",
   "msw": {
