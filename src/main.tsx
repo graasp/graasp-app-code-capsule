@@ -26,6 +26,7 @@ if (MOCK_API) {
   mockApi(
     {
       externalUrls: [],
+      dbName: 'graasp-app-code-capsule-mocks',
       appContext: window.Cypress ? window.appContext : mockContext,
       database: window.Cypress ? window.database : buildDatabase(mockMembers),
     },

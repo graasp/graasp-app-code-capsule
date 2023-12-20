@@ -7,19 +7,23 @@ import { ChatbotThreadMessage, buildPrompt } from '@graasp/apps-query-client';
 
 import { APP_ACTIONS_TYPES } from '../../config/appActionsTypes';
 import { APP_DATA_TYPES } from '../../config/appDataTypes';
-import { GENERAL_SETTINGS_NAME } from '../../config/appSettingsTypes';
+import {
+  CHATBOT_PROMPT_SETTINGS_NAME,
+  GENERAL_SETTINGS_NAME,
+} from '../../config/appSettingsTypes';
 import {
   CHAT_BOT_ERROR_MESSAGE,
   DEFAULT_BOT_USERNAME,
   INSTRUCTOR_CODE_ID,
 } from '../../config/constants';
-import { mutations } from '../../config/queryClient';
+import { hooks, mutations } from '../../config/queryClient';
 import {
   buildChatbotPromptContainerDataCy,
   buildCommentResponseBoxDataCy,
 } from '../../config/selectors';
 import { DEFAULT_GENERAL_SETTINGS } from '../../config/settings';
 import {
+  ChatbotPromptSettings,
   ChatbotPromptSettingsKeys,
   GeneralSettingsKeys,
 } from '../../interfaces/settings';
@@ -45,12 +49,14 @@ const ChatbotPrompts: FC<Props> = ({ line }) => {
   const { mutateAsync: postChatBot } = mutations.usePostChatBot();
   // if a message already exists with the prompt id we should not display this prompt
   const {
-    chatbotPrompts,
     [GENERAL_SETTINGS_NAME]: generalSettings = DEFAULT_GENERAL_SETTINGS,
   } = useSettings();
+  const { data: chatbotPrompts } = hooks.useAppSettings<ChatbotPromptSettings>({
+    name: CHATBOT_PROMPT_SETTINGS_NAME,
+  });
   const { startLoading, stopLoading } = useLoadingIndicator();
 
-  const currentLinePrompt = chatbotPrompts.find(
+  const currentLinePrompt = chatbotPrompts?.find(
     (c) => c.data[ChatbotPromptSettingsKeys.LineNumber] === line,
   );
 
