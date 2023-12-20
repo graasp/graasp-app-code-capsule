@@ -6,7 +6,7 @@ const {
   VITE_SENTRY_ENV,
   VITE_SENTRY_DSN,
   VITE_GA_MEASUREMENT_ID,
-  VITE_DEBUG,
+  VITE_ENABLE_VERBOSE_MESSAGES,
 } = window.Cypress ? Cypress.env() : import.meta.env;
 
 export const MOCK_API = VITE_MOCK_API === 'true';
@@ -16,4 +16,6 @@ export const VERSION = VITE_VERSION || 'latest';
 export const GRAASP_APP_KEY = VITE_GRAASP_APP_KEY;
 export const SENTRY_ENV = VITE_SENTRY_ENV;
 export const SENTRY_DSN = VITE_SENTRY_DSN;
-export const ENABLE_SUCCESS_TOASTS = VITE_DEBUG ?? false;
+export const ENABLE_SUCCESS_TOASTS =
+  // only check if it is set
+  Boolean(VITE_ENABLE_VERBOSE_MESSAGES) ?? false;

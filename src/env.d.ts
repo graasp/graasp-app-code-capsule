@@ -6,6 +6,7 @@ interface ImportMetaEnv {
   readonly VITE_MOCK_API?: string;
   readonly VITE_GRAASP_APP_KEY: string;
   readonly VITE_VERSION?: string;
+  readonly VITE_ENABLE_VERBOSE_MESSAGES?: string;
 }
 
 interface ImportMeta {

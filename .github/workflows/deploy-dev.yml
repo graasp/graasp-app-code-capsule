@@ -30,7 +30,6 @@ jobs:
           VITE_SENTRY_ENV: development
           VITE_SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
           VITE_VERSION: ${{ github.sha }}
-          VITE_DEBUG: false
         run: yarn build
         shell: bash
 
