@@ -1,9 +1,6 @@
-// known problem with date-fns:
-// https://stackoverflow.com/questions/63375527/how-to-set-up-imported-multiple-times-rule-for-date-fns-in-eslint
-// eslint-disable-next-line import/no-duplicates
-import { formatDistance } from 'date-fns';
-// eslint-disable-next-line import/no-duplicates
-import { enGB, fr } from 'date-fns/locale';
+import { Locale, formatDistance } from 'date-fns';
+import { enGB } from 'date-fns/locale/en-GB';
+import { fr } from 'date-fns/locale/fr';
 
 // to add a new language to the dates
 const locales: { [key: string]: Locale } = {
