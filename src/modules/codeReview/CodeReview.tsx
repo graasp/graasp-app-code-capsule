@@ -1,5 +1,3 @@
-import { FC } from 'react';
-
 import { AppView } from '../../config/layout';
 import { CODE_REVIEW_CONTAINER_CYPRESS } from '../../config/selectors';
 import { ReviewProvider } from '../context/ReviewContext';
@@ -10,14 +8,15 @@ import CodeReviewToolbar from './CodeReviewToolbar';
 
 type Props = {
   setView?: (view: AppView) => void;
+  isPreset?: boolean;
 };
 
-const CodeReview: FC<Props> = ({ setView }) => (
+const CodeReview = ({ setView, isPreset }: Props): JSX.Element => (
   <ReviewProvider>
     <VisibilityProvider>
       <CodeReviewContainer data-cy={CODE_REVIEW_CONTAINER_CYPRESS}>
         <CodeReviewToolbar setView={setView} />
-        <CodeReviewBody />
+        <CodeReviewBody isPreset={isPreset} />
       </CodeReviewContainer>
     </VisibilityProvider>
   </ReviewProvider>

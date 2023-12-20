@@ -1,15 +1,17 @@
-import React, { FC, Fragment } from 'react';
+import React, { Fragment } from 'react';
 
 import { Add } from '@mui/icons-material';
 import { IconButton, styled } from '@mui/material';
+
+import { AppDataVisibility } from '@graasp/sdk';
 
 import groupBy from 'lodash.groupby';
 import { Highlight, Language, themes } from 'prism-react-renderer';
 
 import { APP_ACTIONS_TYPES } from '../../config/appActionsTypes';
-import { APP_DATA_TYPES, APP_DATA_VISIBILITY } from '../../config/appDataTypes';
+import { APP_DATA_TYPES } from '../../config/appDataTypes';
 import { GENERAL_SETTINGS_NAME } from '../../config/appSettingsTypes';
-import { REVIEW_MODE_INDIVIDUAL } from '../../config/constants';
+import { REVIEW_MODE_COLLABORATIVE } from '../../config/constants';
 import { SMALL_BORDER_RADIUS } from '../../config/layout';
 import { mutations } from '../../config/queryClient';
 import {
@@ -87,9 +89,11 @@ const AddButton = styled(IconButton)({
 });
 
 // eslint-disable-next-line @typescript-eslint/ban-types
-type Props = {};
+type Props = {
+  isPreset?: boolean;
+};
 
-const CodeReviewBody: FC<Props> = () => {
+const CodeReviewBody = ({ isPreset = false }: Props): JSX.Element => {
   const { addComment, multilineRange, currentCommentLine, closeComment } =
     useReviewContext();
   const { codeVersion, codeId } = useCodeVersionContext();
@@ -203,9 +207,9 @@ const CodeReviewBody: FC<Props> = () => {
                       data,
                       type: APP_DATA_TYPES.COMMENT,
                       visibility:
-                        reviewMode === REVIEW_MODE_INDIVIDUAL
-                          ? APP_DATA_VISIBILITY.MEMBER
-                          : APP_DATA_VISIBILITY.ITEM,
+                        isPreset || reviewMode === REVIEW_MODE_COLLABORATIVE
+                          ? AppDataVisibility.Item
+                          : AppDataVisibility.Member,
                     });
                     postAction({
                       data,

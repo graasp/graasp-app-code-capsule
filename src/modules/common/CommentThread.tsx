@@ -27,7 +27,6 @@ import {
 } from '../../interfaces/settings';
 import { useAppDataContext } from '../context/AppDataContext';
 import { CommentProvider } from '../context/CommentContext';
-import { useLoadingIndicator } from '../context/LoadingIndicatorContext';
 import { useReviewContext } from '../context/ReviewContext';
 import { useSettings } from '../context/SettingsContext';
 import CommentContainer from '../layout/CommentContainer';
@@ -59,9 +58,8 @@ const CommentThread: FC<Props> = ({ children, hiddenState }) => {
     name: CHATBOT_PROMPT_SETTINGS_NAME,
   });
   const maxThreadLength = generalSettings[GeneralSettingsKeys.MaxThreadLength];
-  const { isLoading, startLoading, stopLoading } = useLoadingIndicator();
 
-  const { mutateAsync: postChatBot } = mutations.usePostChatBot();
+  const { mutateAsync: postChatBot, isLoading } = mutations.usePostChatBot();
 
   const isEdited = (id: string): boolean => id === currentEditedCommentId;
   const isReplied = (id: string): boolean => id === currentRepliedCommentId;
@@ -157,7 +155,6 @@ const CommentThread: FC<Props> = ({ children, hiddenState }) => {
                     <CommentEditor
                       onCancel={closeComment}
                       onSend={(content) => {
-                        startLoading();
                         const data = {
                           ...c.data,
                           parent: c.id,
@@ -207,8 +204,6 @@ const CommentThread: FC<Props> = ({ children, hiddenState }) => {
                                 postAppDataAsync({
                                   data: newData,
                                   type: APP_DATA_TYPES.BOT_COMMENT,
-                                })?.then(() => {
-                                  stopLoading();
                                 });
                                 postAction({
                                   data: newData,

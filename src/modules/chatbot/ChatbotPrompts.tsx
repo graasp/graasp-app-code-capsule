@@ -31,7 +31,6 @@ import CommentBody from '../common/CommentBody';
 import CommentEditor from '../common/CommentEditor';
 import ResponseBox from '../common/ResponseBox';
 import { useAppDataContext } from '../context/AppDataContext';
-import { useLoadingIndicator } from '../context/LoadingIndicatorContext';
 import { useSettings } from '../context/SettingsContext';
 import CommentContainer from '../layout/CommentContainer';
 import CustomCommentCard from '../layout/CustomCommentCard';
@@ -54,7 +53,6 @@ const ChatbotPrompts: FC<Props> = ({ line }) => {
   const { data: chatbotPrompts } = hooks.useAppSettings<ChatbotPromptSettings>({
     name: CHATBOT_PROMPT_SETTINGS_NAME,
   });
-  const { startLoading, stopLoading } = useLoadingIndicator();
 
   const currentLinePrompt = chatbotPrompts?.find(
     (c) => c.data[ChatbotPromptSettingsKeys.LineNumber] === line,
@@ -72,7 +70,6 @@ const ChatbotPrompts: FC<Props> = ({ line }) => {
 
   const handleNewDiscussion = (newUserComment: string): void => {
     const chatbotMessage = currentLinePrompt?.data.chatbotPrompt;
-    startLoading();
     const newData = {
       line,
       parent: null,
@@ -131,7 +128,7 @@ const ChatbotPrompts: FC<Props> = ({ line }) => {
             postAppDataAsync({
               data: actionData,
               type: APP_DATA_TYPES.BOT_COMMENT,
-            })?.then(() => stopLoading());
+            });
             postAction({
               data: actionData,
               type: APP_ACTIONS_TYPES.CREATE_COMMENT,
