@@ -110,7 +110,11 @@ const CodeReviewBody = ({ isPreset = false }: Props): JSX.Element => {
   const { postAppData, comments } = useAppDataContext();
   const { mutate: postAction } = mutations.usePostAppAction();
   const versionComments = comments?.filter((c) => c.data.codeId === codeId);
-  const groupedComments = groupBy(versionComments, (c) => c.data.line);
+  // filter out comments that should not be displayed in the presetView
+  const viewComments = versionComments?.filter(
+    (c) => (isPreset && c.type === APP_DATA_TYPES.TEACHER_COMMENT) || !isPreset,
+  );
+  const groupedComments = groupBy(viewComments, (c) => c.data.line);
 
   const handleClick = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
@@ -205,7 +209,9 @@ const CodeReviewBody = ({ isPreset = false }: Props): JSX.Element => {
                     };
                     postAppData({
                       data,
-                      type: APP_DATA_TYPES.COMMENT,
+                      type: isPreset
+                        ? APP_DATA_TYPES.TEACHER_COMMENT
+                        : APP_DATA_TYPES.COMMENT,
                       visibility:
                         isPreset || reviewMode === REVIEW_MODE_COLLABORATIVE
                           ? AppDataVisibility.Item

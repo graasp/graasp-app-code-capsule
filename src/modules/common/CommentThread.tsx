@@ -1,4 +1,4 @@
-import { FC, Fragment } from 'react';
+import { Fragment } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { Alert, CircularProgress, Stack, Typography } from '@mui/material';
@@ -40,7 +40,10 @@ type Props = {
   hiddenState: boolean;
 };
 
-const CommentThread: FC<Props> = ({ children, hiddenState }) => {
+const CommentThread = ({
+  children,
+  hiddenState,
+}: Props): JSX.Element | null => {
   const { t } = useTranslation();
   const {
     addResponse,
@@ -73,7 +76,9 @@ const CommentThread: FC<Props> = ({ children, hiddenState }) => {
     // when the comment is a user comment it should not be a response to a chatbot comment
     // -> in this case, we want to wait for the chatbot response
     (commentType === APP_DATA_TYPES.COMMENT &&
-      arr[idx - 1]?.type !== APP_DATA_TYPES.BOT_COMMENT);
+      arr[idx - 1]?.type !== APP_DATA_TYPES.BOT_COMMENT) ||
+    // allow to respond if it is a teacher comment
+    commentType === APP_DATA_TYPES.TEACHER_COMMENT;
 
   if (!children || children?.length === 0 || hiddenState) {
     return null;
