@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.2.2](https://github.com/graasp/graasp-app-code-capsule/compare/v2.2.1...v2.2.2) (2024-01-19)
+
+
+### Bug Fixes
+
+* **deps:** update dependency i18next to v23.7.11 ([#183](https://github.com/graasp/graasp-app-code-capsule/issues/183)) ([93a3c29](https://github.com/graasp/graasp-app-code-capsule/commit/93a3c2943dfd0ebb017230cdd9fc406f05d7de26))
+* **deps:** update dependency prism-react-renderer to v2 ([#178](https://github.com/graasp/graasp-app-code-capsule/issues/178)) ([f26bf8c](https://github.com/graasp/graasp-app-code-capsule/commit/f26bf8c4bbfc457548c58ac9333696c87b24b3c7))
+* **deps:** update dependency react-markdown to v9 ([#179](https://github.com/graasp/graasp-app-code-capsule/issues/179)) ([7252f5d](https://github.com/graasp/graasp-app-code-capsule/commit/7252f5dc2ea9b12873bb2fed1b4b6f7cc5b47502))
+* **deps:** update mui (non-major) to v5.15.1 ([#182](https://github.com/graasp/graasp-app-code-capsule/issues/182)) ([95eee2b](https://github.com/graasp/graasp-app-code-capsule/commit/95eee2baef768ee039a24dd60ff9b17cb05a8d1b))
+* max comment length is not applied ([#160](https://github.com/graasp/graasp-app-code-capsule/issues/160)) ([dfd7727](https://github.com/graasp/graasp-app-code-capsule/commit/dfd77271cdfa8b9b4f6e696030d33481f9b4aa43))
+* update apps-query-client for resizing ([0df1ed3](https://github.com/graasp/graasp-app-code-capsule/commit/0df1ed3ff36195bf7524771e4716fcfc9f17a511))
+* update deps ([467e38b](https://github.com/graasp/graasp-app-code-capsule/commit/467e38b930a17a46d5ae0051b9dd4fccfea6c3ae))
+
 ## [2.2.1](https://github.com/graasp/graasp-app-code-capsule/compare/v2.2.0...v2.2.1) (2023-12-11)
 
 
