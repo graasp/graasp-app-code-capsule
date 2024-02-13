@@ -170,9 +170,6 @@ const CommentThread = ({
                           data,
                           type: APP_DATA_TYPES.COMMENT,
                         })?.then((parent) => {
-                          if (!chatbotPrompts) {
-                            throw new Error('No chatbot prompts !');
-                          }
                           // when in a chatbot thread, should also post to the api
                           if (thread[0]?.type === APP_DATA_TYPES.BOT_COMMENT) {
                             const { chatbotPromptSettingId } =

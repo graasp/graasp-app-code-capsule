@@ -18,4 +18,4 @@ export const SENTRY_ENV = VITE_SENTRY_ENV;
 export const SENTRY_DSN = VITE_SENTRY_DSN;
 export const ENABLE_SUCCESS_TOASTS =
   // only check if it is set
-  Boolean(VITE_ENABLE_VERBOSE_MESSAGES) ?? false;
+  Boolean(VITE_ENABLE_VERBOSE_MESSAGES ?? false);
