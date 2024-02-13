@@ -23,7 +23,7 @@
     "@fortawesome/free-regular-svg-icons": "6.5.1",
     "@fortawesome/free-solid-svg-icons": "6.5.1",
     "@fortawesome/react-fontawesome": "0.2.0",
-    "@graasp/apps-query-client": "3.4.0",
+    "@graasp/apps-query-client": "github:graasp/graasp-apps-query-client#hotfix-app-data-key",
     "@graasp/pyodide": "github:graasp/graasp-pyodide",
     "@graasp/sdk": "3.3.0",
     "@graasp/ui": "4.1.1",
@@ -86,7 +86,7 @@
     "hooks:install": "husky install",
     "hooks:uninstall": "husky uninstall",
     "pre-commit": "yarn prettier:check && yarn lint",
-    "cypress:open": "env-cmd -f ./.env.development cypress open",
+    "cypress:open": "env-cmd -f ./.env.test cypress open",
     "test": "yarn build:test && concurrently -k -s first \"yarn preview:test\" \"yarn test:ci\"",
     "test:ci": "env-cmd -f ./.env.test cypress run && nyc report --reporter=text --reporter=text-summary",
     "cov:report": "open ./coverage/lcov-report/index.html"
@@ -129,11 +129,7 @@
     "vite-plugin-istanbul": "5.0.0"
   },
   "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
+    "production": [">0.2%", "not dead", "not op_mini all"],
     "development": [
       "last 1 chrome version",
       "last 1 firefox version",
@@ -142,13 +138,8 @@
   },
   "nyc": {
     "all": true,
-    "include": [
-      "src/**/*.{js,ts,jsx,tsx}"
-    ],
-    "exclude": [
-      "src/setupTests.ts",
-      "src/**/*.d.ts"
-    ]
+    "include": ["src/**/*.{js,ts,jsx,tsx}"],
+    "exclude": ["src/setupTests.ts", "src/**/*.d.ts"]
   },
   "resolutions": {
     "@codemirror/state": "6.3.3"

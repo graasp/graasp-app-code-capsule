@@ -8,6 +8,11 @@ import { Tab, Typography, styled } from '@mui/material';
 import { VERSION } from '@/config/env';
 
 import {
+  APP_MODE_SETTINGS_NAME,
+  AppMode,
+} from '../../../config/appSettingsTypes';
+import { hooks } from '../../../config/queryClient';
+import {
   PRESET_VIEW_PANE_CYPRESS,
   SETTINGS_VIEW_PANE_CYPRESS,
   TABLE_VIEW_PANE_CYPRESS,
@@ -37,6 +42,10 @@ enum Tabs {
 const AdminView: FC = () => {
   const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState(Tabs.TABLE_VIEW);
+  const { data: modeSettings } = hooks.useAppSettings<{ mode: AppMode }>({
+    name: APP_MODE_SETTINGS_NAME,
+  });
+  const appMode = modeSettings?.[0]?.data?.mode;
 
   const renderTable = (): ReactElement => (
     <TabContext value={activeTab}>
@@ -61,6 +70,7 @@ const AdminView: FC = () => {
           iconPosition="start"
         />
         <Tab
+          disabled={appMode !== AppMode.Review}
           data-cy={TAB_PRESET_VIEW_CYPRESS}
           value={Tabs.PRESET_VIEW}
           label={t('Preset View')}

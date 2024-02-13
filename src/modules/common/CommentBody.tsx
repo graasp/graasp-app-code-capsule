@@ -1,4 +1,4 @@
-import React, { FC, PropsWithChildren, ReactNode } from 'react';
+import { ReactNode } from 'react';
 import ReactMarkdown from 'react-markdown';
 
 import { styled } from '@mui/material';
@@ -115,7 +115,7 @@ function code(props: {
   );
 }
 
-const CommentBody: FC<PropsWithChildren<Props>> = ({ children }) => (
+const CommentBody = ({ children }: Props): JSX.Element => (
   <StyledReactMarkdown
     remarkPlugins={[remarkGfm, remarkBreaks]}
     components={{ code }}

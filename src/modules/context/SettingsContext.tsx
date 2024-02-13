@@ -1,10 +1,9 @@
-import { FC, ReactElement, createContext, useContext } from 'react';
+import { ReactElement, createContext, useContext } from 'react';
 
 import { AppSetting } from '@graasp/sdk';
 
 import {
   APP_MODE_SETTINGS_NAME,
-  CHATBOT_PROMPT_SETTINGS_NAME,
   CODE_EXECUTION_SETTINGS_NAME,
   DATA_FILE_LIST_SETTINGS_NAME,
   DATA_FILE_SETTINGS_NAME,
@@ -23,7 +22,6 @@ import {
 } from '../../config/settings';
 import {
   AppModeSettings,
-  ChatbotPromptAppSettings,
   CodeExecutionSettings,
   DataFileListSettings,
   DiffViewSettings,
@@ -69,7 +67,6 @@ type AllSettingsDataType = AllSettingsType[keyof AllSettingsType];
 
 export type SettingsContextType = AllSettingsType & {
   dataFileSettings: AppSetting[];
-  chatbotPrompts: ChatbotPromptAppSettings[];
   saveSettings: (
     name: AllSettingsNameType,
     newValue: AllSettingsDataType,
@@ -79,17 +76,16 @@ export type SettingsContextType = AllSettingsType & {
 const defaultContextValue = {
   ...defaultSettingsValues,
   dataFileSettings: [],
-  chatbotPrompts: [],
   saveSettings: () => null,
 };
 
 const SettingsContext = createContext<SettingsContextType>(defaultContextValue);
 
-type Prop = {
+type Props = {
   children: ReactElement | ReactElement[];
 };
 
-export const SettingsProvider: FC<Prop> = ({ children }) => {
+export const SettingsProvider = ({ children }: Props): JSX.Element => {
   const postSettings = mutations.usePostAppSetting();
   const patchSettings = mutations.usePatchAppSetting();
   const { data: appSettingsList, isSuccess } = hooks.useAppSettings();
@@ -121,7 +117,7 @@ export const SettingsProvider: FC<Prop> = ({ children }) => {
         <T extends AllSettingsNameType>(acc: AllSettingsType, key: T) => {
           const setting = appSettingsList.find((s) => s.name === key);
           const settingData = setting?.data;
-          acc[key] = settingData as AllSettingsType[T];
+          acc[key] = settingData as AllSettingsType[T] | undefined;
           return acc;
         },
         {},
@@ -129,16 +125,11 @@ export const SettingsProvider: FC<Prop> = ({ children }) => {
 
       const dataFileSettings = appSettingsList.filter((s) =>
         s.name.startsWith(DATA_FILE_SETTINGS_NAME),
-      ) as AppSetting[];
-
-      const chatbotPrompts = appSettingsList.filter(
-        (s) => s.name === CHATBOT_PROMPT_SETTINGS_NAME,
-      ) as ChatbotPromptAppSettings[];
+      );
 
       return {
         ...allSettings,
         dataFileSettings,
-        chatbotPrompts,
         saveSettings,
       };
     }

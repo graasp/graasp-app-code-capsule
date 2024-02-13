@@ -20,7 +20,7 @@ VITE_API_HOST=http://localhost:3000
 VITE_MOCK_API=true
 VITE_GRAASP_APP_KEY=45678-677889
 VITE_VERSION=latest
-VITE_DEBUG=false # disable success toast message
+# VITE_ENABLE_VERBOSE_MESSAGES=true # comment this out if you want to enable verbose messages
 ```
 
 Launch the app with `yarn dev`.
@@ -35,7 +35,7 @@ VITE_API_HOST=http://localhost:3000
 VITE_MOCK_API=true
 VITE_GRAASP_APP_KEY=45678-677889
 VITE_VERSION=latest
-VITE_DEBUG=false # disable success toast message
+# VITE_ENABLE_VERBOSE_MESSAGES=true # verbose messages will be shown when this is set
 
 # dont open browser
 BROWSER=none

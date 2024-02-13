@@ -7,19 +7,23 @@ import { ChatbotThreadMessage, buildPrompt } from '@graasp/apps-query-client';
 
 import { APP_ACTIONS_TYPES } from '../../config/appActionsTypes';
 import { APP_DATA_TYPES } from '../../config/appDataTypes';
-import { GENERAL_SETTINGS_NAME } from '../../config/appSettingsTypes';
+import {
+  CHATBOT_PROMPT_SETTINGS_NAME,
+  GENERAL_SETTINGS_NAME,
+} from '../../config/appSettingsTypes';
 import {
   CHAT_BOT_ERROR_MESSAGE,
   DEFAULT_BOT_USERNAME,
   INSTRUCTOR_CODE_ID,
 } from '../../config/constants';
-import { mutations } from '../../config/queryClient';
+import { hooks, mutations } from '../../config/queryClient';
 import {
   buildChatbotPromptContainerDataCy,
   buildCommentResponseBoxDataCy,
 } from '../../config/selectors';
 import { DEFAULT_GENERAL_SETTINGS } from '../../config/settings';
 import {
+  ChatbotPromptSettings,
   ChatbotPromptSettingsKeys,
   GeneralSettingsKeys,
 } from '../../interfaces/settings';
@@ -27,7 +31,6 @@ import CommentBody from '../common/CommentBody';
 import CommentEditor from '../common/CommentEditor';
 import ResponseBox from '../common/ResponseBox';
 import { useAppDataContext } from '../context/AppDataContext';
-import { useLoadingIndicator } from '../context/LoadingIndicatorContext';
 import { useSettings } from '../context/SettingsContext';
 import CommentContainer from '../layout/CommentContainer';
 import CustomCommentCard from '../layout/CustomCommentCard';
@@ -45,12 +48,13 @@ const ChatbotPrompts: FC<Props> = ({ line }) => {
   const { mutateAsync: postChatBot } = mutations.usePostChatBot();
   // if a message already exists with the prompt id we should not display this prompt
   const {
-    chatbotPrompts,
     [GENERAL_SETTINGS_NAME]: generalSettings = DEFAULT_GENERAL_SETTINGS,
   } = useSettings();
-  const { startLoading, stopLoading } = useLoadingIndicator();
+  const { data: chatbotPrompts } = hooks.useAppSettings<ChatbotPromptSettings>({
+    name: CHATBOT_PROMPT_SETTINGS_NAME,
+  });
 
-  const currentLinePrompt = chatbotPrompts.find(
+  const currentLinePrompt = chatbotPrompts?.find(
     (c) => c.data[ChatbotPromptSettingsKeys.LineNumber] === line,
   );
 
@@ -66,7 +70,6 @@ const ChatbotPrompts: FC<Props> = ({ line }) => {
 
   const handleNewDiscussion = (newUserComment: string): void => {
     const chatbotMessage = currentLinePrompt?.data.chatbotPrompt;
-    startLoading();
     const newData = {
       line,
       parent: null,
@@ -125,7 +128,7 @@ const ChatbotPrompts: FC<Props> = ({ line }) => {
             postAppDataAsync({
               data: actionData,
               type: APP_DATA_TYPES.BOT_COMMENT,
-            })?.then(() => stopLoading());
+            });
             postAction({
               data: actionData,
               type: APP_ACTIONS_TYPES.CREATE_COMMENT,

@@ -105,40 +105,6 @@ export const MULTILINE_MOCK_COMMENTS: AppData[] = [
     type: APP_DATA_TYPES.COMMENT,
     visibility: AppDataVisibility.Member,
   },
-  {
-    id: uuid(),
-    data: { text: 'some text' },
-    member: MEMBERS.BOB,
-    creator: MEMBERS.BOB,
-    item: MOCK_SERVER_ITEM,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
-    type: APP_DATA_TYPES.COMMENT,
-    visibility: AppDataVisibility.Member,
-  },
-  {
-    id: uuid(),
-    data: { text: 'some text' },
-    member: CURRENT_MEMBER,
-    creator: CURRENT_MEMBER,
-    item: MOCK_SERVER_ITEM,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
-    type: APP_DATA_TYPES.COMMENT,
-    visibility: AppDataVisibility.Member,
-  },
-  // teacher comments
-  {
-    id: uuid(),
-    data: { text: 'some text' },
-    member: CURRENT_MEMBER,
-    creator: CURRENT_MEMBER,
-    item: MOCK_SERVER_ITEM,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
-    type: APP_DATA_TYPES.TEACHER_COMMENT,
-    visibility: AppDataVisibility.Member,
-  },
 ];
 
 export const generateSingleLineThread = (

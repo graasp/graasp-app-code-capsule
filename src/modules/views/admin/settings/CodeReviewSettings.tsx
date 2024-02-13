@@ -24,7 +24,7 @@ import {
   ProgrammingLanguagesType,
   programmingLanguageSelect,
 } from '@/config/programmingLanguages';
-import { mutations } from '@/config/queryClient';
+import { hooks, mutations } from '@/config/queryClient';
 import {
   CODE_EDITOR_LANGUAGE_SELECT_CYPRESS,
   REVIEW_MODE_SETTINGS_KEY,
@@ -46,6 +46,7 @@ import {
 } from '@/config/settings';
 import { CodeVersionType } from '@/interfaces/codeVersions';
 import {
+  ChatbotPromptSettings,
   ChatbotPromptSettingsKeys,
   InstructorCodeSettingsKeys,
 } from '@/interfaces/settings';
@@ -68,9 +69,11 @@ const CodeReviewSettings: FC = () => {
   const {
     [INSTRUCTOR_CODE_VERSION_SETTINGS_NAME]:
       instructorCodeVersionSetting = DEFAULT_INSTRUCTOR_CODE_VERSION_SETTINGS,
-    chatbotPrompts,
     saveSettings,
   } = useSettings();
+  const { data: chatbotPrompts } = hooks.useAppSettings<ChatbotPromptSettings>({
+    name: CHATBOT_PROMPT_SETTINGS_NAME,
+  });
   const [
     instructorCodeVersionLocalSetting,
     setInstructorCodeVersionLocalSetting,
@@ -157,8 +160,8 @@ const CodeReviewSettings: FC = () => {
       <FormLabel>{t('Chatbot Prompts')}</FormLabel>
       <Stack spacing={1}>
         {chatbotPrompts
-          .sort((a, b) => (a.data.lineNumber < b.data.lineNumber ? -1 : 1))
-          .map((s) => (
+          ?.sort((a, b) => (a.data.lineNumber < b.data.lineNumber ? -1 : 1))
+          ?.map((s) => (
             <Card key={s.id} elevation={0} variant="outlined">
               <CardContent sx={{ pb: 0 }}>
                 <Stack direction="row" spacing={1}>

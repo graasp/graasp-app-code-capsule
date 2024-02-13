@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next';
 
 import { Alert, Stack } from '@mui/material';
 
-import AppModeWrapper from '../../common/AppModeWrapper';
+import CodeReview from '../../codeReview/CodeReview';
 
 const PresetView = (): JSX.Element => {
   const { t } = useTranslation();
@@ -11,7 +11,7 @@ const PresetView = (): JSX.Element => {
       <Alert severity="info" sx={{ m: 2 }}>
         {t('Preset View Explanation')}
       </Alert>
-      <AppModeWrapper />
+      <CodeReview isPreset />
     </Stack>
   );
 };

@@ -15,10 +15,12 @@ import {
 
 import groupBy from 'lodash.groupby';
 
+import { COMMENT_APP_DATA_TYPES } from '../../../config/appDataTypes';
 import {
   ANONYMOUS_USER,
   NB_COL_TABLE_VIEW_TABLE,
 } from '../../../config/constants';
+import { hooks } from '../../../config/queryClient';
 import {
   TABLE_NO_COMMENTS_CYPRESS,
   TABLE_VIEW_BODY_USERS_CYPRESS,
@@ -32,12 +34,10 @@ import {
   TABLE_VIEW_VIEW_COMMENTS_CELL_CYPRESS,
   tableRowUserCypress,
 } from '../../../config/selectors';
+import { CommentType } from '../../../interfaces/comment';
 import { getOrphans } from '../../../utils/comments';
 import CodeReview from '../../codeReview/CodeReview';
-import {
-  AppDataProvider,
-  useAppDataContext,
-} from '../../context/AppDataContext';
+import { AppDataProvider } from '../../context/AppDataContext';
 import { useMembersContext } from '../../context/MembersContext';
 import CustomDialog from '../../layout/CustomDialog';
 import DownloadActions from './DownloadActions';
@@ -53,13 +53,17 @@ const TableView: FC = () => {
   const [openCommentView, setOpenCommentView] = useState(false);
   const [currentUser, setCurrentUser] = useState(DEFAULT_CURRENT_USER);
   const members = useMembersContext();
-  const { comments } = useAppDataContext();
+  const { data: appDataArray } = hooks.useAppData();
+  const comments = (appDataArray?.filter((d) =>
+    COMMENT_APP_DATA_TYPES.includes(d.type),
+  ) ?? []) as CommentType[];
 
   const renderTableBody = (): ReactElement[] | ReactElement | null => {
     const orphansId = getOrphans(comments).map((c) => c.id);
     const nonOrphanComments = comments?.filter(
       (c) => !orphansId.includes(c.id),
     );
+
     // nonOrphanComments is undefined or, is an empty list -> there are not resources to display
     if (!nonOrphanComments || nonOrphanComments.length === 0) {
       // show that there are no comments available

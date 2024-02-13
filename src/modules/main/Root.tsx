@@ -104,7 +104,7 @@ const Root: FC = () => {
                 >
                   <ToastContainer position="bottom-right" />
                   <App />
-                  {import.meta.env.DEV && MOCK_API && (
+                  {import.meta.env.MODE !== 'test' && MOCK_API && (
                     <GraaspContextDevTool
                       members={mockMembers}
                       context={mockContext}
@@ -114,7 +114,7 @@ const Root: FC = () => {
                 </WithTokenContext>
               </WithLocalContext>
 
-              {import.meta.env.MODE === 'development' && (
+              {import.meta.env.DEV && import.meta.env.MODE !== 'test' && (
                 <ReactQueryDevtools position="top-right" />
               )}
             </QueryClientProvider>
