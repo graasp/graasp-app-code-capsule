@@ -63,6 +63,7 @@ const TableView: FC = () => {
     const nonOrphanComments = comments?.filter(
       (c) => !orphansId.includes(c.id),
     );
+
     // nonOrphanComments is undefined or, is an empty list -> there are not resources to display
     if (!nonOrphanComments || nonOrphanComments.length === 0) {
       // show that there are no comments available

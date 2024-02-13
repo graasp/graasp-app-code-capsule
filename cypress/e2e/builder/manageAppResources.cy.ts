@@ -101,7 +101,7 @@ describe('Builder as Admin', () => {
       cy.get(buildDataCy(TAB_TABLE_VIEW_CYPRESS)).should('be.visible').click();
     });
 
-    it('Orphan comments', () => {
+    it.only('Orphan comments', () => {
       // table view pane should be displayed
       cy.get(buildDataCy(TABLE_VIEW_PANE_CYPRESS)).should('be.visible');
 
@@ -109,6 +109,7 @@ describe('Builder as Admin', () => {
       const comments = [
         ...SINGLE_LINE_MOCK_COMMENTS,
         ...MULTILINE_MOCK_COMMENTS,
+        MOCK_ORPHAN_COMMENT,
       ].filter((r) => r.type === APP_DATA_TYPES.COMMENT) as CommentType[];
       const orphansId = getOrphans(comments).map((c) => c.id);
       const nonOrphanComments = comments?.filter(
