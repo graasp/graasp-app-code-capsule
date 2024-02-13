@@ -23,7 +23,7 @@
     "@fortawesome/free-regular-svg-icons": "6.5.1",
     "@fortawesome/free-solid-svg-icons": "6.5.1",
     "@fortawesome/react-fontawesome": "0.2.0",
-    "@graasp/apps-query-client": "github:graasp/graasp-apps-query-client#hotfix-app-data-key",
+    "@graasp/apps-query-client": "3.4.3",
     "@graasp/pyodide": "github:graasp/graasp-pyodide",
     "@graasp/sdk": "3.3.0",
     "@graasp/ui": "4.1.1",
@@ -129,7 +129,11 @@
     "vite-plugin-istanbul": "5.0.0"
   },
   "browserslist": {
-    "production": [">0.2%", "not dead", "not op_mini all"],
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
     "development": [
       "last 1 chrome version",
       "last 1 firefox version",
@@ -138,8 +142,13 @@
   },
   "nyc": {
     "all": true,
-    "include": ["src/**/*.{js,ts,jsx,tsx}"],
-    "exclude": ["src/setupTests.ts", "src/**/*.d.ts"]
+    "include": [
+      "src/**/*.{js,ts,jsx,tsx}"
+    ],
+    "exclude": [
+      "src/setupTests.ts",
+      "src/**/*.d.ts"
+    ]
   },
   "resolutions": {
     "@codemirror/state": "6.3.3"
