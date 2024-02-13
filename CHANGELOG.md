@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.2.3](https://github.com/graasp/graasp-app-code-capsule/compare/v2.2.2...v2.2.3) (2024-02-13)
+
+
+### Bug Fixes
+
+* add deploy triggers ([a85b8c9](https://github.com/graasp/graasp-app-code-capsule/commit/a85b8c9bcd676483016dad7da22f645fe18b6847))
+* issues and update apps-query-client dep ([#190](https://github.com/graasp/graasp-app-code-capsule/issues/190)) ([a94fc6e](https://github.com/graasp/graasp-app-code-capsule/commit/a94fc6e0e3e0f7518d8965b4481196cdbf932a20))
+* upgrade query-client ([0d81779](https://github.com/graasp/graasp-app-code-capsule/commit/0d81779b52a634649370e314d28b1361fdedb613))
+
 ## [2.2.2](https://github.com/graasp/graasp-app-code-capsule/compare/v2.2.1...v2.2.2) (2024-01-19)
 
 
