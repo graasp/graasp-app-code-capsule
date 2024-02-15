@@ -1,0 +1,24 @@
+{
+  "translations": {
+    "Welcome to the Graasp App Starter Kit": "Bienvenido al kit de iniciación en aplicaciones de Graasp",
+    "Save": "Guardar",
+    "Clear": "Limpiar",
+    "Saved": "Guardado",
+    "Preview": "Previsualizar ",
+    "View the Users in the Sample Space": "Ver a los usuarios en el espacio de muestra",
+    "Select a bot to impersonate": "Seleccione un bot a personificar",
+    "Close": "Cerrar",
+    "Bot Users": "Usuarios del bot",
+    "Instructor": "Instructor",
+    "Actions": "Acciones",
+    "No Bots": "Sin bots",
+    "Warning! You are impersonating a bot. Clear the field above to write comments as yourself.": "¡Advertencia! Te estás haciendo pasar por un bot. Borra el campo de arriba para escribir comentarios como tu mismo.",
+    "Show Code Run Button": "Mostrar botón de Ejecutar Código",
+    "Preset View Explanation": "En esta vista puedes ver lo que verán los estudiantes. Cuando la aplicación está configurada en el modo \"Revisar\", los comentarios agregados aquí se configurarán como comentarios del instructor y todos los estudiantes los verán.",
+    "Please provide below the reason for reporting this comment": "Proporciona a continuación el motivo para informar este comentario.",
+    "APP_VERSION": "versión {{ version }}",
+    "Supported formats": "Formatos admitidos: {{formats}}",
+    "PRE_LOADED_LIBS_DESCRIPTION": "Puede agregar bibliotecas de Python para ponerlas a disposición de los usuarios. Simplemente escriba el nombre de la biblioteca y separa varias bibliotecas con espacios. Por ejemplo: pandas matplotlib",
+    "APP_MODE_COLLABORATE_DESCRIPTION": "¡Muy pronto!"
+  }
+}
