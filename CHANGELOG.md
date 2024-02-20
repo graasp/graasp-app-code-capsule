@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.3.0](https://github.com/graasp/graasp-app-code-capsule/compare/v2.2.3...v2.3.0) (2024-02-15)
+
+
+### Features
+
+* add spanish translations ([#194](https://github.com/graasp/graasp-app-code-capsule/issues/194)) ([e2b3a44](https://github.com/graasp/graasp-app-code-capsule/commit/e2b3a448972fa60bd0601ad3ec718af4c903c44e))
+
 ## [2.2.3](https://github.com/graasp/graasp-app-code-capsule/compare/v2.2.2...v2.2.3) (2024-02-13)
 
 
