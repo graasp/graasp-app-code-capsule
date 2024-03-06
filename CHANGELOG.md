@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.4.0](https://github.com/graasp/graasp-app-code-capsule/compare/v2.3.0...v2.4.0) (2024-03-06)
+
+
+### Features
+
+* **deps:** update codemirror deps ([#200](https://github.com/graasp/graasp-app-code-capsule/issues/200)) ([8766c0a](https://github.com/graasp/graasp-app-code-capsule/commit/8766c0ada5a20bc8db0144425503d5b26d98ef24))
+
+
+### Bug Fixes
+
+* **deps:** update react monorepo ([#154](https://github.com/graasp/graasp-app-code-capsule/issues/154)) ([49b0091](https://github.com/graasp/graasp-app-code-capsule/commit/49b00916ddd6a23292fd773208eb59c52316995d))
+
 ## [2.3.0](https://github.com/graasp/graasp-app-code-capsule/compare/v2.2.3...v2.3.0) (2024-02-15)
 
 
