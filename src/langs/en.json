@@ -157,6 +157,11 @@
     "APP_MODE_COLLABORATE_DESCRIPTION": "Coming soon !",
     "PUBLIC_ALERT": "You are not authenticated. You cannot save any data.",
     "MAX_COMMENT_LENGTH_SETTING": "Maximum comment length (default is {{default}} character)",
-    "MAX_THREAD_LENGTH_SETTING": "Maximum thread length (default is {{default}} messages per user)"
+    "MAX_THREAD_LENGTH_SETTING": "Maximum thread length (default is {{default}} messages per user)",
+    "Statistics for running code": "Statistics for running code",
+    "Search by member name": "Search by member name",
+    "versions": "versions",
+    "Last version": "Last version",
+    "No Results Match Member": "No Results Match Member"
   }
 }
