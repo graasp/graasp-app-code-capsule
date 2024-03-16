@@ -169,6 +169,8 @@
     "Average Saved Versions": "Average Saved Versions",
     "Average Running Versions": "Average Running Versions",
     "Export": "Export",
-    "Time Spent": "Time Spent"
+    "Time Spent": "Time Spent",
+    "GET_ITEM_ERROR": "Sorry, There was an error retrieving this item actions.",
+    "No Records Yet": "No Records Yet"
   }
 }

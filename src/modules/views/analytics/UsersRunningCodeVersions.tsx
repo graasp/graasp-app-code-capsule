@@ -79,78 +79,91 @@ const UsersRunningCodeVersions = ({
       <Typography variant="h6" align="center">
         {t('Statistics for running code')}
       </Typography>
-      <Box display="flex" gap={2}>
-        <TextField
-          onChange={handleSearchInput}
-          value={memberNameSearchText}
-          placeholder={t('Search by member name')}
-          size="small"
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <SearchIcon />
-              </InputAdornment>
-            ),
+      {runningVersions?.length ? (
+        <>
+          <Box display="flex" gap={2}>
+            <TextField
+              onChange={handleSearchInput}
+              value={memberNameSearchText}
+              placeholder={t('Search by member name')}
+              size="small"
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <SearchIcon />
+                  </InputAdornment>
+                ),
 
-            endAdornment: memberNameSearchText && (
-              <IconButton onClick={() => setMemberNameSearchText('')}>
-                <ClearIcon />
-              </IconButton>
-            ),
-          }}
-        />
-        <CSVLink data={generalStatistics}>
-          <CloudDownloadIcon fontSize="large" color="primary" />
-        </CSVLink>
-      </Box>
-      <Grid container spacing={2} marginTop={1} sx={{ height: '450px' }}>
-        <Grid item xs={12} md={4} sx={{ maxHeight: '100%', overflow: 'auto' }}>
-          <List sx={{ width: '100%', maxHeight: '100%' }}>
-            {searchMembers.map((member) => {
-              const memberIntervals = distributeIntervals({
-                startDate:
-                  codeRunningByMember[member.id][
-                    codeRunningByMember[member.id].length - 1
-                  ].createdAt,
-                endDate: codeRunningByMember[member.id]?.[0].createdAt,
-              });
-              const actionsPerIntervals = groupActionsPerInterval(
-                memberIntervals,
-                codeRunningByMember[member.id],
-              );
-
-              return (
-                <MemberListItem
-                  member={member}
-                  key={member.id}
-                  isMemberSelected={selectedMemberId === member.id}
-                  onClick={() => setSelectedMemberId(member.id)}
-                  totalVersion={codeRunningByMember[member.id].length}
-                  timeOfLastVersion={format(
-                    codeRunningByMember[member.id][
-                      codeRunningByMember[member.id].length - 1
-                    ].createdAt,
-                    'MMM/dd/yyyy HH:mm',
-                  )}
-                  actionsPerIntervals={actionsPerIntervals}
-                />
-              );
-            })}
-          </List>
-        </Grid>
-        <Grid item xs={12} md={8}>
-          {codeRunningByMember[selectedMemberId] ? (
-            <VersionsDisplay
-              spentTimeInSeconds={spentTimeInSeconds || 0}
-              versions={codeRunningByMember[selectedMemberId]
-                ?.slice()
-                .reverse()}
+                endAdornment: memberNameSearchText && (
+                  <IconButton onClick={() => setMemberNameSearchText('')}>
+                    <ClearIcon />
+                  </IconButton>
+                ),
+              }}
             />
-          ) : (
-            t('No Results Match Member')
-          )}
-        </Grid>
-      </Grid>
+            <CSVLink data={generalStatistics}>
+              <CloudDownloadIcon fontSize="large" color="primary" />
+            </CSVLink>
+          </Box>
+          <Grid container spacing={2} marginTop={1} sx={{ height: '450px' }}>
+            <Grid
+              item
+              xs={12}
+              md={4}
+              sx={{ maxHeight: '100%', overflow: 'auto' }}
+            >
+              <List sx={{ width: '100%', maxHeight: '100%' }}>
+                {searchMembers.map((member) => {
+                  const memberIntervals = distributeIntervals({
+                    startDate:
+                      codeRunningByMember[member.id][
+                        codeRunningByMember[member.id].length - 1
+                      ].createdAt,
+                    endDate: codeRunningByMember[member.id]?.[0].createdAt,
+                  });
+                  const actionsPerIntervals = groupActionsPerInterval(
+                    memberIntervals,
+                    codeRunningByMember[member.id],
+                  );
+
+                  return (
+                    <MemberListItem
+                      member={member}
+                      key={member.id}
+                      isMemberSelected={selectedMemberId === member.id}
+                      onClick={() => setSelectedMemberId(member.id)}
+                      totalVersion={codeRunningByMember[member.id].length}
+                      timeOfLastVersion={format(
+                        codeRunningByMember[member.id][
+                          codeRunningByMember[member.id].length - 1
+                        ].createdAt,
+                        'MMM/dd/yyyy HH:mm',
+                      )}
+                      actionsPerIntervals={actionsPerIntervals}
+                    />
+                  );
+                })}
+              </List>
+            </Grid>
+            <Grid item xs={12} md={8}>
+              {codeRunningByMember[selectedMemberId] ? (
+                <VersionsDisplay
+                  spentTimeInSeconds={spentTimeInSeconds || 0}
+                  versions={codeRunningByMember[selectedMemberId]
+                    ?.slice()
+                    .reverse()}
+                />
+              ) : (
+                t('No Results Match Member')
+              )}
+            </Grid>
+          </Grid>{' '}
+        </>
+      ) : (
+        <Box display="flex" justifyContent="center">
+          {t('No Records Yet')}
+        </Box>
+      )}
     </Box>
   );
 };

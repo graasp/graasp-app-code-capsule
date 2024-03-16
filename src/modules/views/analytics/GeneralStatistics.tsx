@@ -39,7 +39,7 @@ const GeneralStatistics = ({ generalStatistics }: Props): JSX.Element => {
         <StatisticCard
           icon={AccessTimeIcon}
           title={t('Average Time Spent By Users')}
-          stat={formatSeconds(averageTime / generalStatistics.length)}
+          stat={formatSeconds(averageTime / generalStatistics.length) || 0}
           key="timeSpent"
         />
         <StatisticCard
@@ -51,13 +51,13 @@ const GeneralStatistics = ({ generalStatistics }: Props): JSX.Element => {
         <StatisticCard
           icon={SaveIcon}
           title={t('Average Saved Versions')}
-          stat={(savedVersions / generalStatistics.length).toFixed()}
+          stat={(savedVersions / generalStatistics.length || 0).toFixed()}
           key="savedVersions"
         />
         <StatisticCard
           icon={RunIcon}
           title={t('Average Running Versions')}
-          stat={(runningVersions / generalStatistics.length).toFixed()}
+          stat={(runningVersions / generalStatistics.length || 0).toFixed()}
           key="runningVersions"
         />
       </Grid>
