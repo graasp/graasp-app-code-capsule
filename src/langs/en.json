@@ -162,6 +162,13 @@
     "Search by member name": "Search by member name",
     "versions": "versions",
     "Last version": "Last version",
-    "No Results Match Member": "No Results Match Member"
+    "No Results Match Member": "No Results Match Member",
+    "General Statistics": "General Statistics",
+    "Average Time Spent By Users": "Average Time Spent By Users",
+    "Total Users": "Total Users",
+    "Average Saved Versions": "Average Saved Versions",
+    "Average Running Versions": "Average Running Versions",
+    "Export": "Export",
+    "Time Spent": "Time Spent"
   }
 }

@@ -4292,7 +4292,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/lodash.countby@npm:4.6.9":
+"@types/lodash.countby@npm:^4":
   version: 4.6.9
   resolution: "@types/lodash.countby@npm:4.6.9"
   dependencies:
@@ -4334,6 +4334,15 @@ __metadata:
   dependencies:
     "@types/lodash": "npm:*"
   checksum: ef381be69b459caa42d7c5dc4ff5b3653e6b3c9b2393f6e92848efeafe7690438e058b26f036b11b4e535fc7645ff12d1203847b9a82e9ae0593bdd3b25a971b
+  languageName: node
+  linkType: hard
+
+"@types/lodash.sumby@npm:4.6.9":
+  version: 4.6.9
+  resolution: "@types/lodash.sumby@npm:4.6.9"
+  dependencies:
+    "@types/lodash": "npm:*"
+  checksum: c26da15e0047e683eac0f07f00f5ad8143fa9083cd00a3fb1e4f1d0b84c6f063cacf2b780716c037c5cb4155ef237995fffc47a9fd67a08a40b1fe0f0b3a3515
   languageName: node
   linkType: hard
 
@@ -4443,6 +4452,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/react-csv@npm:1.1.10":
+  version: 1.1.10
+  resolution: "@types/react-csv@npm:1.1.10"
+  dependencies:
+    "@types/react": "npm:*"
+  checksum: 424b3eefc565e5cc438cce3e64a1a6181be3ae2c9824570283dea7eccd4c31405e9ee88926ab1f8901817df47777fca2fab41e39dcf03c04b53817ba2353ae0d
+  languageName: node
+  linkType: hard
+
 "@types/react-dom@npm:18.2.19":
   version: 18.2.19
   resolution: "@types/react-dom@npm:18.2.19"
@@ -4458,6 +4476,15 @@ __metadata:
   dependencies:
     "@types/react": "npm:*"
   checksum: bceec20a57c91fa9b6b63898a228f6074b8d62dce29b7069a7e986bc7f8cd910ffd197808b559b0a0dd53221e6058db13622a1d1f1faa708557e8c41af1326e4
+  languageName: node
+  linkType: hard
+
+"@types/react-sparklines@npm:^1":
+  version: 1.7.5
+  resolution: "@types/react-sparklines@npm:1.7.5"
+  dependencies:
+    "@types/react": "npm:*"
+  checksum: e79755fb1ed504d36ca0b6aec4e7ef54eba30448a27c275ef56b55132c37761c11d693f885e248e2e8ba80f294bf9475e7d0e15ce5f5bb2a2219f07f18488409
   languageName: node
   linkType: hard
 
@@ -8819,14 +8846,17 @@ __metadata:
     "@trivago/prettier-plugin-sort-imports": "npm:4.3.0"
     "@types/file-saver": "npm:^2.0.7"
     "@types/i18n": "npm:0.13.10"
-    "@types/lodash.countby": "npm:4.6.9"
+    "@types/lodash.countby": "npm:^4"
     "@types/lodash.groupby": "npm:4.6.9"
     "@types/lodash.isequal": "npm:4.5.8"
     "@types/lodash.isobject": "npm:3.0.9"
     "@types/lodash.isstring": "npm:4.0.9"
+    "@types/lodash.sumby": "npm:4.6.9"
     "@types/node": "npm:20.10.5"
     "@types/react": "npm:18.2.60"
+    "@types/react-csv": "npm:1.1.10"
     "@types/react-dom": "npm:18.2.19"
+    "@types/react-sparklines": "npm:^1"
     "@types/react-syntax-highlighter": "npm:^15"
     "@types/uuid": "npm:9.0.7"
     "@typescript-eslint/eslint-plugin": "npm:6.15.0"
@@ -8863,16 +8893,19 @@ __metadata:
     lodash.isequal: "npm:4.5.0"
     lodash.isobject: "npm:3.0.2"
     lodash.isstring: "npm:4.0.1"
+    lodash.sumby: "npm:4.6.0"
     nyc: "npm:15.1.0"
     prettier: "npm:3.1.1"
     prism-react-renderer: "npm:2.3.1"
     react: "npm:18.2.0"
+    react-csv: "npm:2.2.2"
     react-diff-viewer: "npm:3.1.1"
     react-dom: "npm:18.2.0"
     react-i18next: "npm:13.5.0"
     react-markdown: "npm:9.0.1"
     react-mde: "npm:12.0.8"
     react-router-dom: "npm:6.21.0"
+    react-sparklines: "npm:1.7.0"
     react-syntax-highlighter: "npm:15.5.0"
     react-toastify: "npm:9.1.3"
     remark-breaks: "npm:4.0.0"
@@ -10455,6 +10488,13 @@ __metadata:
   version: 4.4.0
   resolution: "lodash.startcase@npm:4.4.0"
   checksum: 3091048a54a2f92bcf2c6441d2bd9a706fb133d5f461ae7c310d6dca1530338a06c91e9e42a5b14b12e875ddae1814d448050dc02afe2cec09b3995d8e836837
+  languageName: node
+  linkType: hard
+
+"lodash.sumby@npm:4.6.0":
+  version: 4.6.0
+  resolution: "lodash.sumby@npm:4.6.0"
+  checksum: cb526d3da501b494a1246baa9461b539752373b647967b74cd1eee20e899165e6e59cd150ebf179c8f27dc7ef128ce1cebcf8d4704d4b4e4aecc536324b7ac83
   languageName: node
   linkType: hard
 
@@ -12297,7 +12337,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prop-types@npm:^15.5.6, prop-types@npm:^15.6.1, prop-types@npm:^15.6.2, prop-types@npm:^15.8.1":
+"prop-types@npm:^15.5.10, prop-types@npm:^15.5.6, prop-types@npm:^15.6.1, prop-types@npm:^15.6.2, prop-types@npm:^15.8.1":
   version: 15.8.1
   resolution: "prop-types@npm:15.8.1"
   dependencies:
@@ -12461,6 +12501,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-csv@npm:2.2.2":
+  version: 2.2.2
+  resolution: "react-csv@npm:2.2.2"
+  checksum: 8c3708d6044f79a14a0d8e58924b95fab36b7435898008facb9ccb86081ab62a95ebbec62644e621e1589128fffda4f10d7d4a111ade2f861137391d00e18d66
+  languageName: node
+  linkType: hard
+
 "react-diff-viewer@npm:3.1.1":
   version: 3.1.1
   resolution: "react-diff-viewer@npm:3.1.1"
@@ -12619,6 +12666,18 @@ __metadata:
   peerDependencies:
     react: ">=16.8"
   checksum: 10c58589d804b823caf3fd46403662769375618ae39ebae99f8df167c43440bb8ebf853548ba2bf96f21027c72c234d4fc37042643c91c9920f1cdfda5e03fab
+  languageName: node
+  linkType: hard
+
+"react-sparklines@npm:1.7.0":
+  version: 1.7.0
+  resolution: "react-sparklines@npm:1.7.0"
+  dependencies:
+    prop-types: "npm:^15.5.10"
+  peerDependencies:
+    react: "*"
+    react-dom: "*"
+  checksum: a6e59d94eab4d33306c17c942df9d101bcbf07f95b685f8f23d7fd9546df5ded5b2170e2ea80a13c276460db1e1a56fd74190e28b523263ae82e945a5114e3b6
   languageName: node
   linkType: hard
 

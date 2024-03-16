@@ -1,5 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { Sparklines, SparklinesLine } from 'react-sparklines';
 
 import {
   Box,
@@ -7,6 +8,8 @@ import {
   ListItem,
   ListItemText,
   Typography,
+  alpha,
+  styled,
 } from '@mui/material';
 
 import { Member } from '@graasp/sdk';
@@ -17,28 +20,34 @@ interface Props {
   onClick: () => void;
   totalVersion: number;
   timeOfLastVersion: string;
+  actionsPerIntervals: { [key: string]: number };
 }
+
+const StyledListItem = styled(ListItem)<{ isMemberSelected: boolean }>(
+  ({ isMemberSelected, theme }) => ({
+    cursor: 'pointer',
+    background: isMemberSelected
+      ? ` ${alpha(theme.palette.primary.main, 0.07)}`
+      : '',
+  }),
+);
+
 const MemberListItem = ({
   member,
   totalVersion,
   isMemberSelected,
   onClick,
   timeOfLastVersion,
+  actionsPerIntervals,
 }: Props): JSX.Element => {
   const { t } = useTranslation();
 
   return (
     <>
-      <ListItem
+      <StyledListItem
         alignItems="flex-start"
         onClick={onClick}
-        sx={{
-          cursor: 'pointer',
-          transform: isMemberSelected ? `scale(1)` : `scale(0.9)`,
-          boxShadow: isMemberSelected
-            ? `rgba(100, 100, 111, 0.2) 0px 7px 29px 0px`
-            : '',
-        }}
+        isMemberSelected={isMemberSelected}
       >
         <ListItemText
           primary={
@@ -55,9 +64,27 @@ const MemberListItem = ({
               </Typography>
             </Box>
           }
-          secondary={`${t('Last version')} : ${timeOfLastVersion}`}
+          secondary={
+            <Box display="flex" justifyContent="space-between" alignItems="end">
+              <Typography variant="caption" component="span">
+                {t('Last version')} : {timeOfLastVersion}
+              </Typography>
+              <Box sx={{ width: '50%' }}>
+                <Sparklines
+                  data={Object.values(actionsPerIntervals)}
+                  limit={5}
+                  height={20}
+                >
+                  <SparklinesLine
+                    color="#5050d2"
+                    style={{ fill: 'none', opacity: 1 }}
+                  />
+                </Sparklines>
+              </Box>
+            </Box>
+          }
         />
-      </ListItem>
+      </StyledListItem>
       <Divider variant="middle" component="li" />
     </>
   );

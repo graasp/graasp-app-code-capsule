@@ -14,6 +14,7 @@ import { AppAction } from '@graasp/sdk';
 import { format } from 'date-fns';
 
 import { CodeVersionType } from '@/interfaces/codeVersions';
+import { VERSION_STEP_DURATION, formatSeconds } from '@/utils/chart';
 
 import RunView from './RunView';
 import TimeLineSlider, { Mark } from './TimeLineSlider';
@@ -31,8 +32,12 @@ const shapeTimeLineMarker = (
 
 interface Props {
   versions: AppAction<CodeVersionType>[];
+  spentTimeInSeconds: number;
 }
-const VersionsDisplay = ({ versions }: Props): JSX.Element => {
+const VersionsDisplay = ({
+  versions,
+  spentTimeInSeconds,
+}: Props): JSX.Element => {
   const { t } = useTranslation();
   const [versionIndex, setVersionIndex] = useState(0);
   const [stopRunning, setStopRunning] = useState(false);
@@ -48,7 +53,7 @@ const VersionsDisplay = ({ versions }: Props): JSX.Element => {
     if (versionIndex < versions.length - 1 && !stopRunning) {
       interval = setInterval(() => {
         setVersionIndex((prev) => prev + 1);
-      }, 2000);
+      }, VERSION_STEP_DURATION);
     }
     return () => clearInterval(interval);
   }, [versionIndex, versions, stopRunning]);
@@ -74,10 +79,16 @@ const VersionsDisplay = ({ versions }: Props): JSX.Element => {
         >
           {versions[versionIndex]?.data.code}
         </SyntaxHighlighter>
-        <Typography variant="caption">
+        <Typography variant="caption" component="div">
           {`${versions.length} ${t('versions')}`}
         </Typography>
-        <Grid container spacing={2} alignItems="start">
+        <Typography variant="caption" sx={{ fontWeight: 'bold' }}>
+          {t('Time Spent')}:
+        </Typography>
+        <Typography variant="caption">
+          {formatSeconds(spentTimeInSeconds)}
+        </Typography>
+        <Grid container alignItems="start" justifyContent="flex-end">
           <Grid item xs={8}>
             <TimeLineSlider
               handleChange={handleSliderChange}
@@ -85,39 +96,45 @@ const VersionsDisplay = ({ versions }: Props): JSX.Element => {
               versionIndex={versionIndex}
             />
           </Grid>
-          <Grid item xs={4} sx={{ paddingTop: '10px' }}>
-            <IconButton
-              aria-label="previous"
-              color="primary"
-              onClick={() => setVersionIndex(versionIndex - 1)}
-              disabled={versionIndex === 0}
+          <Grid item xs={4}>
+            <Box
+              display="flex"
+              justifyContent="flex-end"
+              sx={{ button: { paddingTop: '4px' } }}
             >
-              <SkipPreviousTwoToneIcon />
-            </IconButton>
-            <IconButton
-              aria-label="start"
-              color="primary"
-              onClick={() => setStopRunning((isRunning) => !isRunning)}
-            >
-              {stopRunning ? <NotStartedTwoToneIcon /> : <PauseCircleIcon />}
-            </IconButton>
-            <IconButton
-              aria-label="next"
-              color="primary"
-              disabled={versionIndex === versions.length - 1}
-              onClick={() => setVersionIndex(versionIndex + 1)}
-            >
-              <SkipNextTwoToneIcon />
-            </IconButton>
-            <Button
-              color="primary"
-              onClick={() => {
-                setStopRunning(true);
-                setIsRunnerOpen(true);
-              }}
-            >
-              {t('Run Code')}
-            </Button>
+              <IconButton
+                aria-label="previous"
+                color="primary"
+                onClick={() => setVersionIndex(versionIndex - 1)}
+                disabled={versionIndex === 0}
+              >
+                <SkipPreviousTwoToneIcon />
+              </IconButton>
+              <IconButton
+                aria-label="start"
+                color="primary"
+                onClick={() => setStopRunning((isRunning) => !isRunning)}
+              >
+                {stopRunning ? <NotStartedTwoToneIcon /> : <PauseCircleIcon />}
+              </IconButton>
+              <IconButton
+                aria-label="next"
+                color="primary"
+                disabled={versionIndex === versions.length - 1}
+                onClick={() => setVersionIndex(versionIndex + 1)}
+              >
+                <SkipNextTwoToneIcon />
+              </IconButton>
+              <Button
+                color="primary"
+                onClick={() => {
+                  setStopRunning(true);
+                  setIsRunnerOpen(true);
+                }}
+              >
+                {t('Run Code')}
+              </Button>
+            </Box>
           </Grid>
         </Grid>
       </Box>
