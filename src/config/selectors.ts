@@ -182,8 +182,15 @@ export const buildCommitFieldCypress = (selector: string): string =>
   `[data-cy=${selector}]`;
 export const settingKeyDataCy = (key: string): string => `setting-${key}`;
 
+export const buildStatisticCardID = (key: string): string => `statistic-${key}`;
+
 // keys for save buttons and tests
 export const EXECUTION_MODE_SETTINGS_KEY = 'EXECUTION_MODE_SETTINGS_KEY';
 export const REVIEW_MODE_SETTINGS_KEY = 'REVIEW_MODE_SETTINGS_KEY';
 export const EXPLAIN_MODE_SETTINGS_KEY = 'EXPLAIN_MODE_SETTINGS_KEY';
 export const SETTING_NEW_CHATBOT_PROMPT_KEY = 'NEW_CHATBOT_PROMPT_KEY';
+
+export const STATISTIC_TIME_SPENT_KEY = 'timeSpent';
+export const STATISTIC_TOTAL_USERS_KEY = 'totalUsers';
+export const STATISTIC_SAVED_VERSIONS_KEY = 'savedVersions';
+export const STATISTIC_RUNNING_VERSIONS_KEY = 'runningVersions';

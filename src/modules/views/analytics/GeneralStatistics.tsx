@@ -6,6 +6,12 @@ import { Box, Grid, Typography } from '@mui/material';
 
 import sumBy from 'lodash.sumby';
 
+import {
+  STATISTIC_RUNNING_VERSIONS_KEY,
+  STATISTIC_SAVED_VERSIONS_KEY,
+  STATISTIC_TIME_SPENT_KEY,
+  STATISTIC_TOTAL_USERS_KEY,
+} from '@/config/selectors';
 import { GeneralMemberStatistic } from '@/interfaces/analytics';
 import { formatSeconds } from '@/utils/chart';
 
@@ -40,25 +46,29 @@ const GeneralStatistics = ({ generalStatistics }: Props): JSX.Element => {
           icon={AccessTimeIcon}
           title={t('Average Time Spent By Users')}
           stat={formatSeconds(averageTime / generalStatistics.length) || 0}
-          key="timeSpent"
+          key={STATISTIC_TIME_SPENT_KEY}
+          cardId={STATISTIC_TIME_SPENT_KEY}
         />
         <StatisticCard
           icon={PeopleIcon}
           title={t('Total Users')}
           stat={generalStatistics.length}
-          key="totalUsers"
+          key={STATISTIC_TOTAL_USERS_KEY}
+          cardId={STATISTIC_TOTAL_USERS_KEY}
         />
         <StatisticCard
           icon={SaveIcon}
           title={t('Average Saved Versions')}
           stat={(savedVersions / generalStatistics.length || 0).toFixed()}
-          key="savedVersions"
+          key={STATISTIC_SAVED_VERSIONS_KEY}
+          cardId={STATISTIC_SAVED_VERSIONS_KEY}
         />
         <StatisticCard
           icon={RunIcon}
           title={t('Average Running Versions')}
           stat={(runningVersions / generalStatistics.length || 0).toFixed()}
-          key="runningVersions"
+          key={STATISTIC_RUNNING_VERSIONS_KEY}
+          cardId={STATISTIC_RUNNING_VERSIONS_KEY}
         />
       </Grid>
     </Box>
