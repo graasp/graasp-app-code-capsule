@@ -38,19 +38,21 @@ const UsersRunningCodeVersions = ({
 }: Props): JSX.Element => {
   const { t } = useTranslation();
 
-  const codeRunningByMember = useMemo(
+  const [memberNameSearchText, setMemberNameSearchText] = useState('');
+  const [selectedMemberId, setSelectedMemberId] = useState('');
+
+  const codeRunningByMembers = useMemo(
     () => groupBy(runningVersions, 'member.id'),
     [runningVersions],
   );
 
   const members = useMemo(
     () =>
-      Object.keys(codeRunningByMember).map(
-        (ele) => codeRunningByMember[ele][0].member, // get member objects
+      Object.keys(codeRunningByMembers).map(
+        (ele) => codeRunningByMembers[ele][0].member, // get member objects
       ),
-    [codeRunningByMember],
+    [codeRunningByMembers],
   );
-  const [memberNameSearchText, setMemberNameSearchText] = useState('');
 
   const searchMembers = useMemo(
     () =>
@@ -64,7 +66,6 @@ const UsersRunningCodeVersions = ({
     const text = event.target.value;
     setMemberNameSearchText(text.toLowerCase());
   };
-  const [selectedMemberId, setSelectedMemberId] = useState('');
 
   useEffect(() => {
     // Update selectedMemberId when searchMembers changes, selecting the first item by default
@@ -74,6 +75,7 @@ const UsersRunningCodeVersions = ({
   const spentTimeInSeconds = generalStatistics.find(
     (ele) => ele.memberId === selectedMemberId,
   )?.spentTimeInSeconds;
+
   return (
     <Box>
       <Typography variant="h6" align="center">
@@ -116,14 +118,14 @@ const UsersRunningCodeVersions = ({
                 {searchMembers.map((member) => {
                   const memberIntervals = distributeIntervals({
                     startDate:
-                      codeRunningByMember[member.id][
-                        codeRunningByMember[member.id].length - 1
+                      codeRunningByMembers[member.id][
+                        codeRunningByMembers[member.id].length - 1
                       ].createdAt,
-                    endDate: codeRunningByMember[member.id]?.[0].createdAt,
+                    endDate: codeRunningByMembers[member.id]?.[0].createdAt,
                   });
                   const actionsPerIntervals = groupActionsPerInterval(
                     memberIntervals,
-                    codeRunningByMember[member.id],
+                    codeRunningByMembers[member.id],
                   );
 
                   return (
@@ -132,10 +134,10 @@ const UsersRunningCodeVersions = ({
                       key={member.id}
                       isMemberSelected={selectedMemberId === member.id}
                       onClick={() => setSelectedMemberId(member.id)}
-                      totalVersion={codeRunningByMember[member.id].length}
+                      totalVersion={codeRunningByMembers[member.id].length}
                       timeOfLastVersion={format(
-                        codeRunningByMember[member.id][
-                          codeRunningByMember[member.id].length - 1
+                        codeRunningByMembers[member.id][
+                          codeRunningByMembers[member.id].length - 1
                         ].createdAt,
                         'MMM/dd/yyyy HH:mm',
                       )}
@@ -146,10 +148,10 @@ const UsersRunningCodeVersions = ({
               </List>
             </Grid>
             <Grid item xs={12} md={8}>
-              {codeRunningByMember[selectedMemberId] ? (
+              {codeRunningByMembers[selectedMemberId] ? (
                 <VersionsDisplay
                   spentTimeInSeconds={spentTimeInSeconds || 0}
-                  versions={codeRunningByMember[selectedMemberId]
+                  versions={codeRunningByMembers[selectedMemberId]
                     ?.slice()
                     .reverse()}
                 />
