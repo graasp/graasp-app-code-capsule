@@ -48,7 +48,7 @@ const GeneralStatistics = ({ generalStatistics }: Props): JSX.Element => {
         <StatisticCard
           icon={AccessTimeIcon}
           title={t('Average Time Spent By Users')}
-          stat={`${hours} ${t('hours')}, ${minutes} ${t('minutes')}` || 0}
+          stat={`${hours || 0} ${t('hours')}, ${minutes || 0} ${t('minutes')}`}
           key={STATISTIC_TIME_SPENT_KEY}
           cardId={STATISTIC_TIME_SPENT_KEY}
         />

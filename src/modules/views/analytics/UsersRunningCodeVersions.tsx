@@ -129,7 +129,7 @@ const UsersRunningCodeVersions = ({
             <Grid item xs={12} md={8}>
               {codeRunningByMembers[selectedMemberId] ? (
                 <VersionsDisplay
-                  spentTimeInSeconds={spentTimeInSeconds || 0}
+                  spentTimeInSeconds={spentTimeInSeconds ?? 0}
                   versions={codeRunningByMembers[selectedMemberId]}
                 />
               ) : (
