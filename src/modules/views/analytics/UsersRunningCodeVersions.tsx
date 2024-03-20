@@ -26,10 +26,10 @@ import { CodeVersionType } from '@/interfaces/codeVersions';
 import MemberListItem from './MemberListItem';
 import VersionsDisplay from './VersionsDisplay';
 
-interface Props {
+type Props = {
   runningVersions: AppAction<CodeVersionType>[];
   generalStatistics: GeneralMemberStatistic[];
-}
+};
 
 const UsersRunningCodeVersions = ({
   runningVersions,

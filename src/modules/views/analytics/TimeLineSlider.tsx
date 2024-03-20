@@ -2,10 +2,10 @@ import React from 'react';
 
 import { Slider, styled } from '@mui/material';
 
-export interface Mark {
+export type Mark = {
   value: number;
   label: string;
-}
+};
 const StyledSlider = styled(Slider)(() => ({
   // Styling the labels
   '& .MuiSlider-markLabel': {
@@ -16,11 +16,12 @@ const StyledSlider = styled(Slider)(() => ({
   },
 }));
 
-interface Props {
+type Props = {
   marks: Mark[];
   handleChange: (event: Event, newValue: number | number[]) => void;
   versionIndex: number;
-}
+};
+
 const TimeLineSlider = ({
   marks,
   handleChange,

@@ -22,9 +22,9 @@ const PeopleIcon = <People fontSize="large" color="primary" />;
 const SaveIcon = <Save fontSize="large" color="primary" />;
 const RunIcon = <RunCircleSharp fontSize="large" color="primary" />;
 
-interface Props {
+type Props = {
   generalStatistics: GeneralMemberStatistic[];
-}
+};
 
 const GeneralStatistics = ({ generalStatistics }: Props): JSX.Element => {
   const { t } = useTranslation();

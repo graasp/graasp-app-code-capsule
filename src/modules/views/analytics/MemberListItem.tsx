@@ -22,13 +22,13 @@ import { roundDateToIntervalStart } from '@/utils/chart';
 
 import MemberVersionsSparkLine from './MemberVersionsSparkLine';
 
-interface Props {
+type Props = {
   member: Member;
   isMemberSelected: boolean;
   onClick: () => void;
   runningVersions: AppAction<CodeVersionType>[];
   isLastChild: boolean;
-}
+};
 
 const StyledListItem = styled(ListItem)<{ isMemberSelected: boolean }>(
   ({ isMemberSelected, theme }) => ({

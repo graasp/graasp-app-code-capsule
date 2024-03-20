@@ -35,10 +35,10 @@ const formatMarkers = (versions: AppAction<CodeVersionType>[]): Mark[] => {
   return timestamps;
 };
 
-interface Props {
+type Props = {
   versions: AppAction<CodeVersionType>[];
   spentTimeInSeconds: number;
-}
+};
 const VersionsDisplay = ({
   versions,
   spentTimeInSeconds,
