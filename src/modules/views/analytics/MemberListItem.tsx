@@ -27,7 +27,6 @@ type Props = {
   isMemberSelected: boolean;
   onClick: () => void;
   runningVersions: AppAction<CodeVersionType>[];
-  isLastChild: boolean;
 };
 
 const StyledListItem = styled(ListItem)<{ isMemberSelected: boolean }>(
@@ -44,7 +43,6 @@ const MemberListItem = ({
   isMemberSelected,
   onClick,
   runningVersions,
-  isLastChild,
 }: Props): JSX.Element => {
   const { t } = useTranslation();
 
@@ -75,7 +73,7 @@ const MemberListItem = ({
                 {member.name}
               </Typography>
               <Typography variant="body2" color="text.primary" component="span">
-                {`${runningVersions.length} ${t('versions')}`}
+                {t('VERSION_COUNT', { count: runningVersions.length })}
               </Typography>
             </Stack>
           }
@@ -86,7 +84,7 @@ const MemberListItem = ({
               alignItems="end"
             >
               <Typography variant="caption" component="span">
-                {t('Last version')} : {timeOfLastVersion}
+                {t('LAST_VERSION', { date: timeOfLastVersion })}
               </Typography>
               <Box sx={{ width: '50%' }}>
                 <MemberVersionsSparkLine
@@ -97,7 +95,11 @@ const MemberListItem = ({
           }
         />
       </StyledListItem>
-      {!isLastChild && <Divider variant="middle" component="li" />}
+      <Divider
+        variant="middle"
+        component="li"
+        sx={{ '&:last-child': { display: 'none' } }}
+      />
     </>
   );
 };

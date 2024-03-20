@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { AccessTime, People, RunCircleSharp, Save } from '@mui/icons-material';
 import { Box, Grid, Typography } from '@mui/material';
 
+import { formatDuration } from 'date-fns';
 import sumBy from 'lodash.sumby';
 
 import {
@@ -39,6 +40,7 @@ const GeneralStatistics = ({ generalStatistics }: Props): JSX.Element => {
   const { hours, minutes } = formatSeconds(
     averageTime / generalStatistics.length,
   );
+
   return (
     <Box marginY={4}>
       <Typography variant="h6" align="center">
@@ -48,7 +50,7 @@ const GeneralStatistics = ({ generalStatistics }: Props): JSX.Element => {
         <StatisticCard
           icon={AccessTimeIcon}
           title={t('Average Time Spent By Users')}
-          stat={`${hours || 0} ${t('hours')}, ${minutes || 0} ${t('minutes')}`}
+          stat={formatDuration({ hours, minutes })}
           key={STATISTIC_TIME_SPENT_KEY}
           cardId={STATISTIC_TIME_SPENT_KEY}
         />

@@ -25,7 +25,6 @@ const App: FC = () => {
 
   const renderContent = (): ReactElement => {
     switch (context.context) {
-      // eslint-disable-next-line default-case-last
       case Context.Builder:
         return <BuilderView />;
 

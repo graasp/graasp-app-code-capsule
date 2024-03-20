@@ -114,14 +114,13 @@ const UsersRunningCodeVersions = ({
               sx={{ maxHeight: '100%', overflow: 'auto' }}
             >
               <List sx={{ width: '100%', maxHeight: '100%' }}>
-                {searchMembers.map((member, index) => (
+                {searchMembers.map((member) => (
                   <MemberListItem
                     member={member}
                     key={member.id}
                     isMemberSelected={selectedMemberId === member.id}
                     onClick={() => setSelectedMemberId(member.id)}
                     runningVersions={codeRunningByMembers[member.id]}
-                    isLastChild={index === searchMembers.length}
                   />
                 ))}
               </List>

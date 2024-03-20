@@ -161,7 +161,6 @@
     "Statistics for running code": "Statistics for running code",
     "Search by member name": "Search by member name",
     "versions": "versions",
-    "Last version": "Last version",
     "No Results Match Member": "No Results Match Member",
     "General Statistics": "General Statistics",
     "Average Time Spent By Users": "Average Time Spent By Users",
@@ -173,6 +172,9 @@
     "GET_ITEM_ERROR": "Sorry, There was an error retrieving this item actions.",
     "No Records Yet": "No Records Yet",
     "hours": "hours",
-    "minutes": "minutes"
+    "minutes": "minutes",
+    "VERSION_COUNT_one": "{{count}} version",
+    "VERSION_COUNT_other": "{{count}} versions",
+    "LAST_VERSION": "Last version: {{date}}"
   }
 }

@@ -27,24 +27,25 @@ const AnalyticsView = (): JSX.Element => {
     const actionsByType = groupBy(actionsOrdersByCreatedDate, 'type');
     const actionsByMember = groupBy(actionsOrdersByCreatedDate, 'member.id');
 
-    const generalStatistic = Object.keys(actionsByMember).map((ele) => {
-      const startTime = actionsByMember[ele][0].createdAt;
-      const endTime =
-        actionsByMember[ele][actionsByMember[ele].length - 1].createdAt;
-      return {
-        memberId: ele,
-        endTime,
-        startTime,
-        memberName: actionsByMember[ele][0].member.name,
-        savedVersions: actionsByMember[ele].filter(
-          (version) => version.type === APP_ACTIONS_TYPES.SAVE_CODE,
-        ).length,
-        runningVersions: actionsByMember[ele].filter(
-          (version) => version.type === APP_ACTIONS_TYPES.RUN_CODE,
-        ).length,
-        spentTimeInSeconds: differenceInSeconds(endTime, startTime),
-      };
-    });
+    const generalStatistic = Object.entries(actionsByMember).map(
+      ([memberId, memberActions]) => {
+        const startTime = memberActions[0].createdAt;
+        const endTime = memberActions[memberActions.length - 1].createdAt;
+        return {
+          memberId,
+          endTime,
+          startTime,
+          memberName: memberActions[0].member.name,
+          savedVersions: memberActions.filter(
+            (version) => version.type === APP_ACTIONS_TYPES.SAVE_CODE,
+          ).length,
+          runningVersions: memberActions.filter(
+            (version) => version.type === APP_ACTIONS_TYPES.RUN_CODE,
+          ).length,
+          spentTimeInSeconds: differenceInSeconds(endTime, startTime),
+        };
+      },
+    );
 
     return (
       <div data-cy={ANALYTICS_VIEW_CY}>
