@@ -7,7 +7,14 @@ import NotStartedTwoToneIcon from '@mui/icons-material/NotStartedTwoTone';
 import PauseCircleIcon from '@mui/icons-material/PauseCircle';
 import SkipNextTwoToneIcon from '@mui/icons-material/SkipNextTwoTone';
 import SkipPreviousTwoToneIcon from '@mui/icons-material/SkipPreviousTwoTone';
-import { Box, Button, Grid, IconButton, Typography } from '@mui/material';
+import {
+  Box,
+  Button,
+  Grid,
+  IconButton,
+  Stack,
+  Typography,
+} from '@mui/material';
 
 import { AppAction } from '@graasp/sdk';
 
@@ -19,9 +26,7 @@ import { VERSION_STEP_DURATION, formatSeconds } from '@/utils/chart';
 import RunView from './RunView';
 import TimeLineSlider, { Mark } from './TimeLineSlider';
 
-const shapeTimeLineMarker = (
-  versions: AppAction<CodeVersionType>[],
-): Mark[] => {
+const formatMarkers = (versions: AppAction<CodeVersionType>[]): Mark[] => {
   const timestamps = versions.map((item) => ({
     value: Date.parse(item.createdAt),
     label: format(item.createdAt, 'MMM/dd HH:mm'),
@@ -43,13 +48,11 @@ const VersionsDisplay = ({
   const [stopRunning, setStopRunning] = useState(false);
   const [isRunnerOpen, setIsRunnerOpen] = useState(false);
 
-  const timeLineMarks = useMemo(
-    () => shapeTimeLineMarker(versions),
-    [versions],
-  );
+  const timeLineMarks = useMemo(() => formatMarkers(versions), [versions]);
 
   useEffect(() => {
     let interval: number;
+    // setinterval to move to next version in case it's still not the last version or we don't stop running
     if (versionIndex < versions.length - 1 && !stopRunning) {
       interval = setInterval(() => {
         setVersionIndex((prev) => prev + 1);
@@ -86,10 +89,12 @@ const VersionsDisplay = ({
           {t('Time Spent')}:
         </Typography>
         <Typography variant="caption">
-          {formatSeconds(spentTimeInSeconds)}
+          {` ${formatSeconds(spentTimeInSeconds).hours} ${t('hours')}, ${
+            formatSeconds(spentTimeInSeconds).minutes
+          } ${t('minutes')}`}
         </Typography>
         <Grid container alignItems="start" justifyContent="flex-end">
-          <Grid item xs={8}>
+          <Grid item xs={8} sx={{ paddingTop: 0.5 }}>
             <TimeLineSlider
               handleChange={handleSliderChange}
               marks={timeLineMarks}
@@ -97,11 +102,7 @@ const VersionsDisplay = ({
             />
           </Grid>
           <Grid item xs={4}>
-            <Box
-              display="flex"
-              justifyContent="flex-end"
-              sx={{ button: { paddingTop: '4px' } }}
-            >
+            <Stack direction="row" justifyContent="flex-end">
               <IconButton
                 aria-label="previous"
                 color="primary"
@@ -134,7 +135,7 @@ const VersionsDisplay = ({
               >
                 {t('Run Code')}
               </Button>
-            </Box>
+            </Stack>
           </Grid>
         </Grid>
       </Box>

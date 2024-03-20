@@ -36,6 +36,9 @@ const GeneralStatistics = ({ generalStatistics }: Props): JSX.Element => {
     0,
   );
 
+  const { hours, minutes } = formatSeconds(
+    averageTime / generalStatistics.length,
+  );
   return (
     <Box marginY={4}>
       <Typography variant="h6" align="center">
@@ -45,7 +48,7 @@ const GeneralStatistics = ({ generalStatistics }: Props): JSX.Element => {
         <StatisticCard
           icon={AccessTimeIcon}
           title={t('Average Time Spent By Users')}
-          stat={formatSeconds(averageTime / generalStatistics.length) || 0}
+          stat={`${hours} ${t('hours')}, ${minutes} ${t('minutes')}` || 0}
           key={STATISTIC_TIME_SPENT_KEY}
           cardId={STATISTIC_TIME_SPENT_KEY}
         />

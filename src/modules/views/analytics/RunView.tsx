@@ -1,19 +1,9 @@
 import React from 'react';
 
-import { Box, Modal, styled } from '@mui/material';
+import { Dialog, DialogContent } from '@mui/material';
 
 import { CodeVersionType } from '@/interfaces/codeVersions';
 import Repl from '@/modules/repl/Repl';
-
-const StyledBox = styled(Box)(({ theme }) => ({
-  position: 'absolute' as const,
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  backgroundColor: 'white',
-  padding: theme.spacing(4),
-  borderRadius: theme.spacing(1),
-}));
 
 interface Props {
   open: boolean;
@@ -22,11 +12,16 @@ interface Props {
 }
 
 const RunView = ({ open, handleClose, codeVersion }: Props): JSX.Element => (
-  <Modal open={open} onClose={handleClose}>
-    <StyledBox>
+  <Dialog
+    open={open}
+    onClose={handleClose}
+    maxWidth="lg"
+    PaperProps={{ sx: { width: '80vw' } }}
+  >
+    <DialogContent>
       <Repl seedValue={codeVersion} onClose={handleClose} />
-    </StyledBox>
-  </Modal>
+    </DialogContent>
+  </Dialog>
 );
 
 export default RunView;

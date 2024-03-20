@@ -1,26 +1,33 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Sparklines, SparklinesLine } from 'react-sparklines';
 
 import {
   Box,
   Divider,
   ListItem,
   ListItemText,
+  Stack,
   Typography,
   alpha,
   styled,
 } from '@mui/material';
 
-import { Member } from '@graasp/sdk';
+import { AppAction, Member } from '@graasp/sdk';
+
+import { format } from 'date-fns';
+import countBy from 'lodash.countby';
+
+import { CodeVersionType } from '@/interfaces/codeVersions';
+import { roundDateToIntervalStart } from '@/utils/chart';
+
+import MemberVersionsSparkLine from './MemberVersionsSparkLine';
 
 interface Props {
   member: Member;
   isMemberSelected: boolean;
   onClick: () => void;
-  totalVersion: number;
-  timeOfLastVersion: string;
-  actionsPerIntervals: { [key: string]: number };
+  runningVersions: AppAction<CodeVersionType>[];
+  isLastChild: boolean;
 }
 
 const StyledListItem = styled(ListItem)<{ isMemberSelected: boolean }>(
@@ -34,13 +41,21 @@ const StyledListItem = styled(ListItem)<{ isMemberSelected: boolean }>(
 
 const MemberListItem = ({
   member,
-  totalVersion,
   isMemberSelected,
   onClick,
-  timeOfLastVersion,
-  actionsPerIntervals,
+  runningVersions,
+  isLastChild,
 }: Props): JSX.Element => {
   const { t } = useTranslation();
+
+  const timeOfLastVersion = format(
+    runningVersions[runningVersions.length - 1].createdAt,
+    'MMM/dd/yyyy HH:mm',
+  );
+
+  const versionsGroupedByIntervals = countBy(runningVersions, (action) =>
+    roundDateToIntervalStart(action.createdAt),
+  );
 
   return (
     <>
@@ -51,7 +66,7 @@ const MemberListItem = ({
       >
         <ListItemText
           primary={
-            <Box display="flex" justifyContent="space-between" width="100%">
+            <Stack direction="row" justifyContent="space-between" width="100%">
               <Typography
                 variant="body2"
                 color="text.primary"
@@ -60,32 +75,29 @@ const MemberListItem = ({
                 {member.name}
               </Typography>
               <Typography variant="body2" color="text.primary" component="span">
-                {`${totalVersion} ${t('versions')}`}
+                {`${runningVersions.length} ${t('versions')}`}
               </Typography>
-            </Box>
+            </Stack>
           }
           secondary={
-            <Box display="flex" justifyContent="space-between" alignItems="end">
+            <Stack
+              direction="row"
+              justifyContent="space-between"
+              alignItems="end"
+            >
               <Typography variant="caption" component="span">
                 {t('Last version')} : {timeOfLastVersion}
               </Typography>
               <Box sx={{ width: '50%' }}>
-                <Sparklines
-                  data={Object.values(actionsPerIntervals)}
-                  limit={5}
-                  height={20}
-                >
-                  <SparklinesLine
-                    color="#5050d2"
-                    style={{ fill: 'none', opacity: 1 }}
-                  />
-                </Sparklines>
+                <MemberVersionsSparkLine
+                  versionsGroupedByIntervals={versionsGroupedByIntervals}
+                />
               </Box>
-            </Box>
+            </Stack>
           }
         />
       </StyledListItem>
-      <Divider variant="middle" component="li" />
+      {!isLastChild && <Divider variant="middle" component="li" />}
     </>
   );
 };

@@ -4337,6 +4337,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/lodash.orderby@npm:^4":
+  version: 4.6.9
+  resolution: "@types/lodash.orderby@npm:4.6.9"
+  dependencies:
+    "@types/lodash": "npm:*"
+  checksum: f3ca3a6ba09caef431955f3110a6704e25c90934fb70973e2ed1f4dd9aa48c4776c7e8b909b78f9ae1fb169e437497f8fe8e60fafb5c74ede49c36739ac44c3e
+  languageName: node
+  linkType: hard
+
 "@types/lodash.sumby@npm:4.6.9":
   version: 4.6.9
   resolution: "@types/lodash.sumby@npm:4.6.9"
@@ -8851,6 +8860,7 @@ __metadata:
     "@types/lodash.isequal": "npm:4.5.8"
     "@types/lodash.isobject": "npm:3.0.9"
     "@types/lodash.isstring": "npm:4.0.9"
+    "@types/lodash.orderby": "npm:^4"
     "@types/lodash.sumby": "npm:4.6.9"
     "@types/node": "npm:20.10.5"
     "@types/react": "npm:18.2.60"
@@ -8893,6 +8903,7 @@ __metadata:
     lodash.isequal: "npm:4.5.0"
     lodash.isobject: "npm:3.0.2"
     lodash.isstring: "npm:4.0.1"
+    lodash.orderby: "npm:4.6.0"
     lodash.sumby: "npm:4.6.0"
     nyc: "npm:15.1.0"
     prettier: "npm:3.1.1"
@@ -10467,6 +10478,13 @@ __metadata:
   version: 4.1.1
   resolution: "lodash.once@npm:4.1.1"
   checksum: 202f2c8c3d45e401b148a96de228e50ea6951ee5a9315ca5e15733d5a07a6b1a02d9da1e7fdf6950679e17e8ca8f7190ec33cae47beb249b0c50019d753f38f3
+  languageName: node
+  linkType: hard
+
+"lodash.orderby@npm:4.6.0":
+  version: 4.6.0
+  resolution: "lodash.orderby@npm:4.6.0"
+  checksum: 48da21dcdc25c837f7390cb94062ed6ca6ee8a6bce5bf4ebb6ba118dbb0138f976725efa3d560958d7b3d7339daa1eb31a1223caa38788dd632304cf1450c5ca
   languageName: node
   linkType: hard
 

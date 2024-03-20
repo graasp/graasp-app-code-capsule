@@ -32,7 +32,7 @@ describe('Analytics View', () => {
       .and('have.text', '2');
   });
 
-  it.only('should have average saved versions general statistic', () => {
+  it('should have average saved versions general statistic', () => {
     cy.get(`#${buildStatisticCardID(STATISTIC_SAVED_VERSIONS_KEY)}`)
       .should('be.visible')
       .and('have.text', '1');

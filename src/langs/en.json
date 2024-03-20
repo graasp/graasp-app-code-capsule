@@ -171,6 +171,8 @@
     "Export": "Export",
     "Time Spent": "Time Spent",
     "GET_ITEM_ERROR": "Sorry, There was an error retrieving this item actions.",
-    "No Records Yet": "No Records Yet"
+    "No Records Yet": "No Records Yet",
+    "hours": "hours",
+    "minutes": "minutes"
   }
 }
