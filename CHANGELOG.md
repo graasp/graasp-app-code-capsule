@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.5.0](https://github.com/graasp/graasp-app-code-capsule/compare/v2.4.0...v2.5.0) (2024-03-21)
+
+
+### Features
+
+* analytics view ([#202](https://github.com/graasp/graasp-app-code-capsule/issues/202)) ([e8fc93c](https://github.com/graasp/graasp-app-code-capsule/commit/e8fc93cce2a0f11962a0a682c1dced17f59510fb))
+
 ## [2.4.0](https://github.com/graasp/graasp-app-code-capsule/compare/v2.3.0...v2.4.0) (2024-03-06)
 
 
