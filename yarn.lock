@@ -1954,8 +1954,8 @@ __metadata:
   linkType: hard
 
 "@codemirror/lang-markdown@npm:^6.2.3":
-  version: 6.2.4
-  resolution: "@codemirror/lang-markdown@npm:6.2.4"
+  version: 6.2.5
+  resolution: "@codemirror/lang-markdown@npm:6.2.5"
   dependencies:
     "@codemirror/autocomplete": "npm:^6.7.1"
     "@codemirror/lang-html": "npm:^6.0.0"
@@ -1964,20 +1964,20 @@ __metadata:
     "@codemirror/view": "npm:^6.0.0"
     "@lezer/common": "npm:^1.2.1"
     "@lezer/markdown": "npm:^1.0.0"
-  checksum: ceaf6b8ca430c3df5b11a4df0133b74ea16b77d5cc02594d137a3add226731adaa55db7f9bb1604c704d8e93ec7979b1d0198cffdf21c2ef8846bce51574dfc0
+  checksum: 9b766d98322df57ec3e8e90239061afaf33203d0eb2c793aa1f0b22dd99748bec4e72630b6bd467380e6869289095238b119aff7f99ce761aaf19908a59410d9
   languageName: node
   linkType: hard
 
 "@codemirror/lang-python@npm:^6.1.4":
-  version: 6.1.4
-  resolution: "@codemirror/lang-python@npm:6.1.4"
+  version: 6.1.5
+  resolution: "@codemirror/lang-python@npm:6.1.5"
   dependencies:
     "@codemirror/autocomplete": "npm:^6.3.2"
     "@codemirror/language": "npm:^6.8.0"
     "@codemirror/state": "npm:^6.0.0"
     "@lezer/common": "npm:^1.2.1"
     "@lezer/python": "npm:^1.1.4"
-  checksum: abab48b7efc0465e4a414f9e84ea542e2647ef35c9dd1bf84381cc3b2733369dd830cfec5f2f43f92dfe67436011a4f1f0039bacfb066e05603075345287b816
+  checksum: 430b7258dc3546a619e197837317ac0c1a3c0d1d2557174a99cdaa4815c29b499466d21196792dc9df1d57a9d636ea207691d25d351ec37b60ca5f39c959ca69
   languageName: node
   linkType: hard
 
