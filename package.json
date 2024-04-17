@@ -35,8 +35,8 @@
     "@tanstack/react-query-devtools": "^4.36.1",
     "@types/lodash.groupby": "4.6.9",
     "@types/node": "20.10.5",
-    "@types/react": "18.2.60",
-    "@types/react-dom": "18.2.19",
+    "@types/react": "18.2.79",
+    "@types/react-dom": "18.2.25",
     "@uiw/react-codemirror": "^4.21.24",
     "@uppy/core": "^3.1.1",
     "@uppy/dashboard": "^3.3.1",
@@ -164,8 +164,8 @@
     "@codemirror/state": "6.3.3",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "@types/react": "18.2.60",
-    "@types/react-dom": "18.2.19"
+    "@types/react": "18.2.79",
+    "@types/react-dom": "18.2.25"
   },
   "packageManager": "yarn@4.0.2",
   "msw": {
