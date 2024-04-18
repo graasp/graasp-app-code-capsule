@@ -64,7 +64,7 @@ const SettingsFab: FC = () => {
   };
 
   const renderActions = (): ReactElement => (
-    <Stack gap={1} direction="row">
+    <Stack spacing={1} direction="row">
       <Button
         dataCy={SETTINGS_DIALOG_CANCEL_BUTTON_CYPRESS}
         onClick={() => handleClose(false)}
