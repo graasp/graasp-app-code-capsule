@@ -46,7 +46,6 @@ const OrphanComments: FC<Prop> = ({ comments }) => {
       dataCy={ORPHAN_BUTTON_CYPRESS}
       variant="outlined"
       color="primary"
-      sx={{ mr: 1 }}
       onClick={() => handleOnClickRemoveOrphans(orphanThreads)}
       disabled={orphanThreads.length === 0}
     >
@@ -62,7 +61,13 @@ const OrphanComments: FC<Prop> = ({ comments }) => {
     totalComments: totalNumberOfOrphanComments,
   });
 
-  return <FormControlLabel control={buttonControl} label={buttonLabel} />;
+  return (
+    <FormControlLabel
+      sx={{ mr: 1 }}
+      control={buttonControl}
+      label={buttonLabel}
+    />
+  );
 };
 
 export default OrphanComments;
