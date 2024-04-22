@@ -2,7 +2,7 @@ import { FC, ReactElement, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { DisplaySettings as DisplaySettingsIcon } from '@mui/icons-material';
-import { Box, Fab, Stack, Tooltip } from '@mui/material';
+import { Fab, Stack, Tooltip } from '@mui/material';
 
 import { Button } from '@graasp/ui';
 
@@ -64,9 +64,8 @@ const SettingsFab: FC = () => {
   };
 
   const renderActions = (): ReactElement => (
-    <Box>
+    <Stack spacing={1} direction="row">
       <Button
-        sx={{ m: 1 }}
         dataCy={SETTINGS_DIALOG_CANCEL_BUTTON_CYPRESS}
         onClick={() => handleClose(false)}
         color="error"
@@ -75,7 +74,6 @@ const SettingsFab: FC = () => {
         {t('Cancel')}
       </Button>
       <Button
-        sx={{ m: 1 }}
         dataCy={SETTINGS_DIALOG_SAVE_BUTTON_CYPRESS}
         onClick={() => handleClose(true)}
         disabled={!unsavedChanges}
@@ -83,7 +81,7 @@ const SettingsFab: FC = () => {
       >
         {unsavedChanges ? t('Save') : t('Saved')}
       </Button>
-    </Box>
+    </Stack>
   );
 
   return (

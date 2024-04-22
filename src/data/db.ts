@@ -4,6 +4,7 @@ import {
   CompleteMember,
   DiscriminatedItem,
   ItemType,
+  MemberFactory,
   MemberType,
   PermissionLevel,
 } from '@graasp/sdk';
@@ -50,24 +51,18 @@ export const mockContext: LocalContext = {
 };
 
 export const mockMembers: CompleteMember[] = [
-  {
+  MemberFactory({
     id: mockContext.memberId || '',
     name: 'current-member',
-    email: '',
     extra: {},
     type: MemberType.Individual,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
-  },
-  {
+  }),
+  MemberFactory({
     id: 'mock-member-id-2',
     name: 'mock-member-2',
-    email: '',
     extra: {},
     type: MemberType.Individual,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
-  },
+  }),
 ];
 
 const mockPythonCode = `import matplotlib.pyplot as plt
