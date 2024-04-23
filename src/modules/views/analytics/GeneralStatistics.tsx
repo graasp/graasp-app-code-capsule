@@ -42,7 +42,7 @@ const GeneralStatistics = ({ generalStatistics }: Props): JSX.Element => {
   );
 
   return (
-    <Box marginY={4}>
+    <Box paddingY={4}>
       <Typography variant="h6" align="center">
         {t('General Statistics')}
       </Typography>
