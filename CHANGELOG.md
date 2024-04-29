@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.6.1](https://github.com/graasp/graasp-app-code-capsule/compare/v2.6.0...v2.6.1) (2024-04-29)
+
+
+### Bug Fixes
+
+* style use padding insteadof margin analytics view for prevent scrolling ([#217](https://github.com/graasp/graasp-app-code-capsule/issues/217)) ([69b5922](https://github.com/graasp/graasp-app-code-capsule/commit/69b59220a2d3bcf5c5c950fae11ea69ada10f548))
+
 ## [2.6.0](https://github.com/graasp/graasp-app-code-capsule/compare/v2.5.0...v2.6.0) (2024-04-22)
 
 
