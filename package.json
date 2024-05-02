@@ -26,7 +26,7 @@
     "@graasp/apps-query-client": "3.4.11",
     "@graasp/pyodide": "github:graasp/graasp-pyodide",
     "@graasp/sdk": "4.7.2",
-    "@graasp/ui": "4.15.0",
+    "@graasp/ui": "4.15.3",
     "@mui/icons-material": "5.15.15",
     "@mui/lab": "5.0.0-alpha.170",
     "@mui/material": "5.15.15",
