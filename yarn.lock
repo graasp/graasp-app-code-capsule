@@ -2162,15 +2162,15 @@ __metadata:
   linkType: hard
 
 "@codemirror/lang-python@npm:^6.1.5":
-  version: 6.1.5
-  resolution: "@codemirror/lang-python@npm:6.1.5"
+  version: 6.1.7
+  resolution: "@codemirror/lang-python@npm:6.1.7"
   dependencies:
     "@codemirror/autocomplete": "npm:^6.3.2"
     "@codemirror/language": "npm:^6.8.0"
     "@codemirror/state": "npm:^6.0.0"
     "@lezer/common": "npm:^1.2.1"
     "@lezer/python": "npm:^1.1.4"
-  checksum: 10/430b7258dc3546a619e197837317ac0c1a3c0d1d2557174a99cdaa4815c29b499466d21196792dc9df1d57a9d636ea207691d25d351ec37b60ca5f39c959ca69
+  checksum: 10/a89149c663c440898bfd19d6347e8ee1aa126885c13bfef5309f87327bd3f1843a3a66d8294013a880c8e4e42f1d4538bb5a1c61ff329d916ccd87f17e80c56d
   languageName: node
   linkType: hard
 
