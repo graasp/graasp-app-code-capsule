@@ -1,9 +1,8 @@
 import { useTranslation } from 'react-i18next';
 
-import { Alert, Box } from '@mui/material';
+import { Alert, Box, CircularProgress } from '@mui/material';
 
 import { AppAction } from '@graasp/sdk';
-import { Loader } from '@graasp/ui';
 
 import { differenceInSeconds } from 'date-fns';
 import groupBy from 'lodash.groupby';
@@ -63,7 +62,7 @@ const AnalyticsView = (): JSX.Element => {
   }
 
   if (isLoading) {
-    return <Loader />;
+    return <CircularProgress />;
   }
 
   return (

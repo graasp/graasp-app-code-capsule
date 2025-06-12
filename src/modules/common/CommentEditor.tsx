@@ -18,14 +18,13 @@ import {
 } from '@mui/icons-material';
 import {
   Box,
+  Button,
   FormHelperText,
   Stack,
   TextareaAutosize,
   Typography,
   styled,
 } from '@mui/material';
-
-import { Button } from '@graasp/ui';
 
 import { SMALL_BORDER_RADIUS } from '../../config/layout';
 import {
@@ -193,7 +192,7 @@ const CommentEditor: FC<Props> = ({
           }
           <Stack direction="row" spacing={1} justifyContent="end">
             <Button
-              dataCy={COMMENT_EDITOR_CANCEL_BUTTON_CYPRESS}
+              data-cy={COMMENT_EDITOR_CANCEL_BUTTON_CYPRESS}
               color="secondary"
               variant="outlined"
               onClick={() => onCancel()}
@@ -201,7 +200,7 @@ const CommentEditor: FC<Props> = ({
               {t('Cancel')}
             </Button>
             <Button
-              dataCy={COMMENT_EDITOR_SAVE_BUTTON_CYPRESS}
+              data-cy={COMMENT_EDITOR_SAVE_BUTTON_CYPRESS}
               color="primary"
               variant="outlined"
               onClick={() => onSend(text)}

@@ -1,9 +1,7 @@
 import React, { FC, RefObject, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { Stack, TextField, Typography } from '@mui/material';
-
-import { Button } from '@graasp/ui';
+import { Button, Stack, TextField, Typography } from '@mui/material';
 
 import CustomDialog from '../layout/CustomDialog';
 
