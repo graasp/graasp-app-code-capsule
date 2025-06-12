@@ -9115,6 +9115,7 @@ __metadata:
     lodash.isstring: "npm:4.0.1"
     lodash.orderby: "npm:4.6.0"
     lodash.sumby: "npm:4.6.0"
+    lucide-react: "npm:0.514.0"
     nyc: "npm:17.0.0"
     prettier: "npm:3.3.3"
     prism-react-renderer: "npm:2.3.1"
@@ -10755,6 +10756,15 @@ __metadata:
   version: 7.18.3
   resolution: "lru-cache@npm:7.18.3"
   checksum: 10/6029ca5aba3aacb554e919d7ef804fffd4adfc4c83db00fac8248c7c78811fb6d4b6f70f7fd9d55032b3823446546a007edaa66ad1f2377ae833bd983fac5d98
+  languageName: node
+  linkType: hard
+
+"lucide-react@npm:0.514.0":
+  version: 0.514.0
+  resolution: "lucide-react@npm:0.514.0"
+  peerDependencies:
+    react: ^16.5.1 || ^17.0.0 || ^18.0.0 || ^19.0.0
+  checksum: 10/b58042ffd1a6117b5e5119987f93da393464af718203cc62a1952a3abc5d49f15d9427f0e810be893737533186367dbba3ff7efca5ab2cd414d598bead5a9c9f
   languageName: node
   linkType: hard
 
