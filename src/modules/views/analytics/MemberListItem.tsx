@@ -13,7 +13,7 @@ import {
 
 import { Account, AppAction } from '@graasp/sdk';
 
-import { format } from 'date-fns';
+import { format } from 'date-fns/format';
 import countBy from 'lodash.countby';
 
 import { CodeVersionType } from '@/interfaces/codeVersions';

@@ -1,4 +1,6 @@
-import { setMilliseconds, setMinutes, setSeconds } from 'date-fns';
+import { setMilliseconds } from 'date-fns/setMilliseconds';
+import { setMinutes } from 'date-fns/setMinutes';
+import { setSeconds } from 'date-fns/setSeconds';
 
 export const INTERVAL_DURATION_IN_MINUTES = 10;
 export const VERSION_STEP_DURATION = 2000;

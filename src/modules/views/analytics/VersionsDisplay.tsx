@@ -18,7 +18,7 @@ import {
 
 import { AppAction } from '@graasp/sdk';
 
-import { format } from 'date-fns';
+import { format } from 'date-fns/format';
 
 import { CodeVersionType } from '@/interfaces/codeVersions';
 import { VERSION_STEP_DURATION, formatSeconds } from '@/utils/chart';

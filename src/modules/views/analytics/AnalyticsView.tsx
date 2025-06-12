@@ -4,7 +4,7 @@ import { Alert, Box, CircularProgress } from '@mui/material';
 
 import { AppAction } from '@graasp/sdk';
 
-import { differenceInSeconds } from 'date-fns';
+import { differenceInSeconds } from 'date-fns/differenceInSeconds';
 import groupBy from 'lodash.groupby';
 import orderBy from 'lodash.orderby';
 
