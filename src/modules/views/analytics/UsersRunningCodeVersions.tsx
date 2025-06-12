@@ -48,7 +48,7 @@ const UsersRunningCodeVersions = ({
   const members = useMemo(
     () =>
       Object.keys(codeRunningByMembers).map(
-        (ele) => codeRunningByMembers[ele][0].member, // get member objects
+        (ele) => codeRunningByMembers[ele][0].account, // get member objects
       ),
     [codeRunningByMembers],
   );
@@ -72,7 +72,7 @@ const UsersRunningCodeVersions = ({
   }, [searchMembers]);
 
   const spentTimeInSeconds = generalStatistics.find(
-    (ele) => ele.memberId === selectedMemberId,
+    (ele) => ele.accountId === selectedMemberId,
   )?.spentTimeInSeconds;
 
   return (
@@ -108,9 +108,10 @@ const UsersRunningCodeVersions = ({
           </Stack>
           <Grid container spacing={2} marginTop={1} sx={{ height: '450px' }}>
             <Grid
-              item
-              xs={12}
-              md={4}
+              size={{
+                xs: 12,
+                md: 4,
+              }}
               sx={{ maxHeight: '100%', overflow: 'auto' }}
             >
               <List sx={{ width: '100%', maxHeight: '100%' }}>
@@ -125,7 +126,7 @@ const UsersRunningCodeVersions = ({
                 ))}
               </List>
             </Grid>
-            <Grid item xs={12} md={8}>
+            <Grid size={{ xs: 12, md: 8 }}>
               {codeRunningByMembers[selectedMemberId] ? (
                 <VersionsDisplay
                   spentTimeInSeconds={spentTimeInSeconds ?? 0}

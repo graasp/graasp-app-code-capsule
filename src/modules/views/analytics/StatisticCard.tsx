@@ -10,7 +10,7 @@ type Props = {
 };
 
 const StatisticCard = ({ icon, title, stat, cardId }: Props): JSX.Element => (
-  <Grid xs={12} md={6} lg={3} item>
+  <Grid size={{ xs: 12, md: 6, lg: 3 }}>
     <Stack
       height="100%"
       component={Paper}

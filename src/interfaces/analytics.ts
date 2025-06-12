@@ -1,5 +1,5 @@
 export interface GeneralMemberStatistic {
-  memberId: string;
+  accountId: string;
   endTime: string;
   startTime: string;
   memberName: string;

@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Light as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { docco } from 'react-syntax-highlighter/dist/esm/styles/hljs';
@@ -94,14 +94,14 @@ const VersionsDisplay = ({
           } ${t('minutes')}`}
         </Typography>
         <Grid container alignItems="start" justifyContent="flex-end">
-          <Grid item xs={8} sx={{ paddingTop: 0.5 }}>
+          <Grid size={8} sx={{ paddingTop: 0.5 }}>
             <TimeLineSlider
               handleChange={handleSliderChange}
               marks={timeLineMarks}
               versionIndex={versionIndex}
             />
           </Grid>
-          <Grid item xs={4}>
+          <Grid size={4}>
             <Stack direction="row" justifyContent="flex-end">
               <IconButton
                 aria-label="previous"

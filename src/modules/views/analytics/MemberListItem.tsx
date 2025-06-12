@@ -1,4 +1,3 @@
-import React from 'react';
 import { useTranslation } from 'react-i18next';
 
 import {
@@ -12,7 +11,7 @@ import {
   styled,
 } from '@mui/material';
 
-import { AppAction, Member } from '@graasp/sdk';
+import { Account, AppAction } from '@graasp/sdk';
 
 import { format } from 'date-fns';
 import countBy from 'lodash.countby';
@@ -23,7 +22,7 @@ import { roundDateToIntervalStart } from '@/utils/chart';
 import MemberVersionsSparkLine from './MemberVersionsSparkLine';
 
 type Props = {
-  member: Member;
+  member: Account;
   isMemberSelected: boolean;
   onClick: () => void;
   runningVersions: AppAction<CodeVersionType>[];

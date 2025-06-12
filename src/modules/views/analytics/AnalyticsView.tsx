@@ -25,17 +25,17 @@ const AnalyticsView = (): JSX.Element => {
   if (data) {
     const actionsOrdersByCreatedDate = orderBy(data, 'createdAt');
     const actionsByType = groupBy(actionsOrdersByCreatedDate, 'type');
-    const actionsByMember = groupBy(actionsOrdersByCreatedDate, 'member.id');
+    const actionsByMember = groupBy(actionsOrdersByCreatedDate, 'account.id');
 
     const generalStatistic = Object.entries(actionsByMember).map(
-      ([memberId, memberActions]) => {
+      ([accountId, memberActions]) => {
         const startTime = memberActions[0].createdAt;
         const endTime = memberActions[memberActions.length - 1].createdAt;
         return {
-          memberId,
+          accountId,
           endTime,
           startTime,
-          memberName: memberActions[0].member.name,
+          memberName: memberActions[0].account.name,
           savedVersions: memberActions.filter(
             (version) => version.type === APP_ACTIONS_TYPES.SAVE_CODE,
           ).length,

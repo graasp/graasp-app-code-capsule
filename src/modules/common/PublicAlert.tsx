@@ -10,7 +10,7 @@ const PublicAlert = (): JSX.Element | null => {
   const context = useLocalContext();
 
   // does not show banner if user exists
-  if (context?.memberId) {
+  if (context?.accountId) {
     return null;
   }
 
