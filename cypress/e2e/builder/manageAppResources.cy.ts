@@ -116,7 +116,7 @@ describe('Builder as Admin', () => {
         (c) => !orphansId.includes(c.id),
       );
       // map resources to accountId and convert to JS to use the countBy function
-      const users = nonOrphanComments.map((r) => r.accountId);
+      const users = nonOrphanComments.map((r) => r.account.id);
       const userCounts = countBy(users);
 
       // check that table is displayed
@@ -151,7 +151,7 @@ describe('Builder as Admin', () => {
       // open every review and check that the name matches
       cy.get(buildDataCy(TABLE_VIEW_OPEN_REVIEW_BUTTON_CYPRESS)).each(
         (el, idx) => {
-          let contentText;
+          let contentText: string;
           cy.get('@usernames')
             .eq(idx)
             .invoke('prop', 'innerText')
