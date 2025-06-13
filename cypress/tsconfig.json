@@ -2,9 +2,11 @@
   "extends": "../tsconfig.json",
   "compilerOptions": {
     "target": "es5",
+    "module": "preserve",
     "lib": ["es5", "dom"],
     "types": ["cypress", "node"],
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "moduleResolution": "bundler"
   },
   "include": ["**/*.ts", "../src/@types/cypress.d.ts"]
 }

@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect, useMemo, useState } from 'react';
+import { ChangeEvent, useEffect, useMemo, useState } from 'react';
 import { CSVLink } from 'react-csv';
 import { useTranslation } from 'react-i18next';
 
@@ -17,8 +17,6 @@ import {
 } from '@mui/material';
 
 import { AppAction } from '@graasp/sdk';
-
-import groupBy from 'lodash.groupby';
 
 import { GeneralMemberStatistic } from '@/interfaces/analytics';
 import { CodeVersionType } from '@/interfaces/codeVersions';
@@ -41,7 +39,14 @@ const UsersRunningCodeVersions = ({
   const [selectedMemberId, setSelectedMemberId] = useState('');
 
   const codeRunningByMembers = useMemo(
-    () => groupBy(runningVersions, 'member.id'),
+    () =>
+      runningVersions.reduce<{
+        [memberId: string]: AppAction<CodeVersionType>[];
+      }>((acc, appAction) => {
+        const accountId = appAction.account.id;
+        acc[accountId] = [...(acc[accountId] ?? []), appAction];
+        return acc;
+      }, {}),
     [runningVersions],
   );
 
@@ -88,18 +93,19 @@ const UsersRunningCodeVersions = ({
               value={memberNameSearchText}
               placeholder={t('Search by member name')}
               size="small"
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <SearchIcon />
-                  </InputAdornment>
-                ),
-
-                endAdornment: memberNameSearchText && (
-                  <IconButton onClick={() => setMemberNameSearchText('')}>
-                    <ClearIcon />
-                  </IconButton>
-                ),
+              slotProps={{
+                input: {
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <SearchIcon />
+                    </InputAdornment>
+                  ),
+                  endAdornment: memberNameSearchText && (
+                    <IconButton onClick={() => setMemberNameSearchText('')}>
+                      <ClearIcon />
+                    </IconButton>
+                  ),
+                },
               }}
             />
             <CSVLink data={generalStatistics}>

@@ -37,10 +37,10 @@ const AnalyticsView = (): JSX.Element => {
           memberName: memberActions[0].account.name,
           savedVersions: memberActions.filter(
             (version) => version.type === APP_ACTIONS_TYPES.SAVE_CODE,
-          ).length,
+          )?.length,
           runningVersions: memberActions.filter(
             (version) => version.type === APP_ACTIONS_TYPES.RUN_CODE,
-          ).length,
+          )?.length,
           spentTimeInSeconds: differenceInSeconds(endTime, startTime),
         };
       },

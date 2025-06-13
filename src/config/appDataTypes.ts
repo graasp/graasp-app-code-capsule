@@ -8,7 +8,7 @@ enum APP_DATA_TYPES {
 }
 
 enum APP_DATA_VISIBILITY {
-  MEMBER = 'member',
+  MEMBER = 'account',
   ITEM = 'item',
 }
 
