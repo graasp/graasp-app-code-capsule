@@ -157,11 +157,12 @@
       "src/**/*.d.ts"
     ]
   },
-  "packageManager": "yarn@4.1.1",
+  "packageManager": "yarn@4.9.2",
   "msw": {
     "workerDirectory": "public"
   },
   "volta": {
-    "node": "22.16.0"
+    "node": "22.16.0",
+    "yarn": "4.9.2"
   }
 }
