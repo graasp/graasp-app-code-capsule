@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.6.3](https://github.com/graasp/graasp-app-code-capsule/compare/v2.6.2...v2.6.3) (2025-06-19)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @graasp/ui to v4.15.3 ([#212](https://github.com/graasp/graasp-app-code-capsule/issues/212)) ([7819d89](https://github.com/graasp/graasp-app-code-capsule/commit/7819d89a58daf6f5d72e198d7dc37f488f11cf24))
+* **deps:** update dependency @sentry/react to v7.112.2 ([#187](https://github.com/graasp/graasp-app-code-capsule/issues/187)) ([604fe1e](https://github.com/graasp/graasp-app-code-capsule/commit/604fe1eb091b14ba9e4be4eff43b82b96c1a231b))
+* **deps:** update dependency i18next to v23.11.3 ([#219](https://github.com/graasp/graasp-app-code-capsule/issues/219)) ([3273077](https://github.com/graasp/graasp-app-code-capsule/commit/32730779517243409c75261d460c4ab918d648eb))
+* **deps:** update deps ([#237](https://github.com/graasp/graasp-app-code-capsule/issues/237)) ([8b3f53e](https://github.com/graasp/graasp-app-code-capsule/commit/8b3f53e38166855e335e8863af06f173cdb3de52))
+
 ## [2.6.2](https://github.com/graasp/graasp-app-code-capsule/compare/v2.6.1...v2.6.2) (2024-05-01)
 
 
