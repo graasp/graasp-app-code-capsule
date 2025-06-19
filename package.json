@@ -52,7 +52,7 @@
     "lodash.orderby": "4.6.0",
     "lodash.sumby": "4.6.0",
     "lucide-react": "0.514.0",
-    "prism-react-renderer": "2.3.1",
+    "prism-react-renderer": "2.4.1",
     "react": "18.3.1",
     "react-csv": "2.2.2",
     "react-diff-viewer": "3.1.1",
