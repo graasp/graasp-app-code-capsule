@@ -1,11 +1,10 @@
 import { useTranslation } from 'react-i18next';
 
-import { Alert, Box } from '@mui/material';
+import { Alert, Box, CircularProgress } from '@mui/material';
 
 import { AppAction } from '@graasp/sdk';
-import { Loader } from '@graasp/ui';
 
-import { differenceInSeconds } from 'date-fns';
+import { differenceInSeconds } from 'date-fns/differenceInSeconds';
 import groupBy from 'lodash.groupby';
 import orderBy from 'lodash.orderby';
 
@@ -25,23 +24,23 @@ const AnalyticsView = (): JSX.Element => {
   if (data) {
     const actionsOrdersByCreatedDate = orderBy(data, 'createdAt');
     const actionsByType = groupBy(actionsOrdersByCreatedDate, 'type');
-    const actionsByMember = groupBy(actionsOrdersByCreatedDate, 'member.id');
+    const actionsByMember = groupBy(actionsOrdersByCreatedDate, 'account.id');
 
     const generalStatistic = Object.entries(actionsByMember).map(
-      ([memberId, memberActions]) => {
+      ([accountId, memberActions]) => {
         const startTime = memberActions[0].createdAt;
         const endTime = memberActions[memberActions.length - 1].createdAt;
         return {
-          memberId,
+          accountId,
           endTime,
           startTime,
-          memberName: memberActions[0].member.name,
+          memberName: memberActions[0].account.name,
           savedVersions: memberActions.filter(
             (version) => version.type === APP_ACTIONS_TYPES.SAVE_CODE,
-          ).length,
+          )?.length,
           runningVersions: memberActions.filter(
             (version) => version.type === APP_ACTIONS_TYPES.RUN_CODE,
-          ).length,
+          )?.length,
           spentTimeInSeconds: differenceInSeconds(endTime, startTime),
         };
       },
@@ -63,7 +62,7 @@ const AnalyticsView = (): JSX.Element => {
   }
 
   if (isLoading) {
-    return <Loader />;
+    return <CircularProgress />;
   }
 
   return (

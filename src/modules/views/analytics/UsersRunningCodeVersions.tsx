@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect, useMemo, useState } from 'react';
+import { ChangeEvent, useEffect, useMemo, useState } from 'react';
 import { CSVLink } from 'react-csv';
 import { useTranslation } from 'react-i18next';
 
@@ -17,8 +17,6 @@ import {
 } from '@mui/material';
 
 import { AppAction } from '@graasp/sdk';
-
-import groupBy from 'lodash.groupby';
 
 import { GeneralMemberStatistic } from '@/interfaces/analytics';
 import { CodeVersionType } from '@/interfaces/codeVersions';
@@ -41,14 +39,21 @@ const UsersRunningCodeVersions = ({
   const [selectedMemberId, setSelectedMemberId] = useState('');
 
   const codeRunningByMembers = useMemo(
-    () => groupBy(runningVersions, 'member.id'),
+    () =>
+      runningVersions.reduce<{
+        [memberId: string]: AppAction<CodeVersionType>[];
+      }>((acc, appAction) => {
+        const accountId = appAction.account.id;
+        acc[accountId] = [...(acc[accountId] ?? []), appAction];
+        return acc;
+      }, {}),
     [runningVersions],
   );
 
   const members = useMemo(
     () =>
       Object.keys(codeRunningByMembers).map(
-        (ele) => codeRunningByMembers[ele][0].member, // get member objects
+        (ele) => codeRunningByMembers[ele][0].account, // get member objects
       ),
     [codeRunningByMembers],
   );
@@ -72,7 +77,7 @@ const UsersRunningCodeVersions = ({
   }, [searchMembers]);
 
   const spentTimeInSeconds = generalStatistics.find(
-    (ele) => ele.memberId === selectedMemberId,
+    (ele) => ele.accountId === selectedMemberId,
   )?.spentTimeInSeconds;
 
   return (
@@ -88,18 +93,19 @@ const UsersRunningCodeVersions = ({
               value={memberNameSearchText}
               placeholder={t('Search by member name')}
               size="small"
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <SearchIcon />
-                  </InputAdornment>
-                ),
-
-                endAdornment: memberNameSearchText && (
-                  <IconButton onClick={() => setMemberNameSearchText('')}>
-                    <ClearIcon />
-                  </IconButton>
-                ),
+              slotProps={{
+                input: {
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <SearchIcon />
+                    </InputAdornment>
+                  ),
+                  endAdornment: memberNameSearchText && (
+                    <IconButton onClick={() => setMemberNameSearchText('')}>
+                      <ClearIcon />
+                    </IconButton>
+                  ),
+                },
               }}
             />
             <CSVLink data={generalStatistics}>
@@ -108,9 +114,10 @@ const UsersRunningCodeVersions = ({
           </Stack>
           <Grid container spacing={2} marginTop={1} sx={{ height: '450px' }}>
             <Grid
-              item
-              xs={12}
-              md={4}
+              size={{
+                xs: 12,
+                md: 4,
+              }}
               sx={{ maxHeight: '100%', overflow: 'auto' }}
             >
               <List sx={{ width: '100%', maxHeight: '100%' }}>
@@ -125,7 +132,7 @@ const UsersRunningCodeVersions = ({
                 ))}
               </List>
             </Grid>
-            <Grid item xs={12} md={8}>
+            <Grid size={{ xs: 12, md: 8 }}>
               {codeRunningByMembers[selectedMemberId] ? (
                 <VersionsDisplay
                   spentTimeInSeconds={spentTimeInSeconds ?? 0}

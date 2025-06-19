@@ -4,7 +4,7 @@ import { Alert, Box, Stack, styled } from '@mui/material';
 
 import { Api, TokenContext, useLocalContext } from '@graasp/apps-query-client';
 import { PyWorker, PyodideStatus } from '@graasp/pyodide';
-import { useFullscreen } from '@graasp/ui';
+import { useFullscreen } from '@graasp/ui/apps';
 
 import { PYTHON } from '@/config/programmingLanguages';
 

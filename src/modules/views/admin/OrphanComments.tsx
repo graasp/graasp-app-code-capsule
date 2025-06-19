@@ -1,10 +1,9 @@
-import React, { FC } from 'react';
+import { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { FormControlLabel } from '@mui/material';
+import { Button, FormControlLabel } from '@mui/material';
 
 import { UUID } from '@graasp/sdk';
-import { Button } from '@graasp/ui';
 
 import { ORPHAN_BUTTON_CYPRESS } from '../../../config/selectors';
 import { CommentType } from '../../../interfaces/comment';
@@ -43,7 +42,7 @@ const OrphanComments: FC<Prop> = ({ comments }) => {
 
   const buttonControl = (
     <Button
-      dataCy={ORPHAN_BUTTON_CYPRESS}
+      data-cy={ORPHAN_BUTTON_CYPRESS}
       variant="outlined"
       color="primary"
       onClick={() => handleOnClickRemoveOrphans(orphanThreads)}

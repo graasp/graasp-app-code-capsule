@@ -1,4 +1,4 @@
-import registerCodeCoverageTask from '@cypress/code-coverage/task';
+import registerCodeCoverageTask from '@cypress/code-coverage/task.js';
 import { defineConfig } from 'cypress';
 
 export default defineConfig({

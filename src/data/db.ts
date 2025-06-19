@@ -1,11 +1,12 @@
-import { type Database, type LocalContext } from '@graasp/apps-query-client';
+import { type Database } from '@graasp/apps-query-client';
 import {
+  AccountType,
   AppDataVisibility,
   CompleteMember,
   DiscriminatedItem,
   ItemType,
+  LocalContext,
   MemberFactory,
-  MemberType,
   PermissionLevel,
 } from '@graasp/sdk';
 
@@ -32,7 +33,7 @@ export const mockMember = {
   name: 'anna',
   email: 'bob@gmail.com',
   extra: {},
-  type: MemberType.Individual,
+  type: AccountType.Individual,
   createdAt: new Date().toISOString(),
   updatedAt: new Date().toISOString(),
 };
@@ -47,21 +48,21 @@ export const mockContext: LocalContext = {
   permission: PermissionLevel.Admin,
   context: 'builder',
   itemId: mockItem.id,
-  memberId: mockMember.id,
+  accountId: mockMember.id,
 };
 
 export const mockMembers: CompleteMember[] = [
   MemberFactory({
-    id: mockContext.memberId || '',
+    id: mockContext.accountId ?? '',
     name: 'current-member',
     extra: {},
-    type: MemberType.Individual,
+    type: AccountType.Individual,
   }),
   MemberFactory({
     id: 'mock-member-id-2',
     name: 'mock-member-2',
     extra: {},
-    type: MemberType.Individual,
+    type: AccountType.Individual,
   }),
 ];
 
@@ -122,7 +123,7 @@ And some more text here
 And some text to **finish** _off_`,
         parent: null,
       },
-      member: mockMembers[1],
+      account: mockMembers[1],
       type: APP_DATA_TYPES.COMMENT,
       item: mockItem,
       creator: mockMembers[1],
@@ -138,7 +139,7 @@ And some text to **finish** _off_`,
         parent: commentParent,
         codeId: INSTRUCTOR_CODE_ID,
       },
-      member: mockMembers[0],
+      account: mockMembers[0],
       type: APP_DATA_TYPES.COMMENT,
       item: mockItem,
       creator: mockMembers[0],
@@ -154,7 +155,7 @@ And some text to **finish** _off_`,
         parent: null,
         codeId: INSTRUCTOR_CODE_ID,
       },
-      member: mockMembers[0],
+      account: mockMembers[0],
       type: APP_DATA_TYPES.COMMENT,
       item: mockItem,
       creator: mockMembers[0],
@@ -170,7 +171,7 @@ And some text to **finish** _off_`,
         parent: null,
         codeId: INSTRUCTOR_CODE_ID,
       },
-      member: mockMembers[0],
+      account: mockMembers[0],
       type: APP_DATA_TYPES.COMMENT,
       item: mockItem,
       creator: mockMembers[1],
@@ -213,6 +214,7 @@ And some text to **finish** _off_`,
       updatedAt: new Date().toISOString(),
       creator: mockMembers[0],
     },
+
     // disable to test data file
     // {
     //   id: 'file-id',
@@ -247,6 +249,7 @@ And some text to **finish** _off_`,
     //   item: mockItem,
     // },
   ],
+  uploadedFiles: [],
 });
 
 export default buildDatabase;

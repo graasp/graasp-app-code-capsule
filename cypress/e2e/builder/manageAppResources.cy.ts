@@ -115,8 +115,8 @@ describe('Builder as Admin', () => {
       const nonOrphanComments = comments?.filter(
         (c) => !orphansId.includes(c.id),
       );
-      // map resources to memberId and convert to JS to use the countBy function
-      const users = nonOrphanComments.map((r) => r.member.id);
+      // map resources to accountId and convert to JS to use the countBy function
+      const users = nonOrphanComments.map((r) => r.account.id);
       const userCounts = countBy(users);
 
       // check that table is displayed
@@ -125,8 +125,8 @@ describe('Builder as Admin', () => {
       cy.get(buildDataCy(TABLE_VIEW_BODY_USERS_CYPRESS))
         .children('tr')
         .should('have.length', Object.keys(userCounts).length);
-      Object.entries(userCounts).forEach(([memberId, count]) => {
-        cy.get(buildTableRowCypress(tableRowUserCypress(memberId)))
+      Object.entries(userCounts).forEach(([accountId, count]) => {
+        cy.get(buildTableRowCypress(tableRowUserCypress(accountId)))
           .children(buildDataCy(TABLE_VIEW_NB_COMMENTS_CELL_CYPRESS))
           .should('contain.text', count);
       });
@@ -134,8 +134,8 @@ describe('Builder as Admin', () => {
       cy.get(buildDataCy(ORPHAN_BUTTON_CYPRESS)).should('exist').click();
 
       // number of displayed comments should not have changed
-      Object.entries(userCounts).forEach(([memberId, count]) => {
-        cy.get(buildTableRowCypress(tableRowUserCypress(memberId)))
+      Object.entries(userCounts).forEach(([accountId, count]) => {
+        cy.get(buildTableRowCypress(tableRowUserCypress(accountId)))
           .children(buildDataCy(TABLE_VIEW_NB_COMMENTS_CELL_CYPRESS))
           .should('contain.text', count);
       });
@@ -151,7 +151,7 @@ describe('Builder as Admin', () => {
       // open every review and check that the name matches
       cy.get(buildDataCy(TABLE_VIEW_OPEN_REVIEW_BUTTON_CYPRESS)).each(
         (el, idx) => {
-          let contentText;
+          let contentText: string;
           cy.get('@usernames')
             .eq(idx)
             .invoke('prop', 'innerText')

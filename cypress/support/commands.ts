@@ -49,13 +49,14 @@ Cypress.Commands.add(
         appData: [],
         appActions: [],
         appSettings: [],
+        uploadedFiles: [],
         items: [MOCK_SERVER_ITEM],
         members: Object.values(MEMBERS),
         ...database,
       };
       // eslint-disable-next-line no-param-reassign
       win.appContext = {
-        memberId: currentMember.id,
+        accountId: currentMember.id,
         itemId: MOCK_SERVER_ITEM.id,
         apiHost: Cypress.env('VITE_API_HOST') || MOCK_SERVER_API_HOST,
         context: Context.Builder,

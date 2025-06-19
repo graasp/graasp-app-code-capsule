@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import {
@@ -11,12 +11,10 @@ import { Stack, Tooltip, styled } from '@mui/material';
 
 import { Member, UUID } from '@graasp/sdk';
 
-import { faInfo } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { TFunction } from 'i18next';
-import type { Dictionary } from 'lodash';
+import { InfoIcon } from 'lucide-react';
 
-import { flattenDictionary } from '@/utils/utils';
+import { LodashGroupByDict, flattenDictionary } from '@/utils/utils';
 
 import { GENERAL_SETTINGS_NAME } from '../../config/appSettingsTypes';
 import {
@@ -119,7 +117,7 @@ const CodeReviewToolbar: FC<Props> = ({ setView }) => {
 
   // extract distinct authors from grouped comments by author
   const getUsersFromVersions = (
-    versions: Dictionary<CodeVersionSelectType[]>,
+    versions: LodashGroupByDict<CodeVersionSelectType[]>,
   ): Member[] =>
     Object.values(versions)
       .map((v) => v[0]?.creator)
@@ -226,7 +224,7 @@ const CodeReviewToolbar: FC<Props> = ({ setView }) => {
         dataCy={TOOLBAR_COMMIT_INFO_BUTTON_CYPRESS}
         onClick={() => setIsOpenCommitInfo(true)}
       >
-        <FontAwesomeIcon width={14} fontSize="inherit" icon={faInfo} />
+        <InfoIcon width={14} fontSize="inherit" />
       </ToolbarButton>
     </Tooltip>
   );

@@ -1,9 +1,7 @@
 import { FC, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { Box, Stack, TextField, styled, useTheme } from '@mui/material';
-
-import { Button } from '@graasp/ui';
+import { Box, Button, Stack, TextField, styled, useTheme } from '@mui/material';
 
 import { java } from '@codemirror/lang-java';
 import { javascript } from '@codemirror/lang-javascript';
@@ -201,7 +199,7 @@ const CodeEditor: FC<Props> = ({
 
       <Stack direction="row" justifyContent="end" spacing={1}>
         <Button
-          dataCy={CODE_EDITOR_CANCEL_BUTTON_CYPRESS}
+          data-cy={CODE_EDITOR_CANCEL_BUTTON_CYPRESS}
           onClick={onClose}
           color="error"
           variant="outlined"
@@ -209,7 +207,7 @@ const CodeEditor: FC<Props> = ({
           {t('Cancel')}
         </Button>
         <Button
-          dataCy={CODE_EDITOR_SUBMIT_BUTTON_CYPRESS}
+          data-cy={CODE_EDITOR_SUBMIT_BUTTON_CYPRESS}
           variant="outlined"
           onClick={() => onSubmitCode()}
         >

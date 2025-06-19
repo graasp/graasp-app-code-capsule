@@ -1,10 +1,9 @@
-import React from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { AccessTime, People, RunCircleSharp, Save } from '@mui/icons-material';
 import { Box, Grid, Typography } from '@mui/material';
 
-import { formatDuration } from 'date-fns';
+import { formatDuration } from 'date-fns/formatDuration';
 import sumBy from 'lodash.sumby';
 
 import {

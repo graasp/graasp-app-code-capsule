@@ -1,20 +1,10 @@
-import React from 'react';
 import { useTranslation } from 'react-i18next';
 
-import {
-  Box,
-  Divider,
-  ListItem,
-  ListItemText,
-  Stack,
-  Typography,
-  alpha,
-  styled,
-} from '@mui/material';
+import { Box, Divider, Stack, Typography, alpha, styled } from '@mui/material';
 
-import { AppAction, Member } from '@graasp/sdk';
+import { Account, AppAction } from '@graasp/sdk';
 
-import { format } from 'date-fns';
+import { format } from 'date-fns/format';
 import countBy from 'lodash.countby';
 
 import { CodeVersionType } from '@/interfaces/codeVersions';
@@ -23,20 +13,22 @@ import { roundDateToIntervalStart } from '@/utils/chart';
 import MemberVersionsSparkLine from './MemberVersionsSparkLine';
 
 type Props = {
-  member: Member;
+  member: Account;
   isMemberSelected: boolean;
   onClick: () => void;
   runningVersions: AppAction<CodeVersionType>[];
 };
 
-const StyledListItem = styled(ListItem)<{ isMemberSelected: boolean }>(
-  ({ isMemberSelected, theme }) => ({
-    cursor: 'pointer',
-    background: isMemberSelected
-      ? ` ${alpha(theme.palette.primary.main, 0.07)}`
-      : '',
-  }),
-);
+const StyledListItem = styled(Stack, {
+  shouldForwardProp(propName) {
+    return propName !== 'isMemberSelected';
+  },
+})<{ isMemberSelected: boolean }>(({ isMemberSelected, theme }) => ({
+  cursor: 'pointer',
+  background: isMemberSelected
+    ? ` ${alpha(theme.palette.primary.main, 0.07)}`
+    : '',
+}));
 
 const MemberListItem = ({
   member,
@@ -62,38 +54,40 @@ const MemberListItem = ({
         onClick={onClick}
         isMemberSelected={isMemberSelected}
       >
-        <ListItemText
-          primary={
-            <Stack direction="row" justifyContent="space-between" width="100%">
-              <Typography
-                variant="body2"
-                color="text.primary"
-                textTransform="capitalize"
-              >
-                {member.name}
-              </Typography>
-              <Typography variant="body2" color="text.primary" component="span">
-                {t('VERSION_COUNT', { count: runningVersions.length })}
-              </Typography>
-            </Stack>
-          }
-          secondary={
-            <Stack
-              direction="row"
-              justifyContent="space-between"
-              alignItems="end"
+        <Stack alignItems="space-between" p={1} gap={1}>
+          <Stack
+            direction="row"
+            justifyContent="space-between"
+            width="100%"
+            flex={1}
+          >
+            <Typography
+              variant="body2"
+              color="text.primary"
+              textTransform="capitalize"
             >
-              <Typography variant="caption" component="span">
-                {t('LAST_VERSION', { date: timeOfLastVersion })}
-              </Typography>
-              <Box sx={{ width: '50%' }}>
-                <MemberVersionsSparkLine
-                  versionsGroupedByIntervals={versionsGroupedByIntervals}
-                />
-              </Box>
-            </Stack>
-          }
-        />
+              {member.name}
+            </Typography>
+            <Typography variant="body2" color="text.primary" component="span">
+              {t('VERSION_COUNT', { count: runningVersions.length })}
+            </Typography>
+          </Stack>
+
+          <Stack
+            direction="row"
+            justifyContent="space-between"
+            alignItems="end"
+          >
+            <Typography variant="caption" component="span">
+              {t('LAST_VERSION', { date: timeOfLastVersion })}
+            </Typography>
+            <Box sx={{ width: '50%' }}>
+              <MemberVersionsSparkLine
+                versionsGroupedByIntervals={versionsGroupedByIntervals}
+              />
+            </Box>
+          </Stack>
+        </Stack>
       </StyledListItem>
       <Divider
         variant="middle"

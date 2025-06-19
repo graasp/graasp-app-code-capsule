@@ -8,8 +8,9 @@ import React, {
 
 import { Member } from '@graasp/sdk';
 
-import type { Dictionary } from 'lodash';
 import groupBy from 'lodash.groupby';
+
+import { LodashGroupByDict } from '@/utils/utils';
 
 import { INSTRUCTOR_CODE_VERSION_SETTINGS_NAME } from '../../config/appSettingsTypes';
 import {
@@ -27,7 +28,7 @@ import { useAppDataContext } from './AppDataContext';
 type CodeVersionContextType = {
   codeVersionResource: CodeVersionSelectType;
   codeVersion: CodeVersionType;
-  groupedVersions: Dictionary<CodeVersionSelectType[]>;
+  groupedVersions: LodashGroupByDict<CodeVersionSelectType[]>;
   codeId: string; // id of the appData with the current code
   setCodeId: (id: string) => void;
 };

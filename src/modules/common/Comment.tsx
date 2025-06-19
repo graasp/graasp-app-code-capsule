@@ -47,7 +47,7 @@ const Comment: FC<Props> = ({ comment }) => {
   const members = useMembersContext();
   const { [GENERAL_SETTINGS_NAME]: settings = DEFAULT_GENERAL_SETTINGS } =
     useSettings();
-  const currentMemberId = useLocalContext().memberId;
+  const currentMemberId = useLocalContext().accountId;
   const { mutate: postAppData } = mutations.usePostAppData();
 
   const allowCommentReporting =
@@ -57,8 +57,8 @@ const Comment: FC<Props> = ({ comment }) => {
   const [openFlagDialog, setOpenFlagDialog] = useState(false);
   const commentRef = useRef<HTMLDivElement>(null);
 
-  const member = members.find((u) => u.id === comment.member.id);
-  const userName = member?.name || ANONYMOUS_USER;
+  const member = members.find((u) => u.id === comment.account.id);
+  const userName = member?.name ?? ANONYMOUS_USER;
 
   const isBot = comment.type === APP_DATA_TYPES.BOT_COMMENT;
 

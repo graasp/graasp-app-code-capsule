@@ -1,6 +1,6 @@
 import { Sparklines, SparklinesLine } from 'react-sparklines';
 
-import { differenceInMinutes } from 'date-fns';
+import { differenceInMinutes } from 'date-fns/differenceInMinutes';
 
 import { INTERVAL_DURATION_IN_MINUTES } from '@/utils/chart';
 

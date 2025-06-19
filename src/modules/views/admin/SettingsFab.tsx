@@ -2,9 +2,7 @@ import { FC, ReactElement, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { DisplaySettings as DisplaySettingsIcon } from '@mui/icons-material';
-import { Fab, Stack, Tooltip } from '@mui/material';
-
-import { Button } from '@graasp/ui';
+import { Button, Fab, Stack, Tooltip } from '@mui/material';
 
 import isEqual from 'lodash.isequal';
 
@@ -66,7 +64,7 @@ const SettingsFab: FC = () => {
   const renderActions = (): ReactElement => (
     <Stack spacing={1} direction="row">
       <Button
-        dataCy={SETTINGS_DIALOG_CANCEL_BUTTON_CYPRESS}
+        data-cy={SETTINGS_DIALOG_CANCEL_BUTTON_CYPRESS}
         onClick={() => handleClose(false)}
         color="error"
         variant="outlined"
@@ -74,7 +72,7 @@ const SettingsFab: FC = () => {
         {t('Cancel')}
       </Button>
       <Button
-        dataCy={SETTINGS_DIALOG_SAVE_BUTTON_CYPRESS}
+        data-cy={SETTINGS_DIALOG_SAVE_BUTTON_CYPRESS}
         onClick={() => handleClose(true)}
         disabled={!unsavedChanges}
         variant="outlined"

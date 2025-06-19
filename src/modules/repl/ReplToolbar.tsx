@@ -12,14 +12,7 @@ import { Stack } from '@mui/material';
 
 import { PyodideStatus } from '@graasp/pyodide';
 
-import {
-  IconDefinition,
-  IconLookup,
-  findIconDefinition,
-  library,
-} from '@fortawesome/fontawesome-svg-core';
-import { fas } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { BrushCleaningIcon } from 'lucide-react';
 
 import {
   REPL_CLEAR_BUTTON_CY,
@@ -31,10 +24,6 @@ import {
 import MiniAlert from '../layout/MiniAlert';
 import MiniButton from '../layout/MiniButton';
 import ReplStatusIndicator from './ReplStatusIndicator';
-
-library.add(fas);
-const broomLookup: IconLookup = { prefix: 'fas', iconName: 'broom' };
-const broomIconDefinition: IconDefinition = findIconDefinition(broomLookup);
 
 type Props = {
   onRunCode: () => void;
@@ -125,14 +114,7 @@ const ReplToolbar: FC<Props> = ({
           <MiniButton
             dataCy={REPL_CLEAR_BUTTON_CY}
             color="error"
-            icon={
-              <FontAwesomeIcon
-                icon={broomIconDefinition}
-                color="error"
-                width="24px"
-                height="24px"
-              />
-            }
+            icon={<BrushCleaningIcon />}
             onClick={onClearOutput}
             tooltip={t('Clear outputs and figures')}
             text={t('Clear')}
